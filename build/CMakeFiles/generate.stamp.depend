@@ -1,0 +1,187 @@
+# CMake generation dependency list for this directory.
+C:/Users/fboli/Documents/GitHub/3DCurator/3DCurator/CMakeLists.txt
+C:/Users/fboli/Documents/GitHub/3DCurator/3DCurator/build/CMakeFiles/3.6.1/CMakeSystem.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeSystemSpecificInitialize.cmake
+C:/Users/fboli/Documents/GitHub/3DCurator/3DCurator/build/CMakeFiles/3.6.1/CMakeCCompiler.cmake
+C:/Users/fboli/Documents/GitHub/3DCurator/3DCurator/build/CMakeFiles/3.6.1/CMakeCXXCompiler.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeSystemSpecificInformation.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeGenericSystem.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/Platform/Windows.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/Platform/WindowsPaths.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeLanguageInformation.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/Platform/Windows-MSVC-C.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/Platform/Windows-MSVC.cmake
+C:/Users/fboli/Documents/GitHub/3DCurator/3DCurator/build/CMakeFiles/3.6.1/CMakeRCCompiler.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeRCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeCXXInformation.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeLanguageInformation.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/Compiler/MSVC-CXX.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/Platform/Windows-MSVC-CXX.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/Platform/Windows-MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeCommonLanguageInclude.cmake
+C:/VTK/7.0.0/build/vs14/VTKConfigVersion.cmake
+C:/VTK/7.0.0/build/vs14/VTKConfig.cmake
+C:/VTK/7.0.0/build/vs14/VTKTargets.cmake
+C:/VTK/7.0.0/src/CMake/vtkModuleAPI.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkChartsCore.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkCommonColor.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkCommonDataModel.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkCommonMath.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkCommonCore.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtksys.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkCommonMisc.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkCommonSystem.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkCommonTransforms.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkInfovisCore.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersExtraction.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkCommonExecutionModel.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersCore.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersGeneral.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkCommonComputationalGeometry.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersStatistics.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkImagingFourier.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkImagingCore.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkalglib.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkRenderingContext2D.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkRenderingCore.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersGeometry.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersSources.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkRenderingFreeType.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkfreetype.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkzlib.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkDICOM.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOImage.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkDICOMParser.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOCore.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkMetaIO.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkjpeg.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkpng.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtktiff.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOSQL.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtksqlite.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkImagingStatistics.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkInteractionStyle.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkRenderingImage.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkRenderingOpenGL2.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkImagingHybrid.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkUtilitiesEncodeString.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkglew.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkDomainsChemistry.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOXML.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOGeometry.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOXMLParser.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkexpat.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkDomainsChemistryOpenGL2.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersAMR.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkParallelCore.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOLegacy.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkUtilitiesHashSource.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersFlowPaths.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersGeneric.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersHybrid.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkImagingSources.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersHyperTree.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersImaging.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkImagingGeneral.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersModeling.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersParallel.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersParallelImaging.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersProgrammable.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersSMP.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersSelection.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersTexture.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkFiltersVerdict.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkverdict.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkGUISupportQt.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Core/Qt5CoreConfig.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Core/Qt5CoreConfigExtras.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Core/Qt5CoreMacros.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeParseArguments.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QDDSPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QTgaPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QTiffPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QVirtualKeyboardPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5Gui_QWindowsIntegrationPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeParseArguments.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkGUISupportQtOpenGL.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5OpenGL/Qt5OpenGLConfigVersion.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5OpenGL/Qt5OpenGLConfig.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkGUISupportQtSQL.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Sql/Qt5SqlConfigVersion.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Sql/Qt5SqlConfig.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Sql/Qt5Sql_QMYSQLDriverPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Sql/Qt5Sql_QODBCDriverPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Sql/Qt5Sql_QPSQLDriverPlugin.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Sql/Qt5Sql_QSQLiteDriverPlugin.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkGeovisCore.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkInfovisLayout.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkInteractionWidgets.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkRenderingAnnotation.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkImagingColor.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkRenderingVolume.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkViewsCore.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtklibproj4.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOAMR.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkhdf5.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOEnSight.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOExodus.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkexodusII.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtknetcdf.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOExport.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkRenderingLabel.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOImport.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOInfovis.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtklibxml2.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOLSDyna.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOMINC.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOMovie.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkoggtheora.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIONetCDF.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOPLY.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOParallel.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkjsoncpp.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOParallelXML.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkIOVideo.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkImagingMath.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkImagingMorphological.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkImagingStencil.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkInteractionImage.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkRenderingContextOpenGL2.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkRenderingLOD.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkRenderingQt.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkRenderingVolumeOpenGL2.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkViewsContext2D.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkViewsInfovis.cmake
+C:/VTK/7.0.0/build/vs14/lib/cmake/vtk-7.0/Modules/vtkViewsQt.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake
+C:/Program Files/CMake/share/cmake-3.6/Modules/CMakeConfigurableFile.in
+C:/VTK/7.0.0/src/CMake/UseVTK.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake
+C:/Qt/Qt5.7.0/5.7/msvc2015/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake
+C:/Users/fboli/Documents/GitHub/3DCurator/3DCurator/assets/resources.qrc
+C:/Program Files/CMake/share/cmake-3.6/Modules/AutogenInfo.cmake.in

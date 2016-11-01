@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\chartXY.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\colorTFChart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\colorTransferControlPointsItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\figura.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\imagePlaneWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\interactorStyleDeleter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\interactorStyleImage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\opacityTFChart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\piecewiseControlPointsItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\plano.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\transferFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\build\qrc_resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\build\3DCurator_automoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\build\ui_mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\chartXY.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\colorTFChart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\colorTransferControlPointsItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\figura.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\imagePlaneWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\interactorStyleDeleter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\interactorStyleImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\measures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\opacityTFChart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\piecewiseControlPointsItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\plano.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\transferFunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\mainwindow.ui" />
+    <CustomBuild Include="C:\Users\fboli\Documents\GitHub\3DCurator\3DCurator\assets\resources.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{25240039-E575-378F-BFAD-5E30998D96D1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{3FA45DDD-7611-3226-AEA5-E0E16BDCC99C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="3DCurator.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\assets\icons\3DCurator.ico" />
+  </ItemGroup>
+</Project>
