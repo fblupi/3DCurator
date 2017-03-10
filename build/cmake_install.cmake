@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/fboli/Documents/GitHub/3DCurator/3DCurator
+# Install script for directory: C:/Users/fboli/Documents/GitHub/3DCurator
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/3DCurator")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files/3DCurator")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -35,5 +35,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/fboli/Documents/GitHub/3DCurator/3DCurator/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/fboli/Documents/GitHub/3DCurator/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

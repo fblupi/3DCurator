@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.7.0
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -1005,201 +1005,201 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "3DCurator", 0));
-        actionOpenDICOM->setText(QApplication::translate("MainWindow", "Abrir...", 0));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "3DCurator", Q_NULLPTR));
+        actionOpenDICOM->setText(QApplication::translate("MainWindow", "Abrir...", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionOpenDICOM->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Abrir</p></body></html>", 0));
+        actionOpenDICOM->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Abrir</p></body></html>", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionOpenDICOM->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", 0));
-        actionExit->setText(QApplication::translate("MainWindow", "Salir", 0));
+        actionOpenDICOM->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", Q_NULLPTR));
+        actionExit->setText(QApplication::translate("MainWindow", "Salir", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        actionExit->setToolTip(QApplication::translate("MainWindow", "Salir", 0));
+        actionExit->setToolTip(QApplication::translate("MainWindow", "Salir", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        actionExit->setShortcut(QApplication::translate("MainWindow", "Ctrl+Q", 0));
-        actionExportVolumeImage->setText(QApplication::translate("MainWindow", "Exportar figura...", 0));
-        actionExportVolumeImage->setShortcut(QApplication::translate("MainWindow", "Ctrl+F", 0));
-        actionExportSliceImage->setText(QApplication::translate("MainWindow", "Exportar corte...", 0));
-        actionExportSliceImage->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0));
-        actionImportPreset->setText(QApplication::translate("MainWindow", "Importar preset...", 0));
-        actionImportPreset->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+I", 0));
-        actionExportPreset->setText(QApplication::translate("MainWindow", "Exportar preset...", 0));
-        actionExportPreset->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+E", 0));
-        actionDeleteVolumeParts->setText(QApplication::translate("MainWindow", "Borrar partes", 0));
-        actionDeleteVolumeParts->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+D", 0));
-        actionOpenDICOM_2->setText(QApplication::translate("MainWindow", "Abrir...", 0));
-        actionUpdateMesh->setText(QApplication::translate("MainWindow", "Generar malla", 0));
-        actionEnableDisablePlane->setText(QApplication::translate("MainWindow", "Mostrar/Esconder plano", 0));
-        actionEnableDisablePlane->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+H", 0));
-        actionSagitalPlane->setText(QApplication::translate("MainWindow", "Plano sagital", 0));
-        actionSagitalPlane->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+S", 0));
-        actionAxialPlane->setText(QApplication::translate("MainWindow", "Plano axial", 0));
-        actionAxialPlane->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+A", 0));
-        actionCoronalPlane->setText(QApplication::translate("MainWindow", "Plano coronal", 0));
-        actionCoronalPlane->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+C", 0));
-        actionWoodPreset->setText(QApplication::translate("MainWindow", "Preset madera", 0));
-        actionWoodPreset->setShortcut(QApplication::translate("MainWindow", "F2", 0));
-        actionStuccoPreset->setText(QApplication::translate("MainWindow", "Preset estuco", 0));
-        actionStuccoPreset->setShortcut(QApplication::translate("MainWindow", "F3", 0));
-        actionMetalPreset->setText(QApplication::translate("MainWindow", "Preset metal", 0));
-        actionMetalPreset->setShortcut(QApplication::translate("MainWindow", "F4", 0));
-        actionCompletePreset->setText(QApplication::translate("MainWindow", "Preset completo", 0));
-        actionCompletePreset->setShortcut(QApplication::translate("MainWindow", "F1", 0));
-        actionWoodMesh->setText(QApplication::translate("MainWindow", "Malla madera", 0));
-        actionStuccoMesh->setText(QApplication::translate("MainWindow", "Malla estuco", 0));
-        actionMetalMesh->setText(QApplication::translate("MainWindow", "Malla metal", 0));
-        actionExtractMesh->setText(QApplication::translate("MainWindow", "Extraer malla...", 0));
-        actionExtractMesh->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+M", 0));
-        groupBox->setTitle(QApplication::translate("MainWindow", "Volumen", 0));
+        actionExit->setShortcut(QApplication::translate("MainWindow", "Ctrl+Q", Q_NULLPTR));
+        actionExportVolumeImage->setText(QApplication::translate("MainWindow", "Exportar figura...", Q_NULLPTR));
+        actionExportVolumeImage->setShortcut(QApplication::translate("MainWindow", "Ctrl+F", Q_NULLPTR));
+        actionExportSliceImage->setText(QApplication::translate("MainWindow", "Exportar corte...", Q_NULLPTR));
+        actionExportSliceImage->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", Q_NULLPTR));
+        actionImportPreset->setText(QApplication::translate("MainWindow", "Importar preset...", Q_NULLPTR));
+        actionImportPreset->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+I", Q_NULLPTR));
+        actionExportPreset->setText(QApplication::translate("MainWindow", "Exportar preset...", Q_NULLPTR));
+        actionExportPreset->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+E", Q_NULLPTR));
+        actionDeleteVolumeParts->setText(QApplication::translate("MainWindow", "Borrar partes", Q_NULLPTR));
+        actionDeleteVolumeParts->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+D", Q_NULLPTR));
+        actionOpenDICOM_2->setText(QApplication::translate("MainWindow", "Abrir...", Q_NULLPTR));
+        actionUpdateMesh->setText(QApplication::translate("MainWindow", "Generar malla", Q_NULLPTR));
+        actionEnableDisablePlane->setText(QApplication::translate("MainWindow", "Mostrar/Esconder plano", Q_NULLPTR));
+        actionEnableDisablePlane->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+H", Q_NULLPTR));
+        actionSagitalPlane->setText(QApplication::translate("MainWindow", "Plano sagital", Q_NULLPTR));
+        actionSagitalPlane->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+S", Q_NULLPTR));
+        actionAxialPlane->setText(QApplication::translate("MainWindow", "Plano axial", Q_NULLPTR));
+        actionAxialPlane->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+A", Q_NULLPTR));
+        actionCoronalPlane->setText(QApplication::translate("MainWindow", "Plano coronal", Q_NULLPTR));
+        actionCoronalPlane->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+C", Q_NULLPTR));
+        actionWoodPreset->setText(QApplication::translate("MainWindow", "Preset madera", Q_NULLPTR));
+        actionWoodPreset->setShortcut(QApplication::translate("MainWindow", "F2", Q_NULLPTR));
+        actionStuccoPreset->setText(QApplication::translate("MainWindow", "Preset estuco", Q_NULLPTR));
+        actionStuccoPreset->setShortcut(QApplication::translate("MainWindow", "F3", Q_NULLPTR));
+        actionMetalPreset->setText(QApplication::translate("MainWindow", "Preset metal", Q_NULLPTR));
+        actionMetalPreset->setShortcut(QApplication::translate("MainWindow", "F4", Q_NULLPTR));
+        actionCompletePreset->setText(QApplication::translate("MainWindow", "Preset completo", Q_NULLPTR));
+        actionCompletePreset->setShortcut(QApplication::translate("MainWindow", "F1", Q_NULLPTR));
+        actionWoodMesh->setText(QApplication::translate("MainWindow", "Malla madera", Q_NULLPTR));
+        actionStuccoMesh->setText(QApplication::translate("MainWindow", "Malla estuco", Q_NULLPTR));
+        actionMetalMesh->setText(QApplication::translate("MainWindow", "Malla metal", Q_NULLPTR));
+        actionExtractMesh->setText(QApplication::translate("MainWindow", "Extraer malla...", Q_NULLPTR));
+        actionExtractMesh->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+M", Q_NULLPTR));
+        groupBox->setTitle(QApplication::translate("MainWindow", "Volumen", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        openDICOM->setToolTip(QApplication::translate("MainWindow", "Abrir directorio DICOM", 0));
+        openDICOM->setToolTip(QApplication::translate("MainWindow", "Abrir directorio DICOM", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         openDICOM->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        deleteVolumeParts->setToolTip(QApplication::translate("MainWindow", "Borrar partes", 0));
+        deleteVolumeParts->setToolTip(QApplication::translate("MainWindow", "Borrar partes", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         deleteVolumeParts->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        exportVolumeImage->setToolTip(QApplication::translate("MainWindow", "Guardar imagen volumen", 0));
+        exportVolumeImage->setToolTip(QApplication::translate("MainWindow", "Guardar imagen volumen", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         exportVolumeImage->setText(QString());
-        rulesBox->setTitle(QApplication::translate("MainWindow", "Reglas", 0));
+        rulesBox->setTitle(QApplication::translate("MainWindow", "Reglas", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        enableDisableSliceRule->setToolTip(QApplication::translate("MainWindow", "Mostrar/Esconder regla", 0));
+        enableDisableSliceRule->setToolTip(QApplication::translate("MainWindow", "Mostrar/Esconder regla", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         enableDisableSliceRule->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        addSliceRule->setToolTip(QApplication::translate("MainWindow", "A\303\261adir regla", 0));
+        addSliceRule->setToolTip(QApplication::translate("MainWindow", "A\303\261adir regla", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         addSliceRule->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        deleteSliceRule->setToolTip(QApplication::translate("MainWindow", "Eliminar regla", 0));
+        deleteSliceRule->setToolTip(QApplication::translate("MainWindow", "Eliminar regla", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         deleteSliceRule->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        addVolumeRule->setToolTip(QApplication::translate("MainWindow", "A\303\261adir regla", 0));
+        addVolumeRule->setToolTip(QApplication::translate("MainWindow", "A\303\261adir regla", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         addVolumeRule->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        deleteVolumeRule->setToolTip(QApplication::translate("MainWindow", "Eliminar regla", 0));
+        deleteVolumeRule->setToolTip(QApplication::translate("MainWindow", "Eliminar regla", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         deleteVolumeRule->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        enableDisableVolumeRule->setToolTip(QApplication::translate("MainWindow", "Mostrar/Esconder regla", 0));
+        enableDisableVolumeRule->setToolTip(QApplication::translate("MainWindow", "Mostrar/Esconder regla", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         enableDisableVolumeRule->setText(QString());
-        volumeRuleLabel->setText(QApplication::translate("MainWindow", "Volumen", 0));
-        sliceRuleLabel->setText(QApplication::translate("MainWindow", "Cortes", 0));
-        labelFolder->setText(QApplication::translate("MainWindow", "Carpeta", 0));
+        volumeRuleLabel->setText(QApplication::translate("MainWindow", "Volumen", Q_NULLPTR));
+        sliceRuleLabel->setText(QApplication::translate("MainWindow", "Cortes", Q_NULLPTR));
+        labelFolder->setText(QApplication::translate("MainWindow", "Carpeta", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        enableDisablePlane->setToolTip(QApplication::translate("MainWindow", "Mosrtar/Esconder plano", 0));
+        enableDisablePlane->setToolTip(QApplication::translate("MainWindow", "Mosrtar/Esconder plano", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         enableDisablePlane->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        sagitalPlane->setToolTip(QApplication::translate("MainWindow", "Plano sagital", 0));
+        sagitalPlane->setToolTip(QApplication::translate("MainWindow", "Plano sagital", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         sagitalPlane->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        axialPlane->setToolTip(QApplication::translate("MainWindow", "Plano axial", 0));
+        axialPlane->setToolTip(QApplication::translate("MainWindow", "Plano axial", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         axialPlane->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        coronalPlane->setToolTip(QApplication::translate("MainWindow", "Plano coronal", 0));
+        coronalPlane->setToolTip(QApplication::translate("MainWindow", "Plano coronal", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         coronalPlane->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        exportSliceImage->setToolTip(QApplication::translate("MainWindow", "Guardar imagen corte", 0));
+        exportSliceImage->setToolTip(QApplication::translate("MainWindow", "Guardar imagen corte", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         exportSliceImage->setText(QString());
-        coordsAndValueLabel->setText(QApplication::translate("MainWindow", "HU: Fuera de rango", 0));
-        mainTab->setTabText(mainTab->indexOf(tabSlices), QApplication::translate("MainWindow", "Cortes", 0));
+        coordsAndValueLabel->setText(QApplication::translate("MainWindow", "HU: Fuera de rango", Q_NULLPTR));
+        mainTab->setTabText(mainTab->indexOf(tabSlices), QApplication::translate("MainWindow", "Cortes", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        exportPreset->setToolTip(QApplication::translate("MainWindow", "Exportar preset", 0));
+        exportPreset->setToolTip(QApplication::translate("MainWindow", "Exportar preset", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         exportPreset->setText(QString());
-        defaultPresetsBox->setTitle(QApplication::translate("MainWindow", "Presets", 0));
+        defaultPresetsBox->setTitle(QApplication::translate("MainWindow", "Presets", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        completePreset->setToolTip(QApplication::translate("MainWindow", "Preset completo", 0));
+        completePreset->setToolTip(QApplication::translate("MainWindow", "Preset completo", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         completePreset->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        woodPreset->setToolTip(QApplication::translate("MainWindow", "Preset madera", 0));
+        woodPreset->setToolTip(QApplication::translate("MainWindow", "Preset madera", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         woodPreset->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        stuccoPreset->setToolTip(QApplication::translate("MainWindow", "Preset estuco", 0));
+        stuccoPreset->setToolTip(QApplication::translate("MainWindow", "Preset estuco", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         stuccoPreset->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        metalPreset->setToolTip(QApplication::translate("MainWindow", "Preset metal", 0));
+        metalPreset->setToolTip(QApplication::translate("MainWindow", "Preset metal", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         metalPreset->setText(QString());
-        labelTFName->setText(QApplication::translate("MainWindow", "Nombre", 0));
-        labelTFDescription->setText(QApplication::translate("MainWindow", "Descripci\303\263n", 0));
+        labelTFName->setText(QApplication::translate("MainWindow", "Nombre", Q_NULLPTR));
+        labelTFDescription->setText(QApplication::translate("MainWindow", "Descripci\303\263n", Q_NULLPTR));
         tfDescription->setText(QString());
         tfName->setText(QString());
-        colorTFBox->setTitle(QApplication::translate("MainWindow", "Color", 0));
-        scalarTFBox->setTitle(QApplication::translate("MainWindow", "Opacidad escalar", 0));
-        gradientTFBox->setTitle(QApplication::translate("MainWindow", "Opacidad gradiente", 0));
+        colorTFBox->setTitle(QApplication::translate("MainWindow", "Color", Q_NULLPTR));
+        scalarTFBox->setTitle(QApplication::translate("MainWindow", "Opacidad escalar", Q_NULLPTR));
+        gradientTFBox->setTitle(QApplication::translate("MainWindow", "Opacidad gradiente", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        importPreset->setToolTip(QApplication::translate("MainWindow", "Importar preset", 0));
+        importPreset->setToolTip(QApplication::translate("MainWindow", "Importar preset", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         importPreset->setText(QString());
-        mainTab->setTabText(mainTab->indexOf(tabTransferFunction), QApplication::translate("MainWindow", "Funci\303\263n de transferencia", 0));
+        mainTab->setTabText(mainTab->indexOf(tabTransferFunction), QApplication::translate("MainWindow", "Funci\303\263n de transferencia", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        extractMesh->setToolTip(QApplication::translate("MainWindow", "Exportar malla", 0));
+        extractMesh->setToolTip(QApplication::translate("MainWindow", "Exportar malla", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         extractMesh->setText(QString());
-        extractMeshPresets->setTitle(QApplication::translate("MainWindow", "Presets", 0));
+        extractMeshPresets->setTitle(QApplication::translate("MainWindow", "Presets", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        extractMeshWood->setToolTip(QApplication::translate("MainWindow", "Isosuperficie madera", 0));
+        extractMeshWood->setToolTip(QApplication::translate("MainWindow", "Isosuperficie madera", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         extractMeshWood->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        extractMeshStucco->setToolTip(QApplication::translate("MainWindow", "Isosuperficie estuco", 0));
+        extractMeshStucco->setToolTip(QApplication::translate("MainWindow", "Isosuperficie estuco", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         extractMeshStucco->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        extractMeshMetal->setToolTip(QApplication::translate("MainWindow", "Isosuperficie metal", 0));
+        extractMeshMetal->setToolTip(QApplication::translate("MainWindow", "Isosuperficie metal", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         extractMeshMetal->setText(QString());
-        mainTab->setTabText(mainTab->indexOf(extractMeshTab), QApplication::translate("MainWindow", "Extraer malla", 0));
-        materialProperties->setTitle(QApplication::translate("MainWindow", "Material", 0));
-        specularLabel->setText(QApplication::translate("MainWindow", "Especular", 0));
-        ambientLabel->setText(QApplication::translate("MainWindow", "Ambiente", 0));
-        diffuseLabel->setText(QApplication::translate("MainWindow", "Difusa", 0));
-        powerLabel->setText(QApplication::translate("MainWindow", "Potencia especular", 0));
+        mainTab->setTabText(mainTab->indexOf(extractMeshTab), QApplication::translate("MainWindow", "Extraer malla", Q_NULLPTR));
+        materialProperties->setTitle(QApplication::translate("MainWindow", "Material", Q_NULLPTR));
+        specularLabel->setText(QApplication::translate("MainWindow", "Especular", Q_NULLPTR));
+        ambientLabel->setText(QApplication::translate("MainWindow", "Ambiente", Q_NULLPTR));
+        diffuseLabel->setText(QApplication::translate("MainWindow", "Difusa", Q_NULLPTR));
+        powerLabel->setText(QApplication::translate("MainWindow", "Potencia especular", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        restoreMaterial->setToolTip(QApplication::translate("MainWindow", "Restaurar material por defecto", 0));
+        restoreMaterial->setToolTip(QApplication::translate("MainWindow", "Restaurar material por defecto", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        restoreMaterial->setText(QApplication::translate("MainWindow", "Restaurar", 0));
+        restoreMaterial->setText(QApplication::translate("MainWindow", "Restaurar", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        updateProperties->setToolTip(QApplication::translate("MainWindow", "Actualizar material", 0));
+        updateProperties->setToolTip(QApplication::translate("MainWindow", "Actualizar material", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        updateProperties->setText(QApplication::translate("MainWindow", "Actualizar", 0));
-        groupBox_2->setTitle(QApplication::translate("MainWindow", "Fondos", 0));
-        meshBackgroundLabel->setText(QApplication::translate("MainWindow", "Malla", 0));
+        updateProperties->setText(QApplication::translate("MainWindow", "Actualizar", Q_NULLPTR));
+        groupBox_2->setTitle(QApplication::translate("MainWindow", "Fondos", Q_NULLPTR));
+        meshBackgroundLabel->setText(QApplication::translate("MainWindow", "Malla", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        meshBackground->setToolTip(QApplication::translate("MainWindow", "Color de fondo malla", 0));
+        meshBackground->setToolTip(QApplication::translate("MainWindow", "Color de fondo malla", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         meshBackground->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        volumeDeletingBackground->setToolTip(QApplication::translate("MainWindow", "Color de fondo borrado", 0));
+        volumeDeletingBackground->setToolTip(QApplication::translate("MainWindow", "Color de fondo borrado", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         volumeDeletingBackground->setText(QString());
-        volumeBackgroundLabel->setText(QApplication::translate("MainWindow", "Volumen", 0));
+        volumeBackgroundLabel->setText(QApplication::translate("MainWindow", "Volumen", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        restoreBackgrounds->setToolTip(QApplication::translate("MainWindow", "Restaurar colores de fondo por defecto", 0));
+        restoreBackgrounds->setToolTip(QApplication::translate("MainWindow", "Restaurar colores de fondo por defecto", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        restoreBackgrounds->setText(QApplication::translate("MainWindow", "Restaurar", 0));
+        restoreBackgrounds->setText(QApplication::translate("MainWindow", "Restaurar", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        volumeBackground->setToolTip(QApplication::translate("MainWindow", "Color de fondo volumen", 0));
+        volumeBackground->setToolTip(QApplication::translate("MainWindow", "Color de fondo volumen", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         volumeBackground->setText(QString());
-        volumeDeletingBackgroundLabel->setText(QApplication::translate("MainWindow", "Volumen (borrado)", 0));
-        mainTab->setTabText(mainTab->indexOf(tabProperties), QApplication::translate("MainWindow", "Propiedades", 0));
-        menuArchivo->setTitle(QApplication::translate("MainWindow", "Archivo", 0));
-        menuEditar->setTitle(QApplication::translate("MainWindow", "Editar", 0));
-        menuHerramientas->setTitle(QApplication::translate("MainWindow", "Herramientas", 0));
+        volumeDeletingBackgroundLabel->setText(QApplication::translate("MainWindow", "Volumen (borrado)", Q_NULLPTR));
+        mainTab->setTabText(mainTab->indexOf(tabProperties), QApplication::translate("MainWindow", "Propiedades", Q_NULLPTR));
+        menuArchivo->setTitle(QApplication::translate("MainWindow", "Archivo", Q_NULLPTR));
+        menuEditar->setTitle(QApplication::translate("MainWindow", "Editar", Q_NULLPTR));
+        menuHerramientas->setTitle(QApplication::translate("MainWindow", "Herramientas", Q_NULLPTR));
     } // retranslateUi
 
 };

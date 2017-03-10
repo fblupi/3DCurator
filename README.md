@@ -27,7 +27,7 @@ Software para visualizar e interactuar con los datos DICOM de esculturas.
 
 ##### Qt5.8.0
 
-* Descargar Qt5.7.0 desde [este enlace](http://download.qt.io/official_releases/qt/5.8/5.8.0/qt-opensource-windows-x86-msvc2015_64-5.8.0.exe) de su web e instalar.
+* Descargar Qt5.8.0 desde [este enlace](http://download.qt.io/official_releases/qt/5.8/5.8.0/qt-opensource-windows-x86-msvc2015_64-5.8.0.exe) de su web e instalar.
 * Crear una nueva variable de entorno con nombre: `QTDIR` y valor: `C:\Qt\Qt5.8.0` (directorio raiz de la versión instalada).
 * Agregar al Path la siguiente dirección: `C:\Qt\Qt5.8.0\5.8\msvc2015_64\bin`
 
@@ -146,7 +146,11 @@ Una vez compilado, antes de ejecutar, mover al directorio donde se ha generado e
 * `Qt5Gui.dll`
 * `Qt5Widgets.dll`
 
-Si no se hace, es posible que salte un mensaje de error parecido al siguiete: `The procedure entry point ?rgbSwapped@QImage@@QEHAA$$QEAV1@Z could not be located in the dynamic link library C:\VTK\7.1.0\build\bin\Release\vtkGUISupportQt-7.1.dll`.
+Si no se hace, es posible que salte un mensaje de error parecido al siguiente: 
+
+```
+The procedure entry point ?rgbSwapped@QImage@@QEHAA$$QEAV1@Z could not be located in the dynamic link library C:\VTK\7.1.0\build\bin\Release\vtkGUISupportQt-7.1.dll
+```
 
 ### Linux
 
