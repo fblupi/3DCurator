@@ -6,3 +6,4 @@
 #define MIN_AIR -850 /**< Valor mínimo que se considera aire */
 #define AIR_HU -1000 /**< Valor del aire */
 #define RULES_LIMIT 100 /**< Máximo número de reglas posibles */
+#define LINE_TOLERANCE 25

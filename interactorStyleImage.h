@@ -10,6 +10,7 @@
 #include <vtkCellPicker.h>
 
 #include "plano.h"
+#include "figura.h"
 
 /**
  * @class InteractorStyleImage
@@ -35,7 +36,9 @@ public:
 	 * Establece la etiqueta donde se escribirá el valor escalar del voxel seleccionado
 	 * @param	label	QLabel donde se escribirá el valor escalar del voxel seleccionado
 	 */
-	void SetLabel(QLabel* label); /**< Establece la etiqueta */
+	void SetLabel(QLabel* label);
+
+	void SetFigura(Figura* figura);
 
 	/**
 	 * Evento al pulsar el botón izquierdo del ratón
@@ -50,6 +53,7 @@ public:
 private:
 	Plano* plano; /**< Figura a la que se le borran partes */
 	QLabel* label; /**< Etiqueta donde se actualizan los valores */
+	Figura* figura;
 };
 
 #endif // INTERACTORSTYLEIMAGE_H

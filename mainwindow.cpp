@@ -68,6 +68,7 @@ void MainWindow::connectComponents() {
 	plano->getPlane()->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor()); // asigna el interactor al plano para poder verlo y moverlo
 
 	sliceViewer->SetupInteractor(ui->slicesWidget->GetInteractor()); // asigna el interactor al viewer
+	sliceStyle->SetFigura(figura);
 	sliceStyle->SetPlano(plano); // asigna el plano
 	sliceStyle->SetDefaultRenderer(sliceViewer->GetRenderer()); // asigna el renderer de los cortes
 	sliceStyle->SetLabel(ui->coordsAndValueLabel); // asigna la etiqueta
