@@ -151,6 +151,9 @@ CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=OFF
 
+//The directory containing a CMake configuration file for ITK.
+ITK_DIR:PATH=C:/ITK/4.11.0/build/msvc2015_64
+
 //The directory containing a CMake configuration file for Qt5Core.
 Qt5Core_DIR:PATH=C:/Qt/Qt5.8.0/5.8/msvc2015_64/lib/cmake/Qt5Core
 

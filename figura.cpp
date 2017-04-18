@@ -54,6 +54,9 @@ void Figura::setDICOMFolder(const std::string s) {
     imageReader->Update(); // lee los archivos
 
 	imageData->DeepCopy(imageReader->GetOutput()); // guarda los datos del volumen
+
+	//filter();
+
 	volumeMapper->SetInputData(imageData); // conecta el mapper con los datos
 
 	surface->SetInputData(imageData); // conecta la malla con los datos
@@ -65,6 +68,40 @@ void Figura::setDICOMFolder(const std::string s) {
 
 void Figura::createMesh() {
 	surface->SetValue(0, isoValue); // asigna el valor de isosuperficie
+}
+
+void Figura::filter() {
+	cout << "Filtrando" << endl;
+
+	typedef signed short PixelType;
+	const unsigned int Dimension = 3;
+
+	typedef itk::Image<PixelType, Dimension> ImageType;
+	typedef itk::VTKImageToImageFilter<ImageType> VTKImageToImageType;
+	typedef itk::MedianImageFilter<ImageType, ImageType> MedianFilterType;
+	typedef itk::ImageToVTKImageFilter<ImageType> ImageToVTKImageType;
+
+	VTKImageToImageType::Pointer connectorInput = VTKImageToImageType::New();
+	MedianFilterType::Pointer medianFilter = MedianFilterType::New();
+	ImageToVTKImageType::Pointer connectorOutput = ImageToVTKImageType::New();
+
+	ImageType::SizeType indexRadius;
+	indexRadius[0] = 3;
+	indexRadius[1] = 3;
+
+	connectorInput->SetInput(imageData);
+	connectorInput->Update();
+
+	medianFilter->SetInput(connectorInput->GetOutput());
+	medianFilter->SetRadius(indexRadius);
+
+	connectorOutput->SetInput(medianFilter->GetOutput());
+	connectorOutput->Update();
+
+	imageData = connectorOutput->GetOutput();
+	imageData->Modified();
+
+	cout << "Filtrado" << endl;
 }
 
 void Figura::setMaterial(const double ambient, const double diffuse, const double specular, const double power) {
