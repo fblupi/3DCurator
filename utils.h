@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <limits>
+#include <array>
 
 /**
  * Separa una cadena en subcadenas dado un delimitador y se queda con la última
@@ -33,5 +34,31 @@ std::string toUpper(std::string s);
  * @return	Cadena con la fecha
  */
 std::string getCurrentDate();
+
+/**
+* Get line vector from two points
+* @param A First Point
+* @param B Second Point
+* @return  Vector from B to A
+*/
+std::array<int, 3> getVector(const int A[3], const int B[3]);
+
+/**
+* Get normalized distance betweent two lines
+* @param A  First Point of First Line
+* @param A_ Second Point of First Line
+* @param B  First Point of Second Line
+* @param B_ Second Point of Second Line
+* @return   Normalized distance between two lines
+*/
+double getDistance(const int A[3], const int A_[3], const int B[3], const int B_[3]);
+
+/**
+* Get line equation y = a * x + b by giving two points
+* @param A First Point
+* @param B Second Point
+* @return  a and b parameters of the equation y = a * x + b
+*/
+std::array<double, 2> getEquation(const int A[3], const int B[3]);
 
 #endif // UTILS_H
