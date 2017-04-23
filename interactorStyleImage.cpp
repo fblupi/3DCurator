@@ -22,6 +22,8 @@
 
 vtkStandardNewMacro(InteractorStyleImage);
 
+#define MIN_ANGLE 0.05
+
 bool longerLine(std::pair<std::pair<cv::Point, cv::Point>, double> i, std::pair<std::pair<cv::Point, cv::Point>, double> j) {
 	return i.second > j.second;
 }
@@ -133,13 +135,9 @@ bool isAdjacent(Figura *figura, double x, double y, double z, double MIN, double
 		return false;
 }
 
-void regionGrowingWithLineBoundImage(Figura *figura, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, std::pair<cv::Point, cv::Point> line) {
+void regionGrowingWithLineBoundImage(Figura *figura, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, std::array<double, 2> eq) {
 	std::pair<int, int> ij;
 	std::stack<std::pair<int, int> > stack;
-
-	int A[3] = { line.first.x, line.first.y, ijk[2] };
-	int B[3] = { line.second.x, line.second.y, ijk[2] };
-	std::array<double, 2> eq = getEquation(A, B);
 
 	ij.first = ijk[0]; ij.second = ijk[1]; // voxel inicial
 
@@ -173,15 +171,7 @@ std::pair<std::pair<cv::Point, cv::Point>, double> findNearestLine(std::vector<s
 	for (int i = 0; i < lines.size(); i++) {
 		int B[3] = { lines[i].first.x, lines[i].first.y, z };
 		int B_[3] = { lines[i].second.x, lines[i].second.y, z };
-		if (z > 237) {
-			std::cout << "A=(" << A[0] << "," << A[1] << "," << A[2] << std::endl;
-			std::cout << "A'=(" << A_[0] << "," << A_[1] << "," << A_[2] << std::endl;
-			std::cout << "B=(" << B[0] << "," << B[1] << "," << B[2] << std::endl;
-			std::cout << "B'=(" << B_[0] << "," << B_[1] << "," << B_[2] << std::endl;
-			int a;
-			std::cin >> a;
-		}
-		double distance = getDistance(A, A_, B, B_);
+		double distance = getAngle(A, A_, B, B_);
 		if (distance < minDistance) {
 			min = i;
 			minDistance = distance;
@@ -194,24 +184,35 @@ void regionGrowingWithLineBoundVolume(Figura *figura, const int ijk[3], const in
 	int xyz[3] = { ijk[0], ijk[1], ijk[2] }; // voxel inicial
 	std::pair<cv::Point, cv::Point> lastLine = firstLine;
 	int lastZ = ijk[2];
-	regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, lastLine);
+	int U[3] = { lastLine.first.x, lastLine.first.y, lastZ };
+	int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };
+	regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquation(U, V));
 
 	int numberOfNoLines = 0;
-	// borrar hacia arriba
+
+	// Borrar hacia arriba
 	xyz[2] = ijk[2] + 1; // primera imagen
 	while (xyz[2] < MAX_Z) { // hasta llegar a la última imagen
-		std::cout << "Slice: " << xyz[2] << std::endl;
 		lines[xyz[2]] = getLinesFromImage(figura, xyz[2]);
 		std::pair<std::pair<cv::Point, cv::Point>, double> nearestLine = findNearestLine(lines[xyz[2]], lastLine, lastZ, xyz[2]);
-		if (nearestLine.second < 0.5) {
-			std::cout << "Deleting" << std::endl;
-			//if (numberOfNoLines != 0)
+		if (nearestLine.second < MIN_ANGLE) {
+			if (numberOfNoLines != 0) {
+				int A[3] = { lastLine.first.x, lastLine.first.y, lastZ };
+				int B[3] = { lastLine.second.x, lastLine.second.y, lastZ };
+				int C[3] = { nearestLine.first.first.x, nearestLine.first.first.y, xyz[2] };
+				std::array<double, 4> P = getPlaneEquation(A, B, C);
+				for (int i = xyz[2] - numberOfNoLines; i < xyz[2]; i++) {
+					int xyzAux[3] = { xyz[0], xyz[1], i };
+					regionGrowingWithLineBoundImage(figura, xyzAux, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquationFromPlane(P, i));
+				}
+			}
 			lastLine = nearestLine.first;
-			lastZ = ijk[2];
-			regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, lastLine);
+			lastZ = xyz[2];
+			int U[3] = { lastLine.first.x, lastLine.first.y, lastZ };
+			int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };
+			regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquation(U, V));
 			numberOfNoLines = 0;
 		} else {
-			std::cout << "I can't delete cause distance is " << nearestLine.second << std::endl;
 			numberOfNoLines++;
 		}
 		xyz[2] = xyz[2] + 1; // pasa a la siguiente
@@ -226,20 +227,29 @@ void regionGrowingWithLineBoundVolume(Figura *figura, const int ijk[3], const in
 	while (xyz[2] >= MIN_Z) { // hasta llegar a la última imagen
 		lines[xyz[2]] = getLinesFromImage(figura, xyz[2]);
 		std::pair<std::pair<cv::Point, cv::Point>, double> nearestLine = findNearestLine(lines[xyz[2]], lastLine, lastZ, xyz[2]);
-		if (nearestLine.second < 0.5) {
-			std::cout << "Deleting " << xyz[2] << std::endl;
-			//if (numberOfNoLines != 0)
+		if (nearestLine.second < MIN_ANGLE) {
+			if (numberOfNoLines != 0) {
+				int A[3] = { lastLine.first.x, lastLine.first.y, lastZ };
+				int B[3] = { lastLine.second.x, lastLine.second.y, lastZ };
+				int C[3] = { nearestLine.first.first.x, nearestLine.first.first.y, xyz[2] };
+				std::array<double, 4> P = getPlaneEquation(A, B, C);
+				for (int i = xyz[2] + numberOfNoLines; i > xyz[2]; i--) {
+					int xyzAux[3] = { xyz[0], xyz[1], i };
+					regionGrowingWithLineBoundImage(figura, xyzAux, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquationFromPlane(P, i));
+				}
+			}
 			lastLine = nearestLine.first;
-			lastZ = ijk[2];
-			regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, lastLine);
+			lastZ = xyz[2];
+			int U[3] = { lastLine.first.x, lastLine.first.y, lastZ };
+			int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };
+			regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquation(U, V));
 			numberOfNoLines = 0;
-		} else {
-			std::cout << "I can't delete " << xyz[2] << " cause distance is " << nearestLine.second << std::endl;
+		}
+		else {
 			numberOfNoLines++;
 		}
 		xyz[2] = xyz[2] - 1; // pasa a la siguiente
 	}
-
 }
 
 void InteractorStyleImage::OnLeftButtonDown() {
