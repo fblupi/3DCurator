@@ -22,7 +22,8 @@
 
 vtkStandardNewMacro(InteractorStyleImage);
 
-#define MIN_ANGLE 0.05
+#define MIN_ANGLE 0.5
+#define MIN_DISTA 5
 
 bool longerLine(std::pair<std::pair<cv::Point, cv::Point>, double> i, std::pair<std::pair<cv::Point, cv::Point>, double> j) {
 	return i.second > j.second;
@@ -146,7 +147,7 @@ void regionGrowingWithLineBoundImage(Figura *figura, const int ijk[3], const int
 		ij = stack.top(); // primer elemento de la pila
 		stack.pop(); // elimina el primer elemento de la pila
 		if (ij.first < MAX_X && ij.first >= MIN_X && ij.second < MAX_Y && ij.second >= MIN_Y) { // se encuentra entre los límites
-			if (isAdjacent(figura, ij.first, ij.second, ijk[2], -750, -350) 
+			if (isAdjacent(figura, ij.first, ij.second, ijk[2], -750, 200) 
 				&& !isInLine(ij.first, ij.second, -eq[0], -eq[1], MAX_X)) {
 				figura->getImageData()->SetScalarComponentFromFloat(ij.first, ij.second, ijk[2], 0, AIR_HU); // actualiza el voxel con el valor del aire
 																								 // añade a la pila los voxeles de alrededor
@@ -164,20 +165,21 @@ void regionGrowingWithLineBoundImage(Figura *figura, const int ijk[3], const int
 }
 
 std::pair<std::pair<cv::Point, cv::Point>, double> findNearestLine(std::vector<std::pair<cv::Point, cv::Point> > lines, std::pair<cv::Point, cv::Point> goal, const int originalZ, const int z) {
-	double minDistance = VTK_DOUBLE_MAX;
+	double minAngle = 90;
 	double min = 0;
 	int A[3] = { goal.first.x, goal.first.y, originalZ };
 	int A_[3] = { goal.second.x, goal.second.y, originalZ };
 	for (int i = 0; i < lines.size(); i++) {
 		int B[3] = { lines[i].first.x, lines[i].first.y, z };
 		int B_[3] = { lines[i].second.x, lines[i].second.y, z };
-		double distance = getAngle(A, A_, B, B_);
-		if (distance < minDistance) {
+		double distance = getPointLineDistance(A, A_, B);
+		double angle = getAngle(A, A_, B, B_);
+		if (angle < minAngle && distance < MIN_DISTA) {
 			min = i;
-			minDistance = distance;
+			minAngle = angle;
 		}
 	}
-	return std::make_pair(lines[min], minDistance);
+	return std::make_pair(lines[min], minAngle);
 }
 
 void regionGrowingWithLineBoundVolume(Figura *figura, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, const int MIN_Z, const int MAX_Z, std::pair<cv::Point, cv::Point> firstLine, std::vector<std::vector<std::pair<cv::Point, cv::Point> > > &lines) {
@@ -244,8 +246,7 @@ void regionGrowingWithLineBoundVolume(Figura *figura, const int ijk[3], const in
 			int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };
 			regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquation(U, V));
 			numberOfNoLines = 0;
-		}
-		else {
+		} else {
 			numberOfNoLines++;
 		}
 		xyz[2] = xyz[2] - 1; // pasa a la siguiente

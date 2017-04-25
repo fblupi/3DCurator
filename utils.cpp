@@ -61,3 +61,8 @@ std::array<double, 4> getPlaneEquation(const int A[3], const int B[3], const int
 std::array<double, 2> getLineEquationFromPlane(const std::array<double, 4> P, const int Z) {
 	return{ -P[0] / P[1], -(P[2] * Z + P[3]) / P[1] };
 }
+
+double getPointLineDistance(const int A[3], const int A_[3], const int P[3]) {
+	std::array<double, 2> eq = getLineEquation(A, A_);
+	return abs(eq[0] * P[0] - P[1] + eq[1]) / sqrt(pow(eq[0], 2) + 1);
+}

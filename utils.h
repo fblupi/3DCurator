@@ -90,4 +90,13 @@ std::array<double, 4> getPlaneEquation(const int A[3], const int B[3], const int
  */
 std::array<double, 2> getLineEquationFromPlane(const std::array<double, 4> P, const int Z);
 
+/**
+ * Get distance between a point and a line defined by two points
+ * @param A  First Point of the Line
+ * @param A_ Second Point of the Line
+ * @param P  Point
+ * @return   Distance between the line and the point
+ */
+double getPointLineDistance(const int A[3], const int A_[3], const int P[3]);
+
 #endif // UTILS_H
