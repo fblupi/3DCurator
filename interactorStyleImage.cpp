@@ -24,6 +24,9 @@ vtkStandardNewMacro(InteractorStyleImage);
 
 #define MIN_ANGLE 0.5
 #define MIN_DISTA 5
+#define LINE_TOLERANCE 5
+#define MIN_WOOD -750
+#define MAX_WOOD -300
 
 bool longerLine(std::pair<std::pair<cv::Point, cv::Point>, double> i, std::pair<std::pair<cv::Point, cv::Point>, double> j) {
 	return i.second > j.second;
@@ -136,6 +139,44 @@ bool isAdjacent(Figura *figura, double x, double y, double z, double MIN, double
 		return false;
 }
 
+std::pair<int, int> searchInitialVoxel(Figura *figura, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, double MIN, double MAX, std::array<double, 2> eq) {
+	if (ijk[0] - 1 >= MIN_X
+		&& isAdjacent(figura, ijk[0] - 1, ijk[1], ijk[2], MIN, MAX) 
+		&& !isInLine(ijk[0] - 1, ijk[1], -eq[0], -eq[1], MAX_X)) {
+		return std::make_pair(ijk[0] - 1, ijk[1]);	// (x-1, y) es el voxel inicial
+	} else if (ijk[0] + 1 < MAX_X
+		&& isAdjacent(figura, ijk[0] + 1, ijk[1], ijk[2], MIN, MAX) 
+		&& !isInLine(ijk[0] + 1, ijk[1], -eq[0], -eq[1], MAX_X)) {
+		return std::make_pair(ijk[0] + 1, ijk[1]);	// (x+1, y) es el voxel inicial
+	} else if (ijk[1] - 1 >= MIN_Y
+		&& isAdjacent(figura, ijk[0], ijk[1] - 1, ijk[2], MIN, MAX) 
+		&& !isInLine(ijk[0], ijk[1] - 1, -eq[0], -eq[1], MAX_X)) {
+		return std::make_pair(ijk[0], ijk[1] - 1);	// (x, y-1) es el voxel inicial
+	} else if (ijk[1] + 1 < MAX_Y
+		&& isAdjacent(figura, ijk[0], ijk[1] + 1, ijk[2], MIN, MAX) 
+		&& !isInLine(ijk[0], ijk[1] + 1, -eq[0], -eq[1], MAX_X)) {
+		return std::make_pair(ijk[0], ijk[1] + 1);	// (x, y+1) es el voxel inicial
+	} else if (ijk[0] - 1 >= MIN_X && ijk[1] - 1 >= MIN_Y
+		&& isAdjacent(figura, ijk[0] - 1, ijk[1] - 1, ijk[2], MIN, MAX) 
+		&& !isInLine(ijk[0] - 1, ijk[1] - 1, -eq[0], -eq[1], MAX_X)) {
+		return std::make_pair(ijk[0] - 1, ijk[1] - 1);	// (x-1, y-1) es el voxel inicial
+	} else if (ijk[0] - 1 >= MIN_X && ijk[1] + 1 < MAX_Y
+		&& isAdjacent(figura, ijk[0] - 1, ijk[1] + 1, ijk[2], MIN, MAX) 
+		&& !isInLine(ijk[0] - 1, ijk[1] + 1, -eq[0], -eq[1], MAX_X)) {
+		return std::make_pair(ijk[0] - 1, ijk[1] + 1);	// (x-1, y+1) es el voxel inicial
+	} else if (ijk[0] + 1 < MAX_X && ijk[1] - 1 >= MIN_Y
+		&& isAdjacent(figura, ijk[0] + 1, ijk[1] - 1, ijk[2], MIN, MAX) 
+		&& !isInLine(ijk[0] + 1, ijk[1] - 1, -eq[0], -eq[1], MAX_X)) {
+		return std::make_pair(ijk[0] + 1, ijk[1] - 1);	// (x+1, y-1) es el voxel inicial
+	} else if (ijk[0] + 1 < MAX_X && ijk[1] + 1 < MAX_Y
+		&& isAdjacent(figura, ijk[0] + 1, ijk[1] + 1, ijk[2], MIN, MAX) 
+		&& !isInLine(ijk[0] + 1, ijk[1] + 1, -eq[0], -eq[1], MAX_X)) {
+		return std::make_pair(ijk[0] + 1, ijk[1] + 1);	// (x+1, y+1) es el voxel inicial
+	} else {
+		return std::make_pair(ijk[0], ijk[1]);	// (x, y) es el voxel inicial
+	}
+}
+
 void regionGrowingWithLineBoundImage(Figura *figura, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, std::array<double, 2> eq) {
 	std::pair<int, int> ij;
 	std::stack<std::pair<int, int> > stack;
@@ -147,10 +188,10 @@ void regionGrowingWithLineBoundImage(Figura *figura, const int ijk[3], const int
 		ij = stack.top(); // primer elemento de la pila
 		stack.pop(); // elimina el primer elemento de la pila
 		if (ij.first < MAX_X && ij.first >= MIN_X && ij.second < MAX_Y && ij.second >= MIN_Y) { // se encuentra entre los límites
-			if (isAdjacent(figura, ij.first, ij.second, ijk[2], -750, 200) 
+			if (isAdjacent(figura, ij.first, ij.second, ijk[2], MIN_WOOD, MAX_WOOD)
 				&& !isInLine(ij.first, ij.second, -eq[0], -eq[1], MAX_X)) {
 				figura->getImageData()->SetScalarComponentFromFloat(ij.first, ij.second, ijk[2], 0, AIR_HU); // actualiza el voxel con el valor del aire
-																								 // añade a la pila los voxeles de alrededor
+				// añade a la pila los voxeles de alrededor
 				stack.push(std::make_pair(ij.first - 1, ij.second - 1));
 				stack.push(std::make_pair(ij.first - 1, ij.second));
 				stack.push(std::make_pair(ij.first - 1, ij.second + 1));
@@ -204,6 +245,11 @@ void regionGrowingWithLineBoundVolume(Figura *figura, const int ijk[3], const in
 				int C[3] = { nearestLine.first.first.x, nearestLine.first.first.y, xyz[2] };
 				std::array<double, 4> P = getPlaneEquation(A, B, C);
 				for (int i = xyz[2] - numberOfNoLines; i < xyz[2]; i++) {
+					if (!isAdjacent(figura, xyz[0], xyz[1], i, MIN_WOOD, MAX_WOOD)) {
+						std::pair<int, int> init = searchInitialVoxel(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_WOOD, MAX_WOOD, getLineEquationFromPlane(P, i));
+						xyz[0] = init.first;
+						xyz[1] = init.second;
+					}
 					int xyzAux[3] = { xyz[0], xyz[1], i };
 					regionGrowingWithLineBoundImage(figura, xyzAux, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquationFromPlane(P, i));
 				}
@@ -212,6 +258,11 @@ void regionGrowingWithLineBoundVolume(Figura *figura, const int ijk[3], const in
 			lastZ = xyz[2];
 			int U[3] = { lastLine.first.x, lastLine.first.y, lastZ };
 			int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };
+			if (!isAdjacent(figura, xyz[0], xyz[1], xyz[2], MIN_WOOD, MAX_WOOD)) {
+				std::pair<int, int> init = searchInitialVoxel(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_WOOD, MAX_WOOD, getLineEquation(U, V));
+				xyz[0] = init.first;
+				xyz[1] = init.second;
+			}
 			regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquation(U, V));
 			numberOfNoLines = 0;
 		} else {
@@ -225,6 +276,8 @@ void regionGrowingWithLineBoundVolume(Figura *figura, const int ijk[3], const in
 	lastZ = ijk[2];
 
 	// Borrar hacia abajo
+	xyz[0] = ijk[0];
+	xyz[1] = ijk[1];
 	xyz[2] = ijk[2] - 1; // primera imagen
 	while (xyz[2] >= MIN_Z) { // hasta llegar a la última imagen
 		lines[xyz[2]] = getLinesFromImage(figura, xyz[2]);
@@ -236,6 +289,11 @@ void regionGrowingWithLineBoundVolume(Figura *figura, const int ijk[3], const in
 				int C[3] = { nearestLine.first.first.x, nearestLine.first.first.y, xyz[2] };
 				std::array<double, 4> P = getPlaneEquation(A, B, C);
 				for (int i = xyz[2] + numberOfNoLines; i > xyz[2]; i--) {
+					if (!isAdjacent(figura, xyz[0], xyz[1], i, MIN_WOOD, MAX_WOOD)) {
+						std::pair<int, int> init = searchInitialVoxel(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_WOOD, MAX_WOOD, getLineEquationFromPlane(P, i));
+						xyz[0] = init.first;
+						xyz[1] = init.second;
+					}
 					int xyzAux[3] = { xyz[0], xyz[1], i };
 					regionGrowingWithLineBoundImage(figura, xyzAux, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquationFromPlane(P, i));
 				}
@@ -243,7 +301,12 @@ void regionGrowingWithLineBoundVolume(Figura *figura, const int ijk[3], const in
 			lastLine = nearestLine.first;
 			lastZ = xyz[2];
 			int U[3] = { lastLine.first.x, lastLine.first.y, lastZ };
-			int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };
+			int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };			
+			if (!isAdjacent(figura, xyz[0], xyz[1], xyz[2], MIN_WOOD, MAX_WOOD)) {
+				std::pair<int, int> init = searchInitialVoxel(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_WOOD, MAX_WOOD, getLineEquation(U, V));
+				xyz[0] = init.first;
+				xyz[1] = init.second;
+			}
 			regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquation(U, V));
 			numberOfNoLines = 0;
 		} else {

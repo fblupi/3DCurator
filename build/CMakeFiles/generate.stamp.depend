@@ -346,6 +346,16 @@ C:/VTK/7.1.0/build/msvc2015_64/VTKConfig.cmake
 C:/VTK/7.1.0/src/CMake/vtkModuleAPI.cmake
 C:/Program Files/CMake/share/cmake-3.7/Modules/CMakeConfigurableFile.in
 C:/VTK/7.1.0/src/CMake/UseVTK.cmake
+C:/OpenCV/3.2.0/opencv/build/x64/vc14/lib/OpenCVConfig-version.cmake
+C:/OpenCV/3.2.0/opencv/build/x64/vc14/lib/OpenCVConfig.cmake
+C:/VTK/7.1.0/src/CMake/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.7/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.7/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.7/Modules/CMakeParseArguments.cmake
+C:/OpenCV/3.2.0/opencv/build/x64/vc14/lib/OpenCVModules.cmake
+C:/OpenCV/3.2.0/opencv/build/x64/vc14/lib/OpenCVModules-debug.cmake
+C:/OpenCV/3.2.0/opencv/build/x64/vc14/lib/OpenCVModules-release.cmake
+C:/Program Files/CMake/share/cmake-3.7/Modules/FindBoost.cmake
 C:/Qt/Qt5.8.0/5.8/msvc2015_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake
 C:/Qt/Qt5.8.0/5.8/msvc2015_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake
 C:/Users/fboli/Documents/GitHub/3DCurator/assets/resources.qrc

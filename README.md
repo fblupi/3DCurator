@@ -128,6 +128,12 @@ De esta forma es más fácil organizar versiones para una u otra plataforma de d
   + En *Project Properties* ir a *Configuration Properties > C/C++ > General > Additional Include Directories* y añadir el directorio `C:\Boost\include\boost-1_63`.
   + En *Project Properties* ir a *Configuration Properties > Linker > Additional Library Directories* y añadir el directorio `C:\Boost\lib`.
 
+##### OpenCV
+
+* Crear una nueva variable de entorno con nombre: `OpenCV_BASEDIR` y valor: `C:\OpenCV\3.2.0\opencv\build\x64\vc14\`.
+* Crear una nueva variable de entorno con nombre: `OpenCV_DIR` y valor: `%OpenCV_BASEDIR%\lib`.
+* Agregar al Path la siguiente dirección: `%OpenCV_BASEDIR%\bin`
+
 #### Configurar proyecto
 
 Una vez generado el proyecto con CMake realizar los siguientes cambios en la configuración:

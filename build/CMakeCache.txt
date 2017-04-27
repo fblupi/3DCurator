@@ -20,6 +20,12 @@
 //Value Computed by CMake
 3DCurator_SOURCE_DIR:STATIC=C:/Users/fboli/Documents/GitHub/3DCurator
 
+//The directory containing a CMake configuration file for Boost.
+Boost_DIR:PATH=Boost_DIR-NOTFOUND
+
+//Path to a file.
+Boost_INCLUDE_DIR:PATH=C:/Boost/include/boost-1_63
+
 //Semicolon separated list of supported configuration types, only
 // supports Debug, Release, MinSizeRel, and RelWithDebInfo, anything
 // else will be ignored.
@@ -154,6 +160,9 @@ CMAKE_VERBOSE_MAKEFILE:BOOL=OFF
 //The directory containing a CMake configuration file for ITK.
 ITK_DIR:PATH=C:/ITK/4.11.0/build/msvc2015_64
 
+//The directory containing a CMake configuration file for OpenCV.
+OpenCV_DIR:PATH=C:/OpenCV/3.2.0/opencv/build/x64/vc14/lib
+
 //The directory containing a CMake configuration file for Qt5Core.
 Qt5Core_DIR:PATH=C:/Qt/Qt5.8.0/5.8/msvc2015_64/lib/cmake/Qt5Core
 
@@ -169,14 +178,15 @@ Qt5Sql_DIR:PATH=C:/Qt/Qt5.8.0/5.8/msvc2015_64/lib/cmake/Qt5Sql
 //The directory containing a CMake configuration file for Qt5Widgets.
 Qt5Widgets_DIR:PATH=C:/Qt/Qt5.8.0/5.8/msvc2015_64/lib/cmake/Qt5Widgets
 
-//The directory containing a CMake configuration file for VTK.
-VTK_DIR:PATH=C:/VTK/7.1.0/build/msvc2015_64
-
 
 ########################
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: Boost_DIR
+Boost_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_INCLUDE_DIR
+Boost_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //This is the directory where this CMakeCache.txt was created
 CMAKE_CACHEFILE_DIR:INTERNAL=c:/Users/fboli/Documents/GitHub/3DCurator/build
 //Major version of cmake used to create the current loaded cache
@@ -285,4 +295,14 @@ CMAKE_STATIC_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding OpenCV
+FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[C:/OpenCV/3.2.0/opencv/build][v3.2.0()]
+//Components requested for this build tree.
+_Boost_COMPONENTS_SEARCHED:INTERNAL=
+//Last used Boost_INCLUDE_DIR value.
+_Boost_INCLUDE_DIR_LAST:INTERNAL=C:/Boost/include/boost-1_63
+//Last used Boost_NAMESPACE value.
+_Boost_NAMESPACE_LAST:INTERNAL=boost
+//Last used Boost_USE_MULTITHREADED value.
+_Boost_USE_MULTITHREADED_LAST:INTERNAL=TRUE
 
