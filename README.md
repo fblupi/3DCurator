@@ -14,6 +14,7 @@ Software para visualizar e interactuar con los datos DICOM de esculturas.
 * VTK 7.1.0
 * ITK 4.11.0
 * Boost 1.63.0
+* OpenCV 3.2.0
 
 ## Instalación y configuración
 
@@ -124,15 +125,16 @@ De esta forma es más fácil organizar versiones para una u otra plataforma de d
 * Descomprimir en cualquier lugar, abrir la consola de comandos de Visual Studio y moverse al lugar donde ha sido extraído.
 * Escribir `bootstrap.bat` para generar el Boost.Build.
 * Compilar con: `b2 toolset=msvc --build-type=complete --abbreviate-paths address-model=64 install -j4`.
-* Agregar al proyecto de Visual Studio:
-  + En *Project Properties* ir a *Configuration Properties > C/C++ > General > Additional Include Directories* y añadir el directorio `C:\Boost\include\boost-1_63`.
-  + En *Project Properties* ir a *Configuration Properties > Linker > Additional Library Directories* y añadir el directorio `C:\Boost\lib`.
+* Crear una nueva variable de entorno con nombre: `BOOST_ROOT` y valor: `C:\Boost`.
 
-##### OpenCV
+##### OpenCV 3.2.0
 
-* Crear una nueva variable de entorno con nombre: `OpenCV_BASEDIR` y valor: `C:\OpenCV\3.2.0\opencv\build\x64\vc14\`.
-* Crear una nueva variable de entorno con nombre: `OpenCV_DIR` y valor: `%OpenCV_BASEDIR%\lib`.
-* Agregar al Path la siguiente dirección: `%OpenCV_BASEDIR%\bin`
+* Descargar OpenCV desde [este enlace](https://sourceforge.net/projects/opencvlibrary/files/opencv-win/3.2.0/opencv-3.2.0-vc14.exe/download).
+* Ejecutar y extraer.
+* Mover el directorio extraído a `C:\OpenCV\3.2.0\`.
+* Crear una nueva variable de entorno con nombre: `OPENCV_ROOT` y valor: `C:\OpenCV\3.2.0\opencv\build\x64\vc14\`.
+* Crear una nueva variable de entorno con nombre: `OPENCV_DIR` y valor: `%OPENCV_ROOT%\lib`.
+* Agregar al Path la siguiente dirección: `%OPENCV_ROOT%\bin`.
 
 #### Configurar proyecto
 
