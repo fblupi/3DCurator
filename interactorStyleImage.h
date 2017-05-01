@@ -2,6 +2,8 @@
 #define INTERACTORSTYLEIMAGE_H
 
 #include <QLabel>
+#include <QPixmap>
+#include <QBitmap>
 
 #include <vtkObjectFactory.h>
 #include <vtkSmartPointer.h>

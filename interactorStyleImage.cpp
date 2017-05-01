@@ -3,6 +3,13 @@
 #include "measures.h"
 #include "utils.h"
 
+#include <QMessageBox>
+#include <QProgressDialog>
+#include <QProgressBar>
+#include <QPointer>
+#include <QIcon>
+#include <QApplication>
+
 #include <vector>
 #include <stack>
 #include <array>
@@ -19,6 +26,8 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
+
+#include "lineSelectionDialog.h"
 
 vtkStandardNewMacro(InteractorStyleImage);
 
@@ -66,51 +75,58 @@ std::vector<std::pair<cv::Point, cv::Point> > getLinesFromImage(Figura *figura, 
 		foundLines.push_back(l);
 	}
 	sort(foundLines.begin(), foundLines.end(), longerLine);
-
+/*
 	int numLines = foundLines.size() > 50 ? 50 : foundLines.size();
-	/*
+	
 	for (int i = 0; i < numLines; i++) {
 		cv::Point p0 = foundLines[i].first.first, p1 = foundLines[i].first.second;
 		//cv::Scalar color = i == 0 ? cv::Scalar(255, 0, 0) : cv::Scalar(0, 0, 255);
 		cv::Scalar color;
 		switch (i) {
-		case 8:
+		case 0:
 			color = cv::Scalar(0, 0, 255);
-			cout << i << " - RED: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			//cout << i << " - RED: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
 			break;
-		case 9:
+		case 1:
 			color = cv::Scalar(0, 255, 0);
-			cout << i << " - GREEN: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			//cout << i << " - GREEN: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
 			break;
-		case 10:
+		case 2:
 			color = cv::Scalar(255, 0, 0);
-			cout << i << " - BLUE: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			//cout << i << " - BLUE: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
 			break;
-		case 11:
+		case 3:
 			color = cv::Scalar(0, 255, 255); 
-			cout << i << " - YELLOW: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			//cout << i << " - YELLOW: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
 			break;
-		case 12:
+		case 4:
 			color = cv::Scalar(255, 255, 0);
-			cout << i << " - CYAN: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			//cout << i << " - CYAN: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
 			break;
-		case 13:
+		case 5:
 			color = cv::Scalar(255, 0, 255);
-			cout << i << " - MAGENTA: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			//cout << i << " - MAGENTA: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
 			break;
-		case 14:
+		case 6:
 			color = cv::Scalar(255, 255, 255);
-			cout << i << " - WHITE: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			//cout << i << " - WHITE: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
 			break;
 		default:
 			color = cv::Scalar(128, 128, 128);
-			cout << i << " - GREY: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			//cout << i << " - GREY: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
 			break;
 		}
 		line(cdst, p0, p1, color, 1, cv::LINE_AA);
 	}
-	imshow("detected lines", cdst);
-	*/
+	//imshow("detected lines", cdst);
+
+	std::vector<int> compression_params;
+	compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
+	compression_params.push_back(9);
+	imwrite("lines.png", cdst, compression_params);
+	
+*/
+
 	remove(("tmp" + std::to_string(slice) + ".png").c_str());
 
 	std::vector<std::pair<cv::Point, cv::Point> > result(foundLines.size());
@@ -120,6 +136,79 @@ std::vector<std::pair<cv::Point, cv::Point> > getLinesFromImage(Figura *figura, 
 	}
 
 	return result;
+}
+
+std::string generateImage(Figura *figura, int slice, std::vector<std::pair<cv::Point, cv::Point> > lines) {
+	std::string filename = "tmp" + std::to_string(slice) + ".png";
+
+	vtkSmartPointer<vtkImageMapToColors> map = vtkSmartPointer<vtkImageMapToColors>::New();
+	map->SetInputData(figura->getImageData());
+	map->SetLookupTable(figura->getTransferFunction()->getColorFun());
+
+	vtkSmartPointer<vtkExtractVOI> voi = vtkSmartPointer<vtkExtractVOI>::New();
+	voi->SetInputConnection(map->GetOutputPort());
+	voi->SetVOI(0, figura->getImageData()->GetDimensions()[0] - 1, 0, figura->getImageData()->GetDimensions()[1] - 1, slice, slice);
+	voi->Update();
+
+	vtkSmartPointer<vtkPNGWriter> png = vtkSmartPointer<vtkPNGWriter>::New();
+	png->SetInputData(voi->GetOutput());
+	png->SetFileName(filename.c_str());
+	png->Write();
+
+	cv::Mat src;
+	src = cv::imread(filename.c_str(), 1);
+
+	remove(filename.c_str());
+
+	int numLines = lines.size() > 6 ? 6 : lines.size();
+
+	for (int i = 0; i < numLines; i++) {
+		cv::Point p0 = lines[i].first, p1 = lines[i].second;
+		//cv::Scalar color = i == 0 ? cv::Scalar(255, 0, 0) : cv::Scalar(0, 0, 255);
+		cv::Scalar color;
+		switch (i) {
+		case 0:
+			color = cv::Scalar(0, 0, 255);
+			//cout << i << " - RED: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			break;
+		case 1:
+			color = cv::Scalar(0, 255, 0);
+			//cout << i << " - GREEN: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			break;
+		case 2:
+			color = cv::Scalar(255, 0, 0);
+			//cout << i << " - BLUE: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			break;
+		case 3:
+			color = cv::Scalar(0, 255, 255);
+			//cout << i << " - YELLOW: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			break;
+		case 4:
+			color = cv::Scalar(255, 255, 0);
+			//cout << i << " - CYAN: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			break;
+		case 5:
+			color = cv::Scalar(255, 0, 255);
+			//cout << i << " - MAGENTA: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			break;
+		case 6:
+			color = cv::Scalar(255, 255, 255);
+			//cout << i << " - WHITE: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			break;
+		default:
+			color = cv::Scalar(128, 128, 128);
+			//cout << i << " - GREY: " << p0 << " ;;; " << p1 << " ;;; " << slice << endl;
+			break;
+		}
+		line(src, p0, p1, color, 1, cv::LINE_AA);
+	}
+
+	std::vector<int> compression_params;
+	compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
+	compression_params.push_back(9);
+	imwrite(filename, src, compression_params);
+
+	return filename;
 }
 
 bool isInLine(double x, double y, double a, double b, int max) {
@@ -330,21 +419,83 @@ void InteractorStyleImage::OnLeftButtonDown() {
 			std::vector<std::vector<std::pair<cv::Point, cv::Point> > > lines(figura->getImageData()->GetDimensions()[2]);
 			lines[ijk[2]] = getLinesFromImage(figura, ijk[2]);
 
-			std::pair<cv::Point, cv::Point> selectedLine = lines[ijk[2]][12];
-			//cv::Point p0 = selectedLine.first, p1 = selectedLine.second;
-			//cout << "Selected Line: " << p0 << " ;;; " << p1 << " ;;; " << ijk[2] << endl;
+			std::string img = generateImage(figura, ijk[2], lines[ijk[2]]);
 
-			label->setText(QString::fromStdString("Borrando")); // actualiza el valor de la etiqueta
+			LineSelectionDialog *diag = new LineSelectionDialog();
+			diag->setImage(img);
 
-			int * dimensions = figura->getImageData()->GetDimensions();
-			regionGrowingWithLineBoundVolume(figura, ijk, 0, dimensions[0], 0, dimensions[1], 0, dimensions[2], selectedLine, lines); // borra
-			figura->getImageData()->Modified(); // actualiza tiempo de modificación para que el mapper recalcule los datos del volumen
+			int response = diag->exec();
+			if (response != LINE_CANCEL) { // comprueba si se tiene que deshacer el cambio
+				std::pair<cv::Point, cv::Point> selectedLine;
+				switch (response) {
+					case LINE_RED:
+						selectedLine = lines[ijk[2]][0];
+						break;
+					case LINE_GREEN:
+						selectedLine = lines[ijk[2]][1];
+						break;
+					case LINE_BLUE:
+						selectedLine = lines[ijk[2]][2];
+						break;
+					case LINE_CYAN:
+						selectedLine = lines[ijk[2]][3];
+						break;
+					case LINE_MAGENTA:
+						selectedLine = lines[ijk[2]][4];
+						break;
+					case LINE_YELLOW:
+						selectedLine = lines[ijk[2]][5];
+						break;
+				}
+
+				// lanza barra de progreso
+				QPointer<QProgressBar> bar = new QProgressBar(0);
+				QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+				progressDialog->setWindowTitle(QString("Segmentando..."));
+				progressDialog->setLabelText(QString::fromLatin1("Segmentando la pieza de madera seleccionada"));
+				progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+				progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+				progressDialog->setCancelButton(0);
+				progressDialog->setBar(bar);
+				progressDialog->show();
+				bar->close();
+				QApplication::processEvents();
+
+				//selectedLine = lines[ijk[2]][12];
+				
+				//cv::Point p0 = selectedLine.first, p1 = selectedLine.second;
+				//cout << "Selected Line: " << p0 << " ;;; " << p1 << " ;;; " << ijk[2] << endl;
+
+				//label->setText(QString::fromStdString("Borrando")); // actualiza el valor de la etiqueta
+
+				int * dimensions = figura->getImageData()->GetDimensions();
+				regionGrowingWithLineBoundVolume(figura, ijk, 0, dimensions[0], 0, dimensions[1], 0, dimensions[2], selectedLine, lines); // borra
+				figura->getImageData()->Modified(); // actualiza tiempo de modificación para que el mapper recalcule los datos del volumen
+
+				progressDialog->close(); // cierra barra de progreso
+			}
 		}
 	}
 }
 
 void InteractorStyleImage::OnMouseMove() {
+	if (plano != NULL && label != NULL && this->GetDefaultRenderer() != NULL) { // se han establecido los elementos necesarios
+		vtkSmartPointer<vtkCellPicker> picker = vtkSmartPointer<vtkCellPicker>::New();
+		picker->SetTolerance(0.0005); // ajusta la torlerancia
 
+		int* pos = this->GetInteractor()->GetEventPosition(); // posición del ratón en el render window
+		picker->Pick(pos[0], pos[1], pos[2], this->GetDefaultRenderer()); // realiza pick sobre la posición del ratón en el render window
+
+		int* ijk = picker->GetPointIJK(); // voxel seleccionado
+
+		if (picker->GetPointId() != -1) { // se ha seleccionado un voxel
+			float value = plano->getPlane()->GetResliceOutput()->GetScalarComponentAsFloat(ijk[0], ijk[1], ijk[2], 0); // valor escalar del voxel
+			label->setText(QString::fromStdString("HU: " + std::to_string((int)value))); // actualiza el valor de la etiqueta con el valor del voxel
+		}
+		else {
+			label->setText(QString::fromStdString("HU: Fuera de rango")); // actualiza el valor de la etiqueta
+		}
+	}
 	vtkInteractorStyleImage::OnMouseMove(); // Forward events
 }
 
