@@ -39,23 +39,20 @@ public:
 	 * @param	label	QLabel donde se escribirá el valor escalar del voxel seleccionado
 	 */
 	void SetLabel(QLabel* label);
-
-	void SetFigura(Figura* figura);
-
-	/**
-	 * Evento al pulsar el botón izquierdo del ratón
-	 */
-	virtual void OnLeftButtonDown();
 	
 	/**
 	 * Evento al mover el ratón
 	 */
 	virtual void OnMouseMove();
 
+	/**
+	 * Evento al pulsar el botón izquierdo del ratón
+	 */
+	virtual void OnLeftButtonDown();
+
 private:
 	Plano* plano; /**< Figura a la que se le borran partes */
 	QLabel* label; /**< Etiqueta donde se actualizan los valores */
-	Figura* figura;
 };
 
 #endif // INTERACTORSTYLEIMAGE_H

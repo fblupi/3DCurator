@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Release|x64">
@@ -26,15 +26,15 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-    <PropertyGroup>
-      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\fboli\Documents\GitHub\3DCurator\build\Release\</OutDir>
-      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">3DCurator.dir\Release\</IntDir>
-      <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">3DCurator</TargetName>
-      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
-      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\fboli\Documents\GitHub\3DCurator\build\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">3DCurator.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">3DCurator</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
@@ -50,7 +50,8 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;vtkRenderingCore_INCLUDE="C:/Users/fboli/Documents/GitHub/3DCurator/build/CMakeFiles/vtkRenderingCore_AUTOINIT_vtkInteractionStyle_vtkRenderingFreeType_vtkRenderingOpenGL2.h";ITK_IO_FACTORY_REGISTER_MANAGER;vtkDomainsChemistry_AUTOINIT=1(vtkDomainsChemistryOpenGL2);vtkRenderingContext2D_AUTOINIT=1(vtkRenderingContextOpenGL2);vtkRenderingOpenGL2_AUTOINIT=1(vtkRenderingGL2PSOpenGL2);vtkRenderingVolume_AUTOINIT=1(vtkRenderingVolumeOpenGL2);QT_NO_DEBUG;QT_WIDGETS_LIB;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <DebugInformationFormat></DebugInformationFormat>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;vtkRenderingCore_INCLUDE=\"C:/Users/fboli/Documents/GitHub/3DCurator/build/CMakeFiles/vtkRenderingCore_AUTOINIT_vtkInteractionStyle_vtkRenderingFreeType_vtkRenderingOpenGL2.h\";ITK_IO_FACTORY_REGISTER_MANAGER;vtkDomainsChemistry_AUTOINIT=1(vtkDomainsChemistryOpenGL2);vtkRenderingContext2D_AUTOINIT=1(vtkRenderingContextOpenGL2);vtkRenderingOpenGL2_AUTOINIT=1(vtkRenderingGL2PSOpenGL2);vtkRenderingVolume_AUTOINIT=1(vtkRenderingVolumeOpenGL2);QT_NO_DEBUG;QT_WIDGETS_LIB;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -89,7 +90,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ImportLibrary>C:/Users/fboli/Documents/GitHub/3DCurator/build/Release/3DCurator.lib</ImportLibrary>
       <ProgramDataBaseFile>C:/Users/fboli/Documents/GitHub/3DCurator/build/Release/3DCurator.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
-      <Version></Version>
+      <Version>
+      </Version>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -158,12 +160,13 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/fboli/Documents/GitHub/3DCurator/assets/resources.qrc;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\3DCurator.ico;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\3DCurator.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\folder.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\refresh.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\power.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\save.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\save-as.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\eye.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\eye-slash.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\eraser.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\minus.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\plus.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\axial.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\sagital.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\coronal.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\wood.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\stucco.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\metal.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\complete.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\presets\ct-woodsculpture.xml;C:\Users\fboli\Documents\GitHub\3DCurator\assets\presets\ct-onlywood.xml;C:\Users\fboli\Documents\GitHub\3DCurator\assets\presets\ct-onlystucco.xml;C:\Users\fboli\Documents\GitHub\3DCurator\assets\presets\ct-onlymetal.xml;C:\Users\fboli\Documents\GitHub\3DCurator\assets\resources.qrc;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/fboli/Documents/GitHub/3DCurator/assets/resources.qrc;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\3DCurator.ico;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\3DCurator.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\folder.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\refresh.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\power.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\save.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\save-as.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\eye.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\eye-slash.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\eraser.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\minus.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\plus.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\scissors.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\scissors-slash.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\axial.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\sagital.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\coronal.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\wood.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\stucco.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\metal.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\icons\complete.png;C:\Users\fboli\Documents\GitHub\3DCurator\assets\presets\ct-woodsculpture.xml;C:\Users\fboli\Documents\GitHub\3DCurator\assets\presets\ct-onlywood.xml;C:\Users\fboli\Documents\GitHub\3DCurator\assets\presets\ct-onlystucco.xml;C:\Users\fboli\Documents\GitHub\3DCurator\assets\presets\ct-onlymetal.xml;C:\Users\fboli\Documents\GitHub\3DCurator\assets\resources.qrc;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\fboli\Documents\GitHub\3DCurator\build\qrc_resources.cpp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\interactorStyleSegmentation.h" />
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\build\ui_lineselectiondialog.h" />
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\build\ui_mainwindow.h" />
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\chartXY.h" />
@@ -181,23 +184,24 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\plano.h" />
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\transferFunction.h" />
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\utils.h" />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\chartXY.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\colorTFChart.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\colorTransferControlPointsItem.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\figura.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\imagePlaneWidget.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\interactorStyleDeleter.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\interactorStyleImage.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\lineSelectionDialog.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\main.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\mainwindow.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\opacityTFChart.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\piecewiseControlPointsItem.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\plano.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\transferFunction.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\utils.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\build\qrc_resources.cpp"  />
-    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\build\3DCurator_automoc.cpp"  />
+    <ClCompile Include="..\interactorStyleSegmentation.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\chartXY.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\colorTFChart.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\colorTransferControlPointsItem.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\figura.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\imagePlaneWidget.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\interactorStyleDeleter.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\interactorStyleImage.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\lineSelectionDialog.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\main.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\mainwindow.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\opacityTFChart.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\piecewiseControlPointsItem.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\plano.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\transferFunction.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\utils.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\build\qrc_resources.cpp" />
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\build\3DCurator_automoc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:/Users/fboli/Documents/GitHub/3DCurator/build/ZERO_CHECK.vcxproj">

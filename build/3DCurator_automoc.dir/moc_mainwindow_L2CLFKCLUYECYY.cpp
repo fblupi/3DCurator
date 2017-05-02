@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[122];
-    char stringdata0[2591];
+    QByteArrayData data[124];
+    char stringdata0[2629];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -82,77 +82,79 @@ QT_MOC_LITERAL(47, 1301, 27), // "on_volumeBackground_pressed"
 QT_MOC_LITERAL(48, 1329, 35), // "on_volumeDeletingBackground_p..."
 QT_MOC_LITERAL(49, 1365, 25), // "on_meshBackground_pressed"
 QT_MOC_LITERAL(50, 1391, 29), // "on_restoreBackgrounds_pressed"
-QT_MOC_LITERAL(51, 1421, 32), // "on_colorTFMaxSlider_valueChanged"
-QT_MOC_LITERAL(52, 1454, 32), // "on_colorTFMinSlider_valueChanged"
-QT_MOC_LITERAL(53, 1487, 35), // "on_gradientTFMaxSlider_valueC..."
-QT_MOC_LITERAL(54, 1523, 35), // "on_gradientTFMinSlider_valueC..."
-QT_MOC_LITERAL(55, 1559, 33), // "on_scalarTFMaxSlider_valueCha..."
-QT_MOC_LITERAL(56, 1593, 33), // "on_scalarTFMinSlider_valueCha..."
-QT_MOC_LITERAL(57, 1627, 30), // "on_isoValueSlider_valueChanged"
-QT_MOC_LITERAL(58, 1658, 18), // "setBackgroundColor"
-QT_MOC_LITERAL(59, 1677, 28), // "vtkSmartPointer<vtkRenderer>"
-QT_MOC_LITERAL(60, 1706, 3), // "ren"
-QT_MOC_LITERAL(61, 1710, 1), // "r"
-QT_MOC_LITERAL(62, 1712, 1), // "g"
-QT_MOC_LITERAL(63, 1714, 1), // "b"
-QT_MOC_LITERAL(64, 1716, 17), // "connectComponents"
-QT_MOC_LITERAL(65, 1734, 10), // "drawVolume"
-QT_MOC_LITERAL(66, 1745, 8), // "drawMesh"
-QT_MOC_LITERAL(67, 1754, 12), // "removeVolume"
-QT_MOC_LITERAL(68, 1767, 10), // "removeMesh"
-QT_MOC_LITERAL(69, 1778, 12), // "renderVolume"
-QT_MOC_LITERAL(70, 1791, 10), // "renderMesh"
-QT_MOC_LITERAL(71, 1802, 11), // "renderSlice"
-QT_MOC_LITERAL(72, 1814, 9), // "defaultTF"
-QT_MOC_LITERAL(73, 1824, 15), // "defaultMaterial"
-QT_MOC_LITERAL(74, 1840, 23), // "defaultBackgroundColors"
-QT_MOC_LITERAL(75, 1864, 20), // "defaultPlanePosition"
-QT_MOC_LITERAL(76, 1885, 14), // "updateMaterial"
-QT_MOC_LITERAL(77, 1900, 13), // "updateSliders"
-QT_MOC_LITERAL(78, 1914, 11), // "importDICOM"
-QT_MOC_LITERAL(79, 1926, 12), // "importPreset"
-QT_MOC_LITERAL(80, 1939, 17), // "loadDefaultPreset"
-QT_MOC_LITERAL(81, 1957, 6), // "QFile*"
-QT_MOC_LITERAL(82, 1964, 4), // "file"
-QT_MOC_LITERAL(83, 1969, 27), // "exportImageFromRenderWindow"
-QT_MOC_LITERAL(84, 1997, 32), // "vtkSmartPointer<vtkRenderWindow>"
-QT_MOC_LITERAL(85, 2030, 6), // "renWin"
-QT_MOC_LITERAL(86, 2037, 8), // "filename"
-QT_MOC_LITERAL(87, 2046, 12), // "exportPreset"
-QT_MOC_LITERAL(88, 2059, 16), // "exportMeshToFile"
-QT_MOC_LITERAL(89, 2076, 10), // "exportMesh"
-QT_MOC_LITERAL(90, 2087, 10), // "updateMesh"
-QT_MOC_LITERAL(91, 2098, 22), // "getExportImageFilename"
-QT_MOC_LITERAL(92, 2121, 15), // "defaultFilename"
-QT_MOC_LITERAL(93, 2137, 23), // "getExportPresetFilename"
-QT_MOC_LITERAL(94, 2161, 21), // "getExportMeshFilename"
-QT_MOC_LITERAL(95, 2183, 11), // "enablePlane"
-QT_MOC_LITERAL(96, 2195, 12), // "disablePlane"
-QT_MOC_LITERAL(97, 2208, 18), // "enableDisablePlane"
-QT_MOC_LITERAL(98, 2227, 10), // "axialPlane"
-QT_MOC_LITERAL(99, 2238, 12), // "coronalPlane"
-QT_MOC_LITERAL(100, 2251, 12), // "sagitalPlane"
-QT_MOC_LITERAL(101, 2264, 17), // "deleteVolumeParts"
-QT_MOC_LITERAL(102, 2282, 20), // "importCompletePreset"
-QT_MOC_LITERAL(103, 2303, 16), // "importWoodPreset"
-QT_MOC_LITERAL(104, 2320, 18), // "importStuccoPreset"
-QT_MOC_LITERAL(105, 2339, 17), // "importMetalPreset"
-QT_MOC_LITERAL(106, 2357, 7), // "addRule"
-QT_MOC_LITERAL(107, 2365, 4), // "type"
-QT_MOC_LITERAL(108, 2370, 10), // "deleteRule"
-QT_MOC_LITERAL(109, 2381, 17), // "enableDisableRule"
-QT_MOC_LITERAL(110, 2399, 10), // "enableRule"
-QT_MOC_LITERAL(111, 2410, 11), // "disableRule"
-QT_MOC_LITERAL(112, 2422, 13), // "clearAllRules"
-QT_MOC_LITERAL(113, 2436, 23), // "restoreBackgroundColors"
-QT_MOC_LITERAL(114, 2460, 13), // "launchWarning"
-QT_MOC_LITERAL(115, 2474, 11), // "std::string"
-QT_MOC_LITERAL(116, 2486, 7), // "message"
-QT_MOC_LITERAL(117, 2494, 21), // "launchWarningNoVolume"
-QT_MOC_LITERAL(118, 2516, 19), // "launchWarningNoRule"
-QT_MOC_LITERAL(119, 2536, 25), // "launchWarningTooManyRules"
-QT_MOC_LITERAL(120, 2562, 21), // "changeBackgroundColor"
-QT_MOC_LITERAL(121, 2584, 6) // "widget"
+QT_MOC_LITERAL(51, 1421, 21), // "on_segmentate_pressed"
+QT_MOC_LITERAL(52, 1443, 32), // "on_colorTFMaxSlider_valueChanged"
+QT_MOC_LITERAL(53, 1476, 32), // "on_colorTFMinSlider_valueChanged"
+QT_MOC_LITERAL(54, 1509, 35), // "on_gradientTFMaxSlider_valueC..."
+QT_MOC_LITERAL(55, 1545, 35), // "on_gradientTFMinSlider_valueC..."
+QT_MOC_LITERAL(56, 1581, 33), // "on_scalarTFMaxSlider_valueCha..."
+QT_MOC_LITERAL(57, 1615, 33), // "on_scalarTFMinSlider_valueCha..."
+QT_MOC_LITERAL(58, 1649, 30), // "on_isoValueSlider_valueChanged"
+QT_MOC_LITERAL(59, 1680, 18), // "setBackgroundColor"
+QT_MOC_LITERAL(60, 1699, 28), // "vtkSmartPointer<vtkRenderer>"
+QT_MOC_LITERAL(61, 1728, 3), // "ren"
+QT_MOC_LITERAL(62, 1732, 1), // "r"
+QT_MOC_LITERAL(63, 1734, 1), // "g"
+QT_MOC_LITERAL(64, 1736, 1), // "b"
+QT_MOC_LITERAL(65, 1738, 17), // "connectComponents"
+QT_MOC_LITERAL(66, 1756, 10), // "drawVolume"
+QT_MOC_LITERAL(67, 1767, 8), // "drawMesh"
+QT_MOC_LITERAL(68, 1776, 12), // "removeVolume"
+QT_MOC_LITERAL(69, 1789, 10), // "removeMesh"
+QT_MOC_LITERAL(70, 1800, 12), // "renderVolume"
+QT_MOC_LITERAL(71, 1813, 10), // "renderMesh"
+QT_MOC_LITERAL(72, 1824, 11), // "renderSlice"
+QT_MOC_LITERAL(73, 1836, 9), // "defaultTF"
+QT_MOC_LITERAL(74, 1846, 15), // "defaultMaterial"
+QT_MOC_LITERAL(75, 1862, 23), // "defaultBackgroundColors"
+QT_MOC_LITERAL(76, 1886, 20), // "defaultPlanePosition"
+QT_MOC_LITERAL(77, 1907, 14), // "updateMaterial"
+QT_MOC_LITERAL(78, 1922, 13), // "updateSliders"
+QT_MOC_LITERAL(79, 1936, 11), // "importDICOM"
+QT_MOC_LITERAL(80, 1948, 12), // "importPreset"
+QT_MOC_LITERAL(81, 1961, 17), // "loadDefaultPreset"
+QT_MOC_LITERAL(82, 1979, 6), // "QFile*"
+QT_MOC_LITERAL(83, 1986, 4), // "file"
+QT_MOC_LITERAL(84, 1991, 27), // "exportImageFromRenderWindow"
+QT_MOC_LITERAL(85, 2019, 32), // "vtkSmartPointer<vtkRenderWindow>"
+QT_MOC_LITERAL(86, 2052, 6), // "renWin"
+QT_MOC_LITERAL(87, 2059, 8), // "filename"
+QT_MOC_LITERAL(88, 2068, 12), // "exportPreset"
+QT_MOC_LITERAL(89, 2081, 16), // "exportMeshToFile"
+QT_MOC_LITERAL(90, 2098, 10), // "exportMesh"
+QT_MOC_LITERAL(91, 2109, 10), // "updateMesh"
+QT_MOC_LITERAL(92, 2120, 22), // "getExportImageFilename"
+QT_MOC_LITERAL(93, 2143, 15), // "defaultFilename"
+QT_MOC_LITERAL(94, 2159, 23), // "getExportPresetFilename"
+QT_MOC_LITERAL(95, 2183, 21), // "getExportMeshFilename"
+QT_MOC_LITERAL(96, 2205, 11), // "enablePlane"
+QT_MOC_LITERAL(97, 2217, 12), // "disablePlane"
+QT_MOC_LITERAL(98, 2230, 18), // "enableDisablePlane"
+QT_MOC_LITERAL(99, 2249, 10), // "axialPlane"
+QT_MOC_LITERAL(100, 2260, 12), // "coronalPlane"
+QT_MOC_LITERAL(101, 2273, 12), // "sagitalPlane"
+QT_MOC_LITERAL(102, 2286, 17), // "deleteVolumeParts"
+QT_MOC_LITERAL(103, 2304, 20), // "importCompletePreset"
+QT_MOC_LITERAL(104, 2325, 16), // "importWoodPreset"
+QT_MOC_LITERAL(105, 2342, 18), // "importStuccoPreset"
+QT_MOC_LITERAL(106, 2361, 17), // "importMetalPreset"
+QT_MOC_LITERAL(107, 2379, 7), // "addRule"
+QT_MOC_LITERAL(108, 2387, 4), // "type"
+QT_MOC_LITERAL(109, 2392, 10), // "deleteRule"
+QT_MOC_LITERAL(110, 2403, 17), // "enableDisableRule"
+QT_MOC_LITERAL(111, 2421, 10), // "enableRule"
+QT_MOC_LITERAL(112, 2432, 11), // "disableRule"
+QT_MOC_LITERAL(113, 2444, 13), // "clearAllRules"
+QT_MOC_LITERAL(114, 2458, 23), // "restoreBackgroundColors"
+QT_MOC_LITERAL(115, 2482, 13), // "launchWarning"
+QT_MOC_LITERAL(116, 2496, 11), // "std::string"
+QT_MOC_LITERAL(117, 2508, 7), // "message"
+QT_MOC_LITERAL(118, 2516, 21), // "launchWarningNoVolume"
+QT_MOC_LITERAL(119, 2538, 19), // "launchWarningNoRule"
+QT_MOC_LITERAL(120, 2558, 25), // "launchWarningTooManyRules"
+QT_MOC_LITERAL(121, 2584, 21), // "changeBackgroundColor"
+QT_MOC_LITERAL(122, 2606, 6), // "widget"
+QT_MOC_LITERAL(123, 2613, 15) // "segmentateOnOff"
 
     },
     "MainWindow\0on_actionOpenDICOM_triggered\0"
@@ -199,6 +201,7 @@ QT_MOC_LITERAL(121, 2584, 6) // "widget"
     "on_volumeDeletingBackground_pressed\0"
     "on_meshBackground_pressed\0"
     "on_restoreBackgrounds_pressed\0"
+    "on_segmentate_pressed\0"
     "on_colorTFMaxSlider_valueChanged\0"
     "on_colorTFMinSlider_valueChanged\0"
     "on_gradientTFMaxSlider_valueChanged\0"
@@ -230,7 +233,8 @@ QT_MOC_LITERAL(121, 2584, 6) // "widget"
     "restoreBackgroundColors\0launchWarning\0"
     "std::string\0message\0launchWarningNoVolume\0"
     "launchWarningNoRule\0launchWarningTooManyRules\0"
-    "changeBackgroundColor\0widget"
+    "changeBackgroundColor\0widget\0"
+    "segmentateOnOff"
 };
 #undef QT_MOC_LITERAL
 
@@ -240,7 +244,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-     105,   14, // methods
+     107,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -248,111 +252,113 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  539,    2, 0x08 /* Private */,
-       3,    0,  540,    2, 0x08 /* Private */,
-       4,    0,  541,    2, 0x08 /* Private */,
-       5,    0,  542,    2, 0x08 /* Private */,
-       6,    0,  543,    2, 0x08 /* Private */,
-       7,    0,  544,    2, 0x08 /* Private */,
-       8,    0,  545,    2, 0x08 /* Private */,
-       9,    0,  546,    2, 0x08 /* Private */,
-      10,    0,  547,    2, 0x08 /* Private */,
-      11,    0,  548,    2, 0x08 /* Private */,
-      12,    0,  549,    2, 0x08 /* Private */,
-      13,    0,  550,    2, 0x08 /* Private */,
-      14,    0,  551,    2, 0x08 /* Private */,
-      15,    0,  552,    2, 0x08 /* Private */,
-      16,    0,  553,    2, 0x08 /* Private */,
-      17,    0,  554,    2, 0x08 /* Private */,
-      18,    0,  555,    2, 0x08 /* Private */,
-      19,    0,  556,    2, 0x08 /* Private */,
-      20,    0,  557,    2, 0x08 /* Private */,
-      21,    0,  558,    2, 0x08 /* Private */,
-      22,    0,  559,    2, 0x08 /* Private */,
-      23,    0,  560,    2, 0x08 /* Private */,
-      24,    0,  561,    2, 0x08 /* Private */,
-      25,    0,  562,    2, 0x08 /* Private */,
-      26,    0,  563,    2, 0x08 /* Private */,
-      27,    0,  564,    2, 0x08 /* Private */,
-      28,    0,  565,    2, 0x08 /* Private */,
-      29,    0,  566,    2, 0x08 /* Private */,
-      30,    0,  567,    2, 0x08 /* Private */,
-      31,    0,  568,    2, 0x08 /* Private */,
-      32,    0,  569,    2, 0x08 /* Private */,
-      33,    0,  570,    2, 0x08 /* Private */,
-      34,    0,  571,    2, 0x08 /* Private */,
-      35,    0,  572,    2, 0x08 /* Private */,
-      36,    0,  573,    2, 0x08 /* Private */,
-      37,    0,  574,    2, 0x08 /* Private */,
-      38,    0,  575,    2, 0x08 /* Private */,
-      39,    0,  576,    2, 0x08 /* Private */,
-      40,    0,  577,    2, 0x08 /* Private */,
-      41,    0,  578,    2, 0x08 /* Private */,
-      42,    0,  579,    2, 0x08 /* Private */,
-      43,    0,  580,    2, 0x08 /* Private */,
-      44,    0,  581,    2, 0x08 /* Private */,
-      45,    0,  582,    2, 0x08 /* Private */,
-      46,    0,  583,    2, 0x08 /* Private */,
-      47,    0,  584,    2, 0x08 /* Private */,
-      48,    0,  585,    2, 0x08 /* Private */,
-      49,    0,  586,    2, 0x08 /* Private */,
-      50,    0,  587,    2, 0x08 /* Private */,
-      51,    0,  588,    2, 0x08 /* Private */,
-      52,    0,  589,    2, 0x08 /* Private */,
-      53,    0,  590,    2, 0x08 /* Private */,
-      54,    0,  591,    2, 0x08 /* Private */,
-      55,    0,  592,    2, 0x08 /* Private */,
-      56,    0,  593,    2, 0x08 /* Private */,
-      57,    0,  594,    2, 0x08 /* Private */,
-      58,    4,  595,    2, 0x08 /* Private */,
-      64,    0,  604,    2, 0x08 /* Private */,
-      65,    0,  605,    2, 0x08 /* Private */,
-      66,    0,  606,    2, 0x08 /* Private */,
-      67,    0,  607,    2, 0x08 /* Private */,
-      68,    0,  608,    2, 0x08 /* Private */,
-      69,    0,  609,    2, 0x08 /* Private */,
-      70,    0,  610,    2, 0x08 /* Private */,
-      71,    0,  611,    2, 0x08 /* Private */,
-      72,    0,  612,    2, 0x08 /* Private */,
-      73,    0,  613,    2, 0x08 /* Private */,
-      74,    0,  614,    2, 0x08 /* Private */,
-      75,    0,  615,    2, 0x08 /* Private */,
-      76,    0,  616,    2, 0x08 /* Private */,
-      77,    0,  617,    2, 0x08 /* Private */,
-      78,    0,  618,    2, 0x08 /* Private */,
-      79,    0,  619,    2, 0x08 /* Private */,
-      80,    1,  620,    2, 0x08 /* Private */,
-      83,    2,  623,    2, 0x08 /* Private */,
-      87,    1,  628,    2, 0x08 /* Private */,
-      88,    1,  631,    2, 0x08 /* Private */,
-      89,    0,  634,    2, 0x08 /* Private */,
-      90,    0,  635,    2, 0x08 /* Private */,
-      91,    1,  636,    2, 0x08 /* Private */,
-      93,    1,  639,    2, 0x08 /* Private */,
-      94,    1,  642,    2, 0x08 /* Private */,
-      95,    0,  645,    2, 0x08 /* Private */,
-      96,    0,  646,    2, 0x08 /* Private */,
-      97,    0,  647,    2, 0x08 /* Private */,
-      98,    0,  648,    2, 0x08 /* Private */,
-      99,    0,  649,    2, 0x08 /* Private */,
-     100,    0,  650,    2, 0x08 /* Private */,
-     101,    0,  651,    2, 0x08 /* Private */,
-     102,    0,  652,    2, 0x08 /* Private */,
-     103,    0,  653,    2, 0x08 /* Private */,
-     104,    0,  654,    2, 0x08 /* Private */,
-     105,    0,  655,    2, 0x08 /* Private */,
-     106,    1,  656,    2, 0x08 /* Private */,
-     108,    1,  659,    2, 0x08 /* Private */,
-     109,    1,  662,    2, 0x08 /* Private */,
-     110,    1,  665,    2, 0x08 /* Private */,
-     111,    1,  668,    2, 0x08 /* Private */,
-     112,    0,  671,    2, 0x08 /* Private */,
-     113,    0,  672,    2, 0x08 /* Private */,
-     114,    1,  673,    2, 0x08 /* Private */,
-     117,    0,  676,    2, 0x08 /* Private */,
-     118,    0,  677,    2, 0x08 /* Private */,
-     119,    0,  678,    2, 0x08 /* Private */,
-     120,    1,  679,    2, 0x08 /* Private */,
+       1,    0,  549,    2, 0x08 /* Private */,
+       3,    0,  550,    2, 0x08 /* Private */,
+       4,    0,  551,    2, 0x08 /* Private */,
+       5,    0,  552,    2, 0x08 /* Private */,
+       6,    0,  553,    2, 0x08 /* Private */,
+       7,    0,  554,    2, 0x08 /* Private */,
+       8,    0,  555,    2, 0x08 /* Private */,
+       9,    0,  556,    2, 0x08 /* Private */,
+      10,    0,  557,    2, 0x08 /* Private */,
+      11,    0,  558,    2, 0x08 /* Private */,
+      12,    0,  559,    2, 0x08 /* Private */,
+      13,    0,  560,    2, 0x08 /* Private */,
+      14,    0,  561,    2, 0x08 /* Private */,
+      15,    0,  562,    2, 0x08 /* Private */,
+      16,    0,  563,    2, 0x08 /* Private */,
+      17,    0,  564,    2, 0x08 /* Private */,
+      18,    0,  565,    2, 0x08 /* Private */,
+      19,    0,  566,    2, 0x08 /* Private */,
+      20,    0,  567,    2, 0x08 /* Private */,
+      21,    0,  568,    2, 0x08 /* Private */,
+      22,    0,  569,    2, 0x08 /* Private */,
+      23,    0,  570,    2, 0x08 /* Private */,
+      24,    0,  571,    2, 0x08 /* Private */,
+      25,    0,  572,    2, 0x08 /* Private */,
+      26,    0,  573,    2, 0x08 /* Private */,
+      27,    0,  574,    2, 0x08 /* Private */,
+      28,    0,  575,    2, 0x08 /* Private */,
+      29,    0,  576,    2, 0x08 /* Private */,
+      30,    0,  577,    2, 0x08 /* Private */,
+      31,    0,  578,    2, 0x08 /* Private */,
+      32,    0,  579,    2, 0x08 /* Private */,
+      33,    0,  580,    2, 0x08 /* Private */,
+      34,    0,  581,    2, 0x08 /* Private */,
+      35,    0,  582,    2, 0x08 /* Private */,
+      36,    0,  583,    2, 0x08 /* Private */,
+      37,    0,  584,    2, 0x08 /* Private */,
+      38,    0,  585,    2, 0x08 /* Private */,
+      39,    0,  586,    2, 0x08 /* Private */,
+      40,    0,  587,    2, 0x08 /* Private */,
+      41,    0,  588,    2, 0x08 /* Private */,
+      42,    0,  589,    2, 0x08 /* Private */,
+      43,    0,  590,    2, 0x08 /* Private */,
+      44,    0,  591,    2, 0x08 /* Private */,
+      45,    0,  592,    2, 0x08 /* Private */,
+      46,    0,  593,    2, 0x08 /* Private */,
+      47,    0,  594,    2, 0x08 /* Private */,
+      48,    0,  595,    2, 0x08 /* Private */,
+      49,    0,  596,    2, 0x08 /* Private */,
+      50,    0,  597,    2, 0x08 /* Private */,
+      51,    0,  598,    2, 0x08 /* Private */,
+      52,    0,  599,    2, 0x08 /* Private */,
+      53,    0,  600,    2, 0x08 /* Private */,
+      54,    0,  601,    2, 0x08 /* Private */,
+      55,    0,  602,    2, 0x08 /* Private */,
+      56,    0,  603,    2, 0x08 /* Private */,
+      57,    0,  604,    2, 0x08 /* Private */,
+      58,    0,  605,    2, 0x08 /* Private */,
+      59,    4,  606,    2, 0x08 /* Private */,
+      65,    0,  615,    2, 0x08 /* Private */,
+      66,    0,  616,    2, 0x08 /* Private */,
+      67,    0,  617,    2, 0x08 /* Private */,
+      68,    0,  618,    2, 0x08 /* Private */,
+      69,    0,  619,    2, 0x08 /* Private */,
+      70,    0,  620,    2, 0x08 /* Private */,
+      71,    0,  621,    2, 0x08 /* Private */,
+      72,    0,  622,    2, 0x08 /* Private */,
+      73,    0,  623,    2, 0x08 /* Private */,
+      74,    0,  624,    2, 0x08 /* Private */,
+      75,    0,  625,    2, 0x08 /* Private */,
+      76,    0,  626,    2, 0x08 /* Private */,
+      77,    0,  627,    2, 0x08 /* Private */,
+      78,    0,  628,    2, 0x08 /* Private */,
+      79,    0,  629,    2, 0x08 /* Private */,
+      80,    0,  630,    2, 0x08 /* Private */,
+      81,    1,  631,    2, 0x08 /* Private */,
+      84,    2,  634,    2, 0x08 /* Private */,
+      88,    1,  639,    2, 0x08 /* Private */,
+      89,    1,  642,    2, 0x08 /* Private */,
+      90,    0,  645,    2, 0x08 /* Private */,
+      91,    0,  646,    2, 0x08 /* Private */,
+      92,    1,  647,    2, 0x08 /* Private */,
+      94,    1,  650,    2, 0x08 /* Private */,
+      95,    1,  653,    2, 0x08 /* Private */,
+      96,    0,  656,    2, 0x08 /* Private */,
+      97,    0,  657,    2, 0x08 /* Private */,
+      98,    0,  658,    2, 0x08 /* Private */,
+      99,    0,  659,    2, 0x08 /* Private */,
+     100,    0,  660,    2, 0x08 /* Private */,
+     101,    0,  661,    2, 0x08 /* Private */,
+     102,    0,  662,    2, 0x08 /* Private */,
+     103,    0,  663,    2, 0x08 /* Private */,
+     104,    0,  664,    2, 0x08 /* Private */,
+     105,    0,  665,    2, 0x08 /* Private */,
+     106,    0,  666,    2, 0x08 /* Private */,
+     107,    1,  667,    2, 0x08 /* Private */,
+     109,    1,  670,    2, 0x08 /* Private */,
+     110,    1,  673,    2, 0x08 /* Private */,
+     111,    1,  676,    2, 0x08 /* Private */,
+     112,    1,  679,    2, 0x08 /* Private */,
+     113,    0,  682,    2, 0x08 /* Private */,
+     114,    0,  683,    2, 0x08 /* Private */,
+     115,    1,  684,    2, 0x08 /* Private */,
+     118,    0,  687,    2, 0x08 /* Private */,
+     119,    0,  688,    2, 0x08 /* Private */,
+     120,    0,  689,    2, 0x08 /* Private */,
+     121,    1,  690,    2, 0x08 /* Private */,
+     123,    0,  693,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -411,7 +417,8 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 59, QMetaType::Float, QMetaType::Float, QMetaType::Float,   60,   61,   62,   63,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 60, QMetaType::Float, QMetaType::Float, QMetaType::Float,   61,   62,   63,   64,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -428,18 +435,15 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 81,   82,
-    QMetaType::Void, 0x80000000 | 84, QMetaType::QString,   85,   86,
-    QMetaType::Void, QMetaType::QString,   86,
-    QMetaType::Void, QMetaType::QString,   86,
+    QMetaType::Void, 0x80000000 | 82,   83,
+    QMetaType::Void, 0x80000000 | 85, QMetaType::QString,   86,   87,
+    QMetaType::Void, QMetaType::QString,   87,
+    QMetaType::Void, QMetaType::QString,   87,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::QString, QMetaType::QString,   92,
-    QMetaType::QString, QMetaType::QString,   92,
-    QMetaType::QString, QMetaType::QString,   92,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::QString, QMetaType::QString,   93,
+    QMetaType::QString, QMetaType::QString,   93,
+    QMetaType::QString, QMetaType::QString,   93,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -448,18 +452,22 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,  107,
-    QMetaType::Void, QMetaType::Int,  107,
-    QMetaType::Void, QMetaType::Int,  107,
-    QMetaType::Void, QMetaType::Int,  107,
-    QMetaType::Void, QMetaType::Int,  107,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 115,  116,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,  121,
+    QMetaType::Void, QMetaType::Int,  108,
+    QMetaType::Void, QMetaType::Int,  108,
+    QMetaType::Void, QMetaType::Int,  108,
+    QMetaType::Void, QMetaType::Int,  108,
+    QMetaType::Void, QMetaType::Int,  108,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 116,  117,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,  122,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -519,71 +527,73 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 46: _t->on_volumeDeletingBackground_pressed(); break;
         case 47: _t->on_meshBackground_pressed(); break;
         case 48: _t->on_restoreBackgrounds_pressed(); break;
-        case 49: _t->on_colorTFMaxSlider_valueChanged(); break;
-        case 50: _t->on_colorTFMinSlider_valueChanged(); break;
-        case 51: _t->on_gradientTFMaxSlider_valueChanged(); break;
-        case 52: _t->on_gradientTFMinSlider_valueChanged(); break;
-        case 53: _t->on_scalarTFMaxSlider_valueChanged(); break;
-        case 54: _t->on_scalarTFMinSlider_valueChanged(); break;
-        case 55: _t->on_isoValueSlider_valueChanged(); break;
-        case 56: _t->setBackgroundColor((*reinterpret_cast< vtkSmartPointer<vtkRenderer>(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< float(*)>(_a[3])),(*reinterpret_cast< float(*)>(_a[4]))); break;
-        case 57: _t->connectComponents(); break;
-        case 58: _t->drawVolume(); break;
-        case 59: _t->drawMesh(); break;
-        case 60: _t->removeVolume(); break;
-        case 61: _t->removeMesh(); break;
-        case 62: _t->renderVolume(); break;
-        case 63: _t->renderMesh(); break;
-        case 64: _t->renderSlice(); break;
-        case 65: _t->defaultTF(); break;
-        case 66: _t->defaultMaterial(); break;
-        case 67: _t->defaultBackgroundColors(); break;
-        case 68: _t->defaultPlanePosition(); break;
-        case 69: _t->updateMaterial(); break;
-        case 70: _t->updateSliders(); break;
-        case 71: _t->importDICOM(); break;
-        case 72: _t->importPreset(); break;
-        case 73: _t->loadDefaultPreset((*reinterpret_cast< QFile*(*)>(_a[1]))); break;
-        case 74: _t->exportImageFromRenderWindow((*reinterpret_cast< vtkSmartPointer<vtkRenderWindow>(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 75: _t->exportPreset((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 76: _t->exportMeshToFile((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 77: _t->exportMesh(); break;
-        case 78: _t->updateMesh(); break;
-        case 79: { QString _r = _t->getExportImageFilename((*reinterpret_cast< const QString(*)>(_a[1])));
+        case 49: _t->on_segmentate_pressed(); break;
+        case 50: _t->on_colorTFMaxSlider_valueChanged(); break;
+        case 51: _t->on_colorTFMinSlider_valueChanged(); break;
+        case 52: _t->on_gradientTFMaxSlider_valueChanged(); break;
+        case 53: _t->on_gradientTFMinSlider_valueChanged(); break;
+        case 54: _t->on_scalarTFMaxSlider_valueChanged(); break;
+        case 55: _t->on_scalarTFMinSlider_valueChanged(); break;
+        case 56: _t->on_isoValueSlider_valueChanged(); break;
+        case 57: _t->setBackgroundColor((*reinterpret_cast< vtkSmartPointer<vtkRenderer>(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< float(*)>(_a[3])),(*reinterpret_cast< float(*)>(_a[4]))); break;
+        case 58: _t->connectComponents(); break;
+        case 59: _t->drawVolume(); break;
+        case 60: _t->drawMesh(); break;
+        case 61: _t->removeVolume(); break;
+        case 62: _t->removeMesh(); break;
+        case 63: _t->renderVolume(); break;
+        case 64: _t->renderMesh(); break;
+        case 65: _t->renderSlice(); break;
+        case 66: _t->defaultTF(); break;
+        case 67: _t->defaultMaterial(); break;
+        case 68: _t->defaultBackgroundColors(); break;
+        case 69: _t->defaultPlanePosition(); break;
+        case 70: _t->updateMaterial(); break;
+        case 71: _t->updateSliders(); break;
+        case 72: _t->importDICOM(); break;
+        case 73: _t->importPreset(); break;
+        case 74: _t->loadDefaultPreset((*reinterpret_cast< QFile*(*)>(_a[1]))); break;
+        case 75: _t->exportImageFromRenderWindow((*reinterpret_cast< vtkSmartPointer<vtkRenderWindow>(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 76: _t->exportPreset((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 77: _t->exportMeshToFile((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 78: _t->exportMesh(); break;
+        case 79: _t->updateMesh(); break;
+        case 80: { QString _r = _t->getExportImageFilename((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 80: { QString _r = _t->getExportPresetFilename((*reinterpret_cast< const QString(*)>(_a[1])));
+        case 81: { QString _r = _t->getExportPresetFilename((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 81: { QString _r = _t->getExportMeshFilename((*reinterpret_cast< const QString(*)>(_a[1])));
+        case 82: { QString _r = _t->getExportMeshFilename((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 82: _t->enablePlane(); break;
-        case 83: _t->disablePlane(); break;
-        case 84: _t->enableDisablePlane(); break;
-        case 85: _t->axialPlane(); break;
-        case 86: _t->coronalPlane(); break;
-        case 87: _t->sagitalPlane(); break;
-        case 88: _t->deleteVolumeParts(); break;
-        case 89: _t->importCompletePreset(); break;
-        case 90: _t->importWoodPreset(); break;
-        case 91: _t->importStuccoPreset(); break;
-        case 92: _t->importMetalPreset(); break;
-        case 93: _t->addRule((*reinterpret_cast< const int(*)>(_a[1]))); break;
-        case 94: _t->deleteRule((*reinterpret_cast< const int(*)>(_a[1]))); break;
-        case 95: _t->enableDisableRule((*reinterpret_cast< const int(*)>(_a[1]))); break;
-        case 96: _t->enableRule((*reinterpret_cast< const int(*)>(_a[1]))); break;
-        case 97: _t->disableRule((*reinterpret_cast< const int(*)>(_a[1]))); break;
-        case 98: _t->clearAllRules(); break;
-        case 99: _t->restoreBackgroundColors(); break;
-        case 100: _t->launchWarning((*reinterpret_cast< const std::string(*)>(_a[1]))); break;
-        case 101: _t->launchWarningNoVolume(); break;
-        case 102: _t->launchWarningNoRule(); break;
-        case 103: _t->launchWarningTooManyRules(); break;
-        case 104: _t->changeBackgroundColor((*reinterpret_cast< const int(*)>(_a[1]))); break;
+        case 83: _t->enablePlane(); break;
+        case 84: _t->disablePlane(); break;
+        case 85: _t->enableDisablePlane(); break;
+        case 86: _t->axialPlane(); break;
+        case 87: _t->coronalPlane(); break;
+        case 88: _t->sagitalPlane(); break;
+        case 89: _t->deleteVolumeParts(); break;
+        case 90: _t->importCompletePreset(); break;
+        case 91: _t->importWoodPreset(); break;
+        case 92: _t->importStuccoPreset(); break;
+        case 93: _t->importMetalPreset(); break;
+        case 94: _t->addRule((*reinterpret_cast< const int(*)>(_a[1]))); break;
+        case 95: _t->deleteRule((*reinterpret_cast< const int(*)>(_a[1]))); break;
+        case 96: _t->enableDisableRule((*reinterpret_cast< const int(*)>(_a[1]))); break;
+        case 97: _t->enableRule((*reinterpret_cast< const int(*)>(_a[1]))); break;
+        case 98: _t->disableRule((*reinterpret_cast< const int(*)>(_a[1]))); break;
+        case 99: _t->clearAllRules(); break;
+        case 100: _t->restoreBackgroundColors(); break;
+        case 101: _t->launchWarning((*reinterpret_cast< const std::string(*)>(_a[1]))); break;
+        case 102: _t->launchWarningNoVolume(); break;
+        case 103: _t->launchWarningNoRule(); break;
+        case 104: _t->launchWarningTooManyRules(); break;
+        case 105: _t->changeBackgroundColor((*reinterpret_cast< const int(*)>(_a[1]))); break;
+        case 106: _t->segmentateOnOff(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 73:
+        case 74:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -619,13 +629,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 105)
+        if (_id < 107)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 105;
+        _id -= 107;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 105)
+        if (_id < 107)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 105;
+        _id -= 107;
     }
     return _id;
 }

@@ -110,6 +110,16 @@
       </layout>
      </widget>
     </item>
+    <item row="1" column="0">
+     <widget class="QVTKWidget" name="volumeWidget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>400</width>
+        <height>400</height>
+       </size>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="2" rowspan="3">
      <widget class="QGroupBox" name="rulesBox">
       <property name="minimumSize">
@@ -313,29 +323,6 @@
       </layout>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QVTKWidget" name="volumeWidget">
-      <property name="minimumSize">
-       <size>
-        <width>400</width>
-        <height>400</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="labelFolder">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>13</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Carpeta</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1" rowspan="3">
      <widget class="QTabWidget" name="mainTab">
       <property name="currentIndex">
@@ -345,8 +332,8 @@
        <attribute name="title">
         <string>Cortes</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0" colspan="3">
          <widget class="QGroupBox" name="planeOptions">
           <property name="minimumSize">
            <size>
@@ -517,8 +504,8 @@
           </layout>
          </widget>
         </item>
-        <item>
-         <widget class="QVTKWidget" name="slicesWidget">
+        <item row="1" column="0" colspan="3">
+         <widget class="QVTKWidget" name="slicesWidget" native="true">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -527,7 +514,7 @@
           </property>
          </widget>
         </item>
-        <item>
+        <item row="2" column="0">
          <widget class="QLabel" name="coordsAndValueLabel">
           <property name="maximumSize">
            <size>
@@ -537,6 +524,39 @@
           </property>
           <property name="text">
            <string>HU: Fuera de rango</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <spacer name="horizontalSpacer_20">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>329</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="2">
+         <widget class="QPushButton" name="segmentate">
+          <property name="toolTip">
+           <string>Segmentar</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="assets/resources.qrc">
+            <normaloff>:/icons/scissors.png</normaloff>:/icons/scissors.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>21</width>
+            <height>21</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -750,7 +770,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>452</width>
+             <width>131</width>
              <height>693</height>
             </rect>
            </property>
@@ -791,7 +811,7 @@
                 </widget>
                </item>
                <item row="0" column="0" colspan="2">
-                <widget class="QVTKWidget" name="colorTFWidget">
+                <widget class="QVTKWidget" name="colorTFWidget" native="true">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -813,7 +833,7 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_87">
                <item row="0" column="0" colspan="2">
-                <widget class="QVTKWidget" name="scalarTFWidget">
+                <widget class="QVTKWidget" name="scalarTFWidget" native="true">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -861,7 +881,7 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_88">
                <item row="0" column="0" colspan="2">
-                <widget class="QVTKWidget" name="gradientTFWidget">
+                <widget class="QVTKWidget" name="gradientTFWidget" native="true">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -1084,7 +1104,7 @@
          </widget>
         </item>
         <item row="2" column="2" colspan="3">
-         <widget class="QVTKWidget" name="meshWidget">
+         <widget class="QVTKWidget" name="meshWidget" native="true">
           <property name="minimumSize">
            <size>
             <width>350</width>
@@ -1437,6 +1457,19 @@
         </item>
        </layout>
       </widget>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="labelFolder">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>13</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Carpeta</string>
+      </property>
      </widget>
     </item>
    </layout>

@@ -68,6 +68,7 @@ public:
     QSpacerItem *horizontalSpacer_10;
     QPushButton *deleteVolumeParts;
     QPushButton *exportVolumeImage;
+    QVTKWidget *volumeWidget;
     QGroupBox *rulesBox;
     QGridLayout *gridLayout_3;
     QPushButton *enableDisableSliceRule;
@@ -83,11 +84,9 @@ public:
     QSpacerItem *horizontalSpacer_12;
     QLabel *volumeRuleLabel;
     QLabel *sliceRuleLabel;
-    QVTKWidget *volumeWidget;
-    QLabel *labelFolder;
     QTabWidget *mainTab;
     QWidget *tabSlices;
-    QVBoxLayout *verticalLayout_4;
+    QGridLayout *gridLayout_5;
     QGroupBox *planeOptions;
     QHBoxLayout *horizontalLayout;
     QPushButton *enableDisablePlane;
@@ -99,6 +98,8 @@ public:
     QPushButton *exportSliceImage;
     QVTKWidget *slicesWidget;
     QLabel *coordsAndValueLabel;
+    QSpacerItem *horizontalSpacer_20;
+    QPushButton *segmentate;
     QWidget *tabTransferFunction;
     QGridLayout *gridLayout_84;
     QPushButton *exportPreset;
@@ -179,6 +180,7 @@ public:
     QSpacerItem *horizontalSpacer_19;
     QSpacerItem *horizontalSpacer_4;
     QSpacerItem *horizontalSpacer_3;
+    QLabel *labelFolder;
     QMenuBar *menuBar;
     QMenu *menuArchivo;
     QMenu *menuEditar;
@@ -289,6 +291,12 @@ public:
 
         gridLayout->addWidget(groupBox, 0, 0, 1, 1);
 
+        volumeWidget = new QVTKWidget(centralWidget);
+        volumeWidget->setObjectName(QStringLiteral("volumeWidget"));
+        volumeWidget->setMinimumSize(QSize(400, 400));
+
+        gridLayout->addWidget(volumeWidget, 1, 0, 1, 1);
+
         rulesBox = new QGroupBox(centralWidget);
         rulesBox->setObjectName(QStringLiteral("rulesBox"));
         rulesBox->setMinimumSize(QSize(160, 0));
@@ -380,26 +388,14 @@ public:
 
         gridLayout->addWidget(rulesBox, 0, 2, 3, 1);
 
-        volumeWidget = new QVTKWidget(centralWidget);
-        volumeWidget->setObjectName(QStringLiteral("volumeWidget"));
-        volumeWidget->setMinimumSize(QSize(400, 400));
-
-        gridLayout->addWidget(volumeWidget, 1, 0, 1, 1);
-
-        labelFolder = new QLabel(centralWidget);
-        labelFolder->setObjectName(QStringLiteral("labelFolder"));
-        labelFolder->setMaximumSize(QSize(16777215, 13));
-
-        gridLayout->addWidget(labelFolder, 2, 0, 1, 1);
-
         mainTab = new QTabWidget(centralWidget);
         mainTab->setObjectName(QStringLiteral("mainTab"));
         tabSlices = new QWidget();
         tabSlices->setObjectName(QStringLiteral("tabSlices"));
-        verticalLayout_4 = new QVBoxLayout(tabSlices);
-        verticalLayout_4->setSpacing(6);
-        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        gridLayout_5 = new QGridLayout(tabSlices);
+        gridLayout_5->setSpacing(6);
+        gridLayout_5->setContentsMargins(11, 11, 11, 11);
+        gridLayout_5->setObjectName(QStringLiteral("gridLayout_5"));
         planeOptions = new QGroupBox(tabSlices);
         planeOptions->setObjectName(QStringLiteral("planeOptions"));
         planeOptions->setMinimumSize(QSize(0, 0));
@@ -466,19 +462,32 @@ public:
         horizontalLayout->addWidget(exportSliceImage);
 
 
-        verticalLayout_4->addWidget(planeOptions);
+        gridLayout_5->addWidget(planeOptions, 0, 0, 1, 3);
 
         slicesWidget = new QVTKWidget(tabSlices);
         slicesWidget->setObjectName(QStringLiteral("slicesWidget"));
         slicesWidget->setMinimumSize(QSize(0, 0));
 
-        verticalLayout_4->addWidget(slicesWidget);
+        gridLayout_5->addWidget(slicesWidget, 1, 0, 1, 3);
 
         coordsAndValueLabel = new QLabel(tabSlices);
         coordsAndValueLabel->setObjectName(QStringLiteral("coordsAndValueLabel"));
         coordsAndValueLabel->setMaximumSize(QSize(16777215, 20));
 
-        verticalLayout_4->addWidget(coordsAndValueLabel);
+        gridLayout_5->addWidget(coordsAndValueLabel, 2, 0, 1, 1);
+
+        horizontalSpacer_20 = new QSpacerItem(329, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_5->addItem(horizontalSpacer_20, 2, 1, 1, 1);
+
+        segmentate = new QPushButton(tabSlices);
+        segmentate->setObjectName(QStringLiteral("segmentate"));
+        QIcon icon12;
+        icon12.addFile(QStringLiteral(":/icons/scissors.png"), QSize(), QIcon::Normal, QIcon::Off);
+        segmentate->setIcon(icon12);
+        segmentate->setIconSize(QSize(21, 21));
+
+        gridLayout_5->addWidget(segmentate, 2, 2, 1, 1);
 
         mainTab->addTab(tabSlices, QString());
         tabTransferFunction = new QWidget();
@@ -507,36 +516,36 @@ public:
 
         completePreset = new QPushButton(defaultPresetsBox);
         completePreset->setObjectName(QStringLiteral("completePreset"));
-        QIcon icon12;
-        icon12.addFile(QStringLiteral(":/icons/complete.png"), QSize(), QIcon::Normal, QIcon::Off);
-        completePreset->setIcon(icon12);
+        QIcon icon13;
+        icon13.addFile(QStringLiteral(":/icons/complete.png"), QSize(), QIcon::Normal, QIcon::Off);
+        completePreset->setIcon(icon13);
         completePreset->setIconSize(QSize(50, 50));
 
         horizontalLayout_2->addWidget(completePreset);
 
         woodPreset = new QPushButton(defaultPresetsBox);
         woodPreset->setObjectName(QStringLiteral("woodPreset"));
-        QIcon icon13;
-        icon13.addFile(QStringLiteral(":/icons/wood.png"), QSize(), QIcon::Normal, QIcon::Off);
-        woodPreset->setIcon(icon13);
+        QIcon icon14;
+        icon14.addFile(QStringLiteral(":/icons/wood.png"), QSize(), QIcon::Normal, QIcon::Off);
+        woodPreset->setIcon(icon14);
         woodPreset->setIconSize(QSize(50, 50));
 
         horizontalLayout_2->addWidget(woodPreset);
 
         stuccoPreset = new QPushButton(defaultPresetsBox);
         stuccoPreset->setObjectName(QStringLiteral("stuccoPreset"));
-        QIcon icon14;
-        icon14.addFile(QStringLiteral(":/icons/stucco.png"), QSize(), QIcon::Normal, QIcon::Off);
-        stuccoPreset->setIcon(icon14);
+        QIcon icon15;
+        icon15.addFile(QStringLiteral(":/icons/stucco.png"), QSize(), QIcon::Normal, QIcon::Off);
+        stuccoPreset->setIcon(icon15);
         stuccoPreset->setIconSize(QSize(50, 50));
 
         horizontalLayout_2->addWidget(stuccoPreset);
 
         metalPreset = new QPushButton(defaultPresetsBox);
         metalPreset->setObjectName(QStringLiteral("metalPreset"));
-        QIcon icon15;
-        icon15.addFile(QStringLiteral(":/icons/metal.png"), QSize(), QIcon::Normal, QIcon::Off);
-        metalPreset->setIcon(icon15);
+        QIcon icon16;
+        icon16.addFile(QStringLiteral(":/icons/metal.png"), QSize(), QIcon::Normal, QIcon::Off);
+        metalPreset->setIcon(icon16);
         metalPreset->setIconSize(QSize(50, 50));
 
         horizontalLayout_2->addWidget(metalPreset);
@@ -585,7 +594,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 452, 693));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 131, 693));
         verticalLayout_5 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setContentsMargins(11, 11, 11, 11);
@@ -740,21 +749,21 @@ public:
 
         extractMeshWood = new QPushButton(extractMeshPresets);
         extractMeshWood->setObjectName(QStringLiteral("extractMeshWood"));
-        extractMeshWood->setIcon(icon13);
+        extractMeshWood->setIcon(icon14);
         extractMeshWood->setIconSize(QSize(50, 50));
 
         horizontalLayout_3->addWidget(extractMeshWood);
 
         extractMeshStucco = new QPushButton(extractMeshPresets);
         extractMeshStucco->setObjectName(QStringLiteral("extractMeshStucco"));
-        extractMeshStucco->setIcon(icon14);
+        extractMeshStucco->setIcon(icon15);
         extractMeshStucco->setIconSize(QSize(50, 50));
 
         horizontalLayout_3->addWidget(extractMeshStucco);
 
         extractMeshMetal = new QPushButton(extractMeshPresets);
         extractMeshMetal->setObjectName(QStringLiteral("extractMeshMetal"));
-        extractMeshMetal->setIcon(icon15);
+        extractMeshMetal->setIcon(icon16);
         extractMeshMetal->setIconSize(QSize(50, 50));
 
         horizontalLayout_3->addWidget(extractMeshMetal);
@@ -951,6 +960,12 @@ public:
 
         gridLayout->addWidget(mainTab, 0, 1, 3, 1);
 
+        labelFolder = new QLabel(centralWidget);
+        labelFolder->setObjectName(QStringLiteral("labelFolder"));
+        labelFolder->setMaximumSize(QSize(16777215, 13));
+
+        gridLayout->addWidget(labelFolder, 2, 0, 1, 1);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -1089,7 +1104,6 @@ public:
         enableDisableVolumeRule->setText(QString());
         volumeRuleLabel->setText(QApplication::translate("MainWindow", "Volumen", Q_NULLPTR));
         sliceRuleLabel->setText(QApplication::translate("MainWindow", "Cortes", Q_NULLPTR));
-        labelFolder->setText(QApplication::translate("MainWindow", "Carpeta", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
         enableDisablePlane->setToolTip(QApplication::translate("MainWindow", "Mosrtar/Esconder plano", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
@@ -1111,6 +1125,10 @@ public:
 #endif // QT_NO_TOOLTIP
         exportSliceImage->setText(QString());
         coordsAndValueLabel->setText(QApplication::translate("MainWindow", "HU: Fuera de rango", Q_NULLPTR));
+#ifndef QT_NO_TOOLTIP
+        segmentate->setToolTip(QApplication::translate("MainWindow", "Segmentar", Q_NULLPTR));
+#endif // QT_NO_TOOLTIP
+        segmentate->setText(QString());
         mainTab->setTabText(mainTab->indexOf(tabSlices), QApplication::translate("MainWindow", "Cortes", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
         exportPreset->setToolTip(QApplication::translate("MainWindow", "Exportar preset", Q_NULLPTR));
@@ -1197,6 +1215,7 @@ public:
         volumeBackground->setText(QString());
         volumeDeletingBackgroundLabel->setText(QApplication::translate("MainWindow", "Volumen (borrado)", Q_NULLPTR));
         mainTab->setTabText(mainTab->indexOf(tabProperties), QApplication::translate("MainWindow", "Propiedades", Q_NULLPTR));
+        labelFolder->setText(QApplication::translate("MainWindow", "Carpeta", Q_NULLPTR));
         menuArchivo->setTitle(QApplication::translate("MainWindow", "Archivo", Q_NULLPTR));
         menuEditar->setTitle(QApplication::translate("MainWindow", "Editar", Q_NULLPTR));
         menuHerramientas->setTitle(QApplication::translate("MainWindow", "Herramientas", Q_NULLPTR));

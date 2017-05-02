@@ -36,6 +36,7 @@
 #include "plano.h"
 #include "interactorStyleImage.h"
 #include "interactorStyleDeleter.h"
+#include "interactorStyleSegmentation.h"
 #include "colorTFChart.h"
 #include "opacityTFChart.h"
 
@@ -119,6 +120,7 @@ private slots:
 	void on_volumeDeletingBackground_pressed();
 	void on_meshBackground_pressed();
 	void on_restoreBackgrounds_pressed();
+	void on_segmentate_pressed();
 
 	void on_colorTFMaxSlider_valueChanged();
 	void on_colorTFMinSlider_valueChanged();
@@ -395,6 +397,11 @@ private slots:
 	 */
 	void changeBackgroundColor(const int widget);
 
+	/**
+	 * Activa o desactiva la segmentación
+	 */
+	void segmentateOnOff();
+
 private:
 	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */
 
@@ -421,8 +428,10 @@ private:
 	vtkSmartPointer<vtkInteractorStyleTrackballCamera> volumeStyle; /**< Estilo para la ventana donde se visualizará el volumen */
 	vtkSmartPointer<InteractorStyleImage> sliceStyle; /**< Estilo para la ventana donde se visualizarán los cortes de la figura con el plano */
 	vtkSmartPointer<InteractorStyleDeleter> deleterStyle; /**< Estilo para poder borrar en la ventana donde se visualizará el volumen */
+	vtkSmartPointer<InteractorStyleSegmentation> segmentationStyle; /**< Estilo para poder segmentar en la ventana donde se visualizará el corte del volumen */
 
 	bool deleting; /**< Variable para ver si está en modo borrado o no */
+	bool segmentating; /**< Variable para ver si está en modo segmentado o no */
 	bool showPlane; /**< Mostrar el plano */
 	int volumeRuleCounter; /**< Contador de índice de regla */
 	int sliceRuleCounter; /**< Contador de índice de regla */
