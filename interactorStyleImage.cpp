@@ -12,6 +12,7 @@
 
 #include <vector>
 #include <stack>
+#include <queue>
 #include <array>
 #include <stdio.h>
 
@@ -229,45 +230,40 @@ bool isAdjacent(Figura *figura, double x, double y, double z, double MIN, double
 }
 
 std::pair<int, int> searchInitialVoxel(Figura *figura, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, double MIN, double MAX, std::array<double, 2> eq) {
-	if (ijk[0] - 1 >= MIN_X
-		&& isAdjacent(figura, ijk[0] - 1, ijk[1], ijk[2], MIN, MAX) 
-		&& !isInLine(ijk[0] - 1, ijk[1], -eq[0], -eq[1], MAX_X)) {
-		return std::make_pair(ijk[0] - 1, ijk[1]);	// (x-1, y) es el voxel inicial
-	} else if (ijk[0] + 1 < MAX_X
-		&& isAdjacent(figura, ijk[0] + 1, ijk[1], ijk[2], MIN, MAX) 
-		&& !isInLine(ijk[0] + 1, ijk[1], -eq[0], -eq[1], MAX_X)) {
-		return std::make_pair(ijk[0] + 1, ijk[1]);	// (x+1, y) es el voxel inicial
-	} else if (ijk[1] - 1 >= MIN_Y
-		&& isAdjacent(figura, ijk[0], ijk[1] - 1, ijk[2], MIN, MAX) 
-		&& !isInLine(ijk[0], ijk[1] - 1, -eq[0], -eq[1], MAX_X)) {
-		return std::make_pair(ijk[0], ijk[1] - 1);	// (x, y-1) es el voxel inicial
-	} else if (ijk[1] + 1 < MAX_Y
-		&& isAdjacent(figura, ijk[0], ijk[1] + 1, ijk[2], MIN, MAX) 
-		&& !isInLine(ijk[0], ijk[1] + 1, -eq[0], -eq[1], MAX_X)) {
-		return std::make_pair(ijk[0], ijk[1] + 1);	// (x, y+1) es el voxel inicial
-	} else if (ijk[0] - 1 >= MIN_X && ijk[1] - 1 >= MIN_Y
-		&& isAdjacent(figura, ijk[0] - 1, ijk[1] - 1, ijk[2], MIN, MAX) 
-		&& !isInLine(ijk[0] - 1, ijk[1] - 1, -eq[0], -eq[1], MAX_X)) {
-		return std::make_pair(ijk[0] - 1, ijk[1] - 1);	// (x-1, y-1) es el voxel inicial
-	} else if (ijk[0] - 1 >= MIN_X && ijk[1] + 1 < MAX_Y
-		&& isAdjacent(figura, ijk[0] - 1, ijk[1] + 1, ijk[2], MIN, MAX) 
-		&& !isInLine(ijk[0] - 1, ijk[1] + 1, -eq[0], -eq[1], MAX_X)) {
-		return std::make_pair(ijk[0] - 1, ijk[1] + 1);	// (x-1, y+1) es el voxel inicial
-	} else if (ijk[0] + 1 < MAX_X && ijk[1] - 1 >= MIN_Y
-		&& isAdjacent(figura, ijk[0] + 1, ijk[1] - 1, ijk[2], MIN, MAX) 
-		&& !isInLine(ijk[0] + 1, ijk[1] - 1, -eq[0], -eq[1], MAX_X)) {
-		return std::make_pair(ijk[0] + 1, ijk[1] - 1);	// (x+1, y-1) es el voxel inicial
-	} else if (ijk[0] + 1 < MAX_X && ijk[1] + 1 < MAX_Y
-		&& isAdjacent(figura, ijk[0] + 1, ijk[1] + 1, ijk[2], MIN, MAX) 
-		&& !isInLine(ijk[0] + 1, ijk[1] + 1, -eq[0], -eq[1], MAX_X)) {
-		return std::make_pair(ijk[0] + 1, ijk[1] + 1);	// (x+1, y+1) es el voxel inicial
-	} else {
-		return std::make_pair(ijk[0], ijk[1]);	// (x, y) es el voxel inicial
+	std::pair<int, int> ij;
+	std::queue<std::pair<int, int> > queue;
+	
+	ij.first = ijk[0]; ij.second = ijk[1];
+
+	queue.push(ij);
+	while (!queue.empty()) {
+		ij = queue.front();
+		queue.pop();
+		if (ij.first < MAX_X && ij.first >= MIN_X && ij.second < MAX_Y && ij.second >= MIN_Y
+			&& !isInLine(ij.first, ij.second, -eq[0], -eq[1], MAX_X)) {
+			if (isAdjacent(figura, ij.first, ij.second, ijk[2], MIN_WOOD, MAX_WOOD)) {
+				return ij;
+			} else {
+				queue.push(std::make_pair(ij.first - 1, ij.second - 1));
+				queue.push(std::make_pair(ij.first - 1, ij.second));
+				queue.push(std::make_pair(ij.first - 1, ij.second + 1));
+				queue.push(std::make_pair(ij.first, ij.second - 1));
+				queue.push(std::make_pair(ij.first, ij.second + 1));
+				queue.push(std::make_pair(ij.first + 1, ij.second - 1));
+				queue.push(std::make_pair(ij.first + 1, ij.second));
+				queue.push(std::make_pair(ij.first + 1, ij.second + 1));
+			}
+		}
 	}
+	ij.first = ijk[0]; ij.second = ijk[1];
+	return ij;
 }
 
-void regionGrowingWithLineBoundImage(Figura *figura, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, std::array<double, 2> eq) {
+std::pair<int, int> regionGrowingWithLineBoundImage(Figura *figura, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, std::array<double, 2> eq) {
 	std::pair<int, int> ij;
+	std::pair<int, int> centroid;
+	std::pair<int, int> min = std::make_pair(MAX_X, MAX_Y);
+	std::pair<int, int> max = std::make_pair(MIN_X, MIN_Y);
 	std::stack<std::pair<int, int> > stack;
 
 	ij.first = ijk[0]; ij.second = ijk[1]; // voxel inicial
@@ -289,9 +285,26 @@ void regionGrowingWithLineBoundImage(Figura *figura, const int ijk[3], const int
 				stack.push(std::make_pair(ij.first + 1, ij.second - 1));
 				stack.push(std::make_pair(ij.first + 1, ij.second));
 				stack.push(std::make_pair(ij.first + 1, ij.second + 1));
+				// actualiza "centroide"
+				if (ij.first < min.first) {
+					min.first = ij.first;
+				}
+				if (ij.second < min.second) {
+					min.second = ij.second;
+				}
+				if (ij.first > max.first) {
+					max.first = ij.first;
+				}
+				if (ij.second > max.second) {
+					max.second = ij.second;
+				}
 			}
 		}
 	}
+	centroid.first = (min.first + max.first) / 2;
+	centroid.second = (min.second + max.second) / 2;
+
+	return centroid;
 }
 
 std::pair<std::pair<cv::Point, cv::Point>, double> findNearestLine(std::vector<std::pair<cv::Point, cv::Point> > lines, std::pair<cv::Point, cv::Point> goal, const int originalZ, const int z) {
@@ -318,13 +331,14 @@ void regionGrowingWithLineBoundVolume(Figura *figura, const int ijk[3], const in
 	int lastZ = ijk[2];
 	int U[3] = { lastLine.first.x, lastLine.first.y, lastZ };
 	int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };
-	regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquation(U, V));
+	std::pair<int, int> lastCentroid = regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquation(U, V));
+	std::pair<int, int> lastCentroidAux = lastCentroid;
 
 	int numberOfNoLines = 0;
 
 	// Borrar hacia arriba
-	xyz[2] = ijk[2] + 1; // primera imagen
-	while (xyz[2] < MAX_Z) { // hasta llegar a la última imagen
+	xyz[2] = ijk[2] + 1;
+	while (xyz[2] < MAX_Z) {
 		lines[xyz[2]] = getLinesFromImage(figura, xyz[2]);
 		std::pair<std::pair<cv::Point, cv::Point>, double> nearestLine = findNearestLine(lines[xyz[2]], lastLine, lastZ, xyz[2]);
 		if (nearestLine.second < MIN_ANGLE) {
@@ -333,40 +347,50 @@ void regionGrowingWithLineBoundVolume(Figura *figura, const int ijk[3], const in
 				int B[3] = { lastLine.second.x, lastLine.second.y, lastZ };
 				int C[3] = { nearestLine.first.first.x, nearestLine.first.first.y, xyz[2] };
 				std::array<double, 4> P = getPlaneEquation(A, B, C);
-				for (int i = xyz[2] - numberOfNoLines; i < xyz[2]; i++) {
-					if (!isAdjacent(figura, xyz[0], xyz[1], i, MIN_WOOD, MAX_WOOD)) {
-						std::pair<int, int> init = searchInitialVoxel(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_WOOD, MAX_WOOD, getLineEquationFromPlane(P, i));
-						xyz[0] = init.first;
-						xyz[1] = init.second;
+				int xyzAux[3] = { xyz[0], xyz[1], xyz[2] - numberOfNoLines };
+				for (; xyzAux[2] < xyz[2]; xyzAux[2]++) {
+					if (!isAdjacent(figura, xyzAux[0], xyzAux[1], xyzAux[2], MIN_WOOD, MAX_WOOD)) {
+						xyzAux[0] = lastCentroid.first;
+						xyzAux[1] = lastCentroid.second;
 					}
-					int xyzAux[3] = { xyz[0], xyz[1], i };
-					regionGrowingWithLineBoundImage(figura, xyzAux, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquationFromPlane(P, i));
-				}
-			}
+					if (!isAdjacent(figura, xyzAux[0], xyzAux[1], xyzAux[2], MIN_WOOD, MAX_WOOD)) {
+						std::pair<int, int> newCentroid = searchInitialVoxel(figura, xyzAux, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_WOOD, MAX_WOOD, getLineEquationFromPlane(P, xyzAux[2]));
+						xyzAux[0] = newCentroid.first;
+						xyzAux[1] = newCentroid.second;
+					}
+					lastCentroid = regionGrowingWithLineBoundImage(figura, xyzAux, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquationFromPlane(P, xyzAux[2]));
+				} // for
+			} // if (numberOfNoLines != 0)
 			lastLine = nearestLine.first;
 			lastZ = xyz[2];
 			int U[3] = { lastLine.first.x, lastLine.first.y, lastZ };
 			int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };
 			if (!isAdjacent(figura, xyz[0], xyz[1], xyz[2], MIN_WOOD, MAX_WOOD)) {
-				std::pair<int, int> init = searchInitialVoxel(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_WOOD, MAX_WOOD, getLineEquation(U, V));
-				xyz[0] = init.first;
-				xyz[1] = init.second;
+				xyz[0] = lastCentroid.first;
+				xyz[1] = lastCentroid.second;
 			}
-			regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquation(U, V));
+			if (!isAdjacent(figura, xyz[0], xyz[1], xyz[2], MIN_WOOD, MAX_WOOD)) {
+				std::pair<int, int> newCentroid = searchInitialVoxel(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_WOOD, MAX_WOOD, getLineEquation(U, V));
+				xyz[0] = newCentroid.first;
+				xyz[1] = newCentroid.second;
+			}
+			lastCentroid = regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquation(U, V));
 			numberOfNoLines = 0;
-		} else {
+		} // if (nearestLine.second < MIN_ANGLE)
+		else { 
 			numberOfNoLines++;
 		}
 		xyz[2] = xyz[2] + 1; // pasa a la siguiente
-	}
+	} // while
 
 	numberOfNoLines = 0;
 	lastLine = firstLine;
+	lastCentroid = lastCentroidAux;
 	lastZ = ijk[2];
-
-	// Borrar hacia abajo
 	xyz[0] = ijk[0];
 	xyz[1] = ijk[1];
+
+	// Borrar hacia abajo
 	xyz[2] = ijk[2] - 1; // primera imagen
 	while (xyz[2] >= MIN_Z) { // hasta llegar a la última imagen
 		lines[xyz[2]] = getLinesFromImage(figura, xyz[2]);
@@ -377,32 +401,41 @@ void regionGrowingWithLineBoundVolume(Figura *figura, const int ijk[3], const in
 				int B[3] = { lastLine.second.x, lastLine.second.y, lastZ };
 				int C[3] = { nearestLine.first.first.x, nearestLine.first.first.y, xyz[2] };
 				std::array<double, 4> P = getPlaneEquation(A, B, C);
-				for (int i = xyz[2] + numberOfNoLines; i > xyz[2]; i--) {
-					if (!isAdjacent(figura, xyz[0], xyz[1], i, MIN_WOOD, MAX_WOOD)) {
-						std::pair<int, int> init = searchInitialVoxel(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_WOOD, MAX_WOOD, getLineEquationFromPlane(P, i));
-						xyz[0] = init.first;
-						xyz[1] = init.second;
+				int xyzAux[3] = { xyz[0], xyz[1], xyz[2] + numberOfNoLines };
+				for (; xyzAux[2] > xyz[2]; xyzAux[2]--) {
+					if (!isAdjacent(figura, xyzAux[0], xyzAux[1], xyzAux[2], MIN_WOOD, MAX_WOOD)) {
+						xyzAux[0] = lastCentroid.first;
+						xyzAux[1] = lastCentroid.second;
 					}
-					int xyzAux[3] = { xyz[0], xyz[1], i };
-					regionGrowingWithLineBoundImage(figura, xyzAux, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquationFromPlane(P, i));
-				}
-			}
+					if (!isAdjacent(figura, xyzAux[0], xyzAux[1], xyzAux[2], MIN_WOOD, MAX_WOOD)) {
+						std::pair<int, int> newCentroid = searchInitialVoxel(figura, xyzAux, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_WOOD, MAX_WOOD, getLineEquationFromPlane(P, xyzAux[2]));
+						xyzAux[0] = newCentroid.first;
+						xyzAux[1] = newCentroid.second;
+					}
+					lastCentroid = regionGrowingWithLineBoundImage(figura, xyzAux, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquationFromPlane(P, xyzAux[2]));
+				} // for
+			} // if (numberOfNoLines != 0)
 			lastLine = nearestLine.first;
 			lastZ = xyz[2];
 			int U[3] = { lastLine.first.x, lastLine.first.y, lastZ };
 			int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };			
 			if (!isAdjacent(figura, xyz[0], xyz[1], xyz[2], MIN_WOOD, MAX_WOOD)) {
-				std::pair<int, int> init = searchInitialVoxel(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_WOOD, MAX_WOOD, getLineEquation(U, V));
-				xyz[0] = init.first;
-				xyz[1] = init.second;
+				xyz[0] = lastCentroid.first;
+				xyz[1] = lastCentroid.second;
 			}
-			regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquation(U, V));
+			if (!isAdjacent(figura, xyz[0], xyz[1], xyz[2], MIN_WOOD, MAX_WOOD)) {
+				std::pair<int, int> newCentroid = searchInitialVoxel(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_WOOD, MAX_WOOD, getLineEquation(U, V));
+				xyz[0] = newCentroid.first;
+				xyz[1] = newCentroid.second;
+			}
+			lastCentroid = regionGrowingWithLineBoundImage(figura, xyz, MIN_X, MAX_X, MIN_Y, MAX_Y, getLineEquation(U, V));
 			numberOfNoLines = 0;
-		} else {
+		} // if (nearestLine.second < MIN_ANGLE)
+		else {
 			numberOfNoLines++;
 		}
 		xyz[2] = xyz[2] - 1; // pasa a la siguiente
-	}
+	} // while
 }
 
 void InteractorStyleImage::OnLeftButtonDown() {
@@ -451,8 +484,9 @@ void InteractorStyleImage::OnLeftButtonDown() {
 				// lanza barra de progreso
 				QPointer<QProgressBar> bar = new QProgressBar(0);
 				QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+				std::string lala = "Segmentando " + std::to_string(ijk[2]);
 				progressDialog->setWindowTitle(QString("Segmentando..."));
-				progressDialog->setLabelText(QString::fromLatin1("Segmentando la pieza de madera seleccionada"));
+				progressDialog->setLabelText(QString::fromLatin1(lala.c_str()));
 				progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 				progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 				progressDialog->setCancelButton(0);
