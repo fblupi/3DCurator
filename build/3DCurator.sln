@@ -17,32 +17,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZERO_CHECK", "ZERO_CHECK.vc
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
 		Release|x64 = Release|x64
-		MinSizeRel|x64 = MinSizeRel|x64
-		RelWithDebInfo|x64 = RelWithDebInfo|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{077F49EC-AB79-3B6D-A3A2-3625F58D1FCF}.Debug|x64.ActiveCfg = Debug|x64
 		{077F49EC-AB79-3B6D-A3A2-3625F58D1FCF}.Release|x64.ActiveCfg = Release|x64
-		{077F49EC-AB79-3B6D-A3A2-3625F58D1FCF}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
-		{077F49EC-AB79-3B6D-A3A2-3625F58D1FCF}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
-		{B837D349-0E76-3B4C-9165-4F5A8D8964AB}.Debug|x64.ActiveCfg = Debug|x64
-		{B837D349-0E76-3B4C-9165-4F5A8D8964AB}.Debug|x64.Build.0 = Debug|x64
 		{B837D349-0E76-3B4C-9165-4F5A8D8964AB}.Release|x64.ActiveCfg = Release|x64
 		{B837D349-0E76-3B4C-9165-4F5A8D8964AB}.Release|x64.Build.0 = Release|x64
-		{B837D349-0E76-3B4C-9165-4F5A8D8964AB}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
-		{B837D349-0E76-3B4C-9165-4F5A8D8964AB}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
-		{B837D349-0E76-3B4C-9165-4F5A8D8964AB}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
-		{B837D349-0E76-3B4C-9165-4F5A8D8964AB}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
-		{4940D08E-D350-3703-8096-67857FE20918}.Debug|x64.ActiveCfg = Debug|x64
-		{4940D08E-D350-3703-8096-67857FE20918}.Debug|x64.Build.0 = Debug|x64
 		{4940D08E-D350-3703-8096-67857FE20918}.Release|x64.ActiveCfg = Release|x64
 		{4940D08E-D350-3703-8096-67857FE20918}.Release|x64.Build.0 = Release|x64
-		{4940D08E-D350-3703-8096-67857FE20918}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
-		{4940D08E-D350-3703-8096-67857FE20918}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
-		{4940D08E-D350-3703-8096-67857FE20918}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
-		{4940D08E-D350-3703-8096-67857FE20918}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

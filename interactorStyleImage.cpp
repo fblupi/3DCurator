@@ -2,10 +2,6 @@
 
 vtkStandardNewMacro(InteractorStyleImage);
 
-void InteractorStyleImage::OnLeftButtonDown() {
-	// idle
-}
-
 void InteractorStyleImage::OnMouseMove() {
 	if (plano != NULL && label != NULL && this->GetDefaultRenderer() != NULL) { // se han establecido los elementos necesarios
 		vtkSmartPointer<vtkCellPicker> picker = vtkSmartPointer<vtkCellPicker>::New();
@@ -18,12 +14,17 @@ void InteractorStyleImage::OnMouseMove() {
 
 		if (picker->GetPointId() != -1) { // se ha seleccionado un voxel
 			float value = plano->getPlane()->GetResliceOutput()->GetScalarComponentAsFloat(ijk[0], ijk[1], ijk[2], 0); // valor escalar del voxel
-			label->setText(QString::fromStdString("HU: " + std::to_string((int) value))); // actualiza el valor de la etiqueta con el valor del voxel
-		} else {
+			label->setText(QString::fromStdString("HU: " + std::to_string((int)value))); // actualiza el valor de la etiqueta con el valor del voxel
+		}
+		else {
 			label->setText(QString::fromStdString("HU: Fuera de rango")); // actualiza el valor de la etiqueta
 		}
 	}
 	vtkInteractorStyleImage::OnMouseMove(); // Forward events
+}
+
+void InteractorStyleImage::OnLeftButtonDown() {
+	// idle
 }
 
 void InteractorStyleImage::SetPlano(Plano* plano) {

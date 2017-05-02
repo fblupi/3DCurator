@@ -22,6 +22,9 @@
     <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\interactorStyleImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\lineSelectionDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -49,8 +52,14 @@
     <ClCompile Include="C:\Users\fboli\Documents\GitHub\3DCurator\build\3DCurator_automoc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\interactorStyleSegmentation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\build\ui_lineselectiondialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\build\ui_mainwindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -75,6 +84,9 @@
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\interactorStyleImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\lineSelectionDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\mainwindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -96,9 +108,13 @@
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\interactorStyleSegmentation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\fboli\Documents\GitHub\3DCurator\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\fboli\Documents\GitHub\3DCurator\lineselectiondialog.ui" />
     <CustomBuild Include="C:\Users\fboli\Documents\GitHub\3DCurator\mainwindow.ui" />
     <CustomBuild Include="C:\Users\fboli\Documents\GitHub\3DCurator\assets\resources.qrc" />
   </ItemGroup>
@@ -109,8 +125,5 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{0C6458BB-DF68-3DCC-AF83-A07598BE6E98}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="3DCurator.rc" />
   </ItemGroup>
 </Project>

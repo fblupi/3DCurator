@@ -2,6 +2,8 @@
 #define INTERACTORSTYLEIMAGE_H
 
 #include <QLabel>
+#include <QPixmap>
+#include <QBitmap>
 
 #include <vtkObjectFactory.h>
 #include <vtkSmartPointer.h>
@@ -10,6 +12,7 @@
 #include <vtkCellPicker.h>
 
 #include "plano.h"
+#include "figura.h"
 
 /**
  * @class InteractorStyleImage
@@ -35,17 +38,17 @@ public:
 	 * Establece la etiqueta donde se escribirá el valor escalar del voxel seleccionado
 	 * @param	label	QLabel donde se escribirá el valor escalar del voxel seleccionado
 	 */
-	void SetLabel(QLabel* label); /**< Establece la etiqueta */
-
-	/**
-	 * Evento al pulsar el botón izquierdo del ratón
-	 */
-	virtual void OnLeftButtonDown();
+	void SetLabel(QLabel* label);
 	
 	/**
 	 * Evento al mover el ratón
 	 */
 	virtual void OnMouseMove();
+
+	/**
+	 * Evento al pulsar el botón izquierdo del ratón
+	 */
+	virtual void OnLeftButtonDown();
 
 private:
 	Plano* plano; /**< Figura a la que se le borran partes */

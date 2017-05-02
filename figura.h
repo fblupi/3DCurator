@@ -18,6 +18,13 @@
 #include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
 
+#include <itkImage.h>
+#include <itkImageFileReader.h>
+#include <itkImageToVTKImageFilter.h>
+#include <itkVTKImageToImageFilter.h>
+#include <itkCastImageFilter.h>
+#include <itkMedianImageFilter.h>
+
 #include "transferFunction.h"
 #include "measures.h"
 
@@ -134,6 +141,8 @@ public:
 	 * Crea la malla
 	 */
 	void createMesh();
+
+	void filter();
 
 private:
 	vtkSmartPointer<vtkImageData> imageData; /**< Matriz 3D con los valores escalares de la figura */

@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	deleting = false; // no está en modo borrado
 	showPlane = true; // se muestra el plano
+	segmentating = false; // no está en modo segmentación
 
 	// se inicializan los contadores de reglas
 	volumeRuleCounter = 0;
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	volumeStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 	sliceStyle = vtkSmartPointer<InteractorStyleImage>::New();
 	deleterStyle = vtkSmartPointer<InteractorStyleDeleter>::New();
+	segmentationStyle = vtkSmartPointer<InteractorStyleSegmentation>::New();
 	plano = new Plano();
 	figura = new Figura();
 	defaultTF(); // define la función de transferencia, necesaria para definir las gráficas y el visor de cortes
@@ -80,6 +82,10 @@ void MainWindow::connectComponents() {
 	deleterStyle->SetDefaultRenderer(volumeRen); // asigna el renderer al estilo para borrar partes
 	deleterStyle->SetViewer(sliceViewer); // asigna la ventana de cortes
 	deleterStyle->SetDefaultRenderWindow(ui->volumeWidget->GetRenderWindow()); // asigna la ventana de renderizado al estilo para borrar partes
+
+	segmentationStyle->SetFigura(figura); // asigna la figura
+	segmentationStyle->SetPlano(plano); // asigna el plano
+	segmentationStyle->SetDefaultRenderer(sliceViewer->GetRenderer()); // asigna el renderer de los cortes
 }
 
 void MainWindow::drawVolume() {
@@ -706,6 +712,18 @@ void MainWindow::launchWarningTooManyRules() {
 	launchWarning("Se ha alcanzado el máximo número de reglas permitidas");
 }
 
+void MainWindow::segmentateOnOff() {
+	if (segmentating) {
+		ui->slicesWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(sliceStyle); // cambia el interactor
+		ui->segmentate->setIcon(QIcon(":/icons/scissors.png"));
+		segmentating = false;
+	} else {
+		ui->slicesWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(segmentationStyle); // cambia el interactor
+		ui->segmentate->setIcon(QIcon(":/icons/scissors-slash.png"));
+		segmentating = true;
+	}
+}
+
 //---------------------------------------------------------------------------------------------------------------------------------
 // Eventos GUI - MENÚ
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -924,6 +942,10 @@ void MainWindow::on_meshBackground_pressed() {
 
 void MainWindow::on_restoreBackgrounds_pressed() {
 	restoreBackgroundColors();
+}
+
+void MainWindow::on_segmentate_pressed() {
+	segmentateOnOff();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
