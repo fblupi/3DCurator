@@ -55,6 +55,9 @@
     <ClCompile Include="..\interactorStyleSegmentation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\woodSegmentation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\build\ui_lineselectiondialog.h">
@@ -109,6 +112,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\interactorStyleSegmentation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\woodSegmentation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

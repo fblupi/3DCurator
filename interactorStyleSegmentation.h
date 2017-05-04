@@ -2,8 +2,6 @@
 #define INTERACTORSTYLESEGMENTATION_H
 
 #include <vector>
-#include <stack>
-#include <queue>
 #include <array>
 #include <stdio.h>
 
@@ -25,20 +23,13 @@
 #include <vtkResliceCursorPicker.h>
 #include <vtkPointPlacer.h>
 #include <vtkRenderer.h>
-#include <vtkExtractVOI.h>
-#include <vtkPNGWriter.h>
-#include <vtkImageMapToColors.h>
-
-#include "opencv2/imgcodecs.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
 
 #include "plano.h"
 #include "figura.h"
 #include "measures.h"
 #include "utils.h"
 #include "lineSelectionDialog.h"
-
+#include "woodSegmentation.h"
 
 /**
  * @class InteractorStyleSegmentation
