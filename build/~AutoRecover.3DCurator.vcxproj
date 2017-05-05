@@ -169,7 +169,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\geometry.h" />
     <ClInclude Include="..\interactorStyleSegmentation.h" />
     <ClInclude Include="..\regionGrowingDeleter.h" />
-    <ClInclude Include="..\segmentationCommons.h" />
     <ClInclude Include="..\woodSegmentation.h" />
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\build\ui_lineselectiondialog.h" />
     <ClInclude Include="C:\Users\fboli\Documents\GitHub\3DCurator\build\ui_mainwindow.h" />

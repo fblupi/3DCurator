@@ -46,6 +46,12 @@ public:
 	vtkTypeMacro(vtkInteractorStyleImage, InteractorStyleSegmentation);
 
 	/**
+	 * Establece el ImageViewer2 que actualizará al borrar
+	 * @param	viewer		ImageViewer2 que se actualizará al borrar
+	 */
+	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
+
+	/**
 	 * Establece el plano en el que buscará el valor del voxel seleccionado
 	 * @param	plano	Plano en el que buscará el valor del voxel seleccionado
 	 */
@@ -63,6 +69,7 @@ public:
 	virtual void OnLeftButtonDown();
 
 private:
+	vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 que se actualizará cuando se mueva el plano */
 	Plano* plano; /**< Plano de la figura a la que se le borran partes */
 	Figura* figura; /**< Figura a la que se le borran partes */
 };

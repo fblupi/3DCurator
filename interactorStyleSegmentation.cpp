@@ -3,26 +3,41 @@
 vtkStandardNewMacro(InteractorStyleSegmentation);
 
 void InteractorStyleSegmentation::OnLeftButtonDown() {
-	if (plano != NULL && this->GetDefaultRenderer() != NULL) { // se han establecido los elementos necesarios
+	if (viewer != NULL && plano != NULL && this->GetDefaultRenderer() != NULL) {
 		vtkSmartPointer<vtkVolumePicker> picker = vtkSmartPointer<vtkVolumePicker>::New();
-		int* pos = this->GetInteractor()->GetEventPosition(); // posición del ratón en el render window
-		picker->Pick(pos[0], pos[1], pos[2], this->GetDefaultRenderer()); // realiza pick sobre la posición del ratón en el render window
+		int* pos = this->GetInteractor()->GetEventPosition();
+		picker->Pick(pos[0], pos[1], pos[2], this->GetDefaultRenderer());
 
 		int* ijk = picker->GetPointIJK();
 		
-		if (picker->GetPointId() != -1) { // se ha seleccionado un voxel
+		if (picker->GetPointId() != -1) {
 			ijk[2] = plano->getPlane()->GetCenter()[2] / figura->getImageData()->GetSpacing()[2];
+			int * dimensions = figura->getImageData()->GetDimensions();
+			Bounds bounds;
+			bounds.MIN_X = 0;
+			bounds.MAX_X = dimensions[0];
+			bounds.MIN_Y = 0;
+			bounds.MAX_Y = dimensions[1];
+			bounds.MIN_Z = 0;
+			bounds.MAX_Z = dimensions[2];
 
-			std::vector<std::vector<Line> > lines(figura->getImageData()->GetDimensions()[2]);
-			lines[ijk[2]] = getLinesFromImage(figura, ijk[2]);
+			std::vector<std::vector<Line> > lines(bounds.MAX_Z);
 
-			std::string img = generateImage(figura, ijk[2], lines[ijk[2]]);
+			lines[ijk[2]] = getLinesFromImage(figura->getImageData(), figura->getTransferFunction()->getColorFun(), ijk[2], bounds);
 
+			std::string img = generateImage(figura->getImageData(), figura->getTransferFunction()->getColorFun(), ijk[2], bounds, lines[ijk[2]]);
+
+			// -- launch line selection
 			LineSelectionDialog *diag = new LineSelectionDialog();
 			diag->setImage(img);
+			// -- END launch line selection
+
 			remove(img.c_str());
 
+			// -- exec line selection
 			int response = diag->exec();
+			// -- END exec line selection
+
 			if (response != LINE_CANCEL) {
 				Line selectedLine;
 				switch (response) {
@@ -46,7 +61,7 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 						break;
 				}
 
-				// lanza barra de progreso
+				// -- launch progress bar
 				QPointer<QProgressBar> bar = new QProgressBar(0);
 				QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
 				progressDialog->setWindowTitle(QString("Segmentando..."));
@@ -58,22 +73,24 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 				progressDialog->show();
 				bar->close();
 				QApplication::processEvents();
+				// -- END launch progress bar
 
-				int * dimensions = figura->getImageData()->GetDimensions();
-				Bounds bounds;
-				bounds.MIN_X = 0;
-				bounds.MAX_X = dimensions[0];
-				bounds.MIN_Y = 0;
-				bounds.MAX_Y = dimensions[1];
-				bounds.MIN_Z = 0;
-				bounds.MAX_Z = dimensions[2];
-				regionGrowingWithLineBoundVolume(figura, ijk, bounds, selectedLine, lines); // borra
-				figura->getImageData()->Modified(); // actualiza tiempo de modificación para que el mapper recalcule los datos del volumen
+				regionGrowingWithLineBoundVolume(figura->getImageData(), figura->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines);
 
-				progressDialog->close(); // cierra barra de progreso
+				figura->getImageData()->Modified();
+				plano->getPlane()->UpdatePlacement();
+				viewer->Render();
+
+				// -- close progress bar
+				progressDialog->close();
+				// -- END close progress bar
 			}
 		}
 	}
+}
+
+void InteractorStyleSegmentation::SetViewer(vtkSmartPointer<vtkImageViewer2> viewer) {
+	this->viewer = viewer;
 }
 
 void InteractorStyleSegmentation::SetPlano(Plano* plano) {

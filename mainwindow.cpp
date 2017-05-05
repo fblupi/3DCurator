@@ -85,6 +85,7 @@ void MainWindow::connectComponents() {
 
 	segmentationStyle->SetFigura(figura); // asigna la figura
 	segmentationStyle->SetPlano(plano); // asigna el plano
+	segmentationStyle->SetViewer(sliceViewer); // asigna la ventana de cortes
 	segmentationStyle->SetDefaultRenderer(sliceViewer->GetRenderer()); // asigna el renderer de los cortes
 }
 
