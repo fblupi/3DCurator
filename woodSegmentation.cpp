@@ -14,13 +14,16 @@ std::vector<Line> getLinesFromImage(Figura *figura, int slice) {
 	voi->SetVOI(0, figura->getImageData()->GetDimensions()[0] - 1, 0, figura->getImageData()->GetDimensions()[1] - 1, slice, slice);
 	voi->Update();
 
+	std::string filename = "tmp" + std::to_string(slice) + ".png";
+
 	vtkSmartPointer<vtkPNGWriter> png = vtkSmartPointer<vtkPNGWriter>::New();
 	png->SetInputData(voi->GetOutput());
-	png->SetFileName(("tmp" + std::to_string(slice) + ".png").c_str());
+	png->SetFileName(filename.c_str());
 	png->Write();
 
 	cv::Mat src, dst, cdst;
-	src = cv::imread(("tmp" + std::to_string(slice) + ".png").c_str(), 0);
+	src = cv::imread(filename.c_str(), 0);
+	remove(filename.c_str());
 
 	cv::Canny(src, dst, 30, 50, 3);
 	cv::cvtColor(dst, cdst, cv::COLOR_GRAY2BGR);
@@ -38,8 +41,6 @@ std::vector<Line> getLinesFromImage(Figura *figura, int slice) {
 		foundLines.push_back(l);
 	}
 	sort(foundLines.begin(), foundLines.end(), longerLine);
-
-	remove(("tmp" + std::to_string(slice) + ".png").c_str());
 
 	std::vector<Line> result(foundLines.size());
 
