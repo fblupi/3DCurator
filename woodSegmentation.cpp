@@ -88,16 +88,13 @@ std::string generateImage(Figura *figura, int slice, std::vector<Line> lines) {
 			color = cv::Scalar(255, 0, 0);
 			break;
 		case 3:
-			color = cv::Scalar(0, 255, 255);
-			break;
-		case 4:
 			color = cv::Scalar(255, 255, 0);
 			break;
-		case 5:
+		case 4:
 			color = cv::Scalar(255, 0, 255);
 			break;
-		case 6:
-			color = cv::Scalar(255, 255, 255);
+		case 5:
+			color = cv::Scalar(0, 255, 255);
 			break;
 		default:
 			color = cv::Scalar(128, 128, 128);
