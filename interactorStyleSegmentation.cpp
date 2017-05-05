@@ -20,9 +20,10 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 
 			LineSelectionDialog *diag = new LineSelectionDialog();
 			diag->setImage(img);
+			remove(img.c_str());
 
 			int response = diag->exec();
-			if (response != LINE_CANCEL) { // comprueba si se tiene que deshacer el cambio
+			if (response != LINE_CANCEL) {
 				Line selectedLine;
 				switch (response) {
 					case LINE_RED:
