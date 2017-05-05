@@ -17,10 +17,9 @@
 #include <vtkVolumePicker.h>
 #include <vtkImageViewer2.h>
 
-#include <stack>
 #include "figura.h"
 #include "plano.h"
-#include "measures.h"
+#include "regionGrowingDeleter.h"
 
 /**
  * @class InteractorStyleDeleter
@@ -71,42 +70,6 @@ private:
 	vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 que se actualizará cuando se mueva el plano */
 	Figura* figura; /**< Figura a la que se le borran partes */
 	Plano* plano; /**< Plano con el que se obtienen los cortes */
-
-	/**
-	 * Busca un voxel inicial donde empezar a expandirse al borrar una imagen
-	 * @param	imageData	Datos del volumen
-	 * @param	ijk			Punto inicial
-	 * @param	MIN_X		Límite mínimo en la coordenada x
-	 * @param	MAX_X		Límite máximo en la coordenada x
-	 * @param	MIN_Y		Límite mínimo en la coordenada y
-	 * @param	MAX_Y		Límite máximo en la coordenada y
-	 * @return	coordenada x,y donde empezar a borrar la imagen
-	 */
-	std::pair<int, int> searchInitialVoxel(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y);
-	
-	/**
-	 * Borra la isla donde se encuentra un punto de una imagen
-	 * @param	imageData	Datos del volumen
-	 * @param	ijk			Punto inicial
-	 * @param	MIN_X		Límite mínimo en la coordenada x
-	 * @param	MAX_X		Límite máximo en la coordenada x
-	 * @param	MIN_Y		Límite mínimo en la coordenada y
-	 * @param	MAX_Y		Límite máximo en la coordenada y
-	 */
-	void deleteImage(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y);
-
-	/**
-	 * Borra la isla donde se encuentra un punto
-	 * @param	imageData	Datos del volumen
-	 * @param	ijk			Punto inicial
-	 * @param	MIN_X		Límite mínimo en la coordenada x
-	 * @param	MAX_X		Límite máximo en la coordenada x
-	 * @param	MIN_Y		Límite mínimo en la coordenada y
-	 * @param	MAX_Y		Límite máximo en la coordenada y
-	 * @param	MIN_Z		Límite mínimo en la coordenada z
-	 * @param	MAX_Z		Límite máximo en la coordenada z
-	 */
-	void deleteByImages(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const int MIN_X, const int MAX_X, const int MIN_Y, const int MAX_Y, const int MIN_Z, const int MAX_Z);
 };
 
 #endif // INTERACTORSTYLEDELETER_H

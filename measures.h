@@ -3,6 +3,4 @@
 #define WOOD_ISOVALUE -750 /**< Valor de isosuperficie de la madera */
 #define STUCCO_ISOVALUE -100 /**< Valor de isosuperficie del estuco */
 #define METAL_ISOVALUE 2976 /**< Valor de isosuperficie del metal */
-#define MIN_AIR -850 /**< Valor mínimo que se considera aire */
-#define AIR_HU -1000 /**< Valor del aire */
 #define RULES_LIMIT 100 /**< Máximo número de reglas posibles */
