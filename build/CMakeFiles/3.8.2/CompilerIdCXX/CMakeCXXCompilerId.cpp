@@ -180,9 +180,13 @@
 #  define SIMULATE_VERSION_MINOR DEC(_MSC_VER % 100)
 # endif
 
-#elif defined(__GNUC__)
+#elif defined(__GNUC__) || defined(__GNUG__)
 # define COMPILER_ID "GNU"
-# define COMPILER_VERSION_MAJOR DEC(__GNUC__)
+# if defined(__GNUC__)
+#  define COMPILER_VERSION_MAJOR DEC(__GNUC__)
+# else
+#  define COMPILER_VERSION_MAJOR DEC(__GNUG__)
+# endif
 # if defined(__GNUC_MINOR__)
 #  define COMPILER_VERSION_MINOR DEC(__GNUC_MINOR__)
 # endif
@@ -499,7 +503,9 @@ char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";
 
 
 const char* info_language_dialect_default = "INFO" ":" "dialect_default["
-#if __cplusplus >= 201402L
+#if __cplusplus > 201402L
+  "17"
+#elif __cplusplus >= 201402L
   "14"
 #elif __cplusplus >= 201103L
   "11"

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.8.0
+** Created by: Qt User Interface Compiler version 5.9.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -1025,45 +1025,77 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionOpenDICOM->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Abrir</p></body></html>", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
+#ifndef QT_NO_SHORTCUT
         actionOpenDICOM->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionExit->setText(QApplication::translate("MainWindow", "Salir", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
         actionExit->setToolTip(QApplication::translate("MainWindow", "Salir", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
+#ifndef QT_NO_SHORTCUT
         actionExit->setShortcut(QApplication::translate("MainWindow", "Ctrl+Q", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionExportVolumeImage->setText(QApplication::translate("MainWindow", "Exportar figura...", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionExportVolumeImage->setShortcut(QApplication::translate("MainWindow", "Ctrl+F", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionExportSliceImage->setText(QApplication::translate("MainWindow", "Exportar corte...", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionExportSliceImage->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionImportPreset->setText(QApplication::translate("MainWindow", "Importar preset...", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionImportPreset->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+I", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionExportPreset->setText(QApplication::translate("MainWindow", "Exportar preset...", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionExportPreset->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+E", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionDeleteVolumeParts->setText(QApplication::translate("MainWindow", "Borrar partes", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionDeleteVolumeParts->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+D", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionOpenDICOM_2->setText(QApplication::translate("MainWindow", "Abrir...", Q_NULLPTR));
         actionUpdateMesh->setText(QApplication::translate("MainWindow", "Generar malla", Q_NULLPTR));
         actionEnableDisablePlane->setText(QApplication::translate("MainWindow", "Mostrar/Esconder plano", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionEnableDisablePlane->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+H", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionSagitalPlane->setText(QApplication::translate("MainWindow", "Plano sagital", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionSagitalPlane->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+S", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionAxialPlane->setText(QApplication::translate("MainWindow", "Plano axial", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionAxialPlane->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+A", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionCoronalPlane->setText(QApplication::translate("MainWindow", "Plano coronal", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionCoronalPlane->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+C", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionWoodPreset->setText(QApplication::translate("MainWindow", "Preset madera", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionWoodPreset->setShortcut(QApplication::translate("MainWindow", "F2", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionStuccoPreset->setText(QApplication::translate("MainWindow", "Preset estuco", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionStuccoPreset->setShortcut(QApplication::translate("MainWindow", "F3", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionMetalPreset->setText(QApplication::translate("MainWindow", "Preset metal", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionMetalPreset->setShortcut(QApplication::translate("MainWindow", "F4", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionCompletePreset->setText(QApplication::translate("MainWindow", "Preset completo", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionCompletePreset->setShortcut(QApplication::translate("MainWindow", "F1", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         actionWoodMesh->setText(QApplication::translate("MainWindow", "Malla madera", Q_NULLPTR));
         actionStuccoMesh->setText(QApplication::translate("MainWindow", "Malla estuco", Q_NULLPTR));
         actionMetalMesh->setText(QApplication::translate("MainWindow", "Malla metal", Q_NULLPTR));
         actionExtractMesh->setText(QApplication::translate("MainWindow", "Extraer malla...", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
         actionExtractMesh->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+M", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         groupBox->setTitle(QApplication::translate("MainWindow", "Volumen", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
         openDICOM->setToolTip(QApplication::translate("MainWindow", "Abrir directorio DICOM", Q_NULLPTR));
