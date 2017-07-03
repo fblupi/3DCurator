@@ -16,7 +16,7 @@
 using boost::property_tree::ptree;
 
 /**
- * Clase con la función de transferencia
+ * Transfer function class. Import-export using XML format
  */
 class TransferFunction {
 public:
@@ -31,103 +31,103 @@ public:
 	~TransferFunction();
 
 	/**
-	 * Obtener función de transferencia de color
-	 * @return	Función de transferencia de color
+	 * Get color transfer function
+	 * @return				Color transfer function
 	 */
 	vtkSmartPointer<vtkColorTransferFunction> getColorFun() const;
 
 	/**
-	 * Obtener función de transferencia de opacidad escalar
-	 * @return	Función de transferencia de opacidad escalar
+	 * Get scalar opacity transfer function
+	 * @return				Scalar opacity transfer function
 	 */
 	vtkSmartPointer<vtkPiecewiseFunction> getScalarFun() const;
 
 	/**
-	 * Obtener función de transferencia de opacidad gradiente
-	 * @return	Función de transferencia de opacidad gradiente
+	 * Get gradient opacity transfer function
+	 * @return				Gradient opacity transfer function
 	 */
 	vtkSmartPointer<vtkPiecewiseFunction> getGradientFun() const;
 
 	/**
-	 * Obtener el nombre de la función de transferencia
-	 * @return	Nombre
+	 * Get transfer function name
+	 * @return				Transfer function name
 	 */
 	std::string getName() const;
 
 	/**
-	 * Obtener la descripción de la función de transferencia
-	 * @return	Descripción
+	 * Get transfer function description
+	 * @return				Transfer function description
 	 */
 	std::string getDescription() const;
 
 	/**
-	 * Establecer el nombre de la función de transferencia
-	 * @param	name	Nombre
+	 * Set transfer function name
+	 * @param	name		Transfer function name
 	 */
 	void setName(const std::string name);
 
 	/**
-	 * Establecer la descripción de la función de transferencia
-	 * @param	description		Descripción
+	 * Set transfer function description
+	 * @param	description	Transfer function description
 	 */
 	void setDescription(const std::string description);
 
 	/**
-	 * Lee la función de transferencia de un archivo XML
-	 * @param	filename	Ruta del archivo de origen
+	 * Read transfer function from an XML file using its path
+	 * @param	filename	Path to the input XML file
 	 */
 	void read(std::string &filename);
 
 	/**
-	 * Lee la función de transferencia de un archivo XML
-	 * @param	file	Archivo de origen
+	 * Read transfer function from an XML file
+	 * @param	file		Input XML file
 	 */
 	void read(std::istream &file);
 
 	/**
-	 * Escribe la función de transferencia en un archivo XML
-	 * @param	filename	Archivo de salida
+	 * Write trasnfer function in an XML file
+	 * @param	filename	Path to the output XML file
 	 */
 	void write(std::string &filename);
 
 	/**
-	 * Limpia todos los puntos de todas las partes de la función de transferencia
+	 * Clear every point in every part of the transfer function
 	 */
 	void clear();
 
 	/**
-	 * Añade un punto en la parte de color de la función de transfencia
-	 * @param	x	Valor de densidad
-	 * @param	r	Componente roja
-	 * @param	g	Componente verde
-	 * @param	b	Componente azul
+	 * Add a RGB color point
+	 * @param	x			Density value
+	 * @param	r			Red
+	 * @param	g			Green
+	 * @param	b			Blue
 	 */
 	void addColorPoint(const double x, const double r, const double g, const double b);
 
 	/**
-	 * Añade un punto en la parte de opacidad escalar de la función de transfencia
-	 * @param	x	Valor de densidad
-	 * @param	y	Opacidad
+	 * Add a scalar point
+	 * @param	x			Density value
+	 * @param	y			Opacity
 	 */
 	void addScalarPoint(const double x, const double y);
 
 	/**
-	 * Añade un punto en la parte de opacidad gradiente de la función de transfencia
-	 * @param	x	Valor de gradiente
-	 * @param	y	Opacidad
+	 * Add a gradient point
+	 * @param	x			Gradient value
+	 * @param	y			Opacity
 	 */
 	void addGradientPoint(const double x, const double y);
 
 private:
-	std::string name; /**< Nombre de la función de transferencia */
-	std::string description; /**< Descripción de la función de transferencia */
-	vtkSmartPointer<vtkColorTransferFunction> colorFun; /**< Parte de color de la función de transferencia */
-	vtkSmartPointer<vtkPiecewiseFunction> scalarFun; /**< Parte de opacidad escalar de la función de transferencia */
-	vtkSmartPointer<vtkPiecewiseFunction> gradientFun; /**< Parte de opacidad gradiente de la función de transferencia */
+	std::string name; /**< Transfer function name */
+	std::string description; /**< Transfer function description */
+	vtkSmartPointer<vtkColorTransferFunction> colorFun; /**< Color transfer function */
+	vtkSmartPointer<vtkPiecewiseFunction> scalarFun; /**< Scalar opacity transfer function */
+	vtkSmartPointer<vtkPiecewiseFunction> gradientFun; /**< Gradient opacity transfer function */
 
 	/**
-	 * Escribe la función de transferencia dado un árbol extraido de un archivo XML
-	 * @param	ptree	Árbol con la función de transferencia
+	 * Read data of transfer function from a tree
+	 * @param	ptree	Tree with transfer function
 	 */
 	void readData(ptree pt);
 };

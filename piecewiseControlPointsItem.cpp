@@ -4,8 +4,8 @@ vtkStandardNewMacro(PiecewiseControlPointsItem);
 
 bool PiecewiseControlPointsItem::MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse) {
 	bool result = vtkPiecewiseControlPointsItem::MouseButtonReleaseEvent(mouse); // forward events
-	if (mouse.GetButton() == vtkContextMouseEvent::LEFT_BUTTON			// si se ha soltado el botón izquierdo (añade punto)
-		|| mouse.GetButton() == vtkContextMouseEvent::MIDDLE_BUTTON) {	// o el central (borra) --> renderiza
+	if (mouse.GetButton() == vtkContextMouseEvent::LEFT_BUTTON			// if point added (left button)
+		|| mouse.GetButton() == vtkContextMouseEvent::MIDDLE_BUTTON) {	// or deleted (middle button) --> render
 		renWin->Render();
 	}
 	return result;
@@ -13,8 +13,8 @@ bool PiecewiseControlPointsItem::MouseButtonReleaseEvent(const vtkContextMouseEv
 
 bool PiecewiseControlPointsItem::KeyReleaseEvent(const vtkContextKeyEvent &key) {
 	bool result = vtkPiecewiseControlPointsItem::KeyReleaseEvent(key); // forward events
-	if (key.GetInteractor()->GetKeySym() == std::string("Delete")			// si se ha pulsado la tecla "Delete"
-		|| key.GetInteractor()->GetKeySym() == std::string("BackSpace")) {	// o "BlackSpace" (borra punto) --> renderiza
+	if (key.GetInteractor()->GetKeySym() == std::string("Delete")			// if point deleted (delete key)
+		|| key.GetInteractor()->GetKeySym() == std::string("BackSpace")) {	// or (back space key) --> render
 		renWin->Render();
 	}
 	return result;

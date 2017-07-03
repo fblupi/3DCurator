@@ -3,10 +3,10 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 
-//#define WINAPI __stdcall
+#define WINAPI __stdcall
 
-//int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nShowCmd) 
-int main()
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nShowCmd) 
+//int main()
 {
 	int argc = 0;
 

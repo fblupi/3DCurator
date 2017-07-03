@@ -11,13 +11,13 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkCellPicker.h>
 
-#include "plano.h"
-#include "figura.h"
+#include "slicePlane.h"
+#include "sculpture.h"
 
 /**
  * @class InteractorStyleImage
- * Clase que hereda de la clase vtkInteractorStyleImage y redefine el evento de pulsar el botón izquierdo del ratón para que no cambie el 
- * nivel de color y ventana del ImageViewer2 y se pueda ver el valor de densidad de cada voxel
+ * Class that inherits from vtkInteractorStyleImage and overrides the left button click mouse event to not change the color and window level and 
+ * the mouse move event to show density value of a voxel
  */
 class InteractorStyleImage : public vtkInteractorStyleImage {
 public:
@@ -29,30 +29,30 @@ public:
 	vtkTypeMacro(vtkInteractorStyleImage, InteractorStyleImage);
 	
 	/**
-	 * Establece el plano en el que buscará el valor del voxel seleccionado
-	 * @param	plano	Plano en el que buscará el valor del voxel seleccionado
+	 * Set plane in which will find the value of the voxel selected
+	 * @param	slicePlane	Plane in which will find the value of the voxel selected
 	 */
-	void SetPlano(Plano* plano);
+	void SetSlicePlane(SlicePlane* slicePlane);
 
 	/**
-	 * Establece la etiqueta donde se escribirá el valor escalar del voxel seleccionado
-	 * @param	label	QLabel donde se escribirá el valor escalar del voxel seleccionado
+	 * Set the QLabel where the density value will be shown
+	 * @param	label		QLabel where the density value will be shown
 	 */
 	void SetLabel(QLabel* label);
 	
 	/**
-	 * Evento al mover el ratón
+	 * Mouse move event
 	 */
 	virtual void OnMouseMove();
 
 	/**
-	 * Evento al pulsar el botón izquierdo del ratón
+	 * Left button down mouse event
 	 */
 	virtual void OnLeftButtonDown();
 
 private:
-	Plano* plano; /**< Figura a la que se le borran partes */
-	QLabel* label; /**< Etiqueta donde se actualizan los valores */
+	SlicePlane* slicePlane; /**< Plane in which will find the value of the voxel selected */
+	QLabel* label; /**< QLabel where the density value will be shown */
 };
 
 #endif // INTERACTORSTYLEIMAGE_H

@@ -4,6 +4,9 @@
 #include <array>
 #include "opencv2/core/types.hpp"
 
+/**
+ * Struct that includes bounds in X, Y and Z axis
+ */
 struct Bounds {
 	int MIN_X;
 	int MAX_X;
@@ -13,6 +16,7 @@ struct Bounds {
 	int MAX_Z;
 };
 
+// typedefs
 typedef std::pair<cv::Point, cv::Point> Line;
 typedef std::pair<Line, double> HoughLine;
 typedef std::array<int, 2> Coord2D;

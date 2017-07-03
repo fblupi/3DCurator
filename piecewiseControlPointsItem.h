@@ -11,8 +11,7 @@
 
 /**
  * @class PiecewiseControlPointsItem
- * Clase que hereda de la clase vtkPiecewiseControlPointsItem y redefine los métodos de eventos producidos por el ratón
- * para que al realizar cualquier cambio sobre la función de transferencia se actualice un RenderWindow.
+ * Class that inherites from vtkPiecewiseControlPointsItem and overrides mouse events to update RenderWindow with each change made
  */
 class PiecewiseControlPointsItem : public vtkPiecewiseControlPointsItem {
 public:
@@ -24,25 +23,25 @@ public:
 	vtkTypeMacro(vtkPiecewiseControlPointsItem, PiecewiseControlPointsItem);
 
 	/**
-	 * Establece el RenderWindow que actualizará
-	 * @param	renWin	RenderWindow que actualizará
+	 * Set the RenderWindow that will be updated
+	 * @param	renWin	RenderWindow that will be updated
 	 */
 	void SetRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin);
 	
 	/**
-	 * Evento al soltar el ratón
-	 * @param	mouse	Contexto del ratón
+	 * Mouse button release event: Updates RenderWindow
+	 * @param	mouse	Mouse context
 	 */
 	virtual bool MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse);
 
 	/**
-	 * Evento al soltar una tecla
-	 * @param	key		Contexto de la tecla
+	 * Key release event: Updates RenderWindow
+	 * @param	key		Key context
 	 */
 	virtual bool KeyReleaseEvent(const vtkContextKeyEvent &key);
 
 private:
-	vtkSmartPointer<vtkRenderWindow> renWin; /**< RenderWindow que se actualizará cuando se produzca un cambio en la función de transferencia */
+	vtkSmartPointer<vtkRenderWindow> renWin; /**< RenderWindow that will be updated when the transfer function is changed */
 };
 
 #endif

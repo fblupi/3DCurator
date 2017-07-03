@@ -7,7 +7,7 @@
 
 /**
  * @class ChartXY
- * Clase que hereda de la clase vtkChartXY y redefine los métodos de eventos producidos por el ratón para que no hagan nada
+ * Class that inherits from vtkChartXY class and overrides some mouse events
  */
 class ChartXY : public vtkChartXY {
 public:
@@ -19,39 +19,39 @@ public:
 	vtkTypeMacro(vtkChartXY, ChartXY);
 
 	/**
-	 * Evento a la entrada del ratón
-	 * @param	mouse	Contexto del ratón
+	 * Mouse enter event: Idle
+	 * @param	mouse	Mouse context
 	 */
 	virtual bool MouseEnterEvent(const vtkContextMouseEvent &mouse);
 
 	/**
-	 * Evento al mover el ratón
-	 * @param	mouse	Contexto del ratón
+	 * Mouse move event: Idle
+	 * @param	mouse	Mouse context
 	 */
 	virtual bool MouseMoveEvent(const vtkContextMouseEvent &mouse);
 
 
 	/**
-	 * Evento a la salida del ratón
-	 * @param	mouse	Contexto del ratón
+	 * Mouse leave event: Idle
+	 * @param	mouse	Mouse context
 	 */
 	virtual bool MouseLeaveEvent(const vtkContextMouseEvent &mouse);
 
 	/**
-	 * Evento al presionar el ratón
-	 * @param	mouse	Contexto del ratón
+	 * Mouse button press event: Idle
+	 * @param	mouse	Mouse context
 	 */
 	virtual bool MouseButtonPressEvent(const vtkContextMouseEvent &mouse);
 
 	/**
-	 * Evento al soltar el ratón
-	 * @param	mouse	Contexto del ratón
+	 * Mouse button release event: Idle
+	 * @param	mouse	Mouse context
 	 */
 	virtual bool MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse);
 
 	/**
-	 * Evento al usar la rueda del ratón
-	 * @param	mouse	Contexto del ratón
+	 * Mouse wheel event: Idle
+	 * @param	mouse	Mouse context
 	 */
 	virtual bool MouseWheelEvent(const vtkContextMouseEvent &mouse, int delta);
 };
