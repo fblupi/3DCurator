@@ -32,8 +32,8 @@
 
 #include "measures.h"
 #include "utils.h"
-#include "figura.h"
-#include "plano.h"
+#include "sculpture.h"
+#include "slicePlane.h"
 #include "interactorStyleImage.h"
 #include "interactorStyleDeleter.h"
 #include "interactorStyleSegmentation.h"
@@ -51,9 +51,9 @@ namespace Ui {
 }
 
 /**
-* @class MainWIndow
-* Clase con la ventana principal
-*/
+ * @class MainWindow
+ * Main window class
+ */
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -69,7 +69,7 @@ public:
     ~MainWindow();
 
 private slots:
-	// eventos GUI
+	// GUI events
 	void on_actionOpenDICOM_triggered();
 	void on_actionExportVolumeImage_triggered();
 	void on_actionExportSliceImage_triggered();
@@ -131,310 +131,310 @@ private slots:
 	void on_isoValueSlider_valueChanged();
 
 	/**
-	 * Establece un color a un Renderer
-	 * @param	ren Renderer al que se le quiere cambiar el color
-	 * @param	r	Componente roja
-	 * @param	g	Componente verde
-	 * @param	b	Componente azul
+	 * Set renderer color using RGB
+	 * @param	ren				Renderer
+	 * @param	r				Red
+	 * @param	g				Green
+	 * @param	b				Blue
 	 */
 	void setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b);
 
 	/**
-	 * Conecta los componentes de VTK con las interfaces
+	 * Connect components of the pipeline
 	 */
 	void connectComponents();
 
 	/**
-	 * Añade el volumen a su respectivo visor
+	 * Add volume to its viewer, reset camera and render it
 	 */
 	void drawVolume();
 
 	/**
-	 * Añade la malla a su respectivo visor
+	 * Add mesh to its viewer, reset camera and render it
 	 */
 	void drawMesh();
 
 	/**
-	 * Elimina el volumen de su respectivo visor
+	 * Remove volume from its viewer, reset camera and render void viewer
 	 */
 	void removeVolume();
 
 	/**
-	 * Elimina la malla de su respectivo visor
+	 * Remove volume from its viewer, reset camera and render void viewer
 	 */
 	void removeMesh();
 
 	/**
-	 * Renderiza la ventana del volumen y el plano
+	 * Render volume viewer
 	 */
 	void renderVolume();
 
 	/**
-	 * Renderiza la ventana de la malla
+	 * Render mesh viewer
 	 */
 	void renderMesh();
 
 	/**
-	 * Renderiza la ventana del corte producidor por el plano en el volumen
+	 * Render slice viewer
 	 */
 	void renderSlice();
 
 	/**
-	 * Asigna una función de trasnferencia por defecto
+	 * Set default transfer function
 	 */
 	void defaultTF();
 
 	/**
-	 * Asigna un material por defecto
+	 * Set default material
 	 */
 	void defaultMaterial();
 
 	/**
-	 * Asigna colores de fondo por defecto
+	 * Set default viewers background colors
 	 */
-	void defaultBackgroundColors();
+	void defaultBackgroundsColors();
 
 	/**
-	 * Coloca el plano en una posición por defecto
+	 * Set default plane position
 	 */
 	void defaultPlanePosition();
 
 	/**
-	 * Actualiza el material
+	 * Update material with GUI values
 	 */
 	void updateMaterial();
 
 	/**
-	 * Actualiza los sliders dándole los valores según la función de transferencia
+	 * Update sliders using transfer function bounds
 	 */
 	void updateSliders();
 
 	/**
-	 * Importa archivos DICOM para representarlos
+	 * Import DICOM files
 	 */
 	void importDICOM();
 
 	/**
-	 * Importa un preset de una función de transferencia
+	 * Import transfer function preset
 	 */
 	void importPreset();
 
 	/**
-	 * Carga un preset de los que por defecto incluye el programa
-	 * @param	file	Archivo con el preset que se va a cargar
+	 * Load one of the default presets
+	 * @param	file			File with the preset that will be used
 	 */
 	void loadDefaultPreset(QFile *file);
 
 	/**
-	 * Exporta una imagen de un Render Window
-	 * @param	renWin		RenderWindow del que se quiere extraer una imagen
-	 * @param	filename	Nombre del archivo de salida
+	 * Export image from a render window
+	 * @param	renWin			RenderWindow from which we will export the image
+	 * @param	filename		Output filename
 	 */
 	void exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin, const QString filename);
 
 	/**
-	 * Exporta el preset
-	 * @param	filename	Nombre del archivo de salida
+	 * Export preset of the current transfer function
+	 * @param	filename		Output filename
 	 */
 	void exportPreset(const QString filename);
 
 	/**
-	 * Exporta la malla a un archivo
-	 * @param	filename	Nombre del archivo de salida
+	 * Export Mesh to STL file
+	 * @param	filename		Output filename
 	 */
 	void exportMeshToFile(const QString filename);
 
 	/**
-	 * Exporta la malla
+	 * Export mesh if volume is loaded
 	 */
 	void exportMesh();
 
 	/**
-	 * Actualiza la malla
+	 * Update mesh from the current volume and isosurface value using marching cubes
 	 */
 	void updateMesh();
 
 	/**
-	 * Obtiene el nombre del archivo de salida para exportar una imagen
-	 * @param	defaultFilename		Nombre que se dará por defecto (fecha y hora)
-	 * @return	Archivo de salida
+	 * Get exported image filename
+	 * @param	defaultFilename	Default filename (date and hour)
+	 * @return					Output filename
 	 */
 	QString getExportImageFilename(const QString defaultFilename);
 
 	/**
-	 * Obtiene el nombre del archivo de salida para exportar un preset
-	 * @param	defaultFilename		Nombre que se dará por defecto (nombre de la función de transferencia)
-	 * @return	Archivo de salida
+	 * Get exported preset filename
+	 * @param	defaultFilename	Default filename (transfer function name)
+	 * @return					Output filename
 	 */
 	QString getExportPresetFilename(const QString defaultFilename);
 
 	/**
-	 * Obtiene el nombre del archivo de salida para exportar una malla
-	 * @param	defaultFilename		Nombre que se dará por defecto
-	 * @return	Archivo de salida
+	 * Get exported mesh filename
+	 * @param	defaultFilename	Default filename
+	 * @return					Output filename
 	 */
 	QString getExportMeshFilename(const QString defaultFilename);
 
 	/**
-	 * Habilita el plano
+	 * Show plane in viewer
 	 */
 	void enablePlane();
 
 	/**
-	 * Deshabilita el plano
+	 * Hide plane in viewer
 	 */
 	void disablePlane();
 
 	/**
-	 * Habilita o deshabilita el plano
+	 * Show or hide plane in viewer
 	 */
 	void enableDisablePlane();
 
 	/**
-	 * Coloca el plano en posición axial
+	 * Set plane in axial poisition
 	 */
 	void axialPlane();
 
 	/**
-	 * Coloca el plano en posición axial
+	 * Set plane in coronal position
 	 */
 	void coronalPlane();
 
 	/**
-	 * Coloca el plano en posición axial
+	 * Set plane in sagital position
 	 */
 	void sagitalPlane();
 
 	/**
-	 * Entra o sale del modo de borrado donde borra partes del volumen
+	 * Enable or disable delete mode
 	 */
 	void deleteVolumeParts();
 
 	/**
-	 * Importa el preset para mostrar la figura completa
+	 * Import all materials preset
 	 */
 	void importCompletePreset();
 
 	/**
-	 * Importa el preset para mostrar la madera
+	 * Import wood materials preset
 	 */
 	void importWoodPreset();
 
 	/**
-	 * Importa el preset para mostrar el estuco
+	 * Import stucco materials preset
 	 */
 	void importStuccoPreset();
 
 	/**
-	 * Importa el preset para mostrar el metal
+	 * Import metal materials preset
 	 */
 	void importMetalPreset();
 
 	/**
-	 * Añade una nueva regla para medir
-	 * @param	type	0: Figura 3D y 1: Cortes
+	 * Add new rule to measure
+	 * @param	type			0: 3D Model and 1: Slice
 	 */
 	void addRule(const int type);
 
 	/**
-	 * Elimina la regla seleccionada
-	 * @param	type	0: Figura 3D y 1: Cortes
+	 * Delete selected rule
+	 * @param	type			0: 3D Model and 1: Slice
 	 */
 	void deleteRule(const int type);
 
 	/**
-	 * Habilita o deshabilita la regla seleccionada
-	 * @param	type	0: Figura 3D y 1: Cortes
+	 * Enable or disable selected rule
+	 * @param	type			0: 3D Model and 1: Slice
 	 */
 	void enableDisableRule(const int type);
 
 	/**
-	 * Habilita la regla
-	 * @param	type	0: Figura 3D y 1: Cortes
+	 * Enable selected rule
+	 * @param	type			0: 3D Model and 1: Slice
 	 */
 	void enableRule(const int type);
 
 	/**
-	 * Deshabilita la regla
-	 * @param	type	0: Figura 3D y 1: Cortes
+	 * Disable selected rule
+	 * @param	type			0: 3D Model and 1: Slice
 	 */
 	void disableRule(const int type);
 
 	/**
-	 * Borra todas las reglas
+	 * Delete all rules
 	 */
 	void clearAllRules();
 
 	/**
-	 * Restaura los colores por defecto
+	 * Restore default viewers background colors
 	 */
-	void restoreBackgroundColors();
+	void restoreBackgroundsColors();
 
 	/**
-	 * Lanza un mensaje informando
-	 * @param	message	Mensaje que se mostrará
+	 * Launch a warning message
+	 * @param	message			Message that will be shown
 	 */
 	void launchWarning(const std::string message);
 
 	/**
-	 * Lanza un mensaje informando que antes se necesita importar un volumen
+	 * Launch a warning message saying there is no volume loaded
 	 */
 	void launchWarningNoVolume();
 
 	/**
-	 * Lanza un mensaje informando que antes se necesita seleccionar una regla
+	 * Launch a warning message saying there is no rule selected
 	 */
 	void launchWarningNoRule();
 
 	/**
-	 * Lanza un mensaje informando que antes se necesita seleccionar una regla
+	 * Launch a warning message saying there are already too many rules
 	 */
 	void launchWarningTooManyRules();
 
 	/**
-	 * Cambia el color de una ventana
-	 * @param	widget	0: Figura 3D, 1: Figura 3D (borrado), 2: Malla
+	 * Change background color of a viewer
+	 * @param	widget			0: 3D Model, 1: 3D Model (deleting), 2: Mesh
 	 */
 	void changeBackgroundColor(const int widget);
 
 	/**
-	 * Activa o desactiva la segmentación
+	 * Enable or disable segmentation mode
 	 */
 	void segmentateOnOff();
 
 private:
-	Ui::MainWindow *ui; /**< Puntero a la interfaz gráfica */
+	Ui::MainWindow *ui; /**< UI pointer */
 
-	QFont itemListEnabled; /**< Fuente de los elementos de la lista de reglas habilitados */
-	QFont itemListDisabled; /**< Fuente de los elementos de la lista de reglas deshabilitados */
+	QFont itemListEnabled; /**< Font type for rule list elements enabled */
+	QFont itemListDisabled; /**< Font type for rule list elements disabled */
 
-	QColor volumeBackground; /**< Color de fondo del widget del volumen */
-	QColor volumeDeletingBackground; /**< Color de fondo del widget del volumen al borrar */
-	QColor meshBackground; /**< Color de fondo del widget de la malla */
+	QColor volumeBackground; /**< Volume viewer background color */
+	QColor volumeDeletingBackground; /**< Volume viewer (delete mode) background color */
+	QColor meshBackground; /**< Mesh viewer background color */
 
-	Figura *figura; /**< Puntero a la figura */
-	Plano *plano; /**< Puntero al plano */
+	Sculpture *sculpture; /**< Sculpture pointer */
+	SlicePlane *slicePlane; /**< Plane pointer */
 
-	ColorTFChart *colorTFChart; /**< Puntero a la gráfica de la parte de color de la función de transferencia */
-	OpacityTFChart *scalarTFChart; /**< Puntero a la gráfica de la parte de opacida escalar de la función de transferencia */
-	OpacityTFChart *gradientTFChart; /**< Puntero a la gráfica de la parte de opacida gradiente de la función de transferencia */
+	ColorTFChart *colorTFChart; /**< Color transfer function chart pointer */
+	OpacityTFChart *scalarTFChart; /**< Scalar transfer function chart pointer */
+	OpacityTFChart *gradientTFChart; /**< Gradient transfer function chart pointer */
 
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget>> rules; /**< Almacén de reglas */
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> > rules; /**< Rules container */
 
-	vtkSmartPointer<vtkRenderer> volumeRen; /**< Puntero al Renderer donde estará el volumen y el plano de corte */
-	vtkSmartPointer<vtkRenderer> meshRen; /**< Puntero al Renderer donde se visulizará la malla a extraer */
-	vtkSmartPointer<vtkImageViewer2> sliceViewer; /**< Puntero al ImageViewer2 donde se verá el corte producido por el plano en el volumen */
+	vtkSmartPointer<vtkRenderer> volumeRen; /**< Volume and slice plane renderer pointer */
+	vtkSmartPointer<vtkRenderer> meshRen; /**< Mesh renderer pointer */
+	vtkSmartPointer<vtkImageViewer2> sliceViewer; /**< Slice viewer pointer */
 
-	vtkSmartPointer<vtkInteractorStyleTrackballCamera> volumeStyle; /**< Estilo para la ventana donde se visualizará el volumen */
-	vtkSmartPointer<InteractorStyleImage> sliceStyle; /**< Estilo para la ventana donde se visualizarán los cortes de la figura con el plano */
-	vtkSmartPointer<InteractorStyleDeleter> deleterStyle; /**< Estilo para poder borrar en la ventana donde se visualizará el volumen */
-	vtkSmartPointer<InteractorStyleSegmentation> segmentationStyle; /**< Estilo para poder segmentar en la ventana donde se visualizará el corte del volumen */
+	vtkSmartPointer<vtkInteractorStyleTrackballCamera> volumeStyle; /**< Volume viewer interaction style */
+	vtkSmartPointer<InteractorStyleImage> sliceStyle; /**< Slice viewer interaction style */
+	vtkSmartPointer<InteractorStyleDeleter> deleterStyle; /**< Volume viewer (delete mode) interaction style */
+	vtkSmartPointer<InteractorStyleSegmentation> segmentationStyle; /**< Slice viewer (segmentation mode) interaction style */
 
-	bool deleting; /**< Variable para ver si está en modo borrado o no */
-	bool segmentating; /**< Variable para ver si está en modo segmentado o no */
-	bool showPlane; /**< Mostrar el plano */
-	int volumeRuleCounter; /**< Contador de índice de regla */
-	int sliceRuleCounter; /**< Contador de índice de regla */
+	bool deleting; /**< Deleting mode enabled or disabled */
+	bool segmentating; /**< Segmentating mode enabled or disabled */
+	bool showPlane; /**< Show or hide plane */
+	int volumeRuleCounter; /**< Number of volume rules */
+	int sliceRuleCounter; /**< Number of slice rules */
 };
 
 #endif // MAINWINDOW_H

@@ -3,7 +3,7 @@
 vtkStandardNewMacro(InteractorStyleSegmentation);
 
 void InteractorStyleSegmentation::OnLeftButtonDown() {
-	if (viewer != NULL && plano != NULL && this->GetDefaultRenderer() != NULL) {
+	if (viewer != NULL && slicePlane != NULL && this->GetDefaultRenderer() != NULL) {
 		vtkSmartPointer<vtkVolumePicker> picker = vtkSmartPointer<vtkVolumePicker>::New();
 		int* pos = this->GetInteractor()->GetEventPosition();
 		picker->Pick(pos[0], pos[1], pos[2], this->GetDefaultRenderer());
@@ -11,8 +11,8 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 		int* ijk = picker->GetPointIJK();
 		
 		if (picker->GetPointId() != -1) {
-			ijk[2] = plano->getPlane()->GetCenter()[2] / figura->getImageData()->GetSpacing()[2];
-			int * dimensions = figura->getImageData()->GetDimensions();
+			ijk[2] = slicePlane->getPlane()->GetCenter()[2] / sculpture->getImageData()->GetSpacing()[2];
+			int * dimensions = sculpture->getImageData()->GetDimensions();
 			Bounds bounds;
 			bounds.MIN_X = 0;
 			bounds.MAX_X = dimensions[0];
@@ -23,9 +23,9 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 
 			std::vector<std::vector<Line> > lines(bounds.MAX_Z);
 
-			lines[ijk[2]] = getLinesFromImage(figura->getImageData(), figura->getTransferFunction()->getColorFun(), ijk[2], bounds);
+			lines[ijk[2]] = getLinesFromImage(sculpture->getImageData(), sculpture->getTransferFunction()->getColorFun(), ijk[2], bounds);
 
-			std::string img = generateImage(figura->getImageData(), figura->getTransferFunction()->getColorFun(), ijk[2], bounds, lines[ijk[2]]);
+			std::string img = generateImage(sculpture->getImageData(), sculpture->getTransferFunction()->getColorFun(), ijk[2], bounds, lines[ijk[2]]);
 
 			// -- launch line selection
 			LineSelectionDialog *diag = new LineSelectionDialog();
@@ -75,10 +75,10 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 				QApplication::processEvents();
 				// -- END launch progress bar
 
-				regionGrowingWithLineBoundVolume(figura->getImageData(), figura->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines);
+				regionGrowingWithLineBoundVolume(sculpture->getImageData(), sculpture->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines);
 
-				figura->getImageData()->Modified();
-				plano->getPlane()->UpdatePlacement();
+				sculpture->getImageData()->Modified();
+				slicePlane->getPlane()->UpdatePlacement();
 				viewer->Render();
 
 				// -- close progress bar
@@ -93,10 +93,10 @@ void InteractorStyleSegmentation::SetViewer(vtkSmartPointer<vtkImageViewer2> vie
 	this->viewer = viewer;
 }
 
-void InteractorStyleSegmentation::SetPlano(Plano* plano) {
-	this->plano = plano;
+void InteractorStyleSegmentation::SetSlicePlane(SlicePlane* slicePlane) {
+	this->slicePlane = slicePlane;
 }
 
-void InteractorStyleSegmentation::SetFigura(Figura* figura) {
-	this->figura = figura;
+void InteractorStyleSegmentation::SetSculpture(Sculpture* sculpture) {
+	this->sculpture = sculpture;
 }

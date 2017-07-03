@@ -8,8 +8,8 @@
 
 /**
  * @class ImagePlaneWidget
- * Clase que hereda de la clase vtkImagePlaneWidget y redefine los métodos de eventos producidos por el ratón para que al moverlo, si previamente
- * se ha pulsado el botón derecho se actualice un ImageViewer2. Además, desactiva los eventos producidos al hacer click en el bótón izquierdo y central
+ * Class that inherits from vtkImagePlaneWIdget and overrides mouse events to update ImageViewer2 when it is moved and previously right button has
+ * been clicked. Furthermore, it turns off left and central button events
  */
 class ImagePlaneWidget : public vtkImagePlaneWidget {
 public:
@@ -21,49 +21,49 @@ public:
 	vtkTypeMacro(vtkImagePlaneWidget, ImagePlaneWidget);
 
 	/**
-	 * Establece el ImageViewer2 que actualizará
-	 * @param	viewer	ImageViewer2 que se actualizará
+	 * Set ImageViewer2 that will be updated
+	 * @param	viewer	ImageViewer2 that will be updated
 	 */
-	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer); /**< Establece el ImageViewer2 */
+	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
 
 	/**
-	 * Evento al mover el ratón
+	 * Mouse move event: Updates viewer if it is moving
 	 */
 	virtual void OnMouseMove();
 
 	/**
-	 * Evento al pulsar el botón central del ratón
+	 * Middle button down event: idle
 	 */
 	virtual void OnMiddleButtonDown();
 
 	/**
-	 * Evento al levantar el botón central del ratón
+	 * Middle button up event: idle
 	 */
 	virtual void OnMiddleButtonUp();
 
 	/**
-	 * Evento al pulsar el botón izquierdo del ratón
+	 * Left button down event: idle
 	 */
 	virtual void OnLeftButtonDown();
 
 	/**
-	 * Evento al levantar el botón izquierdo del ratón
+	 * Left button up event: idle
 	 */
 	virtual void OnLeftButtonUp();
 
 	/**
-	 * Evento al pulsar el botón derecho del ratón
+	 * Right button down event: Start moving
 	 */
 	virtual void OnRightButtonDown();
 
 	/**
-	 * Evento al levantar el botón izquierdo del ratón
+	 * Right button up event: End moving
 	 */
 	virtual void OnRightButtonUp();
 
 private:
-	bool moving = false;  /**< Variable booleana para saber si se está moviendo o no el plano */
-	vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 que se actualizará cuando se mueva el plano */
+	bool moving = false;  /**< Plane is moving */
+	vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 that will be updated when the plane is moving */
 };
 
 #endif // IMAGEPLANEWIDGET_H

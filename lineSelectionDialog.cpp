@@ -5,6 +5,8 @@
 
 LineSelectionDialog::LineSelectionDialog(QWidget *parent) : QDialog(parent), ui(new Ui::LineSelectionDialog) {
 	ui->setupUi(this);
+
+	// Connect button actions
 	QObject::connect(ui->okButton, SIGNAL(clicked()), this, SLOT(accept()));
 	QObject::connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
 }
@@ -14,6 +16,7 @@ LineSelectionDialog::~LineSelectionDialog() {
 }
 
 void LineSelectionDialog::setImage(std::string filename) {
+	// Set image from filename
 	QPixmap pixmap(filename.c_str());
 	ui->image->setPixmap(pixmap);
 	ui->image->setMask(pixmap.mask());

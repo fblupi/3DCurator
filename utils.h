@@ -7,30 +7,30 @@
 #include <limits>
 
 /**
- * Separa una cadena en subcadenas dado un delimitador y se queda con la última
- * @param	s			Cadena inicial
- * @param	delimeter	Delimitador
- * @return	Última subcadena encontrada
+ * Split a string by a delimeter and get last substring
+ * @param	s			Input string
+ * @param	delimeter	Delimeter
+ * @return				Last substring
  */
 std::string splitAndGetLast(std::string s, const std::string delimiter);
 
 /**
- * Dado un archivo, devuelve su extensión
- * @param	s			Nombre del archivo
- * @return	Extensión del archivo
+ * Get file extension
+ * @param	s			Filename
+ * @return				File extension
  */
 std::string getFileExtension(std::string s);
 
 /**
- * Dada una cadena la devuelve en mayúsculas
- * @param	s			Cadena inicial
- * @return	Cadena inicial en mayúsculas
+ * Return a string in uppercase
+ * @param	s			Input string
+ * @return				To upper string
  */
 std::string toUpper(std::string s);
 
 /**
- * Devuelve una cadena con la fecha en formato AAAAMMDDHHMMSS
- * @return	Cadena con la fecha
+ * Return the current date with the format YYYYMMDDHHMMSS
+ * @return				String with formatted date
  */
 std::string getCurrentDate();
 

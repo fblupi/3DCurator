@@ -15,9 +15,8 @@
 
 /**
  * @class ColorTransferControlPointsItem
- * Clase que hereda de la clase vtkColorTransferControlPointsItem y redefine los métodos de eventos producidos por el ratón
- * para que al realizar cualquier cambio sobre la función de transferencia se actualice un RenderWindow. Además se añade una 
- * funcionalidad al doble click para que aparezca un selector de color para cambiar el color de ese punto
+ * Class that inherits from vtkColorTransferControlPointsItem and overrides mouse events to update RenderWindow with each change 
+ * made. Furthermore, it will launch a color selector widget to change the color in a point when double click event is triggered
  */
 class ColorTransferControlPointsItem : public vtkColorTransferControlPointsItem {
 public:
@@ -29,31 +28,31 @@ public:
 	vtkTypeMacro(vtkColorTransferControlPointsItem, ColorTransferControlPointsItem);
 
 	/**
-	 * Establece el RenderWindow que actualizará
-	 * @param	renWin	RenderWindow que actualizará
+	 * Set the RenderWindow that will be updated
+	 * @param	renWin	RenderWindow that will be updated
 	 */
 	void SetRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin);
 
 	/**
-	 * Evento al soltar el ratón
-	 * @param	mouse	Contexto del ratón
+	 * Mouse button release event: Updates RenderWindow
+	 * @param	mouse	Mouse context
 	 */
 	virtual bool MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse);
 
 	/**
-	 * Evento al hacer doble click con el ratón
-	 * @param	mouse	Contexto del ratón
+	 * Mouse double click event: Launches a color selector widget
+	 * @param	mouse	Mouse context
 	 */
 	virtual bool MouseDoubleClickEvent(const vtkContextMouseEvent &mouse);
 
 	/**
-	 * Evento al soltar una tecla
-	 * @param	key		Contexto de la tecla
+	 * Key release event: Updates RenderWindow
+	 * @param	key		Key context
 	 */
 	virtual bool KeyReleaseEvent(const vtkContextKeyEvent &key);
 
 private:
-	vtkSmartPointer<vtkRenderWindow> renWin; /**< RenderWindow que se actualizará cuando se produzca un cambio en la función de transferencia */
+	vtkSmartPointer<vtkRenderWindow> renWin; /**< RenderWindow that will be updated when the transfer function is changed */
 };
 
 #endif

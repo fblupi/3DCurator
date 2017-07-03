@@ -13,7 +13,7 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 	int* ijk = picker->GetPointIJK();
 
 	if (picker->GetPointId() != -1) {
-		double value = figura->getImageData()->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
+		double value = sculpture->getImageData()->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
 		if (value > AIR_HU) {
 			// -- launch progress bar
 			QPointer<QProgressBar> bar = new QProgressBar(0);
@@ -30,9 +30,9 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			// -- END launch progress bar
 
 			vtkSmartPointer<vtkImageData> oldData = vtkSmartPointer<vtkImageData>::New();
-			oldData->DeepCopy(figura->getImageData());
+			oldData->DeepCopy(sculpture->getImageData());
 
-			int* dimensions = figura->getImageData()->GetDimensions();
+			int* dimensions = sculpture->getImageData()->GetDimensions();
 			Bounds bounds;
 			bounds.MIN_X = 0;
 			bounds.MAX_X = dimensions[0];
@@ -40,10 +40,10 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			bounds.MAX_Y = dimensions[1];
 			bounds.MIN_Z = 0;
 			bounds.MAX_Z = dimensions[2];
-			deleteByImages(figura->getImageData(), ijk, bounds); 
+			deleteByImages(sculpture->getImageData(), ijk, bounds); 
 
-			figura->getImageData()->Modified();
-			plano->getPlane()->UpdatePlacement();
+			sculpture->getImageData()->Modified();
+			slicePlane->getPlane()->UpdatePlacement();
 			viewer->Render();
 
 			// -- close progress bar
@@ -68,10 +68,10 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 				QApplication::processEvents();
 				// -- END launch progress bar
 
-				figura->getImageData()->DeepCopy(oldData); 
+				sculpture->getImageData()->DeepCopy(oldData); 
 
-				figura->getImageData()->Modified(); 
-				plano->getPlane()->UpdatePlacement(); 
+				sculpture->getImageData()->Modified(); 
+				slicePlane->getPlane()->UpdatePlacement(); 
 				viewer->Render(); 
 
 				// -- close progress bar
@@ -91,10 +91,10 @@ void InteractorStyleDeleter::SetDefaultRenderWindow(vtkSmartPointer<vtkRenderWin
 	this->renWin = renWin;
 }
 
-void InteractorStyleDeleter::SetFigura(Figura* figura) {
-	this->figura = figura;
+void InteractorStyleDeleter::SetSculpture(Sculpture* sculpture) {
+	this->sculpture = sculpture;
 }
 
-void InteractorStyleDeleter::SetPlano(Plano* plano) {
-	this->plano = plano;
+void InteractorStyleDeleter::SetSlicePlane(SlicePlane* slicePlane) {
+	this->slicePlane = slicePlane;
 }

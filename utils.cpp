@@ -18,13 +18,13 @@ std::string toUpper(std::string s) {
 }
 
 std::string getCurrentDate() {
-	time_t t = time(0); // obtiene fecha actual
+	time_t t = time(0); // current date
 	struct tm now;
-	localtime_s(&now, &t); // obtiene el struct para obtener los distintos componentes
-	return std::to_string(now.tm_year + 1900) // año
-		+ std::to_string(now.tm_mon + 1) // mes
-		+ std::to_string(now.tm_mday) // día
-		+ std::to_string(now.tm_hour) // hora
-		+ std::to_string(now.tm_min) // minuto
-		+ std::to_string(now.tm_sec); // segundo
+	localtime_s(&now, &t); // struct with different components
+	return std::to_string(now.tm_year + 1900)
+		+ std::to_string(now.tm_mon + 1)
+		+ std::to_string(now.tm_mday)
+		+ std::to_string(now.tm_hour)
+		+ std::to_string(now.tm_min)
+		+ std::to_string(now.tm_sec);
 }

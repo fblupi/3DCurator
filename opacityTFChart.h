@@ -18,22 +18,21 @@
 
 /**
  * @class OpacityTFChart
- * Clase que muestra en un gráfico los puntos de control y la paleta de colores utilizada en una función de transferencia de opacidad
+ * Class that shows a chart with the control points and the function used by a opacity transfer function
  */
 class OpacityTFChart {
 public:
 	/**
 	 * Constructor
-	 * @param	figureRenWin	RenderWindow que se actualizará al actualizar la función de opacidad
-	 * @param	chartRenWin		RenderWindow donde se colocará el gráfico
-	 * @param	tf				Función de transferencia de opacidad
-	 * @param	xLabel			Nombre para la etiqueta del eje de la X
-	 * @param	yLabel			Nombre para la etiqueta del eje de la Y
-	 * @param	minBound		Límite inferior que podrán alcanzar los puntos de control
-	 * @param	maxBound		Límite superior que podrán alcanzar los puntos de control
+	 * @param	figureRenWin	RenderWindow that will be updated when the opacity function is updated
+	 * @param	chartRenWin		RenderWindow where will be placed the chart
+	 * @param	tf				Opacity transfer function
+	 * @param	xLabel			Axis X label name
+	 * @param	yLabel			Axis Y label name
+	 * @param	minBound		Min control points bound
+	 * @param	maxBound		Max control points bound
 	 */
-	OpacityTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, 
-		vtkSmartPointer<vtkPiecewiseFunction> tf, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
+	OpacityTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, vtkSmartPointer<vtkPiecewiseFunction> tf, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
 	
 	/*
 	 * Destructor
@@ -41,23 +40,23 @@ public:
 	~OpacityTFChart();
 
 	/**
-	 * Hace que la gráfica vaya en el eje de la Y desde el valor más pequeño de la función de transferencia al más grande
+	 * Range of Y axes goes from the lowest to the highest transfer function value
 	 */
 	void defaultRange();
 
 	/**
-	 * Hace que la gráfica vaya en el eje de la Y desde min hasta max
-	 * @param	min				Límite inferior
-	 * @param	max				Límite superior
+	 * Range of Y axes gos from min to max
+	 * @param	min				Min bound
+	 * @param	max				Max bound
 	 */
 	void setRange(const double min, const double max);
 
 private:
-	vtkSmartPointer<ChartXY> chart;  /**< Gráfica donde se dibujarán los dos Plot de la función y los puntos de control */
-	vtkSmartPointer<vtkContextView> context; /**< ContextView donde se renderizará el contenido de chart */
-	vtkSmartPointer<vtkPiecewiseFunctionItem> function; /**< Plot en el que se mostrará la función de color */
-	vtkSmartPointer<PiecewiseControlPointsItem> controlPoints; /**< Plot en el que se mostrarán los puntos de control de la función */
-	vtkSmartPointer<vtkPiecewiseFunction> tf; /**< Función de transferencia de opacidad de donde se obtendrán los dos plot */
+	vtkSmartPointer<ChartXY> chart;  /**< Chart where both function and control points plots will be placed */
+	vtkSmartPointer<vtkContextView> context; /**< ContextView where the chart content will be rendered */
+	vtkSmartPointer<vtkPiecewiseFunctionItem> function; /**< Plot where the opacity function will be shown */
+	vtkSmartPointer<PiecewiseControlPointsItem> controlPoints; /**> Plot where the function control points will be shown */
+	vtkSmartPointer<vtkPiecewiseFunction> tf; /**< Color transfer function used by both plots */
 };
 
 #endif

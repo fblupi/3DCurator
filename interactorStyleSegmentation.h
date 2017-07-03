@@ -24,8 +24,8 @@
 #include <vtkPointPlacer.h>
 #include <vtkRenderer.h>
 
-#include "plano.h"
-#include "figura.h"
+#include "slicePlane.h"
+#include "sculpture.h"
 #include "measures.h"
 #include "utils.h"
 #include "lineSelectionDialog.h"
@@ -33,8 +33,7 @@
 
 /**
  * @class InteractorStyleSegmentation
- * Clase que hereda de la clase vtkInteractorStyleSegmentation y redefine el evento de pulsar el botón izquierdo del ratón para que no cambie el 
- * nivel de color y ventana del ImageViewer2 y se pueda ver el valor de densidad de cada voxel
+ * Class that inherits from vtkInteractorStyleSegmentation and overrides left button mouse click event to launch segmentation process
  */
 class InteractorStyleSegmentation : public vtkInteractorStyleImage {
 public:
@@ -46,32 +45,32 @@ public:
 	vtkTypeMacro(vtkInteractorStyleImage, InteractorStyleSegmentation);
 
 	/**
-	 * Establece el ImageViewer2 que actualizará al borrar
-	 * @param	viewer		ImageViewer2 que se actualizará al borrar
+	 * Set ImageViewer that will be updated when segmentate
+	 * @param	viewer		ImageViewer2 that will be updated when segmentate
 	 */
 	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
 
 	/**
-	 * Establece el plano en el que buscará el valor del voxel seleccionado
-	 * @param	plano	Plano en el que buscará el valor del voxel seleccionado
+	 * Set plane in which will find the value of the voxel selected
+	 * @param	slicePlane	Plane in which will find the value of the voxel selected
 	 */
-	void SetPlano(Plano* plano);
+	void SetSlicePlane(SlicePlane* slicePlane);
 
 	/**
-	 * Establece la figura sobre la que se hará pick para segmentar
-	 * @param	figura	Figura a la que se segmentará partes
+	 * Set sculpture that we will segmentate
+	 * @param	sculpture	Sculpture that we will segmentate
 	 */
-	void SetFigura(Figura* figura);
+	void SetSculpture(Sculpture* sculpture);
 
 	/**
-	 * Evento al pulsar el botón izquierdo del ratón
+	 * Left button down mouse event
 	 */
 	virtual void OnLeftButtonDown();
 
 private:
-	vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 que se actualizará cuando se mueva el plano */
-	Plano* plano; /**< Plano de la figura a la que se le borran partes */
-	Figura* figura; /**< Figura a la que se le borran partes */
+	vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 that will be updated when segmentate */
+	SlicePlane* slicePlane; /**< Plane in which will find the value of the voxel selected */
+	Sculpture* sculpture; /**< Sculpture that we will segmentate */
 };
 
 #endif // INTERACTORSTYLESEGMENTATION_H

@@ -5,6 +5,7 @@
 #include <QPixmap>
 #include <QBitmap>
 
+// Line ids
 #define LINE_CANCEL 0
 #define LINE_RED 1
 #define LINE_GREEN 2
@@ -17,20 +18,43 @@ namespace Ui {
 	class LineSelectionDialog;
 }
 
+/**
+ * @class LineSelectionDialog
+ * Class of the line selection dialog
+ */
 class LineSelectionDialog : public QDialog {
 	Q_OBJECT
 
 public:
+	/**
+	 * Constructor
+	 */
 	explicit LineSelectionDialog(QWidget *parent = 0);
+
+	/**
+	 * Destructor
+	 */
 	~LineSelectionDialog();
+
+	/**
+	 * Set image where lines will be painted
+	 * @params	filename	filename of the image where the lines will be painted
+	 */
 	void setImage(std::string filename);
 
 private slots:
+	/**
+	 * Ok button selected
+	 */
 	void accept();
+
+	/** 
+	 * Cancel button selected
+	 */
 	void reject();
 
 private:
-	Ui::LineSelectionDialog *ui;
+	Ui::LineSelectionDialog *ui; /**< Dialog GUI pointer */
 };
 
 #endif // LINESELECTIONDIALOG_H

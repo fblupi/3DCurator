@@ -10,9 +10,6 @@
     <ClCompile Include="C:\Users\fblupi\Documents\GitHub\3DCurator\colorTransferControlPointsItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\fblupi\Documents\GitHub\3DCurator\figura.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="C:\Users\fblupi\Documents\GitHub\3DCurator\geometry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -43,10 +40,13 @@
     <ClCompile Include="C:\Users\fblupi\Documents\GitHub\3DCurator\piecewiseControlPointsItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\fblupi\Documents\GitHub\3DCurator\plano.cpp">
+    <ClCompile Include="C:\Users\fblupi\Documents\GitHub\3DCurator\regionGrowingDeleter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\fblupi\Documents\GitHub\3DCurator\regionGrowingDeleter.cpp">
+    <ClCompile Include="C:\Users\fblupi\Documents\GitHub\3DCurator\sculpture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\fblupi\Documents\GitHub\3DCurator\slicePlane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\fblupi\Documents\GitHub\3DCurator\transferFunction.cpp">
@@ -81,9 +81,6 @@
     <ClInclude Include="C:\Users\fblupi\Documents\GitHub\3DCurator\colorTransferControlPointsItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\fblupi\Documents\GitHub\3DCurator\figura.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="C:\Users\fblupi\Documents\GitHub\3DCurator\geometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -114,13 +111,16 @@
     <ClInclude Include="C:\Users\fblupi\Documents\GitHub\3DCurator\piecewiseControlPointsItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\fblupi\Documents\GitHub\3DCurator\plano.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="C:\Users\fblupi\Documents\GitHub\3DCurator\regionGrowingDeleter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Users\fblupi\Documents\GitHub\3DCurator\sculpture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="C:\Users\fblupi\Documents\GitHub\3DCurator\segmentationCommons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\fblupi\Documents\GitHub\3DCurator\slicePlane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\fblupi\Documents\GitHub\3DCurator\transferFunction.h">
