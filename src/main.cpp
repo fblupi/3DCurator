@@ -1,7 +1,8 @@
-#include "mainwindow.h"
 #include <QApplication>
 #include <QTranslator>
 #include <QLibraryInfo>
+
+#include "GUI/mainwindow.h"
 
 #define WINAPI __stdcall
 

@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/fblupi/Documents/GitHub/3DCurator
+# Install script for directory: C:/Users/fblupi/Documents/GitHub/3DCurator/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
