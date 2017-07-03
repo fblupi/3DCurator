@@ -25,8 +25,8 @@
 #include <itkCastImageFilter.h>
 #include <itkMedianImageFilter.h>
 
-#include "transferFunction.h"
-#include "measures.h"
+#include "Core/transferFunction.h"
+#include "Utils/measures.h"
 
 /**
  * @class Sculpture

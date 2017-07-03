@@ -17,9 +17,9 @@
 #include <vtkVolumePicker.h>
 #include <vtkImageViewer2.h>
 
-#include "sculpture.h"
-#include "slicePlane.h"
-#include "regionGrowingDeleter.h"
+#include "Core/sculpture.h"
+#include "Core/slicePlane.h"
+#include "Segmentation/regionGrowingDeleter.h"
 
 /**
  * @class InteractorStyleDeleter

@@ -18,7 +18,7 @@
 3DCurator_BINARY_DIR:STATIC=C:/Users/fblupi/Documents/GitHub/3DCurator/build
 
 //Value Computed by CMake
-3DCurator_SOURCE_DIR:STATIC=C:/Users/fblupi/Documents/GitHub/3DCurator
+3DCurator_SOURCE_DIR:STATIC=C:/Users/fblupi/Documents/GitHub/3DCurator/src
 
 //The directory containing a CMake configuration file for Boost.
 Boost_DIR:PATH=Boost_DIR-NOTFOUND
@@ -261,7 +261,7 @@ CMAKE_GENERATOR_PLATFORM:INTERNAL=
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
 //Source directory with the top level CMakeLists.txt file for this
 // project
-CMAKE_HOME_DIRECTORY:INTERNAL=C:/Users/fblupi/Documents/GitHub/3DCurator
+CMAKE_HOME_DIRECTORY:INTERNAL=C:/Users/fblupi/Documents/GitHub/3DCurator/src
 //ADVANCED property for variable: CMAKE_LINKER
 CMAKE_LINKER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS

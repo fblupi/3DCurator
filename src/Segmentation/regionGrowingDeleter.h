@@ -7,7 +7,7 @@
 #include <vtkSmartPointer.h>
 #include <vtkImageData.h>
 
-#include "segmentationCommons.h"
+#include "Segmentation/segmentationCommons.h"
 
 #define MIN_AIR -850 /**< Min air value */
 #define AIR_HU -1000 /**< Air value */

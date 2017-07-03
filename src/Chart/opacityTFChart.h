@@ -13,8 +13,8 @@
 #include <vtkSmartPointer.h>
 #include <vtkRenderWindow.h>
 
-#include "piecewiseControlPointsItem.h"
-#include "chartXY.h"
+#include "Chart/piecewiseControlPointsItem.h"
+#include "Chart/chartXY.h"
 
 /**
  * @class OpacityTFChart

@@ -22,11 +22,11 @@ find_package(Qt5Widgets REQUIRED QUIET)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${Boost_INCLUDE_DIRS})
 
-file(GLOB UI_FILES *.ui)
-file(GLOB QT_WRAP *.h)
-file(GLOB CPP_FILES *.cpp)
+file(GLOB_RECURSE UI_FILES *.ui)
+file(GLOB_RECURSE QT_WRAP *.h)
+file(GLOB_RECURSE CPP_FILES *.cpp)
 
-set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/assets/resources.qrc)
+set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/../assets/resources.qrc)
 qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
 
 qt5_wrap_ui(UISrcs ${UI_FILES})
