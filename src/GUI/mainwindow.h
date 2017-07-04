@@ -134,10 +134,10 @@ private slots:
 
 	/**
 	 * Set renderer color using RGB
-	 * @param	ren				Renderer
-	 * @param	r				Red
-	 * @param	g				Green
-	 * @param	b				Blue
+	 * @param	ren	Renderer
+	 * @param	r	Red
+	 * @param	g	Green
+	 * @param	b	Blue
 	 */
 	void setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b);
 
@@ -223,26 +223,26 @@ private slots:
 
 	/**
 	 * Load one of the default presets
-	 * @param	file			File with the preset that will be used
+	 * @param	file	File with the preset that will be used
 	 */
 	void loadDefaultPreset(QFile *file);
 
 	/**
 	 * Export image from a render window
-	 * @param	renWin			RenderWindow from which we will export the image
-	 * @param	filename		Output filename
+	 * @param	renWin		RenderWindow from which we will export the image
+	 * @param	filename	Output filename
 	 */
 	void exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin, const QString filename);
 
 	/**
 	 * Export preset of the current transfer function
-	 * @param	filename		Output filename
+	 * @param	filename	Output filename
 	 */
 	void exportPreset(const QString filename);
 
 	/**
 	 * Export Mesh to STL file
-	 * @param	filename		Output filename
+	 * @param	filename	Output filename
 	 */
 	void exportMeshToFile(const QString filename);
 
@@ -259,21 +259,21 @@ private slots:
 	/**
 	 * Get exported image filename
 	 * @param	defaultFilename	Default filename (date and hour)
-	 * @return					Output filename
+	 * @return	Output filename
 	 */
 	QString getExportImageFilename(const QString defaultFilename);
 
 	/**
 	 * Get exported preset filename
 	 * @param	defaultFilename	Default filename (transfer function name)
-	 * @return					Output filename
+	 * @return	Output filename
 	 */
 	QString getExportPresetFilename(const QString defaultFilename);
 
 	/**
 	 * Get exported mesh filename
 	 * @param	defaultFilename	Default filename
-	 * @return					Output filename
+	 * @return	Output filename
 	 */
 	QString getExportMeshFilename(const QString defaultFilename);
 
@@ -334,31 +334,31 @@ private slots:
 
 	/**
 	 * Add new rule to measure
-	 * @param	type			0: 3D Model and 1: Slice
+	 * @param	type	0: 3D Model and 1: Slice
 	 */
 	void addRule(const int type);
 
 	/**
 	 * Delete selected rule
-	 * @param	type			0: 3D Model and 1: Slice
+	 * @param	type	0: 3D Model and 1: Slice
 	 */
 	void deleteRule(const int type);
 
 	/**
 	 * Enable or disable selected rule
-	 * @param	type			0: 3D Model and 1: Slice
+	 * @param	type	0: 3D Model and 1: Slice
 	 */
 	void enableDisableRule(const int type);
 
 	/**
 	 * Enable selected rule
-	 * @param	type			0: 3D Model and 1: Slice
+	 * @param	type	0: 3D Model and 1: Slice
 	 */
 	void enableRule(const int type);
 
 	/**
 	 * Disable selected rule
-	 * @param	type			0: 3D Model and 1: Slice
+	 * @param	type	0: 3D Model and 1: Slice
 	 */
 	void disableRule(const int type);
 
@@ -374,7 +374,7 @@ private slots:
 
 	/**
 	 * Launch a warning message
-	 * @param	message			Message that will be shown
+	 * @param	message	Message that will be shown
 	 */
 	void launchWarning(const std::string message);
 
@@ -395,7 +395,7 @@ private slots:
 
 	/**
 	 * Change background color of a viewer
-	 * @param	widget			0: 3D Model, 1: 3D Model (deleting), 2: Mesh
+	 * @param	widget	0: 3D Model, 1: 3D Model (deleting), 2: Mesh
 	 */
 	void changeBackgroundColor(const int widget);
 

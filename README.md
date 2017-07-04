@@ -2,6 +2,8 @@
 
 > Francisco Javier Bolívar Lupiáñez
 
+![3DCurator icon](https://fblupi.github.io/3DCurator/img/icon.png)
+
 ## Description
 
 A 3D Viewer for CTs of Polychromed Wood Sculptures. Further info in [https://fblupi.github.io/3DCurator/](https://fblupi.github.io/3DCurator/).

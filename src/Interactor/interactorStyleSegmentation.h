@@ -46,7 +46,7 @@ public:
 
 	/**
 	 * Set ImageViewer that will be updated when segmentate
-	 * @param	viewer		ImageViewer2 that will be updated when segmentate
+	 * @param	viewer	ImageViewer2 that will be updated when segmentate
 	 */
 	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
 

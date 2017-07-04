@@ -25,12 +25,12 @@ public:
 	/**
 	 * Constructor
 	 * @param	figureRenWin	RenderWindow that will be updated when the opacity function is updated
-	 * @param	chartRenWin		RenderWindow where will be placed the chart
-	 * @param	tf				Opacity transfer function
-	 * @param	xLabel			Axis X label name
-	 * @param	yLabel			Axis Y label name
-	 * @param	minBound		Min control points bound
-	 * @param	maxBound		Max control points bound
+	 * @param	chartRenWin	RenderWindow where will be placed the chart
+	 * @param	tf		Opacity transfer function
+	 * @param	xLabel		Axis X label name
+	 * @param	yLabel		Axis Y label name
+	 * @param	minBound	Min control points bound
+	 * @param	maxBound	Max control points bound
 	 */
 	OpacityTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, vtkSmartPointer<vtkPiecewiseFunction> tf, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
 	
@@ -46,8 +46,8 @@ public:
 
 	/**
 	 * Range of Y axes gos from min to max
-	 * @param	min				Min bound
-	 * @param	max				Max bound
+	 * @param	min	Min bound
+	 * @param	max	Max bound
 	 */
 	void setRange(const double min, const double max);
 

@@ -32,37 +32,37 @@ public:
 
 	/**
 	 * Get color transfer function
-	 * @return				Color transfer function
+	 * @return	Color transfer function
 	 */
 	vtkSmartPointer<vtkColorTransferFunction> getColorFun() const;
 
 	/**
 	 * Get scalar opacity transfer function
-	 * @return				Scalar opacity transfer function
+	 * @return	Scalar opacity transfer function
 	 */
 	vtkSmartPointer<vtkPiecewiseFunction> getScalarFun() const;
 
 	/**
 	 * Get gradient opacity transfer function
-	 * @return				Gradient opacity transfer function
+	 * @return	Gradient opacity transfer function
 	 */
 	vtkSmartPointer<vtkPiecewiseFunction> getGradientFun() const;
 
 	/**
 	 * Get transfer function name
-	 * @return				Transfer function name
+	 * @return	Transfer function name
 	 */
 	std::string getName() const;
 
 	/**
 	 * Get transfer function description
-	 * @return				Transfer function description
+	 * @return	Transfer function description
 	 */
 	std::string getDescription() const;
 
 	/**
 	 * Set transfer function name
-	 * @param	name		Transfer function name
+	 * @param	name	Transfer function name
 	 */
 	void setName(const std::string name);
 
@@ -97,24 +97,24 @@ public:
 
 	/**
 	 * Add a RGB color point
-	 * @param	x			Density value
-	 * @param	r			Red
-	 * @param	g			Green
-	 * @param	b			Blue
+	 * @param	x	Density value
+	 * @param	r	Red
+	 * @param	g	Green
+	 * @param	b	Blue
 	 */
 	void addColorPoint(const double x, const double r, const double g, const double b);
 
 	/**
 	 * Add a scalar point
-	 * @param	x			Density value
-	 * @param	y			Opacity
+	 * @param	x	Density value
+	 * @param	y	Opacity
 	 */
 	void addScalarPoint(const double x, const double y);
 
 	/**
 	 * Add a gradient point
-	 * @param	x			Gradient value
-	 * @param	y			Opacity
+	 * @param	x	Gradient value
+	 * @param	y	Opacity
 	 */
 	void addGradientPoint(const double x, const double y);
 

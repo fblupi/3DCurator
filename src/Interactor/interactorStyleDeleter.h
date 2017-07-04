@@ -37,13 +37,13 @@ public:
 
 	/**
 	 * Set render window where we will pick a voxel
-	 * @param	renWin		RenderWindow where we will pick a voxel
+	 * @param	renWin	RenderWindow where we will pick a voxel
 	 */
 	void SetDefaultRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin);
 
 	/**
 	 * Set ImageViewer2 that will be updated when delete
-	 * @param	viewer		ImageViewer2 that will be updated when delete
+	 * @param	viewer	ImageViewer2 that will be updated when delete
 	 */
 	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
 

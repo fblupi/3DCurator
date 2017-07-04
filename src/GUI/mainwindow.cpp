@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
 	setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
 
-    connectComponents();
+	connectComponents();
 
 	renderVolume();
 	renderMesh();
@@ -167,9 +167,9 @@ void MainWindow::defaultBackgroundsColors() {
 void MainWindow::defaultPlanePosition() {
 	if (sculpture->getVolume() != NULL) { 
 		// volume dimension
-		double xSize = sculpture->getMaxXBound() - sculpture->getMinXBound(), 
-			   ySize = sculpture->getMaxYBound() - sculpture->getMinYBound(), 
-			   zSize = sculpture->getMaxZBound() - sculpture->getMinZBound();
+		double xSize = sculpture->getMaxXBound() - sculpture->getMinXBound();
+		double ySize = sculpture->getMaxYBound() - sculpture->getMinYBound();
+		double zSize = sculpture->getMaxZBound() - sculpture->getMinZBound();
 		slicePlane->setOrigin(xSize / 2, ySize / 2, zSize / 2); // plane in the center of the sculpture
 		slicePlane->setAxial();
 	} else {
@@ -756,13 +756,11 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 }
 
 void MainWindow::on_actionExportVolumeImage_triggered() {
-	exportImageFromRenderWindow(
-		ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+	exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_actionExportSliceImage_triggered() {
-	exportImageFromRenderWindow(
-		ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_actionExit_triggered() {
@@ -864,13 +862,11 @@ void MainWindow::on_sagitalPlane_pressed() {
 }
 
 void MainWindow::on_exportSliceImage_pressed() {
-	exportImageFromRenderWindow(
-		ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_exportVolumeImage_pressed() {
-	exportImageFromRenderWindow(
-		ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+	exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_importPreset_pressed() {

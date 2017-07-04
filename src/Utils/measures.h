@@ -3,4 +3,4 @@
 #define WOOD_ISOVALUE	-750	/**< Wood isosurface value */
 #define STUCCO_ISOVALUE -100	/**< Stucco isosurface value */
 #define METAL_ISOVALUE	2976	/**< Metal isosurface value */
-#define RULES_LIMIT		100		/**< Max number of rules */
+#define RULES_LIMIT	100	/**< Max number of rules */
