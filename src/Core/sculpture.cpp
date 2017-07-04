@@ -51,8 +51,6 @@ void Sculpture::setDICOMFolder(const std::string s) {
 
 	imageData->DeepCopy(imageReader->GetOutput());
 
-	//filter();
-
 	volumeMapper->SetInputData(imageData);
 
 	surface->SetInputData(imageData);
@@ -67,37 +65,29 @@ void Sculpture::createMesh() {
 }
 
 void Sculpture::filter() {
-	cout << "Filtering" << endl;
-
 	typedef signed short PixelType;
 	const unsigned int Dimension = 3;
 
 	typedef itk::Image<PixelType, Dimension> ImageType;
+
 	typedef itk::VTKImageToImageFilter<ImageType> VTKImageToImageType;
-	typedef itk::MedianImageFilter<ImageType, ImageType> MedianFilterType;
+	VTKImageToImageType::Pointer vtkImageToImage = VTKImageToImageType::New();
+	vtkImageToImage->SetInput(imageData);
+	vtkImageToImage->Update();
+
+	typedef itk::BinomialBlurImageFilter<ImageType, ImageType> BinomialBlurFilterType;
+	BinomialBlurFilterType::Pointer binomialBlurFilter = BinomialBlurFilterType::New();
+	binomialBlurFilter->SetInput(vtkImageToImage->GetOutput());
+	binomialBlurFilter->SetRepetitions(1);
+	binomialBlurFilter->Update();
+
 	typedef itk::ImageToVTKImageFilter<ImageType> ImageToVTKImageType;
+	ImageToVTKImageType::Pointer imageToVTKImage = ImageToVTKImageType::New();
+	imageToVTKImage->SetInput(binomialBlurFilter->GetOutput());
+	imageToVTKImage->Update();
 
-	VTKImageToImageType::Pointer connectorInput = VTKImageToImageType::New();
-	MedianFilterType::Pointer medianFilter = MedianFilterType::New();
-	ImageToVTKImageType::Pointer connectorOutput = ImageToVTKImageType::New();
-
-	ImageType::SizeType indexRadius;
-	indexRadius[0] = 3;
-	indexRadius[1] = 3;
-
-	connectorInput->SetInput(imageData);
-	connectorInput->Update();
-
-	medianFilter->SetInput(connectorInput->GetOutput());
-	medianFilter->SetRadius(indexRadius);
-
-	connectorOutput->SetInput(medianFilter->GetOutput());
-	connectorOutput->Update();
-
-	imageData = connectorOutput->GetOutput();
+	imageData->DeepCopy(imageToVTKImage->GetOutput());
 	imageData->Modified();
-
-	cout << "Filtered" << endl;
 }
 
 void Sculpture::setMaterial(const double ambient, const double diffuse, const double specular, const double power) {

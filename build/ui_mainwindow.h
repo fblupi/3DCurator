@@ -60,12 +60,14 @@ public:
     QAction *actionStuccoMesh;
     QAction *actionMetalMesh;
     QAction *actionExtractMesh;
+    QAction *actionFilter;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QGroupBox *groupBox;
     QHBoxLayout *horizontalLayout_4;
     QPushButton *openDICOM;
     QSpacerItem *horizontalSpacer_10;
+    QPushButton *filter;
     QPushButton *deleteVolumeParts;
     QPushButton *exportVolumeImage;
     QVTKWidget *volumeWidget;
@@ -245,6 +247,8 @@ public:
         actionMetalMesh->setObjectName(QStringLiteral("actionMetalMesh"));
         actionExtractMesh = new QAction(MainWindow);
         actionExtractMesh->setObjectName(QStringLiteral("actionExtractMesh"));
+        actionFilter = new QAction(MainWindow);
+        actionFilter->setObjectName(QStringLiteral("actionFilter"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -270,20 +274,29 @@ public:
 
         horizontalLayout_4->addItem(horizontalSpacer_10);
 
+        filter = new QPushButton(groupBox);
+        filter->setObjectName(QStringLiteral("filter"));
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/icons/filter.png"), QSize(), QIcon::Normal, QIcon::Off);
+        filter->setIcon(icon3);
+        filter->setIconSize(QSize(21, 21));
+
+        horizontalLayout_4->addWidget(filter);
+
         deleteVolumeParts = new QPushButton(groupBox);
         deleteVolumeParts->setObjectName(QStringLiteral("deleteVolumeParts"));
-        QIcon icon3;
-        icon3.addFile(QStringLiteral(":/icons/eraser.png"), QSize(), QIcon::Normal, QIcon::Off);
-        deleteVolumeParts->setIcon(icon3);
+        QIcon icon4;
+        icon4.addFile(QStringLiteral(":/icons/eraser.png"), QSize(), QIcon::Normal, QIcon::Off);
+        deleteVolumeParts->setIcon(icon4);
         deleteVolumeParts->setIconSize(QSize(21, 21));
 
         horizontalLayout_4->addWidget(deleteVolumeParts);
 
         exportVolumeImage = new QPushButton(groupBox);
         exportVolumeImage->setObjectName(QStringLiteral("exportVolumeImage"));
-        QIcon icon4;
-        icon4.addFile(QStringLiteral(":/icons/save.png"), QSize(), QIcon::Normal, QIcon::Off);
-        exportVolumeImage->setIcon(icon4);
+        QIcon icon5;
+        icon5.addFile(QStringLiteral(":/icons/save.png"), QSize(), QIcon::Normal, QIcon::Off);
+        exportVolumeImage->setIcon(icon5);
         exportVolumeImage->setIconSize(QSize(21, 21));
 
         horizontalLayout_4->addWidget(exportVolumeImage);
@@ -307,18 +320,18 @@ public:
         gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
         enableDisableSliceRule = new QPushButton(rulesBox);
         enableDisableSliceRule->setObjectName(QStringLiteral("enableDisableSliceRule"));
-        QIcon icon5;
-        icon5.addFile(QStringLiteral(":/icons/eye.png"), QSize(), QIcon::Normal, QIcon::Off);
-        enableDisableSliceRule->setIcon(icon5);
+        QIcon icon6;
+        icon6.addFile(QStringLiteral(":/icons/eye.png"), QSize(), QIcon::Normal, QIcon::Off);
+        enableDisableSliceRule->setIcon(icon6);
         enableDisableSliceRule->setIconSize(QSize(21, 21));
 
         gridLayout_3->addWidget(enableDisableSliceRule, 6, 0, 1, 1);
 
         addSliceRule = new QPushButton(rulesBox);
         addSliceRule->setObjectName(QStringLiteral("addSliceRule"));
-        QIcon icon6;
-        icon6.addFile(QStringLiteral(":/icons/plus.png"), QSize(), QIcon::Normal, QIcon::Off);
-        addSliceRule->setIcon(icon6);
+        QIcon icon7;
+        icon7.addFile(QStringLiteral(":/icons/plus.png"), QSize(), QIcon::Normal, QIcon::Off);
+        addSliceRule->setIcon(icon7);
         addSliceRule->setIconSize(QSize(21, 21));
 
         gridLayout_3->addWidget(addSliceRule, 6, 3, 1, 1);
@@ -329,9 +342,9 @@ public:
 
         deleteSliceRule = new QPushButton(rulesBox);
         deleteSliceRule->setObjectName(QStringLiteral("deleteSliceRule"));
-        QIcon icon7;
-        icon7.addFile(QStringLiteral(":/icons/minus.png"), QSize(), QIcon::Normal, QIcon::Off);
-        deleteSliceRule->setIcon(icon7);
+        QIcon icon8;
+        icon8.addFile(QStringLiteral(":/icons/minus.png"), QSize(), QIcon::Normal, QIcon::Off);
+        deleteSliceRule->setIcon(icon8);
         deleteSliceRule->setIconSize(QSize(21, 21));
 
         gridLayout_3->addWidget(deleteSliceRule, 6, 2, 1, 1);
@@ -343,7 +356,7 @@ public:
 
         addVolumeRule = new QPushButton(rulesBox);
         addVolumeRule->setObjectName(QStringLiteral("addVolumeRule"));
-        addVolumeRule->setIcon(icon6);
+        addVolumeRule->setIcon(icon7);
         addVolumeRule->setIconSize(QSize(21, 21));
 
         gridLayout_3->addWidget(addVolumeRule, 2, 3, 1, 1);
@@ -355,14 +368,14 @@ public:
 
         deleteVolumeRule = new QPushButton(rulesBox);
         deleteVolumeRule->setObjectName(QStringLiteral("deleteVolumeRule"));
-        deleteVolumeRule->setIcon(icon7);
+        deleteVolumeRule->setIcon(icon8);
         deleteVolumeRule->setIconSize(QSize(21, 21));
 
         gridLayout_3->addWidget(deleteVolumeRule, 2, 2, 1, 1);
 
         enableDisableVolumeRule = new QPushButton(rulesBox);
         enableDisableVolumeRule->setObjectName(QStringLiteral("enableDisableVolumeRule"));
-        enableDisableVolumeRule->setIcon(icon5);
+        enableDisableVolumeRule->setIcon(icon6);
         enableDisableVolumeRule->setIconSize(QSize(21, 21));
 
         gridLayout_3->addWidget(enableDisableVolumeRule, 2, 0, 1, 1);
@@ -409,9 +422,9 @@ public:
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         enableDisablePlane = new QPushButton(planeOptions);
         enableDisablePlane->setObjectName(QStringLiteral("enableDisablePlane"));
-        QIcon icon8;
-        icon8.addFile(QStringLiteral(":/icons/eye-slash.png"), QSize(), QIcon::Normal, QIcon::Off);
-        enableDisablePlane->setIcon(icon8);
+        QIcon icon9;
+        icon9.addFile(QStringLiteral(":/icons/eye-slash.png"), QSize(), QIcon::Normal, QIcon::Off);
+        enableDisablePlane->setIcon(icon9);
         enableDisablePlane->setIconSize(QSize(21, 21));
 
         horizontalLayout->addWidget(enableDisablePlane);
@@ -423,9 +436,9 @@ public:
         sagitalPlane = new QPushButton(planeOptions);
         sagitalPlane->setObjectName(QStringLiteral("sagitalPlane"));
         sagitalPlane->setMinimumSize(QSize(0, 40));
-        QIcon icon9;
-        icon9.addFile(QStringLiteral(":/icons/sagital.png"), QSize(), QIcon::Normal, QIcon::Off);
-        sagitalPlane->setIcon(icon9);
+        QIcon icon10;
+        icon10.addFile(QStringLiteral(":/icons/sagital.png"), QSize(), QIcon::Normal, QIcon::Off);
+        sagitalPlane->setIcon(icon10);
         sagitalPlane->setIconSize(QSize(40, 40));
 
         horizontalLayout->addWidget(sagitalPlane);
@@ -433,9 +446,9 @@ public:
         axialPlane = new QPushButton(planeOptions);
         axialPlane->setObjectName(QStringLiteral("axialPlane"));
         axialPlane->setMinimumSize(QSize(0, 40));
-        QIcon icon10;
-        icon10.addFile(QStringLiteral(":/icons/axial.png"), QSize(), QIcon::Normal, QIcon::Off);
-        axialPlane->setIcon(icon10);
+        QIcon icon11;
+        icon11.addFile(QStringLiteral(":/icons/axial.png"), QSize(), QIcon::Normal, QIcon::Off);
+        axialPlane->setIcon(icon11);
         axialPlane->setIconSize(QSize(40, 40));
 
         horizontalLayout->addWidget(axialPlane);
@@ -443,9 +456,9 @@ public:
         coronalPlane = new QPushButton(planeOptions);
         coronalPlane->setObjectName(QStringLiteral("coronalPlane"));
         coronalPlane->setMinimumSize(QSize(0, 40));
-        QIcon icon11;
-        icon11.addFile(QStringLiteral(":/icons/coronal.png"), QSize(), QIcon::Normal, QIcon::Off);
-        coronalPlane->setIcon(icon11);
+        QIcon icon12;
+        icon12.addFile(QStringLiteral(":/icons/coronal.png"), QSize(), QIcon::Normal, QIcon::Off);
+        coronalPlane->setIcon(icon12);
         coronalPlane->setIconSize(QSize(40, 40));
 
         horizontalLayout->addWidget(coronalPlane);
@@ -456,7 +469,7 @@ public:
 
         exportSliceImage = new QPushButton(planeOptions);
         exportSliceImage->setObjectName(QStringLiteral("exportSliceImage"));
-        exportSliceImage->setIcon(icon4);
+        exportSliceImage->setIcon(icon5);
         exportSliceImage->setIconSize(QSize(21, 21));
 
         horizontalLayout->addWidget(exportSliceImage);
@@ -482,9 +495,9 @@ public:
 
         segmentate = new QPushButton(tabSlices);
         segmentate->setObjectName(QStringLiteral("segmentate"));
-        QIcon icon12;
-        icon12.addFile(QStringLiteral(":/icons/scissors.png"), QSize(), QIcon::Normal, QIcon::Off);
-        segmentate->setIcon(icon12);
+        QIcon icon13;
+        icon13.addFile(QStringLiteral(":/icons/scissors.png"), QSize(), QIcon::Normal, QIcon::Off);
+        segmentate->setIcon(icon13);
         segmentate->setIconSize(QSize(21, 21));
 
         gridLayout_5->addWidget(segmentate, 2, 2, 1, 1);
@@ -498,7 +511,7 @@ public:
         gridLayout_84->setObjectName(QStringLiteral("gridLayout_84"));
         exportPreset = new QPushButton(tabTransferFunction);
         exportPreset->setObjectName(QStringLiteral("exportPreset"));
-        exportPreset->setIcon(icon4);
+        exportPreset->setIcon(icon5);
         exportPreset->setIconSize(QSize(21, 21));
 
         gridLayout_84->addWidget(exportPreset, 1, 7, 1, 1);
@@ -516,36 +529,36 @@ public:
 
         completePreset = new QPushButton(defaultPresetsBox);
         completePreset->setObjectName(QStringLiteral("completePreset"));
-        QIcon icon13;
-        icon13.addFile(QStringLiteral(":/icons/complete.png"), QSize(), QIcon::Normal, QIcon::Off);
-        completePreset->setIcon(icon13);
+        QIcon icon14;
+        icon14.addFile(QStringLiteral(":/icons/complete.png"), QSize(), QIcon::Normal, QIcon::Off);
+        completePreset->setIcon(icon14);
         completePreset->setIconSize(QSize(50, 50));
 
         horizontalLayout_2->addWidget(completePreset);
 
         woodPreset = new QPushButton(defaultPresetsBox);
         woodPreset->setObjectName(QStringLiteral("woodPreset"));
-        QIcon icon14;
-        icon14.addFile(QStringLiteral(":/icons/wood.png"), QSize(), QIcon::Normal, QIcon::Off);
-        woodPreset->setIcon(icon14);
+        QIcon icon15;
+        icon15.addFile(QStringLiteral(":/icons/wood.png"), QSize(), QIcon::Normal, QIcon::Off);
+        woodPreset->setIcon(icon15);
         woodPreset->setIconSize(QSize(50, 50));
 
         horizontalLayout_2->addWidget(woodPreset);
 
         stuccoPreset = new QPushButton(defaultPresetsBox);
         stuccoPreset->setObjectName(QStringLiteral("stuccoPreset"));
-        QIcon icon15;
-        icon15.addFile(QStringLiteral(":/icons/stucco.png"), QSize(), QIcon::Normal, QIcon::Off);
-        stuccoPreset->setIcon(icon15);
+        QIcon icon16;
+        icon16.addFile(QStringLiteral(":/icons/stucco.png"), QSize(), QIcon::Normal, QIcon::Off);
+        stuccoPreset->setIcon(icon16);
         stuccoPreset->setIconSize(QSize(50, 50));
 
         horizontalLayout_2->addWidget(stuccoPreset);
 
         metalPreset = new QPushButton(defaultPresetsBox);
         metalPreset->setObjectName(QStringLiteral("metalPreset"));
-        QIcon icon16;
-        icon16.addFile(QStringLiteral(":/icons/metal.png"), QSize(), QIcon::Normal, QIcon::Off);
-        metalPreset->setIcon(icon16);
+        QIcon icon17;
+        icon17.addFile(QStringLiteral(":/icons/metal.png"), QSize(), QIcon::Normal, QIcon::Off);
+        metalPreset->setIcon(icon17);
         metalPreset->setIconSize(QSize(50, 50));
 
         horizontalLayout_2->addWidget(metalPreset);
@@ -594,7 +607,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 131, 693));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 452, 693));
         verticalLayout_5 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setContentsMargins(11, 11, 11, 11);
@@ -718,7 +731,7 @@ public:
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
         extractMesh = new QPushButton(extractMeshTab);
         extractMesh->setObjectName(QStringLiteral("extractMesh"));
-        extractMesh->setIcon(icon4);
+        extractMesh->setIcon(icon5);
         extractMesh->setIconSize(QSize(21, 21));
 
         gridLayout_2->addWidget(extractMesh, 3, 4, 1, 1);
@@ -749,21 +762,21 @@ public:
 
         extractMeshWood = new QPushButton(extractMeshPresets);
         extractMeshWood->setObjectName(QStringLiteral("extractMeshWood"));
-        extractMeshWood->setIcon(icon14);
+        extractMeshWood->setIcon(icon15);
         extractMeshWood->setIconSize(QSize(50, 50));
 
         horizontalLayout_3->addWidget(extractMeshWood);
 
         extractMeshStucco = new QPushButton(extractMeshPresets);
         extractMeshStucco->setObjectName(QStringLiteral("extractMeshStucco"));
-        extractMeshStucco->setIcon(icon15);
+        extractMeshStucco->setIcon(icon16);
         extractMeshStucco->setIconSize(QSize(50, 50));
 
         horizontalLayout_3->addWidget(extractMeshStucco);
 
         extractMeshMetal = new QPushButton(extractMeshPresets);
         extractMeshMetal->setObjectName(QStringLiteral("extractMeshMetal"));
-        extractMeshMetal->setIcon(icon16);
+        extractMeshMetal->setIcon(icon17);
         extractMeshMetal->setIconSize(QSize(50, 50));
 
         horizontalLayout_3->addWidget(extractMeshMetal);
@@ -1005,6 +1018,8 @@ public:
         menuEditar->addAction(actionWoodMesh);
         menuEditar->addAction(actionStuccoMesh);
         menuEditar->addAction(actionMetalMesh);
+        menuEditar->addSeparator();
+        menuEditar->addAction(actionFilter);
         menuHerramientas->addAction(actionImportPreset);
         menuHerramientas->addAction(actionExportPreset);
         menuHerramientas->addSeparator();
@@ -1096,11 +1111,19 @@ public:
 #ifndef QT_NO_SHORTCUT
         actionExtractMesh->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+M", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
+        actionFilter->setText(QApplication::translate("MainWindow", "Filtrar", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        actionFilter->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+F", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         groupBox->setTitle(QApplication::translate("MainWindow", "Volumen", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
         openDICOM->setToolTip(QApplication::translate("MainWindow", "Abrir directorio DICOM", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         openDICOM->setText(QString());
+#ifndef QT_NO_TOOLTIP
+        filter->setToolTip(QApplication::translate("MainWindow", "Filtrar", Q_NULLPTR));
+#endif // QT_NO_TOOLTIP
+        filter->setText(QString());
 #ifndef QT_NO_TOOLTIP
         deleteVolumeParts->setToolTip(QApplication::translate("MainWindow", "Borrar partes", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
