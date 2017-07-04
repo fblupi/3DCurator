@@ -19,11 +19,9 @@
 #include <vtkActor.h>
 
 #include <itkImage.h>
-#include <itkImageFileReader.h>
-#include <itkImageToVTKImageFilter.h>
 #include <itkVTKImageToImageFilter.h>
-#include <itkCastImageFilter.h>
-#include <itkMedianImageFilter.h>
+#include <itkImageToVTKImageFilter.h>
+#include <itkBinomialBlurImageFilter.h>
 
 #include "Core/transferFunction.h"
 #include "Utils/measures.h"
@@ -142,6 +140,11 @@ public:
 	 */
 	void createMesh();
 
+	/**
+	 * Filter the volume using a Gaussian filter to reduce noise
+	 */
+	void filter();
+
 private:
 	vtkSmartPointer<vtkImageData> imageData; /**< 3D Matrix with volume data */
     vtkSmartPointer<vtkVolume> volume; /**< Volume */
@@ -163,11 +166,6 @@ private:
 	 * Connect components of the pipeline
 	 */
 	void connectComponents();
-
-	/**
-	 * Filter the volume using a Gaussian filter to reduce noise
-	 */
-	void filter();
 };
 
 #endif // SCULPTURE_H

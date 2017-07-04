@@ -89,6 +89,7 @@ private slots:
 	void on_actionWoodMesh_triggered();
 	void on_actionStuccoMesh_triggered();
 	void on_actionMetalMesh_triggered();
+	void on_actionFilter_triggered();
 
 	void on_openDICOM_pressed();
 	void on_axialPlane_pressed();
@@ -121,6 +122,7 @@ private slots:
 	void on_meshBackground_pressed();
 	void on_restoreBackgrounds_pressed();
 	void on_segmentate_pressed();
+	void on_filter_pressed();
 
 	void on_colorTFMaxSlider_valueChanged();
 	void on_colorTFMinSlider_valueChanged();
@@ -401,6 +403,11 @@ private slots:
 	 * Enable or disable segmentation mode
 	 */
 	void segmentateOnOff();
+
+	/**
+	 * Reduce noise with a gaussian filter
+	 */
+	void filter();
 
 private:
 	Ui::MainWindow *ui; /**< UI pointer */

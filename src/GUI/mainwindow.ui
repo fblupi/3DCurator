@@ -14,7 +14,7 @@
    <string>3DCurator</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="assets/resources.qrc">
+   <iconset resource="../../assets/resources.qrc">
     <normaloff>:/icons/3DCurator.png</normaloff>:/icons/3DCurator.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -43,7 +43,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="assets/resources.qrc">
+          <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
          </property>
          <property name="iconSize">
@@ -68,6 +68,26 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="filter">
+         <property name="toolTip">
+          <string>Filtrar</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../assets/resources.qrc">
+           <normaloff>:/icons/filter.png</normaloff>:/icons/filter.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="deleteVolumeParts">
          <property name="toolTip">
           <string>Borrar partes</string>
@@ -76,7 +96,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="assets/resources.qrc">
+          <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/eraser.png</normaloff>:/icons/eraser.png</iconset>
          </property>
          <property name="iconSize">
@@ -96,7 +116,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="assets/resources.qrc">
+          <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
          </property>
          <property name="iconSize">
@@ -111,7 +131,7 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QVTKWidget" name="volumeWidget" native="true">
+     <widget class="QVTKWidget" name="volumeWidget">
       <property name="minimumSize">
        <size>
         <width>400</width>
@@ -147,7 +167,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="assets/resources.qrc">
+          <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/eye.png</normaloff>:/icons/eye.png</iconset>
          </property>
          <property name="iconSize">
@@ -167,7 +187,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="assets/resources.qrc">
+          <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
          </property>
          <property name="iconSize">
@@ -200,7 +220,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="assets/resources.qrc">
+          <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/minus.png</normaloff>:/icons/minus.png</iconset>
          </property>
          <property name="iconSize">
@@ -223,7 +243,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="assets/resources.qrc">
+          <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
          </property>
          <property name="iconSize">
@@ -246,7 +266,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="assets/resources.qrc">
+          <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/minus.png</normaloff>:/icons/minus.png</iconset>
          </property>
          <property name="iconSize">
@@ -266,7 +286,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="assets/resources.qrc">
+          <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/eye.png</normaloff>:/icons/eye.png</iconset>
          </property>
          <property name="iconSize">
@@ -366,7 +386,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="assets/resources.qrc">
+              <iconset resource="../../assets/resources.qrc">
                <normaloff>:/icons/eye-slash.png</normaloff>:/icons/eye-slash.png</iconset>
              </property>
              <property name="iconSize">
@@ -405,7 +425,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="assets/resources.qrc">
+              <iconset resource="../../assets/resources.qrc">
                <normaloff>:/icons/sagital.png</normaloff>:/icons/sagital.png</iconset>
              </property>
              <property name="iconSize">
@@ -431,7 +451,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="assets/resources.qrc">
+              <iconset resource="../../assets/resources.qrc">
                <normaloff>:/icons/axial.png</normaloff>:/icons/axial.png</iconset>
              </property>
              <property name="iconSize">
@@ -457,7 +477,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="assets/resources.qrc">
+              <iconset resource="../../assets/resources.qrc">
                <normaloff>:/icons/coronal.png</normaloff>:/icons/coronal.png</iconset>
              </property>
              <property name="iconSize">
@@ -490,7 +510,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="assets/resources.qrc">
+              <iconset resource="../../assets/resources.qrc">
                <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
              </property>
              <property name="iconSize">
@@ -505,7 +525,7 @@
          </widget>
         </item>
         <item row="1" column="0" colspan="3">
-         <widget class="QVTKWidget" name="slicesWidget" native="true">
+         <widget class="QVTKWidget" name="slicesWidget">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -549,7 +569,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="assets/resources.qrc">
+           <iconset resource="../../assets/resources.qrc">
             <normaloff>:/icons/scissors.png</normaloff>:/icons/scissors.png</iconset>
           </property>
           <property name="iconSize">
@@ -576,7 +596,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="assets/resources.qrc">
+           <iconset resource="../../assets/resources.qrc">
             <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
           </property>
           <property name="iconSize">
@@ -621,7 +641,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="assets/resources.qrc">
+              <iconset resource="../../assets/resources.qrc">
                <normaloff>:/icons/complete.png</normaloff>:/icons/complete.png</iconset>
              </property>
              <property name="iconSize">
@@ -641,7 +661,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="assets/resources.qrc">
+              <iconset resource="../../assets/resources.qrc">
                <normaloff>:/icons/wood.png</normaloff>:/icons/wood.png</iconset>
              </property>
              <property name="iconSize">
@@ -661,7 +681,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="assets/resources.qrc">
+              <iconset resource="../../assets/resources.qrc">
                <normaloff>:/icons/stucco.png</normaloff>:/icons/stucco.png</iconset>
              </property>
              <property name="iconSize">
@@ -681,7 +701,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="assets/resources.qrc">
+              <iconset resource="../../assets/resources.qrc">
                <normaloff>:/icons/metal.png</normaloff>:/icons/metal.png</iconset>
              </property>
              <property name="iconSize">
@@ -770,7 +790,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>131</width>
+             <width>452</width>
              <height>693</height>
             </rect>
            </property>
@@ -811,7 +831,7 @@
                 </widget>
                </item>
                <item row="0" column="0" colspan="2">
-                <widget class="QVTKWidget" name="colorTFWidget" native="true">
+                <widget class="QVTKWidget" name="colorTFWidget">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -833,7 +853,7 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_87">
                <item row="0" column="0" colspan="2">
-                <widget class="QVTKWidget" name="scalarTFWidget" native="true">
+                <widget class="QVTKWidget" name="scalarTFWidget">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -881,7 +901,7 @@
               </property>
               <layout class="QGridLayout" name="gridLayout_88">
                <item row="0" column="0" colspan="2">
-                <widget class="QVTKWidget" name="gradientTFWidget" native="true">
+                <widget class="QVTKWidget" name="gradientTFWidget">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -935,7 +955,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="assets/resources.qrc">
+           <iconset resource="../../assets/resources.qrc">
             <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
           </property>
           <property name="iconSize">
@@ -962,7 +982,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="assets/resources.qrc">
+           <iconset resource="../../assets/resources.qrc">
             <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
           </property>
           <property name="iconSize">
@@ -1036,7 +1056,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="assets/resources.qrc">
+              <iconset resource="../../assets/resources.qrc">
                <normaloff>:/icons/wood.png</normaloff>:/icons/wood.png</iconset>
              </property>
              <property name="iconSize">
@@ -1056,7 +1076,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="assets/resources.qrc">
+              <iconset resource="../../assets/resources.qrc">
                <normaloff>:/icons/stucco.png</normaloff>:/icons/stucco.png</iconset>
              </property>
              <property name="iconSize">
@@ -1076,7 +1096,7 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="assets/resources.qrc">
+              <iconset resource="../../assets/resources.qrc">
                <normaloff>:/icons/metal.png</normaloff>:/icons/metal.png</iconset>
              </property>
              <property name="iconSize">
@@ -1104,7 +1124,7 @@
          </widget>
         </item>
         <item row="2" column="2" colspan="3">
-         <widget class="QVTKWidget" name="meshWidget" native="true">
+         <widget class="QVTKWidget" name="meshWidget">
           <property name="minimumSize">
            <size>
             <width>350</width>
@@ -1513,6 +1533,8 @@
     <addaction name="actionWoodMesh"/>
     <addaction name="actionStuccoMesh"/>
     <addaction name="actionMetalMesh"/>
+    <addaction name="separator"/>
+    <addaction name="actionFilter"/>
    </widget>
    <widget class="QMenu" name="menuHerramientas">
     <property name="title">
@@ -1530,7 +1552,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpenDICOM">
    <property name="icon">
-    <iconset resource="assets/resources.qrc">
+    <iconset resource="../../assets/resources.qrc">
      <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
    </property>
    <property name="text">
@@ -1548,7 +1570,7 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="assets/resources.qrc">
+    <iconset resource="../../assets/resources.qrc">
      <normaloff>:/icons/power.png</normaloff>:/icons/power.png</iconset>
    </property>
    <property name="text">
@@ -1603,7 +1625,7 @@
   </action>
   <action name="actionOpenDICOM_2">
    <property name="icon">
-    <iconset resource="assets/resources.qrc">
+    <iconset resource="../../assets/resources.qrc">
      <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
    </property>
    <property name="text">
@@ -1702,6 +1724,14 @@
     <string>Ctrl+Shift+M</string>
    </property>
   </action>
+  <action name="actionFilter">
+   <property name="text">
+    <string>Filtrar</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -1713,7 +1743,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="assets/resources.qrc"/>
+  <include location="../../assets/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

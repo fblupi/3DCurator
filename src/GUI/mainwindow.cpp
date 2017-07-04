@@ -721,6 +721,32 @@ void MainWindow::segmentateOnOff() {
 	}
 }
 
+void MainWindow::filter() {
+	if (sculpture->getLoaded()) {
+		// -- launch progress bar
+		QPointer<QProgressBar> bar = new QProgressBar(0);
+		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+		progressDialog->setWindowTitle(QString("Filtrando..."));
+		progressDialog->setLabelText(QString::fromLatin1("Aplicando un filtro Gaussiano para reducir el ruido"));
+		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+		progressDialog->setCancelButton(0);
+		progressDialog->setBar(bar);
+		progressDialog->show();
+		bar->close();
+		QApplication::processEvents();
+		// -- END launch progress bar
+
+		sculpture->filter();
+
+		// -- close progress bar
+		progressDialog->close();
+		// -- END close progress bar
+	} else {
+		launchWarningNoVolume();
+	}
+}
+
 //---------------------------------------------------------------------------------------------------------------------------------
 // GUI Events - Menu
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -811,6 +837,10 @@ void MainWindow::on_actionStuccoMesh_triggered() {
 
 void MainWindow::on_actionMetalMesh_triggered() {
 	ui->isoValueSlider->setValue(METAL_ISOVALUE);
+}
+
+void MainWindow::on_actionFilter_triggered() {
+	filter();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -942,6 +972,10 @@ void MainWindow::on_restoreBackgrounds_pressed() {
 
 void MainWindow::on_segmentate_pressed() {
 	segmentateOnOff();
+}
+
+void MainWindow::on_filter_pressed() {
+	filter();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
