@@ -18,8 +18,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nSho
 
 	a.installTranslator(&qtTranslator);
 
-    MainWindow w;
-    w.show();
+	MainWindow w;
+	w.show();
 
-    return a.exec();
+	return a.exec();
 }

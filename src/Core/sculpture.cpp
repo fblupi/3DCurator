@@ -5,11 +5,11 @@ Sculpture::Sculpture() {
 	loaded = false; // no volume loaded
 
 	tf = new TransferFunction();
-    volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
+	volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	imageData = vtkSmartPointer<vtkImageData>::New();
 	meshActor = vtkSmartPointer<vtkActor>::New();
-    volume = vtkSmartPointer<vtkVolume>::New();
+	volume = vtkSmartPointer<vtkVolume>::New();
 	meshMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
 	surface = vtkSmartPointer<vtkMarchingCubes>::New();
 
@@ -46,8 +46,8 @@ void Sculpture::setDICOMFolder(const std::string s) {
 	loaded = false;
 
 	vtkSmartPointer<vtkDICOMImageReader> imageReader = vtkSmartPointer<vtkDICOMImageReader>::New();
-    imageReader->SetDirectoryName(s.c_str());
-    imageReader->Update();
+	imageReader->SetDirectoryName(s.c_str());
+	imageReader->Update();
 
 	imageData->DeepCopy(imageReader->GetOutput());
 

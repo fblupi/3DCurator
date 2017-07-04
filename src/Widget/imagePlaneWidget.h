@@ -62,7 +62,7 @@ public:
 	virtual void OnRightButtonUp();
 
 private:
-	bool moving = false;  /**< Plane is moving */
+	bool moving = false; /**< Plane is moving */
 	vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 that will be updated when the plane is moving */
 };
 

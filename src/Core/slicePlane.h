@@ -27,7 +27,7 @@ public:
 
 	/**
 	 * GetPlane
-	 * @return				Pointer to ImagePlaneWidget
+	 * @return	Pointer to ImagePlaneWidget
 	 */
 	vtkSmartPointer<ImagePlaneWidget> getPlane() const;
 
@@ -39,27 +39,27 @@ public:
 
 	/** 
 	 * Set viewer where slices will be shown
-	 * @param	viewer		Viewer where slices will be shown
+	 * @param	viewer	Viewer where slices will be shown
 	 */
 	void setViewer(vtkSmartPointer<vtkImageViewer2> viewer);
 
 	/**
 	 * Makes the plane visible/invisible
-	 * @param	onOff		Visibility on or off
+	 * @param	onOff	Visibility on or off
 	 */
 	void enable(const bool onOff);
 
 	/**
 	 * Makes visible the slice with the volume
-	 * @param	onOff		Visibility on or off
+	 * @param	onOff	Visibility on or off
 	 */
 	void show(const bool onOff);
 
 	/**
 	 * Set the origin of the plane in a point
-	 * @param	x		X coordinate
-	 * @param	y		Y coordinate
-	 * @param	z		Z coordinate
+	 * @param	x	X coordinate
+	 * @param	y	Y coordinate
+	 * @param	z	Z coordinate
 	 */
 	void setOrigin(const double x, const double y, const double z);
 

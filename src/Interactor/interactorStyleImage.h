@@ -36,7 +36,7 @@ public:
 
 	/**
 	 * Set the QLabel where the density value will be shown
-	 * @param	label		QLabel where the density value will be shown
+	 * @param	label	QLabel where the density value will be shown
 	 */
 	void SetLabel(QLabel* label);
 	

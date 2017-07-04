@@ -36,7 +36,7 @@ public:
 
 	/**
 	 * Key release event: Updates RenderWindow
-	 * @param	key		Key context
+	 * @param	key	Key context
 	 */
 	virtual bool KeyReleaseEvent(const vtkContextKeyEvent &key);
 

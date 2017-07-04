@@ -44,79 +44,79 @@ public:
 
 	/**
 	 * Get transfer function
-	 * @return				Transfer function pointer
+	 * @return	Transfer function pointer
 	 */
 	TransferFunction *getTransferFunction() const;
 
 	/**
 	 * Get volume
-	 * @return				Volume pointer
+	 * @return	Volume pointer
 	 */
 	vtkSmartPointer<vtkVolume> getVolume() const;
 
 	/**
 	 * Get 3D matrix with volume data
-	 * @return				volume data pointer
+	 * @return	volume data pointer
 	 */
 	vtkSmartPointer<vtkImageData> getImageData() const;
 
 	/**
 	 * Get mesh extracted using marching cubes
-	 * @return				Mesh pointer
+	 * @return	Mesh pointer
 	 */
 	vtkSmartPointer<vtkActor> getMesh() const;
 
 	/**
 	 * Get isosurface value
-	 * @return				Isosurface value
+	 * @return	Isosurface value
 	 */
 	double getIsoValue() const;
 
 	/**
 	 * Get the flag to see if a volume is loaded or not
-	 * @return				Volume is loaded or not
+	 * @return	Volume is loaded or not
 	 */
 	bool getLoaded() const;
 
 	/**
 	 * Get volume min x bound
-	 * @return				Min x bound
+	 * @return	Min x bound
 	 */
 	double getMinXBound() const;
 
 	/**
 	 * Get volume min y bound
-	 * @return				Min y bound
+	 * @return	Min y bound
 	 */
 	double getMinYBound() const;
 
 	/**
 	 * Get volume min z bound
-	 * @return				Min z bound
+	 * @return	Min z bound
 	 */
 	double getMinZBound() const;
 
 	/**
 	 * Get volume max x bound
-	 * @return				Max x bound
+	 * @return	Max x bound
 	 */
 	double getMaxXBound() const;
 
 	/**
 	 * Get volume max y bound
-	 * @return				Max y bound
+	 * @return	Max y bound
 	 */
 	double getMaxYBound() const;
 
 	/**
 	 * Get volume max z bound
-	 * @return				Max z bound
+	 * @return	Max z bound
 	 */
 	double getMaxZBound() const;
 
 	/**
 	 * Set folder where DICOM files will be read
-	 * @param	s			Folder with DICOM files
+	 * @param	s	Folder with DICOM files
 	 */
 	void setDICOMFolder(const std::string s);
 
@@ -131,7 +131,7 @@ public:
 
 	/**
 	 * Set isosurface value to extract the mesh
-	 * @param	isoValue	isosurface value
+	 * @param	isoValue	Isosurface value
 	 */
 	void setIsoValue(const double isoValue);
 
