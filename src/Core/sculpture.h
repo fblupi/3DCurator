@@ -24,7 +24,7 @@
 #include <itkBinomialBlurImageFilter.h>
 
 #include "Core/transferFunction.h"
-#include "Utils/measures.h"
+#include "Util/measures.h"
 
 /**
  * @class Sculpture

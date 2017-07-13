@@ -30,8 +30,8 @@
 #include <vtkSmoothPolyDataFilter.h>
 #include <vtkPolyDataConnectivityFilter.h>
 
-#include "Utils/measures.h"
-#include "Utils/utils.h"
+#include "Util/measures.h"
+#include "Util/utils.h"
 #include "Core/sculpture.h"
 #include "Core/slicePlane.h"
 #include "Interactor/interactorStyleImage.h"
@@ -66,7 +66,7 @@ public:
 	/*
 	 * Destructor
 	 */
-    ~MainWindow();
+	~MainWindow();
 
 private slots:
 	// GUI events

@@ -1,3 +1,0 @@
-C:/Users/fblupi/Documents/GitHub/3DCurator/build/CMakeFiles/3DCurator.dir
-C:/Users/fblupi/Documents/GitHub/3DCurator/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/fblupi/Documents/GitHub/3DCurator/build/CMakeFiles/ZERO_CHECK.dir
