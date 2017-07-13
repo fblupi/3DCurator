@@ -9,8 +9,8 @@
 
 #include "Segmentation/segmentationCommons.h"
 
-#define MIN_AIR	-850	/**< Min air value */
-#define AIR_HU	-1000	/**< Air value */
+#define MIN_AIR	-850.0	/**< Min air value */
+#define AIR_HU	-1000.0	/**< Air value */
 
 /**
  * Search a seed where star the region growing

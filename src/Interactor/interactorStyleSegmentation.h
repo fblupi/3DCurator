@@ -26,8 +26,8 @@
 
 #include "Core/slicePlane.h"
 #include "Core/sculpture.h"
-#include "Utils/measures.h"
-#include "Utils/utils.h"
+#include "Util/measures.h"
+#include "Util/utils.h"
 #include "GUI/lineSelectionDialog.h"
 #include "Segmentation/woodSegmentation.h"
 
