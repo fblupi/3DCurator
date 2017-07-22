@@ -1,4 +1,4 @@
-#include "regionGrowingDeleter.h"
+#include "RegionGrowingDeleter.h"
 
 Coord2D searchInitialVoxel(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const Bounds bounds) {
 	if (ijk[0] - 1 >= bounds.MIN_X

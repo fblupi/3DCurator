@@ -1,4 +1,4 @@
-#include "chartXY.h"
+#include "ChartXY.h"
 
 vtkStandardNewMacro(ChartXY);	
 

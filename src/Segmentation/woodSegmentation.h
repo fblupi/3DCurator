@@ -15,8 +15,8 @@
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 
-#include "Util/geometry.h"
-#include "Segmentation/segmentationCommons.h"
+#include "Util/Geometry.h"
+#include "Segmentation/SegmentationCommons.h"
 
 #define MIN_ANGLE	0.5	/**< Min angle for nearest line */
 #define MIN_DISTA	5	/**< Min for nearest line */

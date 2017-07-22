@@ -13,8 +13,8 @@
 #include <vtkSmartPointer.h>
 #include <vtkRenderWindow.h>
 
-#include "Chart/colorTransferControlPointsItem.h"
-#include "Chart/chartXY.h"
+#include "Chart/ColorTransferControlPointsItem.h"
+#include "Chart/ChartXY.h"
 
 /**
  * @class ColorTFChart

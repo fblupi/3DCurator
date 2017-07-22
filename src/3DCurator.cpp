@@ -2,7 +2,7 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 
-#include "GUI/mainwindow.h"
+#include "GUI/MainWindow.h"
 
 #define WINAPI __stdcall
 

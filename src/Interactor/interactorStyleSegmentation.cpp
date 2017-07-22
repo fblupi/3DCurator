@@ -1,4 +1,4 @@
-#include "interactorStyleSegmentation.h"
+#include "InteractorStyleSegmentation.h"
 
 vtkStandardNewMacro(InteractorStyleSegmentation);
 

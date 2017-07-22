@@ -1,4 +1,4 @@
-#include "sculpture.h"
+#include "Sculpture.h"
 
 Sculpture::Sculpture() {
 	isoValue = WOOD_ISOVALUE; // default isovalue

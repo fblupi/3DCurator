@@ -7,7 +7,7 @@
 #include <vtkImageViewer2.h>
 #include <vtkImageData.h>
 
-#include "Widget/imagePlaneWidget.h"
+#include "Widget/ImagePlaneWidget.h"
 
 /** 
  * @class SlicePlane
