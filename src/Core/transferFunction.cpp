@@ -1,4 +1,4 @@
-#include "transferFunction.h"
+#include "TransferFunction.h"
 
 TransferFunction::TransferFunction() {
 	colorFun = vtkSmartPointer<vtkColorTransferFunction>::New();

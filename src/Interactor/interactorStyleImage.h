@@ -11,8 +11,8 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkCellPicker.h>
 
-#include "Core/slicePlane.h"
-#include "Core/sculpture.h"
+#include "Core/SlicePlane.h"
+#include "Core/Sculpture.h"
 
 /**
  * @class InteractorStyleImage

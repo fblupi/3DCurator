@@ -1,4 +1,4 @@
-#include "interactorStyleImage.h"
+#include "InteractorStyleImage.h"
 
 vtkStandardNewMacro(InteractorStyleImage);
 

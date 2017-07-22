@@ -1,4 +1,4 @@
-#include "colorTransferControlPointsItem.h"
+#include "ColorTransferControlPointsItem.h"
 
 vtkStandardNewMacro(ColorTransferControlPointsItem);
 

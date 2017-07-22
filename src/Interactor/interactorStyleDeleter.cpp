@@ -1,4 +1,4 @@
-#include "interactorStyleDeleter.h"
+#include "InteractorStyleDeleter.h"
 
 vtkStandardNewMacro(InteractorStyleDeleter);
 

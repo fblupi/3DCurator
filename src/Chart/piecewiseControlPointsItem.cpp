@@ -1,4 +1,4 @@
-#include "piecewiseControlPointsItem.h"
+#include "PiecewiseControlPointsItem.h"
 
 vtkStandardNewMacro(PiecewiseControlPointsItem);
 

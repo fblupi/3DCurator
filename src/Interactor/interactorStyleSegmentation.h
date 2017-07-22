@@ -24,12 +24,12 @@
 #include <vtkPointPlacer.h>
 #include <vtkRenderer.h>
 
-#include "Core/slicePlane.h"
-#include "Core/sculpture.h"
-#include "Util/measures.h"
-#include "Util/utils.h"
-#include "GUI/lineSelectionDialog.h"
-#include "Segmentation/woodSegmentation.h"
+#include "Core/SlicePlane.h"
+#include "Core/Sculpture.h"
+#include "Util/Measures.h"
+#include "Util/Utils.h"
+#include "GUI/LineSelectionDialog.h"
+#include "Segmentation/WoodSegmentation.h"
 
 /**
  * @class InteractorStyleSegmentation

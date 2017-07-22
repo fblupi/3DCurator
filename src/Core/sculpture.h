@@ -23,8 +23,8 @@
 #include <itkImageToVTKImageFilter.h>
 #include <itkBinomialBlurImageFilter.h>
 
-#include "Core/transferFunction.h"
-#include "Util/measures.h"
+#include "Core/TransferFunction.h"
+#include "Util/Measures.h"
 
 /**
  * @class Sculpture

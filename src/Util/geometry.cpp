@@ -1,4 +1,4 @@
-#include "geometry.h"
+#include "Geometry.h"
 
 std::array<int, 3> getVector(const int A[3], const int B[3]) {
 	return{ B[0] - A[0], B[1] - A[1], B[2] - A[2] };

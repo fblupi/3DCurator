@@ -1,4 +1,4 @@
-#include "slicePlane.h"
+#include "SlicePlane.h"
 
 SlicePlane::SlicePlane() {
 	plane = vtkSmartPointer<ImagePlaneWidget>::New();

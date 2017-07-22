@@ -1,4 +1,4 @@
-﻿#include "woodSegmentation.h"
+﻿#include "WoodSegmentation.h"
 
 bool longerLine(const HoughLine i, const HoughLine j) {
 	return i.second > j.second;

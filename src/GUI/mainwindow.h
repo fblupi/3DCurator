@@ -30,15 +30,15 @@
 #include <vtkSmoothPolyDataFilter.h>
 #include <vtkPolyDataConnectivityFilter.h>
 
-#include "Util/measures.h"
-#include "Util/utils.h"
-#include "Core/sculpture.h"
-#include "Core/slicePlane.h"
-#include "Interactor/interactorStyleImage.h"
-#include "Interactor/interactorStyleDeleter.h"
-#include "Interactor/interactorStyleSegmentation.h"
-#include "Chart/colorTFChart.h"
-#include "Chart/opacityTFChart.h"
+#include "Util/Measures.h"
+#include "Util/Utils.h"
+#include "Core/Sculpture.h"
+#include "Core/SlicePlane.h"
+#include "Interactor/InteractorStyleImage.h"
+#include "Interactor/InteractorStyleDeleter.h"
+#include "Interactor/InteractorStyleSegmentation.h"
+#include "Chart/ColorTFChart.h"
+#include "Chart/OpacityTFChart.h"
 
 #define VOLUME_RULE 0
 #define SLICE_RULE 1
