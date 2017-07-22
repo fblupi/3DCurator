@@ -111,12 +111,9 @@ private slots:
 	void on_extractMeshMetal_pressed();
 	void on_enableDisablePlane_pressed();
 	void on_deleteVolumeParts_pressed();
-	void on_addSliceRule_pressed();
-	void on_addVolumeRule_pressed();
-	void on_deleteSliceRule_pressed();
-	void on_deleteVolumeRule_pressed();
-	void on_enableDisableSliceRule_pressed();
-	void on_enableDisableVolumeRule_pressed();
+	void on_addRule_pressed();
+	void on_deleteRule_pressed();
+	void on_enableDisableRule_pressed();
 	void on_volumeBackground_pressed();
 	void on_volumeDeletingBackground_pressed();
 	void on_meshBackground_pressed();
@@ -334,33 +331,28 @@ private slots:
 
 	/**
 	 * Add new rule to measure
-	 * @param	type	0: 3D Model and 1: Slice
 	 */
-	void addRule(const int type);
+	void addRule();
 
 	/**
 	 * Delete selected rule
-	 * @param	type	0: 3D Model and 1: Slice
 	 */
-	void deleteRule(const int type);
+	void deleteRule();
 
 	/**
 	 * Enable or disable selected rule
-	 * @param	type	0: 3D Model and 1: Slice
 	 */
-	void enableDisableRule(const int type);
+	void enableDisableRule();
 
 	/**
 	 * Enable selected rule
-	 * @param	type	0: 3D Model and 1: Slice
 	 */
-	void enableRule(const int type);
+	void enableRule();
 
 	/**
 	 * Disable selected rule
-	 * @param	type	0: 3D Model and 1: Slice
 	 */
-	void disableRule(const int type);
+	void disableRule();
 
 	/**
 	 * Delete all rules
@@ -440,7 +432,6 @@ private:
 	bool deleting; /**< Deleting mode enabled or disabled */
 	bool segmentating; /**< Segmentating mode enabled or disabled */
 	bool showPlane; /**< Show or hide plane */
-	int volumeRuleCounter; /**< Number of volume rules */
 	int sliceRuleCounter; /**< Number of slice rules */
 };
 

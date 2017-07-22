@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	segmentating = false;
 
 	// initiate counters
-	volumeRuleCounter = 0;
 	sliceRuleCounter = 0;
 
 	itemListEnabled = QFont();
@@ -495,32 +494,18 @@ void MainWindow::importMetalPreset() {
 	renderVolume();
 }
 
-void MainWindow::addRule(const int type) {
+void MainWindow::addRule() {
 	if (rules.size() < RULES_LIMIT) {
 		std::string id;
 		QListWidgetItem *item = new QListWidgetItem(0); // create GUI item
-		switch (type) {
-			case VOLUME_RULE:
-				volumeRuleCounter++;
-				id = "Regla " + std::to_string(volumeRuleCounter);
-				item->setText(id.c_str());
-				item->setFont(itemListEnabled);
-				ui->volumeRulesList->addItem(item); 
-				ui->volumeRulesList->setCurrentItem(item);
-				rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); 
-				rules[item]->SetInteractor(ui->volumeWidget->GetInteractor());
-				break;
-			case SLICE_RULE: 
-				sliceRuleCounter++; 
-				id = "Regla " + std::to_string(sliceRuleCounter); 
-				item->setText(id.c_str()); 
-				item->setFont(itemListEnabled); 
-				ui->sliceRulesList->addItem(item);
-				ui->sliceRulesList->setCurrentItem(item);
-				rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); 
-				rules[item]->SetInteractor(ui->slicesWidget->GetInteractor());
-				break;
-		}
+		sliceRuleCounter++; 
+		id = "Regla " + std::to_string(sliceRuleCounter); 
+		item->setText(id.c_str()); 
+		item->setFont(itemListEnabled); 
+		ui->ruleList->addItem(item);
+		ui->ruleList->setCurrentItem(item);
+		rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); 
+		rules[item]->SetInteractor(ui->slicesWidget->GetInteractor());
 		rules[item]->CreateDefaultRepresentation(); 
 		static_cast<vtkDistanceRepresentation *>(rules[item]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); 
 		rules[item]->On();
@@ -529,101 +514,46 @@ void MainWindow::addRule(const int type) {
 	}
 }
 
-void MainWindow::deleteRule(const int type) {
-	switch (type) {
-		case VOLUME_RULE: 
-			if (ui->volumeRulesList->currentItem() != NULL) {
-				rules.erase(ui->volumeRulesList->currentItem());
-				delete ui->volumeRulesList->currentItem();
-				renderVolume();
-				if (ui->volumeRulesList->count() == 0) {
-					volumeRuleCounter = 0;
-				}
-			} else {
-				launchWarningNoRule();
-			}
-			break;
-		case SLICE_RULE: 
-			if (ui->sliceRulesList->currentItem() != NULL) { 
-				rules.erase(ui->sliceRulesList->currentItem()); 
-				delete ui->sliceRulesList->currentItem(); 
-				renderSlice();
-				if (ui->sliceRulesList->count() == 0) {
-					sliceRuleCounter = 0;
-				}
-			} else {
-				launchWarningNoRule();
-			}
-			break;
+void MainWindow::deleteRule() {
+	if (ui->ruleList->currentItem() != NULL) { 
+		rules.erase(ui->ruleList->currentItem()); 
+		delete ui->ruleList->currentItem(); 
+		renderSlice();
+		if (ui->ruleList->count() == 0) {
+			sliceRuleCounter = 0;
+		}
+	} else {
+		launchWarningNoRule();
 	}
 }
 
-void MainWindow::enableDisableRule(const int type) {
-	switch (type) {
-		case VOLUME_RULE:
-			if (ui->volumeRulesList->currentItem() != NULL) {
-				if (ui->volumeRulesList->currentItem()->font() == itemListDisabled) {
-					enableRule(type); 
-					ui->volumeRulesList->currentItem()->setFont(itemListEnabled); 
-				} else {
-					disableRule(type);
-					ui->volumeRulesList->currentItem()->setFont(itemListDisabled);
-				}
-			} else {
-				launchWarningNoRule();
-			}
-			break;
-		case SLICE_RULE:
-			if (ui->sliceRulesList->currentItem() != NULL) {
-				if (ui->sliceRulesList->currentItem()->font() == itemListDisabled) {
-					enableRule(type);
-					ui->sliceRulesList->currentItem()->setFont(itemListEnabled);
-				} else {
-					disableRule(type);
-					ui->sliceRulesList->currentItem()->setFont(itemListDisabled);
-				}
-			} else {
-				launchWarningNoRule();
-			}
-			break;
+void MainWindow::enableDisableRule() {
+	if (ui->ruleList->currentItem() != NULL) {
+		if (ui->ruleList->currentItem()->font() == itemListDisabled) {
+			enableRule();
+			ui->ruleList->currentItem()->setFont(itemListEnabled);
+		} else {
+			disableRule();
+			ui->ruleList->currentItem()->setFont(itemListDisabled);
+		}
+	} else {
+		launchWarningNoRule();
 	}
 }
 
-void MainWindow::enableRule(const int type) {
-	switch (type) {
-		case VOLUME_RULE:
-			if (ui->volumeRulesList->currentItem() != NULL) {
-				rules[ui->volumeRulesList->currentItem()]->On();
-			} else {
-				launchWarningNoRule();
-			}
-			break;
-		case SLICE_RULE:
-			if (ui->sliceRulesList->currentItem() != NULL) {
-				rules[ui->sliceRulesList->currentItem()]->On();
-			} else {
-				launchWarningNoRule();
-			}
-			break;
+void MainWindow::enableRule() {
+	if (ui->ruleList->currentItem() != NULL) {
+		rules[ui->ruleList->currentItem()]->On();
+	} else {
+		launchWarningNoRule();
 	}
 }
 
-void MainWindow::disableRule(const int type) {
-	switch (type) {
-		case VOLUME_RULE:
-			if (ui->volumeRulesList->currentItem() != NULL) {
-				rules[ui->volumeRulesList->currentItem()]->Off();
-			} else {
-				launchWarningNoRule();
-			}
-			break;
-		case SLICE_RULE:
-			if (ui->sliceRulesList->currentItem() != NULL) {
-				rules[ui->sliceRulesList->currentItem()]->Off();
-			} else {
-				launchWarningNoRule();
-			}
-			break;
+void MainWindow::disableRule() {
+	if (ui->ruleList->currentItem() != NULL) {
+		rules[ui->ruleList->currentItem()]->Off();
+	} else {
+		launchWarningNoRule();
 	}
 }
 
@@ -631,12 +561,10 @@ void MainWindow::clearAllRules() {
 	rules.clear(); // clear container
 
 	// clear GUI lists
-	ui->sliceRulesList->clear();
-	ui->volumeRulesList->clear();
+	ui->ruleList->clear();
 
 	// reset counters
 	sliceRuleCounter = 0;
-	volumeRuleCounter = 0;
 }
 
 void MainWindow::changeBackgroundColor(const int widget) {
@@ -926,28 +854,16 @@ void MainWindow::on_deleteVolumeParts_pressed() {
 	deleteVolumeParts();
 }
 
-void MainWindow::on_addSliceRule_pressed() {
-	addRule(1);
+void MainWindow::on_addRule_pressed() {
+	addRule();
 }
 
-void MainWindow::on_addVolumeRule_pressed() {
-	addRule(0);
+void MainWindow::on_deleteRule_pressed() {
+	deleteRule();
 }
 
-void MainWindow::on_deleteSliceRule_pressed() {
-	deleteRule(1);
-}
-
-void MainWindow::on_deleteVolumeRule_pressed() {
-	deleteRule(0);
-}
-
-void MainWindow::on_enableDisableSliceRule_pressed() {
-	enableDisableRule(1);
-}
-
-void MainWindow::on_enableDisableVolumeRule_pressed() {
-	enableDisableRule(0);
+void MainWindow::on_enableDisableRule_pressed() {
+	enableDisableRule();
 }
 
 void MainWindow::on_volumeBackground_pressed() {
