@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	// initiate counters
 	sliceRuleCounter = 0;
+	rodCounter = 0;
 
 	itemListEnabled = QFont();
 	itemListDisabled = QFont();
@@ -494,79 +495,6 @@ void MainWindow::importMetalPreset() {
 	renderVolume();
 }
 
-void MainWindow::addRule() {
-	if (rules.size() < RULES_LIMIT) {
-		std::string id;
-		QListWidgetItem *item = new QListWidgetItem(0); // create GUI item
-		sliceRuleCounter++; 
-		id = "Regla " + std::to_string(sliceRuleCounter); 
-		item->setText(id.c_str()); 
-		item->setFont(itemListEnabled); 
-		ui->ruleList->addItem(item);
-		ui->ruleList->setCurrentItem(item);
-		rules[item] = vtkSmartPointer<vtkDistanceWidget>::New(); 
-		rules[item]->SetInteractor(ui->slicesWidget->GetInteractor());
-		rules[item]->CreateDefaultRepresentation(); 
-		static_cast<vtkDistanceRepresentation *>(rules[item]->GetRepresentation())->SetLabelFormat("%-#6.3g mm"); 
-		rules[item]->On();
-	} else {
-		launchWarningTooManyRules();
-	}
-}
-
-void MainWindow::deleteRule() {
-	if (ui->ruleList->currentItem() != NULL) { 
-		rules.erase(ui->ruleList->currentItem()); 
-		delete ui->ruleList->currentItem(); 
-		renderSlice();
-		if (ui->ruleList->count() == 0) {
-			sliceRuleCounter = 0;
-		}
-	} else {
-		launchWarningNoRule();
-	}
-}
-
-void MainWindow::enableDisableRule() {
-	if (ui->ruleList->currentItem() != NULL) {
-		if (ui->ruleList->currentItem()->font() == itemListDisabled) {
-			enableRule();
-			ui->ruleList->currentItem()->setFont(itemListEnabled);
-		} else {
-			disableRule();
-			ui->ruleList->currentItem()->setFont(itemListDisabled);
-		}
-	} else {
-		launchWarningNoRule();
-	}
-}
-
-void MainWindow::enableRule() {
-	if (ui->ruleList->currentItem() != NULL) {
-		rules[ui->ruleList->currentItem()]->On();
-	} else {
-		launchWarningNoRule();
-	}
-}
-
-void MainWindow::disableRule() {
-	if (ui->ruleList->currentItem() != NULL) {
-		rules[ui->ruleList->currentItem()]->Off();
-	} else {
-		launchWarningNoRule();
-	}
-}
-
-void MainWindow::clearAllRules() {
-	rules.clear(); // clear container
-
-	// clear GUI lists
-	ui->ruleList->clear();
-
-	// reset counters
-	sliceRuleCounter = 0;
-}
-
 void MainWindow::changeBackgroundColor(const int widget) {
 	QColor color;
 	switch (widget) {
@@ -673,6 +601,108 @@ void MainWindow::filter() {
 	} else {
 		launchWarningNoVolume();
 	}
+}
+
+void MainWindow::setActiveROD(ROD* rod) {
+	activeROD = rod;
+	slicePlane->setCustomPosition(activeROD->getOrigin(), activeROD->getPoint1(), activeROD->getPoint2(), activeROD->getSlicePosition());
+	renderVolume();
+	renderSlice();
+}
+
+void MainWindow::addROD() {
+	if (sculpture->getLoaded()) {
+		std::string name;
+		QListWidgetItem *item = new QListWidgetItem(0);
+		bool ok;
+		QString text = QInputDialog::getText(this, tr("Nombre del ROD"), tr("Nombre:"), QLineEdit::Normal, tr("Sin nombre"), &ok);
+		if (ok) {
+			if (text.isEmpty()) {
+				name = "Sin nombre";
+			} else {
+				name = text.toUtf8().constData(); 
+			}
+			item->setText(name.c_str());
+			ui->RODList->addItem(item);
+			rods[item] = new ROD(name, slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition());
+			ui->RODList->setCurrentItem(item); // calls setActiveROD
+		}
+	} else {
+		launchWarningNoVolume();
+	}
+}
+
+void MainWindow::addRule() {
+	if (rules.size() < RULES_LIMIT) {
+		std::string id;
+		QListWidgetItem *item = new QListWidgetItem(0); // create GUI item
+		sliceRuleCounter++;
+		id = "Regla " + std::to_string(sliceRuleCounter);
+		item->setText(id.c_str());
+		item->setFont(itemListEnabled);
+		ui->ruleList->addItem(item);
+		ui->ruleList->setCurrentItem(item);
+		rules[item] = vtkSmartPointer<vtkDistanceWidget>::New();
+		rules[item]->SetInteractor(ui->slicesWidget->GetInteractor());
+		rules[item]->CreateDefaultRepresentation();
+		static_cast<vtkDistanceRepresentation *>(rules[item]->GetRepresentation())->SetLabelFormat("%-#6.3g mm");
+		rules[item]->On();
+	} else {
+		launchWarningTooManyRules();
+	}
+}
+
+void MainWindow::deleteRule() {
+	if (ui->ruleList->currentItem() != NULL) {
+		rules.erase(ui->ruleList->currentItem());
+		delete ui->ruleList->currentItem();
+		renderSlice();
+		if (ui->ruleList->count() == 0) {
+			sliceRuleCounter = 0;
+		}
+	} else {
+		launchWarningNoRule();
+	}
+}
+
+void MainWindow::enableDisableRule() {
+	if (ui->ruleList->currentItem() != NULL) {
+		if (ui->ruleList->currentItem()->font() == itemListDisabled) {
+			enableRule();
+			ui->ruleList->currentItem()->setFont(itemListEnabled);
+		} else {
+			disableRule();
+			ui->ruleList->currentItem()->setFont(itemListDisabled);
+		}
+	} else {
+		launchWarningNoRule();
+	}
+}
+
+void MainWindow::enableRule() {
+	if (ui->ruleList->currentItem() != NULL) {
+		rules[ui->ruleList->currentItem()]->On();
+	} else {
+		launchWarningNoRule();
+	}
+}
+
+void MainWindow::disableRule() {
+	if (ui->ruleList->currentItem() != NULL) {
+		rules[ui->ruleList->currentItem()]->Off();
+	} else {
+		launchWarningNoRule();
+	}
+}
+
+void MainWindow::clearAllRules() {
+	rules.clear(); // clear container
+
+	// clear GUI lists
+	ui->ruleList->clear();
+
+	// reset counters
+	sliceRuleCounter = 0;
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -854,18 +884,6 @@ void MainWindow::on_deleteVolumeParts_pressed() {
 	deleteVolumeParts();
 }
 
-void MainWindow::on_addRule_pressed() {
-	addRule();
-}
-
-void MainWindow::on_deleteRule_pressed() {
-	deleteRule();
-}
-
-void MainWindow::on_enableDisableRule_pressed() {
-	enableDisableRule();
-}
-
 void MainWindow::on_volumeBackground_pressed() {
 	changeBackgroundColor(0);
 }
@@ -888,6 +906,30 @@ void MainWindow::on_segmentate_pressed() {
 
 void MainWindow::on_filter_pressed() {
 	filter();
+}
+
+void MainWindow::on_addRule_pressed() {
+	addRule();
+}
+
+void MainWindow::on_deleteRule_pressed() {
+	deleteRule();
+}
+
+void MainWindow::on_enableDisableRule_pressed() {
+	enableDisableRule();
+}
+
+void MainWindow::on_addROD_pressed() {
+	addROD();
+}
+
+//---------------------------------------------------------------------------------------------------------------------------------
+// GUI Events - Lists
+//---------------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_RODList_currentItemChanged() {
+	setActiveROD(rods[ui->RODList->currentItem()]);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

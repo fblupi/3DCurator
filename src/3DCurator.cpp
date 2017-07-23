@@ -2,14 +2,24 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 
+#include <vtkObject.h>
+
 #include "GUI/MainWindow.h"
 
-#define WINAPI __stdcall
+#define RELEASE
 
+#ifdef RELEASE
+#define WINAPI __stdcall
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nShowCmd) 
-//int main()
+#else
+int main()
+#endif
 {
 	int argc = 0;
+
+	#ifdef RELEASE
+	vtkObject::GlobalWarningDisplayOff(); // disable VTK warnings
+	#endif
 
 	QTranslator qtTranslator;
 	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));

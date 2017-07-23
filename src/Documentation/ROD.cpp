@@ -1,10 +1,22 @@
 #include "ROD.h"
 
-ROD::ROD(std::string name, double* origin, double* point1, double* point2) {
+ROD::ROD(const std::string name, const double* origin, const double* point1, const double* point2, const double slice) {
 	this->name = name;
-	planePosition.origin = origin;
-	planePosition.point1 = point1;
-	planePosition.point2 = point2;
+	this->slice = slice;
+
+	this->origin = new double[3];
+	this->point1 = new double[3];
+	this->point2 = new double[3];
+
+	this->origin[0] = origin[0];
+	this->origin[1] = origin[1];
+	this->origin[2] = origin[2];
+	this->point1[0] = point1[0];
+	this->point1[1] = point1[1];
+	this->point1[2] = point1[2];
+	this->point2[0] = point2[0];
+	this->point2[1] = point2[1];
+	this->point2[2] = point2[2];
 }
 
 std::string ROD::getName() const {
@@ -12,17 +24,20 @@ std::string ROD::getName() const {
 }
 
 double* ROD::getOrigin() const {
-	return planePosition.origin;
+	return origin;
 }
 
 double* ROD::getPoint1() const {
-	return planePosition.point1;
+	return point1;
 }
 
 double* ROD::getPoint2() const {
-	return planePosition.point2;
+	return point2;
 }
 
+double ROD::getSlicePosition() const {
+	return slice;
+}
 std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> > ROD::getRules() const {
 	return rules;
 }
@@ -37,24 +52,6 @@ std::map<double*, std::string> ROD::getAnnotations() const {
 
 void ROD::setName(const std::string name) {
 	this->name = name;
-}
-
-void ROD::setOrigin(const double* origin) {
-	planePosition.origin[0] = origin[0];
-	planePosition.origin[1] = origin[1];
-	planePosition.origin[2] = origin[2];
-}
-
-void ROD::setPoint1(const double* point1) {
-	planePosition.point1[0] = point1[0];
-	planePosition.point1[1] = point1[1];
-	planePosition.point1[2] = point1[2];
-}
-
-void ROD::setPoint2(const double* point2) {
-	planePosition.point2[0] = point2[0];
-	planePosition.point2[1] = point2[1];
-	planePosition.point2[2] = point2[2];
 }
 
 void ROD::clearAllRules() {

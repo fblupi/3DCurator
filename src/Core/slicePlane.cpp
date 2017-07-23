@@ -61,6 +61,15 @@ void SlicePlane::setAxial() {
 	plane->SetSlicePosition(centers[2]);
 }
 
+void SlicePlane::setCustomPosition(const double* origin, const double* point1, const double* point2, const double slice) {
+	plane->SetOrigin(origin[0], origin[1], origin[2]);
+	plane->SetPoint1(point1[0], point1[1], point1[2]);
+	plane->SetPoint2(point2[0], point2[1], point2[2]);
+	plane->SetSlicePosition(slice);
+
+	plane->UpdatePlacement();
+}
+
 void SlicePlane::setOrigin(const double x, const double y, const double z) {
 	plane->SetOrigin(x, y, z);
 	
@@ -87,4 +96,20 @@ void SlicePlane::setViewer(vtkSmartPointer<vtkImageViewer2> viewer) {
 
 vtkSmartPointer<ImagePlaneWidget> SlicePlane::getPlane() const {
 	return plane;
+}
+
+double* SlicePlane::getOrigin() const {
+	return plane->GetOrigin();
+}
+
+double* SlicePlane::getPoint1() const {
+	return plane->GetPoint1();
+}
+
+double* SlicePlane::getPoint2() const {
+	return plane->GetPoint2();
+}
+
+double SlicePlane::getSlicePosition() const {
+	return plane->GetSlicePosition();
 }
