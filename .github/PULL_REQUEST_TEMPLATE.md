@@ -11,7 +11,8 @@
 - ITK version
 - Boost version
 - OpenCV version
-- Other...
+- CMake version
+- Others if needed. Remove if its is not necessary
 
 ### Instructions to compile libraries and program
 
