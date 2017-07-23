@@ -8,6 +8,7 @@
 #include <QProgressBar>
 #include <QPointer>
 #include <QListWidgetItem>
+#include <QInputDialog>
 
 #include <sstream>
 #include <map>
@@ -39,6 +40,7 @@
 #include "Interactor/InteractorStyleSegmentation.h"
 #include "Chart/ColorTFChart.h"
 #include "Chart/OpacityTFChart.h"
+#include "Documentation/ROD.h"
 
 #define VOLUME_RULE 0
 #define SLICE_RULE 1
@@ -111,18 +113,18 @@ private slots:
 	void on_extractMeshMetal_pressed();
 	void on_enableDisablePlane_pressed();
 	void on_deleteVolumeParts_pressed();
-	void on_addSliceRule_pressed();
-	void on_addVolumeRule_pressed();
-	void on_deleteSliceRule_pressed();
-	void on_deleteVolumeRule_pressed();
-	void on_enableDisableSliceRule_pressed();
-	void on_enableDisableVolumeRule_pressed();
 	void on_volumeBackground_pressed();
 	void on_volumeDeletingBackground_pressed();
 	void on_meshBackground_pressed();
 	void on_restoreBackgrounds_pressed();
 	void on_segmentate_pressed();
 	void on_filter_pressed();
+	void on_addRule_pressed();
+	void on_deleteRule_pressed();
+	void on_enableDisableRule_pressed();
+	void on_addROD_pressed();
+
+	void on_RODList_currentItemChanged();
 
 	void on_colorTFMaxSlider_valueChanged();
 	void on_colorTFMinSlider_valueChanged();
@@ -333,41 +335,6 @@ private slots:
 	void importMetalPreset();
 
 	/**
-	 * Add new rule to measure
-	 * @param	type	0: 3D Model and 1: Slice
-	 */
-	void addRule(const int type);
-
-	/**
-	 * Delete selected rule
-	 * @param	type	0: 3D Model and 1: Slice
-	 */
-	void deleteRule(const int type);
-
-	/**
-	 * Enable or disable selected rule
-	 * @param	type	0: 3D Model and 1: Slice
-	 */
-	void enableDisableRule(const int type);
-
-	/**
-	 * Enable selected rule
-	 * @param	type	0: 3D Model and 1: Slice
-	 */
-	void enableRule(const int type);
-
-	/**
-	 * Disable selected rule
-	 * @param	type	0: 3D Model and 1: Slice
-	 */
-	void disableRule(const int type);
-
-	/**
-	 * Delete all rules
-	 */
-	void clearAllRules();
-
-	/**
 	 * Restore default viewers background colors
 	 */
 	void restoreBackgroundsColors();
@@ -409,6 +376,47 @@ private slots:
 	 */
 	void filter();
 
+	/**
+	 * Set the active ROD and use its plane position
+	 * @param	rod	ROD to be the active one
+	 */
+	void setActiveROD(ROD *rod);
+
+	/**
+	 * Add new ROD
+	 */
+	void addROD();
+
+	/**
+	 * Add new rule to measure
+	 */
+	void addRule();
+
+	/**
+	 * Delete selected rule
+	 */
+	void deleteRule();
+
+	/**
+	 * Enable or disable selected rule
+	 */
+	void enableDisableRule();
+
+	/**
+	 * Enable selected rule
+	 */
+	void enableRule();
+
+	/**
+	 * Disable selected rule
+	 */
+	void disableRule();
+
+	/**
+	 * Delete all rules
+	 */
+	void clearAllRules();
+
 private:
 	Ui::MainWindow *ui; /**< UI pointer */
 
@@ -426,7 +434,10 @@ private:
 	OpacityTFChart *scalarTFChart; /**< Scalar transfer function chart pointer */
 	OpacityTFChart *gradientTFChart; /**< Gradient transfer function chart pointer */
 
+	ROD *activeROD; /**< ROD currently active */
+
 	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> > rules; /**< Rules container */
+	std::map<QListWidgetItem*, ROD*> rods; /**< RODs counter */
 
 	vtkSmartPointer<vtkRenderer> volumeRen; /**< Volume and slice plane renderer pointer */
 	vtkSmartPointer<vtkRenderer> meshRen; /**< Mesh renderer pointer */
@@ -440,8 +451,8 @@ private:
 	bool deleting; /**< Deleting mode enabled or disabled */
 	bool segmentating; /**< Segmentating mode enabled or disabled */
 	bool showPlane; /**< Show or hide plane */
-	int volumeRuleCounter; /**< Number of volume rules */
-	int sliceRuleCounter; /**< Number of slice rules */
+	unsigned int sliceRuleCounter; /**< Number of slice rules */
+	unsigned int rodCounter; /**< Number of RODs */
 };
 
 #endif // MAINWINDOW_H

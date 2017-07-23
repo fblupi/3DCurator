@@ -32,6 +32,30 @@ public:
 	vtkSmartPointer<ImagePlaneWidget> getPlane() const;
 
 	/**
+	 * Get the origin of the plane
+	 * @return	Origin of the plane
+	 */
+	double* getOrigin() const;
+
+	/**
+	 * Get the position of the point defining the first axis of the plane
+	 * @return	Position of the point defining the first axis of the plane
+	 */
+	double* getPoint1() const;
+
+	/**
+	 * Get the position of the point defining the first second of the plane
+	 * @return	Position of the point defining the second axis of the plane
+	 */
+	double* getPoint2() const;
+
+	/**
+	 * Get slice position in terms of data extent
+	 * @return	Slice position in terms of data extent
+	 */
+	double getSlicePosition() const;
+
+	/**
 	 * Set connection with the volue
 	 * @param	imageData	Volume data
 	 */
@@ -77,6 +101,15 @@ public:
 	 * Set the plane in axial position (XY axis)
 	 */
 	void setAxial();
+
+	/**
+	 * Set the plane in a custom position
+	 * @param	origin	Origin of the plane
+	 * @param	point1	Position of the point defining the first axis of the plane
+	 * @param	point2	Position of the point defining the second axis of the plane
+	 * @param	slice	Slice position in terms of data extent
+	 */
+	void setCustomPosition(const double* origin, const double* point1, const double* point2, const double slice);
 
 private:
 	vtkSmartPointer<ImagePlaneWidget> plane; /**< Cutting plane in the sculpture data */
