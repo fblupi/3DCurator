@@ -22,6 +22,15 @@ ROD::ROD(const std::string name, const double* origin, const double* point1, con
 	this->disabled = disabled;
 }
 
+ROD::~ROD() {
+	delete origin;
+	delete point1;
+	delete point2;
+	clearAllRules();
+	clearAllProtractors();
+	clearAllAnnotations();
+}
+
 std::string ROD::getName() const {
 	return std::string();
 }
@@ -90,7 +99,7 @@ void ROD::enableDisableRule(QListWidgetItem* item) {
 }
 
 void ROD::hideAllRules() {
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget>>::iterator it;
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> >::iterator it;
 	for (it = rules.begin(); it != rules.end(); ++it) {
 		it->first->setHidden(true);
 		it->second->Off();
@@ -98,7 +107,7 @@ void ROD::hideAllRules() {
 }
 
 void ROD::showAllRules() {
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget>>::iterator it;
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> >::iterator it;
 	for (it = rules.begin(); it != rules.end(); ++it) {
 		it->first->setHidden(false);
 		if (it->first->font() == enabled) {
@@ -109,6 +118,56 @@ void ROD::showAllRules() {
 
 void ROD::clearAllRules() {
 	rules.clear();
+}
+
+void ROD::addProtractor(QListWidgetItem* item, vtkSmartPointer<vtkRenderWindowInteractor> interactor) {
+	protractors[item] = vtkSmartPointer<vtkAngleWidget>::New();
+	protractors[item]->SetInteractor(interactor);
+	protractors[item]->CreateDefaultRepresentation();
+	protractors[item]->On();
+}
+
+void ROD::deleteProtractor(QListWidgetItem* item) {
+	protractors.erase(item);
+}
+
+void ROD::enableProtractor(QListWidgetItem* item) {
+	item->setFont(enabled);
+	protractors[item]->On();
+}
+
+void ROD::disableProtractor(QListWidgetItem* item) {
+	item->setFont(disabled);
+	protractors[item]->Off();
+}
+
+void ROD::enableDisableProtractor(QListWidgetItem* item) {
+	if (item->font() == disabled) {
+		enableProtractor(item);
+		item->setFont(enabled);
+	}
+	else {
+		disableProtractor(item);
+		item->setFont(disabled);
+	}
+}
+
+void ROD::hideAllProtractors() {
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget> >::iterator it;
+	for (it = protractors.begin(); it != protractors.end(); ++it) {
+		it->first->setHidden(true);
+		it->second->Off();
+	}
+}
+
+void ROD::showAllProtractors() {
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget> >::iterator it;
+	for (it = protractors.begin(); it != protractors.end(); ++it) {
+		it->first->setHidden(false);
+		if (it->first->font() == enabled) {
+			it->second->On();
+		}
+	}
 }
 
 void ROD::clearAllProtractors() {

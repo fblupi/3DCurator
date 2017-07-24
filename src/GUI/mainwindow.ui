@@ -587,7 +587,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>131</width>
+             <width>452</width>
              <height>693</height>
             </rect>
            </property>
@@ -1320,13 +1320,6 @@
          </property>
         </spacer>
        </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="angleLabel">
-         <property name="text">
-          <string>Angle</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0" colspan="4">
         <widget class="QListWidget" name="RODList"/>
        </item>
@@ -1553,7 +1546,7 @@
         </spacer>
        </item>
        <item row="10" column="3">
-        <widget class="QPushButton" name="addAngle">
+        <widget class="QPushButton" name="addProtractor">
          <property name="toolTip">
           <string>Añadir regla</string>
          </property>
@@ -1573,10 +1566,10 @@
         </widget>
        </item>
        <item row="9" column="0" colspan="4">
-        <widget class="QListWidget" name="angleList"/>
+        <widget class="QListWidget" name="protractorList"/>
        </item>
        <item row="10" column="0">
-        <widget class="QPushButton" name="enableDisableAngle">
+        <widget class="QPushButton" name="enableDisableProtractor">
          <property name="toolTip">
           <string>Mostrar/Esconder regla</string>
          </property>
@@ -1596,7 +1589,7 @@
         </widget>
        </item>
        <item row="10" column="2">
-        <widget class="QPushButton" name="deleteAngle">
+        <widget class="QPushButton" name="deleteProtractor">
          <property name="toolTip">
           <string>Eliminar regla</string>
          </property>
@@ -1633,6 +1626,13 @@
        </item>
        <item row="13" column="0" colspan="4">
         <widget class="QTextEdit" name="annotation"/>
+       </item>
+       <item row="8" column="0" colspan="4">
+        <widget class="QLabel" name="protractorLabel">
+         <property name="text">
+          <string>Transportadores de ángulos</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
