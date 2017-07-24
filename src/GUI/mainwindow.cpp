@@ -222,7 +222,7 @@ void MainWindow::importDICOM() {
 
 		removeVolume();
 		removeMesh();
-		clearAllRules(); 
+		clearAllRODs();
 
 		slicePlane->show(false);
 		disablePlane();
@@ -558,6 +558,10 @@ void MainWindow::launchWarningNoRule() {
 	launchWarning("Seleccione una regla antes");
 }
 
+void MainWindow::launchWarningNoProtractor() {
+	launchWarning("Seleccione un transportador de ángulos antes");
+}
+
 void MainWindow::launchWarningNoActiveROD() {
 	launchWarning("Seleccione un ROD antes");
 }
@@ -603,6 +607,7 @@ void MainWindow::filter() {
 void MainWindow::unsetActiveROD() {
 	if (activeROD != NULL) {
 		activeROD->hideAllRules();
+		activeROD->hideAllProtractors();
 		ui->ruleList->setCurrentItem(NULL);
 	}
 }
@@ -612,6 +617,7 @@ void MainWindow::setActiveROD(ROD* rod) {
 	if (rod != NULL) {
 		activeROD = rod;
 		activeROD->showAllRules();
+		activeROD->showAllProtractors();
 		slicePlane->setCustomPosition(activeROD->getOrigin(), activeROD->getPoint1(), activeROD->getPoint2(), activeROD->getSlicePosition());
 		renderVolume();
 		renderSlice();
@@ -645,6 +651,11 @@ void MainWindow::deleteROD() {
 		rods.erase(ui->RODList->currentItem());
 		delete ui->RODList->currentItem();
 	}
+}
+
+void MainWindow::clearAllRODs() {
+	rods.clear();
+	ui->RODList->clear();
 }
 
 void MainWindow::addRule() {
@@ -691,8 +702,56 @@ void MainWindow::clearAllRules() {
 	if (activeROD != NULL) {
 		activeROD->clearAllRules(); // clear container
 	}
-	// clear GUI lists
-	ui->ruleList->clear();
+	ui->ruleList->clear(); // clear GUI lists
+}
+
+void MainWindow::addProtractor() {
+	if (activeROD != NULL) {
+		std::string name;
+		QListWidgetItem *item = new QListWidgetItem(0);
+		bool ok;
+		QString text = QInputDialog::getText(this, tr("Nombre de la regla"), tr("Nombre:"), QLineEdit::Normal, tr("Sin nombre"), &ok);
+		if (ok) {
+			if (text.isEmpty()) {
+				name = "Sin nombre";
+			}
+			else {
+				name = text.toUtf8().constData();
+			}
+			item->setText(name.c_str());
+			ui->protractorList->addItem(item);
+			ui->protractorList->setCurrentItem(item);
+			activeROD->addProtractor(item, ui->slicesWidget->GetInteractor());
+		}
+	}
+	else {
+		launchWarningNoActiveROD();
+	}
+}
+
+void MainWindow::deleteProtractor() {
+	if (ui->protractorList->currentItem() != NULL) {
+		activeROD->deleteProtractor(ui->protractorList->currentItem());
+		delete ui->protractorList->currentItem();
+		renderSlice();
+	} else {
+		launchWarningNoProtractor();
+	}
+}
+
+void MainWindow::enableDisableProtractor() {
+	if (ui->protractorList->currentItem() != NULL) {
+		activeROD->enableDisableProtractor(ui->protractorList->currentItem());
+	} else {
+		launchWarningNoProtractor();
+	}
+}
+
+void MainWindow::clearAllProtractors() {
+	if (activeROD != NULL) {
+		activeROD->clearAllProtractors(); // clear container
+	}
+	ui->protractorList->clear(); // clear GUI lists
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -908,6 +967,18 @@ void MainWindow::on_deleteRule_pressed() {
 
 void MainWindow::on_enableDisableRule_pressed() {
 	enableDisableRule();
+}
+
+void MainWindow::on_addProtractor_pressed() {
+	addProtractor();
+}
+
+void MainWindow::on_deleteProtractor_pressed() {
+	deleteProtractor();
+}
+
+void MainWindow::on_enableDisableProtractor_pressed() {
+	enableDisableProtractor();
 }
 
 void MainWindow::on_addROD_pressed() {

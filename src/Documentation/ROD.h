@@ -11,6 +11,7 @@
 #include <vtkSmartPointer.h>
 #include <vtkDistanceWidget.h>
 #include <vtkDistanceRepresentation.h>
+#include <vtkAngleRepresentation2D.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkAngleWidget.h>
 
@@ -27,6 +28,11 @@ public:
 	 * @param	disabled	Font for disabled list elements
 	 */
 	ROD(const std::string name, const double* origin, const double* point1, const double* point2, const double slice, const QFont enabled, const QFont disabled);
+
+	/**
+	 * Destructor
+	 */
+	~ROD();
 
 	/**
 	 * Get ROD name
@@ -126,6 +132,46 @@ public:
 	 * Delete all rules
 	 */
 	void clearAllRules();
+
+	/**
+	 * Add new protractor to measure
+	 * @param	item	Rule item in UI
+	 */
+	void addProtractor(QListWidgetItem* item, vtkSmartPointer<vtkRenderWindowInteractor> interactor);
+
+	/**
+	 * Delete selected protractor
+	 * @param	item	Protractor item in UI
+	 */
+	void deleteProtractor(QListWidgetItem* item);
+
+	/**
+	 * Enable or disable selected protractor
+	 * @param	item	Protractor item in UI
+	 */
+	void enableDisableProtractor(QListWidgetItem* item);
+
+	/**
+	 * Enable selected protractor
+	 * @param	item	Protractor item in UI
+	 */
+	void enableProtractor(QListWidgetItem* item);
+
+	/**
+	 * Disable selected protractor
+	 * @param	item	Protractor item in UI
+	 */
+	void disableProtractor(QListWidgetItem* item);
+
+	/**
+	 * Hide all protractors
+	 */
+	void hideAllProtractors();
+
+	/**
+	 * Show all protractors
+	 */
+	void showAllProtractors();
 
 	/**
 	 * Delete all protractors

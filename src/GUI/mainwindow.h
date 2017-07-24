@@ -119,11 +119,14 @@ private slots:
 	void on_restoreBackgrounds_pressed();
 	void on_segmentate_pressed();
 	void on_filter_pressed();
+	void on_addROD_pressed();
+	void on_deleteROD_pressed();
 	void on_addRule_pressed();
 	void on_deleteRule_pressed();
 	void on_enableDisableRule_pressed();
-	void on_addROD_pressed();
-	void on_deleteROD_pressed();
+	void on_addProtractor_pressed();
+	void on_deleteProtractor_pressed();
+	void on_enableDisableProtractor_pressed();
 
 	void on_RODList_currentItemChanged();
 
@@ -357,6 +360,11 @@ private slots:
 	void launchWarningNoRule();
 
 	/**
+	 * Launch a warning message saying there is no protractor selected
+	 */
+	void launchWarningNoProtractor();
+
+	/**
 	 * Launch a warning message saying there is no ROD selected
 	 */
 	void launchWarningNoActiveROD();
@@ -399,6 +407,11 @@ private slots:
 	void deleteROD();
 
 	/**
+	 * Delete all RODs
+	 */
+	void clearAllRODs();
+
+	/**
 	 * Add new rule to measure
 	 */
 	void addRule();
@@ -417,6 +430,26 @@ private slots:
 	 * Delete all rules
 	 */
 	void clearAllRules();
+
+	/**
+	 * Add new protractor to measure
+	 */
+	void addProtractor();
+
+	/**
+	 * Delete selected protractor
+	 */
+	void deleteProtractor();
+
+	/**
+	 * Enable or disable selected protractor
+	 */
+	void enableDisableProtractor();
+
+	/**
+	 * Delete all protractors
+	 */
+	void clearAllProtractors();
 
 private:
 	Ui::MainWindow *ui; /**< UI pointer */
