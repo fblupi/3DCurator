@@ -9,10 +9,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	showPlane = true;
 	segmentating = false;
 
-	// initiate counters
-	sliceRuleCounter = 0;
-	rodCounter = 0;
-
 	itemListEnabled = QFont();
 	itemListDisabled = QFont();
 	itemListDisabled.setItalic(true);
@@ -26,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	segmentationStyle = vtkSmartPointer<InteractorStyleSegmentation>::New();
 	slicePlane = new SlicePlane();
 	sculpture = new Sculpture();
+	activeROD = NULL;
 	defaultTF(); 
 	defaultMaterial();
 	defaultBackgroundsColors();
@@ -561,8 +558,8 @@ void MainWindow::launchWarningNoRule() {
 	launchWarning("Seleccione una regla antes");
 }
 
-void MainWindow::launchWarningTooManyRules() {
-	launchWarning("Se ha alcanzado el máximo número de reglas permitidas");
+void MainWindow::launchWarningNoActiveROD() {
+	launchWarning("Seleccione un ROD antes");
 }
 
 void MainWindow::segmentateOnOff() {
@@ -603,11 +600,22 @@ void MainWindow::filter() {
 	}
 }
 
+void MainWindow::unsetActiveROD() {
+	if (activeROD != NULL) {
+		activeROD->hideAllRules();
+		ui->ruleList->setCurrentItem(NULL);
+	}
+}
+
 void MainWindow::setActiveROD(ROD* rod) {
-	activeROD = rod;
-	slicePlane->setCustomPosition(activeROD->getOrigin(), activeROD->getPoint1(), activeROD->getPoint2(), activeROD->getSlicePosition());
-	renderVolume();
-	renderSlice();
+	unsetActiveROD();
+	if (rod != NULL) {
+		activeROD = rod;
+		activeROD->showAllRules();
+		slicePlane->setCustomPosition(activeROD->getOrigin(), activeROD->getPoint1(), activeROD->getPoint2(), activeROD->getSlicePosition());
+		renderVolume();
+		renderSlice();
+	}
 }
 
 void MainWindow::addROD() {
@@ -624,7 +632,7 @@ void MainWindow::addROD() {
 			}
 			item->setText(name.c_str());
 			ui->RODList->addItem(item);
-			rods[item] = new ROD(name, slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition());
+			rods[item] = new ROD(name, slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition(), itemListEnabled, itemListDisabled);
 			ui->RODList->setCurrentItem(item); // calls setActiveROD
 		}
 	} else {
@@ -632,34 +640,40 @@ void MainWindow::addROD() {
 	}
 }
 
+void MainWindow::deleteROD() {
+	if (activeROD != NULL) {
+		rods.erase(ui->RODList->currentItem());
+		delete ui->RODList->currentItem();
+	}
+}
+
 void MainWindow::addRule() {
-	if (rules.size() < RULES_LIMIT) {
-		std::string id;
-		QListWidgetItem *item = new QListWidgetItem(0); // create GUI item
-		sliceRuleCounter++;
-		id = "Regla " + std::to_string(sliceRuleCounter);
-		item->setText(id.c_str());
-		item->setFont(itemListEnabled);
-		ui->ruleList->addItem(item);
-		ui->ruleList->setCurrentItem(item);
-		rules[item] = vtkSmartPointer<vtkDistanceWidget>::New();
-		rules[item]->SetInteractor(ui->slicesWidget->GetInteractor());
-		rules[item]->CreateDefaultRepresentation();
-		static_cast<vtkDistanceRepresentation *>(rules[item]->GetRepresentation())->SetLabelFormat("%-#6.3g mm");
-		rules[item]->On();
+	if (activeROD != NULL) {
+		std::string name;
+		QListWidgetItem *item = new QListWidgetItem(0);
+		bool ok;
+		QString text = QInputDialog::getText(this, tr("Nombre de la regla"), tr("Nombre:"), QLineEdit::Normal, tr("Sin nombre"), &ok);
+		if (ok) {
+			if (text.isEmpty()) {
+				name = "Sin nombre";
+			} else {
+				name = text.toUtf8().constData();
+			}
+			item->setText(name.c_str());
+			ui->ruleList->addItem(item);
+			ui->ruleList->setCurrentItem(item);
+			activeROD->addRule(item, ui->slicesWidget->GetInteractor());
+		}
 	} else {
-		launchWarningTooManyRules();
+		launchWarningNoActiveROD();
 	}
 }
 
 void MainWindow::deleteRule() {
 	if (ui->ruleList->currentItem() != NULL) {
-		rules.erase(ui->ruleList->currentItem());
+		activeROD->deleteRule(ui->ruleList->currentItem());
 		delete ui->ruleList->currentItem();
 		renderSlice();
-		if (ui->ruleList->count() == 0) {
-			sliceRuleCounter = 0;
-		}
 	} else {
 		launchWarningNoRule();
 	}
@@ -667,42 +681,18 @@ void MainWindow::deleteRule() {
 
 void MainWindow::enableDisableRule() {
 	if (ui->ruleList->currentItem() != NULL) {
-		if (ui->ruleList->currentItem()->font() == itemListDisabled) {
-			enableRule();
-			ui->ruleList->currentItem()->setFont(itemListEnabled);
-		} else {
-			disableRule();
-			ui->ruleList->currentItem()->setFont(itemListDisabled);
-		}
-	} else {
-		launchWarningNoRule();
-	}
-}
-
-void MainWindow::enableRule() {
-	if (ui->ruleList->currentItem() != NULL) {
-		rules[ui->ruleList->currentItem()]->On();
-	} else {
-		launchWarningNoRule();
-	}
-}
-
-void MainWindow::disableRule() {
-	if (ui->ruleList->currentItem() != NULL) {
-		rules[ui->ruleList->currentItem()]->Off();
+		activeROD->enableDisableRule(ui->ruleList->currentItem());
 	} else {
 		launchWarningNoRule();
 	}
 }
 
 void MainWindow::clearAllRules() {
-	rules.clear(); // clear container
-
+	if (activeROD != NULL) {
+		activeROD->clearAllRules(); // clear container
+	}
 	// clear GUI lists
 	ui->ruleList->clear();
-
-	// reset counters
-	sliceRuleCounter = 0;
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -922,6 +912,10 @@ void MainWindow::on_enableDisableRule_pressed() {
 
 void MainWindow::on_addROD_pressed() {
 	addROD();
+}
+
+void MainWindow::on_deleteROD_pressed() {
+	deleteROD();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

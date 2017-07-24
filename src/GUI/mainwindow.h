@@ -123,6 +123,7 @@ private slots:
 	void on_deleteRule_pressed();
 	void on_enableDisableRule_pressed();
 	void on_addROD_pressed();
+	void on_deleteROD_pressed();
 
 	void on_RODList_currentItemChanged();
 
@@ -356,9 +357,9 @@ private slots:
 	void launchWarningNoRule();
 
 	/**
-	 * Launch a warning message saying there are already too many rules
+	 * Launch a warning message saying there is no ROD selected
 	 */
-	void launchWarningTooManyRules();
+	void launchWarningNoActiveROD();
 
 	/**
 	 * Change background color of a viewer
@@ -383,9 +384,19 @@ private slots:
 	void setActiveROD(ROD *rod);
 
 	/**
+	 * Unset the active ROD
+	 */
+	void unsetActiveROD();
+
+	/**
 	 * Add new ROD
 	 */
 	void addROD();
+
+	/**
+	 * Delete active ROD
+	 */
+	void deleteROD();
 
 	/**
 	 * Add new rule to measure
@@ -401,16 +412,6 @@ private slots:
 	 * Enable or disable selected rule
 	 */
 	void enableDisableRule();
-
-	/**
-	 * Enable selected rule
-	 */
-	void enableRule();
-
-	/**
-	 * Disable selected rule
-	 */
-	void disableRule();
 
 	/**
 	 * Delete all rules
@@ -435,8 +436,6 @@ private:
 	OpacityTFChart *gradientTFChart; /**< Gradient transfer function chart pointer */
 
 	ROD *activeROD; /**< ROD currently active */
-
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> > rules; /**< Rules container */
 	std::map<QListWidgetItem*, ROD*> rods; /**< RODs counter */
 
 	vtkSmartPointer<vtkRenderer> volumeRen; /**< Volume and slice plane renderer pointer */
@@ -451,8 +450,6 @@ private:
 	bool deleting; /**< Deleting mode enabled or disabled */
 	bool segmentating; /**< Segmentating mode enabled or disabled */
 	bool showPlane; /**< Show or hide plane */
-	unsigned int sliceRuleCounter; /**< Number of slice rules */
-	unsigned int rodCounter; /**< Number of RODs */
 };
 
 #endif // MAINWINDOW_H
