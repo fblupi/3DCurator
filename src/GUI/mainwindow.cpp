@@ -73,6 +73,8 @@ void MainWindow::connectComponents() {
 	ui->slicesWidget->GetInteractor()->SetInteractorStyle(sliceStyle);
 
 	slicePlane->setViewer(sliceViewer);
+	slicePlane->getPlane()->setActiveROD(activeROD);
+	slicePlane->getPlane()->setListROD(ui->ruleList);
 
 	deleterStyle->SetSculpture(sculpture);
 	deleterStyle->SetSlicePlane(slicePlane);
@@ -606,22 +608,28 @@ void MainWindow::filter() {
 
 void MainWindow::unsetActiveROD() {
 	if (activeROD != NULL) {
-		activeROD->hideAllRules();
-		activeROD->hideAllProtractors();
-		ui->ruleList->setCurrentItem(NULL);
+		activeROD->hideAll();
+		ui->ruleList->setCurrentItem(nullROD);
+		updateActiveROD(NULL);
+		nullROD->setSelected(true);
 	}
 }
 
 void MainWindow::setActiveROD(ROD* rod) {
 	unsetActiveROD();
 	if (rod != NULL) {
-		activeROD = rod;
+		updateActiveROD(rod);
 		activeROD->showAllRules();
 		activeROD->showAllProtractors();
 		slicePlane->setCustomPosition(activeROD->getOrigin(), activeROD->getPoint1(), activeROD->getPoint2(), activeROD->getSlicePosition());
 		renderVolume();
 		renderSlice();
 	}
+}
+
+void MainWindow::updateActiveROD(ROD *rod) {
+	activeROD = rod;
+	slicePlane->getPlane()->setActiveROD(rod);
 }
 
 void MainWindow::addROD() {
@@ -640,6 +648,7 @@ void MainWindow::addROD() {
 			ui->RODList->addItem(item);
 			rods[item] = new ROD(name, slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition(), itemListEnabled, itemListDisabled);
 			ui->RODList->setCurrentItem(item); // calls setActiveROD
+			item->setSelected(true);
 		}
 	} else {
 		launchWarningNoVolume();
@@ -656,6 +665,9 @@ void MainWindow::deleteROD() {
 void MainWindow::clearAllRODs() {
 	rods.clear();
 	ui->RODList->clear();
+	nullROD = new QListWidgetItem("---");
+	ui->RODList->insertItem(0, nullROD);
+	slicePlane->getPlane()->setNullROD(nullROD);
 }
 
 void MainWindow::addRule() {
@@ -723,8 +735,7 @@ void MainWindow::addProtractor() {
 			ui->protractorList->setCurrentItem(item);
 			activeROD->addProtractor(item, ui->slicesWidget->GetInteractor());
 		}
-	}
-	else {
+	} else {
 		launchWarningNoActiveROD();
 	}
 }
@@ -994,7 +1005,11 @@ void MainWindow::on_deleteROD_pressed() {
 //---------------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::on_RODList_currentItemChanged() {
-	setActiveROD(rods[ui->RODList->currentItem()]);
+	if (ui->RODList->currentItem() != nullROD) {
+		setActiveROD(rods[ui->RODList->currentItem()]);
+	} else {
+		unsetActiveROD();
+	}
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

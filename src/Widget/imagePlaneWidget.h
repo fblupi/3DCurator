@@ -1,10 +1,15 @@
 #ifndef IMAGEPLANEWIDGET_H
 #define IMAGEPLANEWIDGET_H
 
+#include <QListWidget>
+#include <QListWidgetItem>
+
 #include <vtkObjectFactory.h>
 #include <vtkSmartPointer.h>
 #include <vtkImagePlaneWidget.h>
 #include <vtkImageViewer2.h>
+
+#include "Documentation/ROD.h"
 
 /**
  * @class ImagePlaneWidget
@@ -25,6 +30,24 @@ public:
 	 * @param	viewer	ImageViewer2 that will be updated
 	 */
 	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
+
+	/**
+	 * Set ROD that will be disabled after moving
+	 * @param	activeROD	ROD that will be disabled after moving
+	 */
+	void setActiveROD(ROD* activeROD);
+
+	/**
+	 * Set list with RODs which active element will be disabled
+	 * @param	activeROD	List with RODs which active element will be disabled
+	 */
+	void setListROD(QListWidget* listROD);
+
+	/**
+	 * Empty list item 
+	 * @param	nullROD	Empty list item 
+	 */
+	void setNullROD(QListWidgetItem* nullROD);
 
 	/**
 	 * Mouse move event: Updates viewer if it is moving
@@ -64,6 +87,11 @@ public:
 private:
 	bool moving = false; /**< Plane is moving */
 	vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 that will be updated when the plane is moving */
+	ROD* activeROD; /**< Active ROD that will be disabled after moving */
+	QListWidgetItem* nullROD; /**< Empty list item */
+	QListWidget* listROD; /**< List with RODs which active element will be disabled */
+
+	void unsetActiveROD(); /**< Disable active ROD element and hide UI ROD elements in the list */
 };
 
 #endif // IMAGEPLANEWIDGET_H

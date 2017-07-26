@@ -183,6 +183,11 @@ public:
 	 */
 	void clearAllAnnotations();
 
+	/**
+	 * Hide all ROD elements
+	 */
+	void hideAll();
+
 private:
 	std::string name; /**< ROD name */
 	double* origin; /**< Origin of the plane */

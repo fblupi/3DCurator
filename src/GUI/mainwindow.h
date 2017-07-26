@@ -397,6 +397,12 @@ private slots:
 	void unsetActiveROD();
 
 	/**
+	 * Update pointer value of active ROD
+	 * @param	rod	New active ROD
+	 */
+	void updateActiveROD(ROD* rod);
+
+	/**
 	 * Add new ROD
 	 */
 	void addROD();
@@ -460,6 +466,8 @@ private:
 	QColor volumeBackground; /**< Volume viewer background color */
 	QColor volumeDeletingBackground; /**< Volume viewer (delete mode) background color */
 	QColor meshBackground; /**< Mesh viewer background color */
+
+	QListWidgetItem *nullROD; /**< ROD selected when there is no ROD selected */
 
 	Sculpture *sculpture; /**< Sculpture pointer */
 	SlicePlane *slicePlane; /**< Plane pointer */
