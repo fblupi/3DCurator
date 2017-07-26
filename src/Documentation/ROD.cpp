@@ -177,3 +177,8 @@ void ROD::clearAllProtractors() {
 void ROD::clearAllAnnotations() {
 	annotations.clear();
 }
+
+void ROD::hideAll() {
+	hideAllRules();
+	hideAllProtractors();
+}
