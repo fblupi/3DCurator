@@ -127,6 +127,9 @@ private slots:
 	void on_addProtractor_pressed();
 	void on_deleteProtractor_pressed();
 	void on_enableDisableProtractor_pressed();
+	void on_addAnnotation_pressed();
+	void on_deleteAnnotation_pressed();
+	void on_enableDisableAnnotation_pressed();
 
 	void on_RODList_currentItemChanged();
 
@@ -365,6 +368,16 @@ private slots:
 	void launchWarningNoProtractor();
 
 	/**
+	 * Launch a warning message saying there is no annotation text written
+	 */
+	void launchWarningNoAnnotationText();
+
+	/**
+	 * Launch a warning message saying there is no annotation selected
+	 */
+	void launchWarningNoAnnotation();
+
+	/**
 	 * Launch a warning message saying there is no ROD selected
 	 */
 	void launchWarningNoActiveROD();
@@ -433,11 +446,6 @@ private slots:
 	void enableDisableRule();
 
 	/**
-	 * Delete all rules
-	 */
-	void clearAllRules();
-
-	/**
 	 * Add new protractor to measure
 	 */
 	void addProtractor();
@@ -453,9 +461,19 @@ private slots:
 	void enableDisableProtractor();
 
 	/**
-	 * Delete all protractors
+	 * Add new annotation to measure
 	 */
-	void clearAllProtractors();
+	void addAnnotation();
+
+	/**
+	 * Delete annotation
+	 */
+	void deleteAnnotation();
+
+	/**
+	 * Enable or disable selected annotation
+	 */
+	void enableDisableAnnotation();
 
 private:
 	Ui::MainWindow *ui; /**< UI pointer */

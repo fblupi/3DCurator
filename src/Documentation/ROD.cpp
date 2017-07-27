@@ -31,10 +31,6 @@ ROD::~ROD() {
 	clearAllAnnotations();
 }
 
-std::string ROD::getName() const {
-	return std::string();
-}
-
 double* ROD::getOrigin() const {
 	return origin;
 }
@@ -49,21 +45,6 @@ double* ROD::getPoint2() const {
 
 double ROD::getSlicePosition() const {
 	return slice;
-}
-std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> > ROD::getRules() const {
-	return rules;
-}
-
-std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget> > ROD::getProtractors() const {
-	return protractors;
-}
-
-std::map<double*, std::string> ROD::getAnnotations() const {
-	return annotations;
-}
-
-void ROD::setName(const std::string name) {
-	this->name = name;
 }
 
 void ROD::addRule(QListWidgetItem* item, vtkSmartPointer<vtkRenderWindowInteractor> interactor) {
@@ -174,6 +155,60 @@ void ROD::clearAllProtractors() {
 	protractors.clear();
 }
 
+void ROD::addAnnotation(QListWidgetItem* item, std::string text, vtkSmartPointer<vtkRenderWindowInteractor> interactor) {
+	vtkSmartPointer<vtkCaptionRepresentation> captionRepresentation = vtkSmartPointer<vtkCaptionRepresentation>::New();
+	captionRepresentation->GetCaptionActor2D()->SetCaption(text.c_str());
+	captionRepresentation->GetCaptionActor2D()->BorderOff();
+	captionRepresentation->GetCaptionActor2D()->GetTextActor()->SetMinimumSize(300, 300);
+	annotations[item] = vtkSmartPointer<vtkCaptionWidget>::New();
+	annotations[item]->SetInteractor(interactor);
+	annotations[item]->CreateDefaultRepresentation();
+	annotations[item]->SetRepresentation(captionRepresentation);
+	annotations[item]->On();
+}
+
+void ROD::deleteAnnotation(QListWidgetItem* item) {
+	annotations.erase(item);
+}
+
+void ROD::enableAnnotation(QListWidgetItem* item) {
+	item->setFont(enabled);
+	annotations[item]->On();
+}
+
+void ROD::disableAnnotation(QListWidgetItem* item) {
+	item->setFont(disabled);
+	annotations[item]->Off();
+}
+
+void ROD::enableDisableAnnotation(QListWidgetItem* item) {
+	if (item->font() == disabled) {
+		enableAnnotation(item);
+		item->setFont(enabled);
+	} else {
+		disableAnnotation(item);
+		item->setFont(disabled);
+	}
+}
+
+void ROD::hideAllAnnotations() {
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkCaptionWidget> >::iterator it;
+	for (it = annotations.begin(); it != annotations.end(); ++it) {
+		it->first->setHidden(true);
+		it->second->Off();
+	}
+}
+
+void ROD::showAllAnnotations() {
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkCaptionWidget> >::iterator it;
+	for (it = annotations.begin(); it != annotations.end(); ++it) {
+		it->first->setHidden(false);
+		if (it->first->font() == enabled) {
+			it->second->On();
+		}
+	}
+}
+
 void ROD::clearAllAnnotations() {
 	annotations.clear();
 }
@@ -181,4 +216,11 @@ void ROD::clearAllAnnotations() {
 void ROD::hideAll() {
 	hideAllRules();
 	hideAllProtractors();
+	hideAllAnnotations();
+}
+
+void ROD::showAll() {
+	showAllRules();
+	showAllProtractors();
+	showAllAnnotations();
 }
