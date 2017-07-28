@@ -212,6 +212,16 @@ public:
 	 */
 	void showAll();
 
+	/**
+	 * Compare if the input plane is the same as the ROD's one
+	 * @param	origin		Origin of the plane
+	 * @param	point1		Position of the point defining the first axis of the plane
+	 * @param	point2		Position of the point defining the second axis of the plane
+	 * @param	slice		Slice position in terms of data extent
+	 * @return	The input plane is the same as the ROD's one
+	 */
+	bool samePlane(const double* origin, const double* point1, const double* point2, const double slice);
+
 private:
 	std::string name; /**< ROD name */
 	double* origin; /**< Origin of the plane */

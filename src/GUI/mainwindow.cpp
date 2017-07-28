@@ -624,7 +624,9 @@ void MainWindow::unsetActiveROD() {
 }
 
 void MainWindow::setActiveROD(ROD* rod) {
-	unsetActiveROD();
+	if (activeROD != NULL) {
+		activeROD->hideAll();
+	}
 	if (rod != NULL) {
 		updateActiveROD(rod);
 		activeROD->showAll();
@@ -666,6 +668,7 @@ void MainWindow::deleteROD() {
 	if (activeROD != NULL) {
 		rods.erase(ui->RODList->currentItem());
 		delete ui->RODList->currentItem();
+		unsetActiveROD();
 	}
 }
 
@@ -678,6 +681,9 @@ void MainWindow::clearAllRODs() {
 }
 
 void MainWindow::addRule() {
+	if (activeROD != NULL && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
+		unsetActiveROD();
+	}
 	if (activeROD != NULL) {
 		std::string name;
 		QListWidgetItem *item = new QListWidgetItem(0);
@@ -718,6 +724,9 @@ void MainWindow::enableDisableRule() {
 }
 
 void MainWindow::addProtractor() {
+	if (activeROD != NULL && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
+		unsetActiveROD();
+	}
 	if (activeROD != NULL) {
 		std::string name;
 		QListWidgetItem *item = new QListWidgetItem(0);
@@ -758,6 +767,9 @@ void MainWindow::enableDisableProtractor() {
 }
 
 void MainWindow::addAnnotation() {
+	if (activeROD != NULL && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
+		unsetActiveROD();
+	}
 	if (activeROD != NULL) {
 		std::string name;
 		std::string description = ui->annotation->toPlainText().toUtf8().constData();

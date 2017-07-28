@@ -224,3 +224,18 @@ void ROD::showAll() {
 	showAllProtractors();
 	showAllAnnotations();
 }
+
+bool ROD::samePlane(const double* origin, const double* point1, const double* point2, const double slice) {
+	return (
+		this->origin[0] == origin[0] &&
+		this->origin[1] == origin[1] &&
+		this->origin[2] == origin[2] &&
+		this->point1[0] == point1[0] &&
+		this->point1[1] == point1[1] &&
+		this->point1[2] == point1[2] &&
+		this->point2[0] == point2[0] &&
+		this->point2[1] == point2[1] &&
+		this->point2[2] == point2[2] &&
+		this->slice == slice
+	);
+}
