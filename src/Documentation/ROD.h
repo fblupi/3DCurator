@@ -9,11 +9,16 @@
 #include <vector>
 
 #include <vtkSmartPointer.h>
+#include <vtkRenderWindowInteractor.h>
 #include <vtkDistanceWidget.h>
 #include <vtkDistanceRepresentation.h>
-#include <vtkAngleRepresentation2D.h>
-#include <vtkRenderWindowInteractor.h>
 #include <vtkAngleWidget.h>
+#include <vtkAngleRepresentation2D.h>
+#include <vtkCaptionWidget.h>
+#include <vtkCaptionRepresentation.h>
+#include <vtkCaptionActor2D.h>
+#include <vtkTextActor.h>
+#include <vtkTextProperty.h>
 
 class ROD {
 public:
@@ -33,12 +38,6 @@ public:
 	 * Destructor
 	 */
 	~ROD();
-
-	/**
-	 * Get ROD name
-	 * @return	ROD name
-	 */
-	std::string getName() const;
 
 	/**
 	 * Get origin of the plane
@@ -65,32 +64,9 @@ public:
 	double getSlicePosition() const;
 
 	/**
-	 * Get ROD rules
-	 * @return	ROD rules
-	 */
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> > getRules() const;
-
-	/**
-	 * Get ROD protractors
-	 * @return	ROD protractors
-	 */
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget> > getProtractors() const;
-
-	/**
-	 * Get ROD annotations
-	 * @return	ROD annotations
-	 */
-	std::map<double*, std::string> getAnnotations() const;
-
-	/**
-	 * Set ROD name
-	 * @param	name	ROD name
-	 */
-	void setName(const std::string name);
-
-	/**
 	 * Add new rule to measure
-	 * @param	item	Rule item in UI
+	 * @param	item		Rule item in UI
+	 * @param	interactor	Render window interactor where will be placed
 	 */
 	void addRule(QListWidgetItem* item, vtkSmartPointer<vtkRenderWindowInteractor> interactor);
 
@@ -135,7 +111,8 @@ public:
 
 	/**
 	 * Add new protractor to measure
-	 * @param	item	Rule item in UI
+	 * @param	item		Rule item in UI
+	 * @param	interactor	Render window interactor where will be placed
 	 */
 	void addProtractor(QListWidgetItem* item, vtkSmartPointer<vtkRenderWindowInteractor> interactor);
 
@@ -179,6 +156,48 @@ public:
 	void clearAllProtractors();
 
 	/**
+	 * Add new annotation
+	 * @param	item		Rule item in UI
+	 * @param	text		Annotation text
+	 * @param	interactor	Render window interactor where will be placed
+	 */
+	void addAnnotation(QListWidgetItem* item, std::string text, vtkSmartPointer<vtkRenderWindowInteractor> interactor);
+
+	/**
+	* Delete selected annotation
+	* @param	item	Annotation item in UI
+	*/
+	void deleteAnnotation(QListWidgetItem* item);
+
+	/**
+	* Enable or disable selected annotation
+	* @param	item	Annotation item in UI
+	*/
+	void enableDisableAnnotation(QListWidgetItem* item);
+
+	/**
+	* Enable selected annotation
+	* @param	item	Protractor item in UI
+	*/
+	void enableAnnotation(QListWidgetItem* item);
+
+	/**
+	* Disable selected annotation
+	* @param	item	Annotation item in UI
+	*/
+	void disableAnnotation(QListWidgetItem* item);
+
+	/**
+	* Hide all annotations
+	*/
+	void hideAllAnnotations();
+
+	/**
+	* Show all annotations
+	*/
+	void showAllAnnotations();
+
+	/**
 	 * Delete all annotations
 	 */
 	void clearAllAnnotations();
@@ -188,6 +207,21 @@ public:
 	 */
 	void hideAll();
 
+	/**
+	 * Show all ROD elements
+	 */
+	void showAll();
+
+	/**
+	 * Compare if the input plane is the same as the ROD's one
+	 * @param	origin		Origin of the plane
+	 * @param	point1		Position of the point defining the first axis of the plane
+	 * @param	point2		Position of the point defining the second axis of the plane
+	 * @param	slice		Slice position in terms of data extent
+	 * @return	The input plane is the same as the ROD's one
+	 */
+	bool samePlane(const double* origin, const double* point1, const double* point2, const double slice);
+
 private:
 	std::string name; /**< ROD name */
 	double* origin; /**< Origin of the plane */
@@ -196,7 +230,7 @@ private:
 	double slice; /**< Slice position in terms of data extent */
 	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> > rules; /**< Rules container */
 	std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget> > protractors; /**< Rules container */
-	std::map<double*, std::string> annotations; /**< Annotations container */
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkCaptionWidget> > annotations; /**< Annotations container */
 
 	QFont enabled; /**< Font for list enabled elements */
 	QFont disabled; /**< Font for list disabled elements */

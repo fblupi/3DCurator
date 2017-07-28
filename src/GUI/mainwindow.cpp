@@ -564,6 +564,14 @@ void MainWindow::launchWarningNoProtractor() {
 	launchWarning("Seleccione un transportador de ángulos antes");
 }
 
+void MainWindow::launchWarningNoAnnotationText() {
+	launchWarning("Escribe el texto de la nota antes");
+}
+
+void MainWindow::launchWarningNoAnnotation() {
+	launchWarning("Seleccione una nota antes");
+}
+
 void MainWindow::launchWarningNoActiveROD() {
 	launchWarning("Seleccione un ROD antes");
 }
@@ -609,18 +617,19 @@ void MainWindow::filter() {
 void MainWindow::unsetActiveROD() {
 	if (activeROD != NULL) {
 		activeROD->hideAll();
-		ui->ruleList->setCurrentItem(nullROD);
+		ui->RODList->setCurrentItem(nullROD);
 		updateActiveROD(NULL);
 		nullROD->setSelected(true);
 	}
 }
 
 void MainWindow::setActiveROD(ROD* rod) {
-	unsetActiveROD();
+	if (activeROD != NULL) {
+		activeROD->hideAll();
+	}
 	if (rod != NULL) {
 		updateActiveROD(rod);
-		activeROD->showAllRules();
-		activeROD->showAllProtractors();
+		activeROD->showAll();
 		slicePlane->setCustomPosition(activeROD->getOrigin(), activeROD->getPoint1(), activeROD->getPoint2(), activeROD->getSlicePosition());
 		renderVolume();
 		renderSlice();
@@ -659,6 +668,7 @@ void MainWindow::deleteROD() {
 	if (activeROD != NULL) {
 		rods.erase(ui->RODList->currentItem());
 		delete ui->RODList->currentItem();
+		unsetActiveROD();
 	}
 }
 
@@ -671,6 +681,9 @@ void MainWindow::clearAllRODs() {
 }
 
 void MainWindow::addRule() {
+	if (activeROD != NULL && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
+		unsetActiveROD();
+	}
 	if (activeROD != NULL) {
 		std::string name;
 		QListWidgetItem *item = new QListWidgetItem(0);
@@ -710,24 +723,19 @@ void MainWindow::enableDisableRule() {
 	}
 }
 
-void MainWindow::clearAllRules() {
-	if (activeROD != NULL) {
-		activeROD->clearAllRules(); // clear container
-	}
-	ui->ruleList->clear(); // clear GUI lists
-}
-
 void MainWindow::addProtractor() {
+	if (activeROD != NULL && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
+		unsetActiveROD();
+	}
 	if (activeROD != NULL) {
 		std::string name;
 		QListWidgetItem *item = new QListWidgetItem(0);
 		bool ok;
-		QString text = QInputDialog::getText(this, tr("Nombre de la regla"), tr("Nombre:"), QLineEdit::Normal, tr("Sin nombre"), &ok);
+		QString text = QInputDialog::getText(this, tr("Nombre del transportador de ángulos"), tr("Nombre:"), QLineEdit::Normal, tr("Sin nombre"), &ok);
 		if (ok) {
 			if (text.isEmpty()) {
 				name = "Sin nombre";
-			}
-			else {
+			} else {
 				name = text.toUtf8().constData();
 			}
 			item->setText(name.c_str());
@@ -758,11 +766,53 @@ void MainWindow::enableDisableProtractor() {
 	}
 }
 
-void MainWindow::clearAllProtractors() {
-	if (activeROD != NULL) {
-		activeROD->clearAllProtractors(); // clear container
+void MainWindow::addAnnotation() {
+	if (activeROD != NULL && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
+		unsetActiveROD();
 	}
-	ui->protractorList->clear(); // clear GUI lists
+	if (activeROD != NULL) {
+		std::string name;
+		std::string description = ui->annotation->toPlainText().toUtf8().constData();
+		if (description == "") {
+			launchWarningNoAnnotationText();
+		} else {
+			QListWidgetItem *item = new QListWidgetItem(0);
+			bool ok;
+			QString text = QInputDialog::getText(this, tr("Nombre de la nota"), tr("Nombre:"), QLineEdit::Normal, tr("Sin nombre"), &ok);
+			if (ok) {
+				if (text.isEmpty()) {
+					name = "Sin nombre";
+				} else {
+					name = text.toUtf8().constData();
+				}
+				item->setText(name.c_str());
+				ui->annotationList->addItem(item);
+				ui->annotationList->setCurrentItem(item);
+				activeROD->addAnnotation(item, description, ui->slicesWidget->GetInteractor());
+				ui->annotation->clear();
+			}
+		}
+	} else {
+		launchWarningNoActiveROD();
+	}
+}
+
+void MainWindow::deleteAnnotation() {
+	if (ui->annotationList->currentItem() != NULL) {
+		activeROD->deleteAnnotation(ui->annotationList->currentItem());
+		delete ui->annotationList->currentItem();
+		renderSlice();
+	} else {
+		launchWarningNoAnnotation();
+	}
+}
+
+void MainWindow::enableDisableAnnotation() {
+	if (ui->annotationList->currentItem() != NULL) {
+		activeROD->enableDisableAnnotation(ui->annotationList->currentItem());
+	} else {
+		launchWarningNoAnnotation();
+	}
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -992,12 +1042,24 @@ void MainWindow::on_enableDisableProtractor_pressed() {
 	enableDisableProtractor();
 }
 
+void MainWindow::on_addAnnotation_pressed() {
+	addAnnotation();
+}
+
+void MainWindow::on_deleteAnnotation_pressed() {
+	deleteAnnotation();
+}
+
 void MainWindow::on_addROD_pressed() {
 	addROD();
 }
 
 void MainWindow::on_deleteROD_pressed() {
 	deleteROD();
+}
+
+void MainWindow::on_enableDisableAnnotation_pressed() {
+	enableDisableAnnotation();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------

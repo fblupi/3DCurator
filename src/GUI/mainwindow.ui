@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1143</width>
-    <height>696</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,16 +19,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QVTKWidget" name="volumeWidget">
-      <property name="minimumSize">
-       <size>
-        <width>400</width>
-        <height>400</height>
-       </size>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QGroupBox" name="groupBox">
       <property name="maximumSize">
@@ -149,7 +139,7 @@
        <attribute name="title">
         <string>Cortes</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_5">
+       <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0" colspan="3">
          <widget class="QGroupBox" name="planeOptions">
           <property name="minimumSize">
@@ -587,7 +577,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>131</width>
+             <width>391</width>
              <height>693</height>
             </rect>
            </property>
@@ -1276,19 +1266,6 @@
       </widget>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="labelFolder">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>13</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Carpeta</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="2" rowspan="3">
      <widget class="QGroupBox" name="documentationBox">
       <property name="minimumSize">
@@ -1306,8 +1283,58 @@
       <property name="title">
        <string>Documentación</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="2" column="0" colspan="2">
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="0" colspan="3">
+        <spacer name="horizontalSpacer_21">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>59</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="importROD">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../assets/resources.qrc">
+           <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <widget class="QPushButton" name="exportROD">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../assets/resources.qrc">
+           <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="6">
+        <widget class="QListWidget" name="RODList"/>
+       </item>
+       <item row="2" column="0" colspan="3">
         <spacer name="horizontalSpacer_22">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -1320,10 +1347,7 @@
          </property>
         </spacer>
        </item>
-       <item row="1" column="0" colspan="4">
-        <widget class="QListWidget" name="RODList"/>
-       </item>
-       <item row="2" column="2">
+       <item row="2" column="3" colspan="2">
         <widget class="QPushButton" name="deleteROD">
          <property name="toolTip">
           <string>Eliminar regla</string>
@@ -1343,64 +1367,8 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0" colspan="2">
-        <spacer name="horizontalSpacer_21">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>59</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="ruleLabel">
-         <property name="text">
-          <string>Reglas</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QPushButton" name="enableDisableRule">
-         <property name="toolTip">
-          <string>Mostrar/Esconder regla</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../../assets/resources.qrc">
-           <normaloff>:/icons/eye.png</normaloff>:/icons/eye.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>21</width>
-           <height>21</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="4">
-        <widget class="QListWidget" name="ruleList"/>
-       </item>
-       <item row="6" column="1">
-        <spacer name="horizontalSpacer_11">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="6" column="3">
-        <widget class="QPushButton" name="addRule">
+       <item row="2" column="5">
+        <widget class="QPushButton" name="addROD">
          <property name="toolTip">
           <string>Añadir regla</string>
          </property>
@@ -1410,23 +1378,6 @@
          <property name="icon">
           <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>21</width>
-           <height>21</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="importROD">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../../assets/resources.qrc">
-           <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -1452,14 +1403,27 @@
          </property>
         </spacer>
        </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="exportROD">
+       <item row="4" column="0" colspan="2">
+        <widget class="QLabel" name="ruleLabel">
+         <property name="text">
+          <string>Reglas</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="6">
+        <widget class="QListWidget" name="ruleList"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QPushButton" name="enableDisableRule">
+         <property name="toolTip">
+          <string>Mostrar/Esconder regla</string>
+         </property>
          <property name="text">
           <string/>
          </property>
          <property name="icon">
           <iconset resource="../../assets/resources.qrc">
-           <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+           <normaloff>:/icons/eye.png</normaloff>:/icons/eye.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -1470,6 +1434,19 @@
         </widget>
        </item>
        <item row="6" column="2">
+        <spacer name="horizontalSpacer_11">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="6" column="3">
         <widget class="QPushButton" name="deleteRule">
          <property name="toolTip">
           <string>Eliminar regla</string>
@@ -1480,6 +1457,26 @@
          <property name="icon">
           <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/minus.png</normaloff>:/icons/minus.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="5">
+        <widget class="QPushButton" name="addRule">
+         <property name="toolTip">
+          <string>Añadir regla</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../assets/resources.qrc">
+           <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -1505,67 +1502,14 @@
          </property>
         </spacer>
        </item>
-       <item row="2" column="3">
-        <widget class="QPushButton" name="addROD">
-         <property name="toolTip">
-          <string>Añadir regla</string>
-         </property>
+       <item row="8" column="0" colspan="6">
+        <widget class="QLabel" name="protractorLabel">
          <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../../assets/resources.qrc">
-           <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>21</width>
-           <height>21</height>
-          </size>
+          <string>Transportadores de ángulos</string>
          </property>
         </widget>
        </item>
-       <item row="12" column="0">
-        <widget class="QLabel" name="annotationLabel">
-         <property name="text">
-          <string>Nota</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <spacer name="horizontalSpacer_12">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="10" column="3">
-        <widget class="QPushButton" name="addProtractor">
-         <property name="toolTip">
-          <string>Añadir regla</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../../assets/resources.qrc">
-           <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>21</width>
-           <height>21</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0" colspan="4">
+       <item row="9" column="0" colspan="6">
         <widget class="QListWidget" name="protractorList"/>
        </item>
        <item row="10" column="0">
@@ -1589,6 +1533,19 @@
         </widget>
        </item>
        <item row="10" column="2">
+        <spacer name="horizontalSpacer_12">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="10" column="3">
         <widget class="QPushButton" name="deleteProtractor">
          <property name="toolTip">
           <string>Eliminar regla</string>
@@ -1599,6 +1556,26 @@
          <property name="icon">
           <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/minus.png</normaloff>:/icons/minus.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="5">
+        <widget class="QPushButton" name="addProtractor">
+         <property name="toolTip">
+          <string>Añadir regla</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../assets/resources.qrc">
+           <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -1624,17 +1601,127 @@
          </property>
         </spacer>
        </item>
-       <item row="13" column="0" colspan="4">
-        <widget class="QTextEdit" name="annotation"/>
-       </item>
-       <item row="8" column="0" colspan="4">
-        <widget class="QLabel" name="protractorLabel">
+       <item row="12" column="0">
+        <widget class="QLabel" name="annotationLabel">
          <property name="text">
-          <string>Transportadores de ángulos</string>
+          <string>Nota</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="0" colspan="6">
+        <widget class="QTextEdit" name="annotation">
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="placeholderText">
+          <string>Introducir aquí el texto de la nota antes de crearla</string>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="0" colspan="6">
+        <widget class="QListWidget" name="annotationList"/>
+       </item>
+       <item row="15" column="0">
+        <widget class="QPushButton" name="enableDisableAnnotation">
+         <property name="toolTip">
+          <string>Mostrar/Esconder regla</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../assets/resources.qrc">
+           <normaloff>:/icons/eye.png</normaloff>:/icons/eye.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="1" colspan="2">
+        <spacer name="horizontalSpacer_23">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>26</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="15" column="3">
+        <widget class="QPushButton" name="deleteAnnotation">
+         <property name="toolTip">
+          <string>Eliminar regla</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../assets/resources.qrc">
+           <normaloff>:/icons/minus.png</normaloff>:/icons/minus.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="4" colspan="2">
+        <widget class="QPushButton" name="addAnnotation">
+         <property name="toolTip">
+          <string>Añadir regla</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../assets/resources.qrc">
+           <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
          </property>
         </widget>
        </item>
       </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QVTKWidget" name="volumeWidget">
+      <property name="minimumSize">
+       <size>
+        <width>400</width>
+        <height>400</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="labelFolder">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>13</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Carpeta</string>
+      </property>
      </widget>
     </item>
    </layout>
@@ -1644,7 +1731,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1143</width>
+     <width>1024</width>
      <height>21</height>
     </rect>
    </property>

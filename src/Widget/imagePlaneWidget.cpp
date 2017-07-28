@@ -23,9 +23,7 @@ void ImagePlaneWidget::OnRightButtonUp() {
 void ImagePlaneWidget::unsetActiveROD() {
 	if (activeROD != NULL && listROD != NULL) {
 		activeROD->hideAll();
-		listROD->setCurrentItem(nullROD);
-		activeROD = NULL;
-		nullROD->setSelected(true);
+		listROD->setCurrentItem(NULL);
 	}
 }
 
