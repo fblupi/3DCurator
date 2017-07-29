@@ -246,7 +246,7 @@ void MainWindow::importDICOM() {
 }
 
 void MainWindow::importPreset() {
-	QString presetFile = QFileDialog::getOpenFileName(this, tr("Importar preset"), QDir::homePath());
+	QString presetFile = QFileDialog::getOpenFileName(this, tr("Importar preset"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
 
 	if (presetFile != NULL) {
 		std::string s = presetFile.toUtf8().constData();
@@ -364,6 +364,10 @@ QString MainWindow::getExportImageFilename(const QString defaultFilename) {
 
 QString MainWindow::getExportMeshFilename(const QString defaultFilename) {
 	return QFileDialog::getSaveFileName(this, tr("Exportar malla"), QDir(QDir::homePath()).filePath(defaultFilename), "STL (*.stl)");
+}
+
+QString MainWindow::getExportRODFilename(const QString defaultFilename) {
+	return QFileDialog::getSaveFileName(this, tr("Exportar ROD"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
 }
 
 void MainWindow::enablePlane() {
@@ -655,7 +659,7 @@ void MainWindow::addROD() {
 			}
 			item->setText(name.c_str());
 			ui->RODList->addItem(item);
-			rods[item] = new ROD(name, slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition(), itemListEnabled, itemListDisabled);
+			rods[item] = new ROD(name, slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition(), itemListEnabled, itemListDisabled, ui->slicesWidget->GetInteractor());
 			ui->RODList->setCurrentItem(item); // calls setActiveROD
 			item->setSelected(true);
 		}
@@ -698,7 +702,7 @@ void MainWindow::addRule() {
 			item->setText(name.c_str());
 			ui->ruleList->addItem(item);
 			ui->ruleList->setCurrentItem(item);
-			activeROD->addRule(item, ui->slicesWidget->GetInteractor());
+			activeROD->addRule(item);
 		}
 	} else {
 		launchWarningNoActiveROD();
@@ -741,7 +745,7 @@ void MainWindow::addProtractor() {
 			item->setText(name.c_str());
 			ui->protractorList->addItem(item);
 			ui->protractorList->setCurrentItem(item);
-			activeROD->addProtractor(item, ui->slicesWidget->GetInteractor());
+			activeROD->addProtractor(item);
 		}
 	} else {
 		launchWarningNoActiveROD();
@@ -788,7 +792,7 @@ void MainWindow::addAnnotation() {
 				item->setText(name.c_str());
 				ui->annotationList->addItem(item);
 				ui->annotationList->setCurrentItem(item);
-				activeROD->addAnnotation(item, description, ui->slicesWidget->GetInteractor());
+				activeROD->addAnnotation(item, description);
 				ui->annotation->clear();
 			}
 		}
@@ -812,6 +816,31 @@ void MainWindow::enableDisableAnnotation() {
 		activeROD->enableDisableAnnotation(ui->annotationList->currentItem());
 	} else {
 		launchWarningNoAnnotation();
+	}
+}
+
+void MainWindow::importROD() {
+	if (sculpture->getLoaded()) {
+		QString rodFile = QFileDialog::getOpenFileName(this, tr("Importar ROD"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
+		if (rodFile != NULL) {
+			std::string s = rodFile.toUtf8().constData();
+			ROD* rod = new ROD(s, itemListEnabled, itemListDisabled, ui->slicesWidget->GetInteractor(), ui->ruleList, ui->protractorList, ui->annotationList);
+			QListWidgetItem *item = new QListWidgetItem(0);
+			item->setText(QString::fromStdString(rod->getName()));
+			ui->RODList->addItem(item);
+			rods[item] = rod;
+			ui->RODList->setCurrentItem(item); // calls setActiveROD
+			item->setSelected(true);
+		}
+	} else {
+		launchWarningNoVolume();
+	}
+}
+
+void MainWindow::exportROD(const QString filename) {
+	if (filename != NULL) {
+		std::string s = filename.toUtf8().constData();
+		activeROD->write(s);
 	}
 }
 
@@ -1060,6 +1089,21 @@ void MainWindow::on_deleteROD_pressed() {
 
 void MainWindow::on_enableDisableAnnotation_pressed() {
 	enableDisableAnnotation();
+}
+
+void MainWindow::on_importROD_pressed() {
+	importROD();
+}
+
+void MainWindow::on_exportROD_pressed() {
+	if (activeROD != NULL && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
+		unsetActiveROD();
+	}
+	if (activeROD != NULL) {
+		exportROD(getExportRODFilename(QString::fromStdString(activeROD->getName())));
+	} else {
+		launchWarningNoActiveROD();
+	}
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
