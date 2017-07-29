@@ -31,6 +31,10 @@ ROD::~ROD() {
 	clearAllAnnotations();
 }
 
+std::string ROD::getName() const {
+	return name;
+}
+
 double* ROD::getOrigin() const {
 	return origin;
 }
@@ -238,4 +242,79 @@ bool ROD::samePlane(const double* origin, const double* point1, const double* po
 		this->point2[2] == point2[2] &&
 		this->slice == slice
 	);
+}
+
+void ROD::write(std::string &filename) {
+	ptree pt;
+
+	pt.put("rod.<xmlattr>.name", this->name);
+
+	ptree &pos = pt.add("rod.pos", "");
+	ptree &origin = pos.add("o", "");
+	origin.put("x", this->origin[0]);
+	origin.put("y", this->origin[1]);
+	origin.put("z", this->origin[2]);
+	ptree &point1 = pos.add("p1", "");
+	point1.put("x", this->point1[0]);
+	point1.put("y", this->point1[1]);
+	point1.put("z", this->point1[2]);
+	ptree &point2 = pos.add("p2", "");
+	point2.put("x", this->point2[0]);
+	point2.put("y", this->point2[1]);
+	point2.put("z", this->point2[2]);
+	pos.put("slice", this->slice);
+
+	ptree &rules = pt.add("rod.rules", "");
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> >::iterator itr;
+	for (itr = this->rules.begin(); itr != this->rules.end(); ++itr) {
+		ptree &rule = rules.add("rule", "");
+		ptree &name = rule.add("name", itr->first->text().toUtf8().constData());
+		ptree &p1 = rule.add("p1", "");
+		p1.put("x", itr->second->GetDistanceRepresentation()->GetPoint1WorldPosition()[0]);
+		p1.put("y", itr->second->GetDistanceRepresentation()->GetPoint1WorldPosition()[1]);
+		p1.put("z", itr->second->GetDistanceRepresentation()->GetPoint1WorldPosition()[2]);
+		ptree &p2 = rule.add("p2", "");
+		p2.put("x", itr->second->GetDistanceRepresentation()->GetPoint2WorldPosition()[0]);
+		p2.put("y", itr->second->GetDistanceRepresentation()->GetPoint2WorldPosition()[1]);
+		p2.put("z", itr->second->GetDistanceRepresentation()->GetPoint2WorldPosition()[2]);
+	}
+
+	ptree &protractors = pt.add("rod.protractors", "");
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget> >::iterator itp;
+	for (itp = this->protractors.begin(); itp != this->protractors.end(); ++itp) {
+		double *point1 = new double[3], *point2 = new double[3], *center = new double[3];
+		itp->second->GetAngleRepresentation()->GetPoint1WorldPosition(point1);
+		itp->second->GetAngleRepresentation()->GetPoint2WorldPosition(point2);
+		itp->second->GetAngleRepresentation()->GetCenterWorldPosition(center);
+
+		ptree &protractor = protractors.add("protractor", "");
+		ptree &name = protractor.add("name", itp->first->text().toUtf8().constData());
+		ptree &p1 = protractor.add("p1", "");
+		p1.put("x", point1[0]);
+		p1.put("y", point1[1]);
+		p1.put("z", point1[2]);
+		ptree &p2 = protractor.add("p2", "");
+		p2.put("x", point2[0]);
+		p2.put("y", point2[1]);
+		p2.put("z", point2[2]);
+		ptree &c = protractor.add("c", "");
+		c.put("x", center[0]);
+		c.put("y", center[1]);
+		c.put("z", center[2]);
+	}
+
+	ptree &annotations = pt.add("rod.annotations", "");
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkCaptionWidget> >::iterator ita;
+	for (ita = this->annotations.begin(); ita != this->annotations.end(); ++ita) {
+		double *point = ita->second->GetCaptionActor2D()->GetAttachmentPoint();
+		ptree &annotation = annotations.add("annotation", "");
+		ptree &name = annotation.add("name", ita->first->text().toUtf8().constData());
+		ptree &text = annotation.add("text", ita->second->GetCaptionActor2D()->GetCaption());
+		ptree &p = annotation.add("p", "");
+		p.put("x", point[0]);
+		p.put("y", point[1]);
+		p.put("z", point[2]);
+	}
+
+	write_xml(filename, pt);
 }

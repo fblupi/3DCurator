@@ -8,17 +8,23 @@
 #include <map>
 #include <vector>
 
+#include <boost/property_tree/xml_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/foreach.hpp>
+
 #include <vtkSmartPointer.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkDistanceWidget.h>
 #include <vtkDistanceRepresentation.h>
 #include <vtkAngleWidget.h>
-#include <vtkAngleRepresentation2D.h>
+#include <vtkAngleRepresentation.h>
 #include <vtkCaptionWidget.h>
 #include <vtkCaptionRepresentation.h>
 #include <vtkCaptionActor2D.h>
 #include <vtkTextActor.h>
 #include <vtkTextProperty.h>
+
+using boost::property_tree::ptree;
 
 class ROD {
 public:
@@ -38,6 +44,12 @@ public:
 	 * Destructor
 	 */
 	~ROD();
+
+	/**
+	 * Get ROD name
+	 * @return	ROD name
+	 */
+	std::string getName() const;
 
 	/**
 	 * Get origin of the plane
@@ -221,6 +233,12 @@ public:
 	 * @return	The input plane is the same as the ROD's one
 	 */
 	bool samePlane(const double* origin, const double* point1, const double* point2, const double slice);
+
+	/**
+	 * Write ROMD in an XML file
+	 * @param	filename	Path to the output XML file
+	 */
+	void write(std::string &filename);
 
 private:
 	std::string name; /**< ROD name */

@@ -130,6 +130,7 @@ private slots:
 	void on_addAnnotation_pressed();
 	void on_deleteAnnotation_pressed();
 	void on_enableDisableAnnotation_pressed();
+	void on_exportROD_pressed();
 
 	void on_RODList_currentItemChanged();
 
@@ -285,6 +286,13 @@ private slots:
 	 * @return	Output filename
 	 */
 	QString getExportMeshFilename(const QString defaultFilename);
+
+	/**
+	 * Get exported ROD filename
+	 * @param	defaultFilename	Default filename (transfer function name)
+	 * @return	Output filename
+	 */
+	QString getExportRODFilename(const QString defaultFilename);
 
 	/**
 	 * Show plane in viewer
@@ -474,6 +482,12 @@ private slots:
 	 * Enable or disable selected annotation
 	 */
 	void enableDisableAnnotation();
+
+	/**
+	 * Export current ROD to XML
+	 * @param	filename	Output filename
+	 */
+	void exportROD(const QString filename);
 
 private:
 	Ui::MainWindow *ui; /**< UI pointer */

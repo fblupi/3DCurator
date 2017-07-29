@@ -366,6 +366,10 @@ QString MainWindow::getExportMeshFilename(const QString defaultFilename) {
 	return QFileDialog::getSaveFileName(this, tr("Exportar malla"), QDir(QDir::homePath()).filePath(defaultFilename), "STL (*.stl)");
 }
 
+QString MainWindow::getExportRODFilename(const QString defaultFilename) {
+	return QFileDialog::getSaveFileName(this, tr("Exportar ROD"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
+}
+
 void MainWindow::enablePlane() {
 	slicePlane->enable(true);
 	QIcon icon(":/icons/eye-slash.png");
@@ -815,6 +819,13 @@ void MainWindow::enableDisableAnnotation() {
 	}
 }
 
+void MainWindow::exportROD(const QString filename) {
+	if (filename != NULL) {
+		std::string s = filename.toUtf8().constData();
+		activeROD->write(s);
+	}
+}
+
 //---------------------------------------------------------------------------------------------------------------------------------
 // GUI Events - Menu
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -1060,6 +1071,17 @@ void MainWindow::on_deleteROD_pressed() {
 
 void MainWindow::on_enableDisableAnnotation_pressed() {
 	enableDisableAnnotation();
+}
+
+void MainWindow::on_exportROD_pressed() {
+	if (activeROD != NULL && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
+		unsetActiveROD();
+	}
+	if (activeROD != NULL) {
+		exportROD(getExportRODFilename(QString::fromStdString(activeROD->getName())));
+	} else {
+		launchWarningNoActiveROD();
+	}
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
