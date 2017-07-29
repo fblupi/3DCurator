@@ -18,6 +18,7 @@
 #include <vtkDistanceRepresentation.h>
 #include <vtkAngleWidget.h>
 #include <vtkAngleRepresentation.h>
+#include <vtkHandleRepresentation.h>
 #include <vtkCaptionWidget.h>
 #include <vtkCaptionRepresentation.h>
 #include <vtkCaptionActor2D.h>
@@ -37,8 +38,21 @@ public:
 	 * @param	slice		Slice position in terms of data extent
 	 * @param	enabled		Font for enabled list elements
 	 * @param	disabled	Font for disabled list elements
+	 * @param	interactor	Render window interactor where will be placed
 	 */
-	ROD(const std::string name, const double* origin, const double* point1, const double* point2, const double slice, const QFont enabled, const QFont disabled);
+	ROD(const std::string name, const double* origin, const double* point1, const double* point2, const double slice, const QFont enabled, const QFont disabled, vtkSmartPointer<vtkRenderWindowInteractor> interactor);
+
+	/**
+	 * Constructor
+	 * @param	filename	Path to the input XML file
+	 * @param	enabled		Font for enabled list elements
+	 * @param	disabled	Font for disabled list elements
+	 * @param	interactor	Render window interactor where will be placed
+	 * @param	ruleList	List where the rule QListWidgetItems will be placed
+	 * @param	protractorList	List where the protractor QListWidgetItems will be placed
+	 * @param	annotationList	List where the annotation QListWidgetItems will be placed
+	 */
+	ROD(std::string &filename, const QFont enabled, const QFont disabled, vtkSmartPointer<vtkRenderWindowInteractor> interactor, QListWidget* ruleList, QListWidget* protractorList, QListWidget *annotationList);
 
 	/**
 	 * Destructor
@@ -76,11 +90,28 @@ public:
 	double getSlicePosition() const;
 
 	/**
+	 * Get rules container
+	 * @return	Rules container
+	 */
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> > getRules() const;
+
+	/**
+	 * Get protractors container
+	 * @return	Protractors container
+	 */
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget> > getProtractors() const;
+
+	/**
+	 * Get annotations container
+	 * @return	Annotations container
+	 */
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkCaptionWidget> > getAnnotations() const;
+
+	/**
 	 * Add new rule to measure
 	 * @param	item		Rule item in UI
-	 * @param	interactor	Render window interactor where will be placed
 	 */
-	void addRule(QListWidgetItem* item, vtkSmartPointer<vtkRenderWindowInteractor> interactor);
+	void addRule(QListWidgetItem* item);
 
 	/**
 	 * Delete selected rule
@@ -124,9 +155,8 @@ public:
 	/**
 	 * Add new protractor to measure
 	 * @param	item		Rule item in UI
-	 * @param	interactor	Render window interactor where will be placed
 	 */
-	void addProtractor(QListWidgetItem* item, vtkSmartPointer<vtkRenderWindowInteractor> interactor);
+	void addProtractor(QListWidgetItem* item);
 
 	/**
 	 * Delete selected protractor
@@ -171,9 +201,8 @@ public:
 	 * Add new annotation
 	 * @param	item		Rule item in UI
 	 * @param	text		Annotation text
-	 * @param	interactor	Render window interactor where will be placed
 	 */
-	void addAnnotation(QListWidgetItem* item, std::string text, vtkSmartPointer<vtkRenderWindowInteractor> interactor);
+	void addAnnotation(QListWidgetItem* item, std::string text);
 
 	/**
 	* Delete selected annotation
@@ -235,10 +264,19 @@ public:
 	bool samePlane(const double* origin, const double* point1, const double* point2, const double slice);
 
 	/**
-	 * Write ROMD in an XML file
+	 * Write ROD in an XML file
 	 * @param	filename	Path to the output XML file
 	 */
 	void write(std::string &filename);
+
+	/**
+	 * Read ROD from an XML file using its path
+	 * @param	filename	Path to the input XML file
+	 * @param	ruleList	List where the rule QListWidgetItems will be placed
+	 * @param	protractorList	List where the protractor QListWidgetItems will be placed
+	 * @param	annotationList	List where the annotation QListWidgetItems will be placed
+	 */
+	void read(std::string &filename, QListWidget* ruleList, QListWidget* protractorList, QListWidget *annotationList);
 
 private:
 	std::string name; /**< ROD name */
@@ -247,11 +285,12 @@ private:
 	double* point2; /**< Position of the point defining the second axis of the plane */
 	double slice; /**< Slice position in terms of data extent */
 	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> > rules; /**< Rules container */
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget> > protractors; /**< Rules container */
+	std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget> > protractors; /**< Protractors container */
 	std::map<QListWidgetItem*, vtkSmartPointer<vtkCaptionWidget> > annotations; /**< Annotations container */
 
 	QFont enabled; /**< Font for list enabled elements */
 	QFont disabled; /**< Font for list disabled elements */
+	vtkSmartPointer<vtkRenderWindowInteractor> interactor; /**< Render window interactor where will be placed */
 };
 
 #endif

@@ -1,9 +1,6 @@
 #include "ROD.h"
 
-ROD::ROD(const std::string name, const double* origin, const double* point1, const double* point2, const double slice, const QFont enabled, const QFont disabled) {
-	this->name = name;
-	this->slice = slice;
-
+ROD::ROD(const std::string name, const double* origin, const double* point1, const double* point2, const double slice, const QFont enabled, const QFont disabled, vtkSmartPointer<vtkRenderWindowInteractor> interactor) {
 	this->origin = new double[3];
 	this->point1 = new double[3];
 	this->point2 = new double[3];
@@ -18,8 +15,26 @@ ROD::ROD(const std::string name, const double* origin, const double* point1, con
 	this->point2[1] = point2[1];
 	this->point2[2] = point2[2];
 
+	this->name = name;
+	this->slice = slice;
+
 	this->enabled = enabled;
 	this->disabled = disabled;
+
+	this->interactor = interactor;
+}
+
+ROD::ROD(std::string &filename, const QFont enabled, const QFont disabled, vtkSmartPointer<vtkRenderWindowInteractor> interactor, QListWidget* ruleList, QListWidget* protractorList, QListWidget *annotationList) {
+	this->origin = new double[3];
+	this->point1 = new double[3];
+	this->point2 = new double[3];
+
+	this->enabled = enabled;
+	this->disabled = disabled;
+
+	this->interactor = interactor;
+
+	read(filename, ruleList, protractorList, annotationList);
 }
 
 ROD::~ROD() {
@@ -51,7 +66,19 @@ double ROD::getSlicePosition() const {
 	return slice;
 }
 
-void ROD::addRule(QListWidgetItem* item, vtkSmartPointer<vtkRenderWindowInteractor> interactor) {
+std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget>> ROD::getRules() const {
+	return rules;
+}
+
+std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget>> ROD::getProtractors() const {
+	return protractors;
+}
+
+std::map<QListWidgetItem*, vtkSmartPointer<vtkCaptionWidget>> ROD::getAnnotations() const {
+	return annotations;
+}
+
+void ROD::addRule(QListWidgetItem* item) {
 	rules[item] = vtkSmartPointer<vtkDistanceWidget>::New();
 	rules[item]->SetInteractor(interactor);
 	rules[item]->CreateDefaultRepresentation();
@@ -105,7 +132,7 @@ void ROD::clearAllRules() {
 	rules.clear();
 }
 
-void ROD::addProtractor(QListWidgetItem* item, vtkSmartPointer<vtkRenderWindowInteractor> interactor) {
+void ROD::addProtractor(QListWidgetItem* item) {
 	protractors[item] = vtkSmartPointer<vtkAngleWidget>::New();
 	protractors[item]->SetInteractor(interactor);
 	protractors[item]->CreateDefaultRepresentation();
@@ -159,7 +186,7 @@ void ROD::clearAllProtractors() {
 	protractors.clear();
 }
 
-void ROD::addAnnotation(QListWidgetItem* item, std::string text, vtkSmartPointer<vtkRenderWindowInteractor> interactor) {
+void ROD::addAnnotation(QListWidgetItem* item, std::string text) {
 	vtkSmartPointer<vtkCaptionRepresentation> captionRepresentation = vtkSmartPointer<vtkCaptionRepresentation>::New();
 	captionRepresentation->GetCaptionActor2D()->SetCaption(text.c_str());
 	captionRepresentation->GetCaptionActor2D()->BorderOff();
@@ -317,4 +344,96 @@ void ROD::write(std::string &filename) {
 	}
 
 	write_xml(filename, pt);
+}
+
+void ROD::read(std::string &filename, QListWidget* ruleList, QListWidget* protractorList, QListWidget *annotationList) {
+	ptree pt;
+	read_xml(filename, pt);
+
+	this->name = pt.get<std::string>("rod.<xmlattr>.name");
+
+	this->origin[0] = pt.get<double>("rod.pos.o.x");
+	this->origin[1] = pt.get<double>("rod.pos.o.y");
+	this->origin[2] = pt.get<double>("rod.pos.o.z");
+	this->point1[0] = pt.get<double>("rod.pos.p1.x");
+	this->point1[1] = pt.get<double>("rod.pos.p1.y");
+	this->point1[2] = pt.get<double>("rod.pos.p1.z");
+	this->point2[0] = pt.get<double>("rod.pos.p2.x");
+	this->point2[1] = pt.get<double>("rod.pos.p2.y");
+	this->point2[2] = pt.get<double>("rod.pos.p2.z");
+	this->slice = pt.get<double>("rod.pos.slice");
+
+	BOOST_FOREACH(ptree::value_type const &v, pt.get_child("rod.rules")) {
+		if (v.first == "rule") {
+			QListWidgetItem *item = new QListWidgetItem(0);
+			item->setText(QString::fromStdString(v.second.get<std::string>("name")));
+			ruleList->addItem(item);
+
+			double *p1 = new double[3], *p2 = new double[3];
+			p1[0] = v.second.get<double>("p1.x");
+			p1[1] = v.second.get<double>("p1.y");
+			p1[2] = v.second.get<double>("p1.z");
+			p2[0] = v.second.get<double>("p2.x");
+			p2[1] = v.second.get<double>("p2.y");
+			p2[2] = v.second.get<double>("p2.z");
+
+			rules[item] = vtkSmartPointer<vtkDistanceWidget>::New();
+			rules[item]->SetInteractor(interactor);
+			rules[item]->CreateDefaultRepresentation();
+			rules[item]->GetDistanceRepresentation()->SetLabelFormat("%-#6.3g mm");
+			rules[item]->GetDistanceRepresentation()->SetPoint1WorldPosition(p1);
+			rules[item]->GetDistanceRepresentation()->SetPoint2WorldPosition(p2);
+			rules[item]->SetWidgetStateToManipulate();
+		}
+	}
+
+	BOOST_FOREACH(ptree::value_type const &v, pt.get_child("rod.protractors")) {
+		if (v.first == "protractor") {
+			QListWidgetItem *item = new QListWidgetItem(0);
+			item->setText(QString::fromStdString(v.second.get<std::string>("name")));
+			protractorList->addItem(item);
+
+			double *p1 = new double[3], *p2 = new double[3], *c = new double[3];
+			p1[0] = v.second.get<double>("p1.x");
+			p1[1] = v.second.get<double>("p1.y");
+			p1[2] = v.second.get<double>("p1.z");
+			p2[0] = v.second.get<double>("p2.x");
+			p2[1] = v.second.get<double>("p2.y");
+			p2[2] = v.second.get<double>("p2.z");
+			c[0] = v.second.get<double>("c.x");
+			c[1] = v.second.get<double>("c.y");
+			c[2] = v.second.get<double>("c.z");
+
+			protractors[item] = vtkSmartPointer<vtkAngleWidget>::New();
+			protractors[item]->SetInteractor(interactor);
+			protractors[item]->CreateDefaultRepresentation();
+			protractors[item]->GetAngleRepresentation()->GetPoint1Representation()->SetWorldPosition(p1);
+			protractors[item]->GetAngleRepresentation()->GetPoint2Representation()->SetWorldPosition(p2);
+			protractors[item]->GetAngleRepresentation()->GetCenterRepresentation()->SetWorldPosition(c);
+			protractors[item]->SetWidgetStateToManipulate();
+		}
+	}
+
+	BOOST_FOREACH(ptree::value_type const &v, pt.get_child("rod.annotations")) {
+		if (v.first == "annotation") {
+			QListWidgetItem *item = new QListWidgetItem(0);
+			item->setText(QString::fromStdString(v.second.get<std::string>("name")));
+			annotationList->addItem(item);
+
+			double *pos = new double[3];
+			pos[0] = v.second.get<double>("p.x");
+			pos[1] = v.second.get<double>("p.y");
+			pos[2] = v.second.get<double>("p.z");
+
+			vtkSmartPointer<vtkCaptionRepresentation> captionRepresentation = vtkSmartPointer<vtkCaptionRepresentation>::New();
+			captionRepresentation->GetCaptionActor2D()->SetCaption(v.second.get<std::string>("text").c_str());
+			captionRepresentation->GetCaptionActor2D()->BorderOff();
+			captionRepresentation->GetCaptionActor2D()->GetTextActor()->SetMinimumSize(300, 300);
+			captionRepresentation->GetCaptionActor2D()->SetAttachmentPoint(pos);
+			annotations[item] = vtkSmartPointer<vtkCaptionWidget>::New();
+			annotations[item]->SetInteractor(interactor);
+			annotations[item]->CreateDefaultRepresentation();
+			annotations[item]->SetRepresentation(captionRepresentation);
+		}
+	}
 }

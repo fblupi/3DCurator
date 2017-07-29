@@ -131,6 +131,7 @@ private slots:
 	void on_deleteAnnotation_pressed();
 	void on_enableDisableAnnotation_pressed();
 	void on_exportROD_pressed();
+	void on_importROD_pressed();
 
 	void on_RODList_currentItemChanged();
 
@@ -482,6 +483,11 @@ private slots:
 	 * Enable or disable selected annotation
 	 */
 	void enableDisableAnnotation();
+
+	/**
+	 * Import ROD preset
+	 */
+	void importROD();
 
 	/**
 	 * Export current ROD to XML
