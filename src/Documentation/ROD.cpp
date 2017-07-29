@@ -82,7 +82,7 @@ void ROD::addRule(QListWidgetItem* item) {
 	rules[item] = vtkSmartPointer<vtkDistanceWidget>::New();
 	rules[item]->SetInteractor(interactor);
 	rules[item]->CreateDefaultRepresentation();
-	static_cast<vtkDistanceRepresentation *>(rules[item]->GetRepresentation())->SetLabelFormat("%-#6.3g mm");
+	rules[item]->GetDistanceRepresentation()->SetLabelFormat(DISTANCE_FORMAT.c_str());
 	rules[item]->On();
 }
 
@@ -136,6 +136,7 @@ void ROD::addProtractor(QListWidgetItem* item) {
 	protractors[item] = vtkSmartPointer<vtkAngleWidget>::New();
 	protractors[item]->SetInteractor(interactor);
 	protractors[item]->CreateDefaultRepresentation();
+	protractors[item]->GetAngleRepresentation()->SetLabelFormat(ANGLE_FORMAT.c_str());
 	protractors[item]->On();
 }
 
@@ -380,7 +381,7 @@ void ROD::read(std::string &filename, QListWidget* ruleList, QListWidget* protra
 			rules[item] = vtkSmartPointer<vtkDistanceWidget>::New();
 			rules[item]->SetInteractor(interactor);
 			rules[item]->CreateDefaultRepresentation();
-			rules[item]->GetDistanceRepresentation()->SetLabelFormat("%-#6.3g mm");
+			rules[item]->GetDistanceRepresentation()->SetLabelFormat(DISTANCE_FORMAT.c_str());
 			rules[item]->GetDistanceRepresentation()->SetPoint1WorldPosition(p1);
 			rules[item]->GetDistanceRepresentation()->SetPoint2WorldPosition(p2);
 			rules[item]->SetWidgetStateToManipulate();
@@ -410,6 +411,7 @@ void ROD::read(std::string &filename, QListWidget* ruleList, QListWidget* protra
 			protractors[item]->GetAngleRepresentation()->GetPoint1Representation()->SetWorldPosition(p1);
 			protractors[item]->GetAngleRepresentation()->GetPoint2Representation()->SetWorldPosition(p2);
 			protractors[item]->GetAngleRepresentation()->GetCenterRepresentation()->SetWorldPosition(c);
+			protractors[item]->GetAngleRepresentation()->SetLabelFormat(ANGLE_FORMAT.c_str());
 			protractors[item]->SetWidgetStateToManipulate();
 		}
 	}

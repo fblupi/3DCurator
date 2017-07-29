@@ -246,7 +246,7 @@ void MainWindow::importDICOM() {
 }
 
 void MainWindow::importPreset() {
-	QString presetFile = QFileDialog::getOpenFileName(this, tr("Importar preset"), QDir::homePath());
+	QString presetFile = QFileDialog::getOpenFileName(this, tr("Importar preset"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
 
 	if (presetFile != NULL) {
 		std::string s = presetFile.toUtf8().constData();
@@ -821,7 +821,7 @@ void MainWindow::enableDisableAnnotation() {
 
 void MainWindow::importROD() {
 	if (sculpture->getLoaded()) {
-		QString rodFile = QFileDialog::getOpenFileName(this, tr("Importar ROD"), QDir::homePath());
+		QString rodFile = QFileDialog::getOpenFileName(this, tr("Importar ROD"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
 		if (rodFile != NULL) {
 			std::string s = rodFile.toUtf8().constData();
 			ROD* rod = new ROD(s, itemListEnabled, itemListDisabled, ui->slicesWidget->GetInteractor(), ui->ruleList, ui->protractorList, ui->annotationList);
