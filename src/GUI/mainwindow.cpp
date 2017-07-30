@@ -617,6 +617,12 @@ void MainWindow::filter() {
 			case GAUSSIAN:
 				sculpture->gaussianFilter(dialog->getGaussianReps());
 				break;
+			case MEAN:
+				// TODO sculpture->meanFilter(dialog->getMeanRadius());
+				break;
+			case MEDIAN:
+				// TODO sculpture->medianFilter(dialog->getMedianRadius());
+				break;
 			}
 
 			// -- close progress bar

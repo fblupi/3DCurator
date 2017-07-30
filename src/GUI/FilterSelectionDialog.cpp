@@ -1,8 +1,6 @@
 #include "FilterSelectionDialog.h"
 #include "ui_filterselectiondialog.h"
 
-#include <iostream>
-
 FilterSelectionDialog::FilterSelectionDialog(QWidget *parent) : QDialog(parent), ui(new Ui::FilterSelectionDialog) {
 	ui->setupUi(this);
 
@@ -15,14 +13,40 @@ FilterSelectionDialog::~FilterSelectionDialog() {
 	delete ui;
 }
 
-int FilterSelectionDialog::getGaussianReps() const {
+unsigned int FilterSelectionDialog::getGaussianReps() const {
 	return ui->gaussianReps->value();
 }
 
+unsigned int FilterSelectionDialog::getMeanRadius() const {
+	switch (ui->meanRadius->currentIndex()) {
+	case N_3x3:
+		return 1;
+	case N_5x5:
+		return 2;
+	case N_7x7:
+		return 3;
+	}
+}
+
+unsigned int FilterSelectionDialog::getMedianRadius() const {
+	switch (ui->medianRadius->currentIndex()) {
+	case N_3x3:
+		return 1;
+	case N_5x5:
+		return 2;
+	case N_7x7:
+		return 3;
+	}
+}
+
 void FilterSelectionDialog::accept() {
-	done(GAUSSIAN);
+	done(filterType);
 }
 
 void FilterSelectionDialog::reject() {
 	done(CANCEL);
+}
+
+void FilterSelectionDialog::on_filtersTab_currentChanged() {
+	filterType = ui->filtersTab->currentIndex();
 }
