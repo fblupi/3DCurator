@@ -41,6 +41,7 @@
 #include "Chart/ColorTFChart.h"
 #include "Chart/OpacityTFChart.h"
 #include "Documentation/ROD.h"
+#include "GUI/FilterSelectionDialog.h"
 
 #define VOLUME_RULE 0
 #define SLICE_RULE 1

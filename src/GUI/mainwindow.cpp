@@ -594,25 +594,35 @@ void MainWindow::segmentateOnOff() {
 
 void MainWindow::filter() {
 	if (sculpture->getLoaded()) {
-		// -- launch progress bar
-		QPointer<QProgressBar> bar = new QProgressBar(0);
-		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(QString("Filtrando..."));
-		progressDialog->setLabelText(QString::fromLatin1("Aplicando un filtro Gaussiano para reducir el ruido"));
-		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-		progressDialog->setCancelButton(0);
-		progressDialog->setBar(bar);
-		progressDialog->show();
-		bar->close();
-		QApplication::processEvents();
-		// -- END launch progress bar
+		FilterSelectionDialog *dialog = new FilterSelectionDialog();
 
-		sculpture->filter();
+		int response = dialog->exec();
 
-		// -- close progress bar
-		progressDialog->close();
-		// -- END close progress bar
+		if (response != CANCEL) {
+			// -- launch progress bar
+			QPointer<QProgressBar> bar = new QProgressBar(0);
+			QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+			progressDialog->setWindowTitle(QString("Filtrando..."));
+			progressDialog->setLabelText(QString::fromLatin1("Aplicando filtro con los parámetros seleccionados"));
+			progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+			progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+			progressDialog->setCancelButton(0);
+			progressDialog->setBar(bar);
+			progressDialog->show();
+			bar->close();
+			QApplication::processEvents();
+			// -- END launch progress bar
+
+			switch (response) {
+			case GAUSSIAN:
+				sculpture->gaussianFilter(dialog->getGaussianReps());
+				break;
+			}
+
+			// -- close progress bar
+			progressDialog->close();
+			// -- END close progress bar
+		}
 	} else {
 		launchWarningNoVolume();
 	}

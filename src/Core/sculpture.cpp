@@ -64,7 +64,7 @@ void Sculpture::createMesh() {
 	surface->SetValue(0, isoValue);
 }
 
-void Sculpture::filter() {
+void Sculpture::gaussianFilter(const unsigned int reps) {
 	typedef signed short PixelType;
 	const unsigned int Dimension = 3;
 
@@ -78,7 +78,7 @@ void Sculpture::filter() {
 	typedef itk::BinomialBlurImageFilter<ImageType, ImageType> BinomialBlurFilterType;
 	BinomialBlurFilterType::Pointer binomialBlurFilter = BinomialBlurFilterType::New();
 	binomialBlurFilter->SetInput(vtkImageToImage->GetOutput());
-	binomialBlurFilter->SetRepetitions(1);
+	binomialBlurFilter->SetRepetitions(reps);
 	binomialBlurFilter->Update();
 
 	typedef itk::ImageToVTKImageFilter<ImageType> ImageToVTKImageType;
