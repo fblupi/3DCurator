@@ -142,8 +142,9 @@ public:
 
 	/**
 	 * Filter the volume using a Gaussian filter to reduce noise
+	 * @param reps	How many times should we apply the blur
 	 */
-	void filter();
+	void gaussianFilter(const unsigned int reps);
 
 private:
 	vtkSmartPointer<vtkImageData> imageData; /**< 3D Matrix with volume data */

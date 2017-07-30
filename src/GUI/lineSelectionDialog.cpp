@@ -1,5 +1,5 @@
 #include "LineSelectionDialog.h"
-#include "ui_lineSelectionDialog.h"
+#include "ui_lineselectiondialog.h"
 
 #include <iostream>
 
