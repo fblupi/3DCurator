@@ -1,8 +1,6 @@
 #include "LineSelectionDialog.h"
 #include "ui_lineselectiondialog.h"
 
-#include <iostream>
-
 LineSelectionDialog::LineSelectionDialog(QWidget *parent) : QDialog(parent), ui(new Ui::LineSelectionDialog) {
 	ui->setupUi(this);
 
