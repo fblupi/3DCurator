@@ -618,10 +618,10 @@ void MainWindow::filter() {
 				sculpture->gaussianFilter(dialog->getGaussianReps());
 				break;
 			case MEAN:
-				// TODO sculpture->meanFilter(dialog->getMeanRadius());
+				sculpture->meanFilter(dialog->getMeanRadius());
 				break;
 			case MEDIAN:
-				// TODO sculpture->medianFilter(dialog->getMedianRadius());
+				sculpture->medianFilter(dialog->getMedianRadius());
 				break;
 			}
 

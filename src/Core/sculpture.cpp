@@ -90,6 +90,58 @@ void Sculpture::gaussianFilter(const unsigned int reps) {
 	imageData->Modified();
 }
 
+void Sculpture::meanFilter(const unsigned int radius) {
+	typedef signed short PixelType;
+	const unsigned int Dimension = 3;
+
+	typedef itk::Image<PixelType, Dimension> ImageType;
+
+	typedef itk::VTKImageToImageFilter<ImageType> VTKImageToImageType;
+	VTKImageToImageType::Pointer vtkImageToImage = VTKImageToImageType::New();
+	vtkImageToImage->SetInput(imageData);
+	vtkImageToImage->Update();
+
+	typedef itk::MeanImageFilter<ImageType, ImageType> MeanImageFilterType;
+	MeanImageFilterType::Pointer meanFilter = MeanImageFilterType::New();
+	meanFilter->SetInput(vtkImageToImage->GetOutput());
+	meanFilter->SetRadius(radius);
+	meanFilter->Update();
+
+	typedef itk::ImageToVTKImageFilter<ImageType> ImageToVTKImageType;
+	ImageToVTKImageType::Pointer imageToVTKImage = ImageToVTKImageType::New();
+	imageToVTKImage->SetInput(meanFilter->GetOutput());
+	imageToVTKImage->Update();
+
+	imageData->DeepCopy(imageToVTKImage->GetOutput());
+	imageData->Modified();
+}
+
+void Sculpture::medianFilter(const unsigned int radius) {
+	typedef signed short PixelType;
+	const unsigned int Dimension = 3;
+
+	typedef itk::Image<PixelType, Dimension> ImageType;
+
+	typedef itk::VTKImageToImageFilter<ImageType> VTKImageToImageType;
+	VTKImageToImageType::Pointer vtkImageToImage = VTKImageToImageType::New();
+	vtkImageToImage->SetInput(imageData);
+	vtkImageToImage->Update();
+
+	typedef itk::MedianImageFilter<ImageType, ImageType> MedianImageFilterType;
+	MedianImageFilterType::Pointer medianFilter = MedianImageFilterType::New();
+	medianFilter->SetInput(vtkImageToImage->GetOutput());
+	medianFilter->SetRadius(radius);
+	medianFilter->Update();
+
+	typedef itk::ImageToVTKImageFilter<ImageType> ImageToVTKImageType;
+	ImageToVTKImageType::Pointer imageToVTKImage = ImageToVTKImageType::New();
+	imageToVTKImage->SetInput(medianFilter->GetOutput());
+	imageToVTKImage->Update();
+
+	imageData->DeepCopy(imageToVTKImage->GetOutput());
+	imageData->Modified();
+}
+
 void Sculpture::setMaterial(const double ambient, const double diffuse, const double specular, const double power) {
 	volumeProperty->SetAmbient(ambient);
 	volumeProperty->SetDiffuse(diffuse);

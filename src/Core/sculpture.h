@@ -22,6 +22,8 @@
 #include <itkVTKImageToImageFilter.h>
 #include <itkImageToVTKImageFilter.h>
 #include <itkBinomialBlurImageFilter.h>
+#include <itkMeanImageFilter.h>
+#include <itkMedianImageFilter.h>
 
 #include "Core/TransferFunction.h"
 #include "Util/Measures.h"
@@ -146,9 +148,21 @@ public:
 	 */
 	void gaussianFilter(const unsigned int reps);
 
+	/**
+	 * Filter the volume using a mean filter to reduce noise
+	 * @param radius	Radius of the neigbourhood for median filter
+	 */
+	void meanFilter(const unsigned int radius);
+
+	/**
+	 * Filter the volume using a median filter to reduce noise
+	 * @param radius	Radius of the neigbourhood for median filter
+	 */
+	void medianFilter(const unsigned int radius);
+
 private:
 	vtkSmartPointer<vtkImageData> imageData; /**< 3D Matrix with volume data */
-    vtkSmartPointer<vtkVolume> volume; /**< Volume */
+	vtkSmartPointer<vtkVolume> volume; /**< Volume */
 	vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper; /**< Mapper that uses DVR GPU-Raycasting */
 	vtkSmartPointer<vtkVolumeProperty> volumeProperty; /**< Volume properties */
 	vtkSmartPointer<vtkMarchingCubes> surface; /**< Extracted mesh using marching cubes */
@@ -161,7 +175,7 @@ private:
 	/**
 	 * Set properties of volume and mesh
 	 */
-    void setProperties();
+	void setProperties();
 
 	/**
 	 * Connect components of the pipeline
