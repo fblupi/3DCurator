@@ -253,7 +253,7 @@ void MainWindow::importVTI() {
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
 		progressDialog->setWindowTitle(QString("Cargando..."));
-		progressDialog->setLabelText(QString::fromLatin1("Cargando los datos DICOM especificados"));
+		progressDialog->setLabelText(QString::fromLatin1("Cargando los datos especificados"));
 		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog->setCancelButton(0);
@@ -509,6 +509,9 @@ void MainWindow::enableDisablePlane() {
 void MainWindow::axialPlane() {
 	if (sculpture->getLoaded()) {
 		slicePlane->setAxial();
+		if (activeROD != NULL) {
+			unsetActiveROD();
+		}
 		renderVolume();
 		renderSlice();
 	} else {
@@ -519,6 +522,9 @@ void MainWindow::axialPlane() {
 void MainWindow::coronalPlane() {
 	if (sculpture->getLoaded()) {
 		slicePlane->setCoronal();
+		if (activeROD != NULL) {
+			unsetActiveROD();
+		}
 		renderVolume();
 		renderSlice();
 	} else {
@@ -529,6 +535,9 @@ void MainWindow::coronalPlane() {
 void MainWindow::sagitalPlane() {
 	if (sculpture->getLoaded()) {
 		slicePlane->setSagital();
+		if (activeROD != NULL) {
+			unsetActiveROD();
+		}
 		renderVolume();
 		renderSlice();
 	} else {
