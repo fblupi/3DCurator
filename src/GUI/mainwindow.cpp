@@ -246,7 +246,44 @@ void MainWindow::importDICOM() {
 }
 
 void MainWindow::importVTI() {
-	// TODO
+	QString vtiFile = QFileDialog::getOpenFileName(this, tr("Abrir archivo VTI"), QDir::homePath(), "VTI (*.vti) ;; XML (*.xml) ;; All files (*.*)");
+
+	if (vtiFile != NULL) {
+		// -- launch progress bar
+		QPointer<QProgressBar> bar = new QProgressBar(0);
+		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+		progressDialog->setWindowTitle(QString("Cargando..."));
+		progressDialog->setLabelText(QString::fromLatin1("Cargando los datos DICOM especificados"));
+		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+		progressDialog->setCancelButton(0);
+		progressDialog->setBar(bar);
+		progressDialog->show();
+		bar->close();
+		QApplication::processEvents();
+		// -- END launch progress bar
+
+		removeVolume();
+		removeMesh();
+		clearAllRODs();
+
+		slicePlane->show(false);
+		disablePlane();
+		sculpture->setVTIFile(vtiFile.toUtf8().constData());
+		slicePlane->setInputData(sculpture->getImageData());
+		ui->labelFolder->setText(vtiFile);
+		defaultPlanePosition();
+		slicePlane->show(true);
+		enablePlane();
+
+		drawVolume();
+		drawMesh();
+		renderSlice();
+
+		// -- close progress bar
+		progressDialog->close();
+		// -- END close progress bar
+	}
 }
 
 void MainWindow::exportVTI() {

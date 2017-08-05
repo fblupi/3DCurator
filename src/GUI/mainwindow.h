@@ -31,7 +31,6 @@
 #include <vtkSmoothPolyDataFilter.h>
 #include <vtkPolyDataConnectivityFilter.h>
 #include <vtkXMLImageDataWriter.h>
-#include <vtkXMLImageDataReader.h>
 
 #include "Util/Measures.h"
 #include "Util/Utils.h"

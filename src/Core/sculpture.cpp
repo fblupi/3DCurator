@@ -60,6 +60,24 @@ void Sculpture::setDICOMFolder(const std::string s) {
 	loaded = true;
 }
 
+void Sculpture::setVTIFile(const std::string s) {
+	loaded = false;
+
+	vtkSmartPointer<vtkXMLImageDataReader> imageReader = vtkSmartPointer<vtkXMLImageDataReader>::New();
+	imageReader->SetFileName(s.c_str());
+	imageReader->Update();
+
+	imageData->DeepCopy(imageReader->GetOutput());
+
+	volumeMapper->SetInputData(imageData);
+
+	surface->SetInputData(imageData);
+	meshMapper->Update();
+	surface->SetValue(0, isoValue);
+
+	loaded = true;
+}
+
 void Sculpture::createMesh() {
 	surface->SetValue(0, isoValue);
 }
