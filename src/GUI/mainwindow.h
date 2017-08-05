@@ -30,6 +30,8 @@
 #include <vtkDecimatePro.h>
 #include <vtkSmoothPolyDataFilter.h>
 #include <vtkPolyDataConnectivityFilter.h>
+#include <vtkXMLImageDataWriter.h>
+#include <vtkXMLImageDataReader.h>
 
 #include "Util/Measures.h"
 #include "Util/Utils.h"
@@ -95,6 +97,8 @@ private slots:
 	void on_actionFilter_triggered();
 
 	void on_openDICOM_pressed();
+	void on_openVolume_pressed();
+	void on_saveVolume_pressed();
 	void on_axialPlane_pressed();
 	void on_coronalPlane_pressed();
 	void on_sagitalPlane_pressed();
@@ -229,6 +233,16 @@ private slots:
 	void importDICOM();
 
 	/**
+	 * Import VTI file
+	 */
+	void importVTI();
+
+	/**
+	 * Export VTI file
+	 */
+	void exportVTI();
+
+	/**
 	 * Import transfer function preset
 	 */
 	void importPreset();
@@ -291,10 +305,17 @@ private slots:
 
 	/**
 	 * Get exported ROD filename
-	 * @param	defaultFilename	Default filename (transfer function name)
+	 * @param	defaultFilename	Default filename (ROD name)
 	 * @return	Output filename
 	 */
 	QString getExportRODFilename(const QString defaultFilename);
+
+	/**
+	 * Get exported VTI filename
+	 * @param	defaultFilename	Default filename
+	 * @return	Output filename
+	 */
+	QString getExportVTIFilename(const QString defaultFilename);
 
 	/**
 	 * Show plane in viewer

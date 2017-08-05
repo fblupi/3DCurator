@@ -245,6 +245,42 @@ void MainWindow::importDICOM() {
 	}
 }
 
+void MainWindow::importVTI() {
+	// TODO
+}
+
+void MainWindow::exportVTI() {
+	if (sculpture->getLoaded()) {
+		QString filename = getExportVTIFilename("Volume");
+		if (filename != NULL) {
+			// -- launch progress bar
+			QPointer<QProgressBar> bar = new QProgressBar(0);
+			QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+			progressDialog->setWindowTitle(QString("Extrayendo..."));
+			progressDialog->setLabelText(QString::fromLatin1("Extrayendo el modelo"));
+			progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+			progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+			progressDialog->setCancelButton(0);
+			progressDialog->setBar(bar);
+			progressDialog->show();
+			bar->close();
+			QApplication::processEvents();
+			// -- END launch progress bar
+
+			vtkSmartPointer<vtkXMLImageDataWriter> writer = vtkSmartPointer<vtkXMLImageDataWriter>::New();
+			writer->SetFileName(filename.toUtf8().constData());
+			writer->SetInputData(sculpture->getImageData());
+			writer->Write();
+
+			// -- close progress bar
+			progressDialog->close();
+			// -- END close progress bar
+		}
+	} else {
+		launchWarningNoVolume();
+	}
+}
+
 void MainWindow::importPreset() {
 	QString presetFile = QFileDialog::getOpenFileName(this, tr("Importar preset"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
 
@@ -368,6 +404,10 @@ QString MainWindow::getExportMeshFilename(const QString defaultFilename) {
 
 QString MainWindow::getExportRODFilename(const QString defaultFilename) {
 	return QFileDialog::getSaveFileName(this, tr("Exportar ROD"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
+}
+
+QString MainWindow::getExportVTIFilename(const QString defaultFilename) {
+	return QFileDialog::getSaveFileName(this, tr("Exportar volumen"), QDir(QDir::homePath()).filePath(defaultFilename), "VTI (*.vti) ;; XML (*.xml)");
 }
 
 void MainWindow::enablePlane() {
@@ -960,6 +1000,14 @@ void MainWindow::on_actionFilter_triggered() {
 
 void MainWindow::on_openDICOM_pressed() {
 	importDICOM();
+}
+
+void MainWindow::on_openVolume_pressed() {
+	importVTI();
+}
+
+void MainWindow::on_saveVolume_pressed() {
+	exportVTI();
 }
 
 void MainWindow::on_axialPlane_pressed() {
