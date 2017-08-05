@@ -50,6 +50,23 @@
          </property>
          <property name="icon">
           <iconset resource="../../assets/resources.qrc">
+           <normaloff>:/icons/folder-dicom.png</normaloff>:/icons/folder-dicom.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="openVolume">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../assets/resources.qrc">
            <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
          </property>
          <property name="iconSize">
@@ -61,7 +78,50 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="saveVolume">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../assets/resources.qrc">
+           <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>21</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer_10">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_25">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_26">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -114,6 +174,19 @@
         </widget>
        </item>
        <item>
+        <spacer name="horizontalSpacer_24">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QPushButton" name="exportVolumeImage">
          <property name="toolTip">
           <string>Guardar imagen volumen</string>
@@ -123,7 +196,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../assets/resources.qrc">
-           <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+           <normaloff>:/icons/camera.png</normaloff>:/icons/camera.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -304,7 +377,7 @@
              </property>
              <property name="icon">
               <iconset resource="../../assets/resources.qrc">
-               <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+               <normaloff>:/icons/camera.png</normaloff>:/icons/camera.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -583,7 +656,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>131</width>
+             <width>452</width>
              <height>693</height>
             </rect>
            </property>

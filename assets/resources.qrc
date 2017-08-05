@@ -4,10 +4,12 @@
 	<file>icons/3DCurator.ico</file>
 	<file>icons/3DCurator.png</file>
 	<file>icons/folder.png</file>
+	<file>icons/folder-dicom.png</file>
 	<file>icons/refresh.png</file>
 	<file>icons/power.png</file>
 	<file>icons/save.png</file>
 	<file>icons/save-as.png</file>
+	<file>icons/camera.png</file>
 	<file>icons/eye.png</file>
 	<file>icons/eye-slash.png</file>
 	<file>icons/eraser.png</file>

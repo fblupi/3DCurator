@@ -17,6 +17,7 @@
 #include <vtkMarchingCubes.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
+#include <vtkXMLImageDataReader.h>
 
 #include <itkImage.h>
 #include <itkVTKImageToImageFilter.h>
@@ -37,12 +38,12 @@ public:
 	/**
 	 * Constructor
 	 */
-    Sculpture();
+	Sculpture();
 
 	/*
 	 * Destructor
 	 */
-    ~Sculpture();
+	~Sculpture();
 
 	/**
 	 * Get transfer function
@@ -121,6 +122,12 @@ public:
 	 * @param	s	Folder with DICOM files
 	 */
 	void setDICOMFolder(const std::string s);
+
+	/**
+	 * Set VTI file with volume dataset
+	 * @param	s	VTI file
+	 */
+	void setVTIFile(const std::string s);
 
 	/**
 	 * Set volume material
