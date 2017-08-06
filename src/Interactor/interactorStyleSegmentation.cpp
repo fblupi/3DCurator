@@ -78,18 +78,18 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 				vtkSmartPointer<vtkImageData> oldData = vtkSmartPointer<vtkImageData>::New();
 				oldData->DeepCopy(sculpture->getImageData());
 
-				vtkSmartPointer<vtkImageData> segmentatedData = vtkSmartPointer<vtkImageData>::New();
-				segmentatedData->DeepCopy(sculpture->getImageData());
+				vtkSmartPointer<vtkImageData> segmentedData = vtkSmartPointer<vtkImageData>::New();
+				segmentedData->DeepCopy(sculpture->getImageData());
 
 				for (int i = 0; i < dimensions[0]; i++) {
 					for (int j = 0; j < dimensions[1]; j++) {
 						for (int k = 0; k < dimensions[2]; k++) {
-							segmentatedData->SetScalarComponentFromFloat(i, j, k, 0, AIR_HU);
+							segmentedData->SetScalarComponentFromFloat(i, j, k, 0, AIR_HU);
 						}
 					}
 				}
 
-				regionGrowingWithLineBoundVolume(sculpture->getImageData(), segmentatedData, sculpture->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines);
+				regionGrowingWithLineBoundVolume(sculpture->getImageData(), segmentedData, sculpture->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines);
 
 				sculpture->getImageData()->DeepCopy(oldData);
 
@@ -98,14 +98,40 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 				// -- END close progress bar
 
 				SegmentedVolumeDialog *segmentedVolumeDialog = new SegmentedVolumeDialog();
-				segmentedVolumeDialog->setImageData(segmentatedData);
+				segmentedVolumeDialog->setImageData(segmentedData);
 				segmentedVolumeDialog->setTransferFunction(sculpture->getTransferFunction());
 				segmentedVolumeDialog->render();
 
-				if (segmentedVolumeDialog->exec() == QMessageBox::Yes) {
-					cout << "Hola" << endl;
-				} else {
-					cout << "Adiós" << endl;
+				int exportSegmentedVolume = segmentedVolumeDialog->exec();
+
+				if (exportSegmentedVolume == QMessageBox::Yes) {
+					QString vtiFile = NULL;
+					while (vtiFile == NULL) {
+						vtiFile = QFileDialog::getSaveFileName(NULL, QObject::tr("Exportar volumen"), QDir(QDir::homePath()).filePath("Sub-volume"), "VTI (*.vti) ;; XML (*.xml)");
+					}
+
+					// -- launch progress bar
+					QPointer<QProgressBar> bar = new QProgressBar(0);
+					QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+					progressDialog->setWindowTitle(QString("Extrayendo..."));
+					progressDialog->setLabelText(QString::fromLatin1("Extrayendo el modelo"));
+					progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+					progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+					progressDialog->setCancelButton(0);
+					progressDialog->setBar(bar);
+					progressDialog->show();
+					bar->close();
+					QApplication::processEvents();
+					// -- END launch progress bar
+
+					vtkSmartPointer<vtkXMLImageDataWriter> writer = vtkSmartPointer<vtkXMLImageDataWriter>::New();
+					writer->SetFileName(vtiFile.toUtf8().constData());
+					writer->SetInputData(segmentedData);
+					writer->Write();
+
+					// -- close progress bar
+					progressDialog->close();
+					// -- END close progress bar
 				}
 			}
 		}

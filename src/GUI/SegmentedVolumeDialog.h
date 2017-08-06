@@ -13,6 +13,8 @@
 #include <QDialog>
 #include <QPixmap>
 #include <QBitmap>
+#include <QMessageBox>
+#include <QFileDialog>
 
 #include <Core/TransferFunction.h>
 

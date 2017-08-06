@@ -177,7 +177,7 @@ Coord2D regionGrowingWithLineBoundImage(vtkSmartPointer<vtkImageData> inputData,
 		if (ij[0] < bounds.MAX_X && ij[0] >= bounds.MIN_X && ij[1] < bounds.MAX_Y && ij[1] >= bounds.MIN_Y) {
 			if (isAdjacent(inputData, { ij[0], ij[1], ijk[2] }, MIN_WOOD, MAX_WOOD)
 				&& !isInLine(ij, eq, bounds.MAX_X)) {
-				outputData->SetScalarComponentFromFloat(ij[0], ij[1], ijk[2], 0, AIR_HU);
+				outputData->SetScalarComponentFromFloat(ij[0], ij[1], ijk[2], 0, inputData->GetScalarComponentAsFloat(ij[0], ij[1], ijk[2], 0));
 				inputData->SetScalarComponentFromFloat(ij[0], ij[1], ijk[2], 0, AIR_HU);
 
 				queue.push({ ij[0] - 1, ij[1] - 1 });

@@ -4,8 +4,6 @@
 SegmentedVolumeDialog::SegmentedVolumeDialog(QWidget *parent) : QDialog(parent), ui(new Ui::SegmentedVolumeDialog) {
 	ui->setupUi(this);
 
-	cout << "constructor" << endl;
-
 	// Connect button actions
 	QObject::connect(ui->okButton, SIGNAL(clicked()), this, SLOT(accept()));
 	QObject::connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
@@ -16,33 +14,24 @@ SegmentedVolumeDialog::~SegmentedVolumeDialog() {
 }
 
 void SegmentedVolumeDialog::setImageData(vtkSmartPointer<vtkImageData> imageData) {
-
-	cout << "imageData" << endl;
 	this->imageData = imageData;
 }
 
 void SegmentedVolumeDialog::setTransferFunction(TransferFunction* tf) {
-
-	cout << "tf" << endl;
 	this->tf = tf;
 }
 
 void SegmentedVolumeDialog::render() {
-
-	cout << "render start" << endl;
-	vtkSmartPointer<vtkRenderWindow> renderWindow = ui->viewer->GetRenderWindow();
-	vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
-	vtkSmartPointer<vtkInteractorStyleTrackballCamera> interactorStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New(); 
-	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 	vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	vtkSmartPointer<vtkVolumeProperty> volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	vtkSmartPointer<vtkVolume> volume = vtkSmartPointer<vtkVolume>::New();
+	vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+	vtkSmartPointer<vtkInteractorStyleTrackballCamera> interactorStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 
 	renderer->SetBackground(0.1, 0.2, 0.3);
-	renderWindow->AddRenderer(renderer);
-	renderWindowInteractor->SetInteractorStyle(interactorStyle);
-	renderWindowInteractor->SetRenderWindow(renderWindow); 
-	
+	ui->viewer->GetRenderWindow()->AddRenderer(renderer);
+	ui->viewer->GetRenderWindow()->GetInteractor()->SetInteractorStyle(interactorStyle);
+
 	volumeMapper->SetBlendModeToComposite();
 	volumeMapper->SetRequestedRenderModeToGPU();
 	volumeMapper->SetInputData(imageData);
@@ -59,20 +48,18 @@ void SegmentedVolumeDialog::render() {
 	volumeProperty->SetColor(tf->getColorFun());
 
 	volume->SetMapper(volumeMapper);
-	volume->SetProperty(volumeProperty);
+	volume->SetProperty(volumeProperty); 
+	
 	renderer->AddVolume(volume);
 	renderer->ResetCamera();
 
-	renderWindow->Render();
-	renderWindowInteractor->Start();
-
-	cout << "render end" << endl;
+	ui->viewer->GetRenderWindow()->Render();
 }
 
 void SegmentedVolumeDialog::accept() {
-	// TODO
+	done(QMessageBox::Yes);
 }
 
 void SegmentedVolumeDialog::reject() {
-	// TODO
+	done(QMessageBox::No);
 }

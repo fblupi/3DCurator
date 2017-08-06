@@ -13,6 +13,7 @@
 #include <QPointer>
 #include <QIcon>
 #include <QApplication>
+#include <QObject>
 
 #include <vtkObjectFactory.h>
 #include <vtkSmartPointer.h>
@@ -23,6 +24,7 @@
 #include <vtkResliceCursorPicker.h>
 #include <vtkPointPlacer.h>
 #include <vtkRenderer.h>
+#include <vtkXMLImageDataWriter.h>
 
 #include "Core/SlicePlane.h"
 #include "Core/Sculpture.h"

@@ -16,14 +16,8 @@
 #include "opencv2/imgproc.hpp"
 
 #include "Util/Geometry.h"
+#include "Util/Measures.h"
 #include "Segmentation/SegmentationCommons.h"
-
-#define MIN_ANGLE	0.5	/**< Min angle for nearest line */
-#define MIN_DISTA	5	/**< Min for nearest line */
-#define LINE_TOLERANCE	5	/**< Line tolerance to check if a point is contained by a line */
-#define MIN_WOOD	-750	/**< Min wood value */
-#define MAX_WOOD	-300	/**< Max wood value */
-#define AIR_HU		-1000	/**< Air value */
 
 /**
  * Check if the first line is longer than the second
