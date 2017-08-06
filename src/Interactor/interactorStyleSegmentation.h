@@ -13,6 +13,7 @@
 #include <QPointer>
 #include <QIcon>
 #include <QApplication>
+#include <QObject>
 
 #include <vtkObjectFactory.h>
 #include <vtkSmartPointer.h>
@@ -23,12 +24,14 @@
 #include <vtkResliceCursorPicker.h>
 #include <vtkPointPlacer.h>
 #include <vtkRenderer.h>
+#include <vtkXMLImageDataWriter.h>
 
 #include "Core/SlicePlane.h"
 #include "Core/Sculpture.h"
 #include "Util/Measures.h"
 #include "Util/Utils.h"
 #include "GUI/LineSelectionDialog.h"
+#include "GUI/SegmentedVolumeDialog.h"
 #include "Segmentation/WoodSegmentation.h"
 
 /**
@@ -43,12 +46,6 @@ public:
 	static InteractorStyleSegmentation* New();
 
 	vtkTypeMacro(vtkInteractorStyleImage, InteractorStyleSegmentation);
-
-	/**
-	 * Set ImageViewer that will be updated when segmentate
-	 * @param	viewer	ImageViewer2 that will be updated when segmentate
-	 */
-	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
 
 	/**
 	 * Set plane in which will find the value of the voxel selected

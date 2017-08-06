@@ -8,9 +8,7 @@
 #include <vtkImageData.h>
 
 #include "Segmentation/SegmentationCommons.h"
-
-#define MIN_AIR	-850.0	/**< Min air value */
-#define AIR_HU	-1000.0	/**< Air value */
+#include "Util/Measures.h"
 
 /**
  * Search a seed where star the region growing

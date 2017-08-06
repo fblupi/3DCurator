@@ -84,7 +84,6 @@ void MainWindow::connectComponents() {
 
 	segmentationStyle->SetSculpture(sculpture);
 	segmentationStyle->SetSlicePlane(slicePlane);
-	segmentationStyle->SetViewer(sliceViewer);
 	segmentationStyle->SetDefaultRenderer(sliceViewer->GetRenderer());
 }
 

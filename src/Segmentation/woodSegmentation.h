@@ -16,14 +16,8 @@
 #include "opencv2/imgproc.hpp"
 
 #include "Util/Geometry.h"
+#include "Util/Measures.h"
 #include "Segmentation/SegmentationCommons.h"
-
-#define MIN_ANGLE	0.5	/**< Min angle for nearest line */
-#define MIN_DISTA	5	/**< Min for nearest line */
-#define LINE_TOLERANCE	5	/**< Line tolerance to check if a point is contained by a line */
-#define MIN_WOOD	-750	/**< Min wood value */
-#define MAX_WOOD	-300	/**< Max wood value */
-#define AIR_HU		-1000	/**< Air value */
 
 /**
  * Check if the first line is longer than the second
@@ -87,13 +81,14 @@ Coord2D searchInitialVoxel(vtkSmartPointer<vtkImageData> imageData, const int ij
 
 /**
  * 2D region growing with a line bound
- * @param	imageData	3D image data
+ * @param	inputData	Input 3D image data
+ * @param	outputData	Ouput 3D image data
  * @param	ijk		Initial voxel
  * @param	bounds		Image bounds
  * @param	eq		Line equation
  * @return	Midpoint of the region
  */
-Coord2D regionGrowingWithLineBoundImage(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const Bounds bounds, const LineEq eq);
+Coord2D regionGrowingWithLineBoundImage(vtkSmartPointer<vtkImageData> inputData, vtkSmartPointer<vtkImageData> outputData, const int ijk[3], const Bounds bounds, const LineEq eq);
 
 /**
  * Find the line nearest to the goal using angles and distances
@@ -107,13 +102,14 @@ std::pair<Line, double> findNearestLine(std::vector<Line> lines, const Line goal
 
 /**
  * 3D region growing with a line bound
- * @param	imageData	3D image data
+ * @param	inputData	Input 3D image data
+ * @param	outputData	Output 3D image data
  * @param	colorFun	Mapper scalar to colors
  * @param	ijk		Initial voxel
  * @param	bounds		Image bounds
  * @param	firstLine	Initial line
  * @param	lines		Lines for each slice
  */
-void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> imageData, vtkSmartPointer<vtkColorTransferFunction> colorFun, const int ijk[3], const Bounds bounds, const Line firstLine, std::vector<std::vector<Line> > &lines);
+void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> inputData, vtkSmartPointer<vtkImageData> outputData, vtkSmartPointer<vtkColorTransferFunction> colorFun, const int ijk[3], const Bounds bounds, const Line firstLine, std::vector<std::vector<Line> > &lines);
 
 #endif // WOODSEGMENTATION_H

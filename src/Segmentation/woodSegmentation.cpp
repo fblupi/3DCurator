@@ -162,7 +162,7 @@ Coord2D searchInitialVoxel(vtkSmartPointer<vtkImageData> imageData, const int ij
 
 	return{ ijk[0], ijk[1] };
 }
-Coord2D regionGrowingWithLineBoundImage(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const Bounds bounds, const LineEq eq) {
+Coord2D regionGrowingWithLineBoundImage(vtkSmartPointer<vtkImageData> inputData, vtkSmartPointer<vtkImageData> outputData, const int ijk[3], const Bounds bounds, const LineEq eq) {
 	Coord2D ij;
 	Coord2D min = { bounds.MAX_X, bounds.MAX_Y };
 	Coord2D max = { bounds.MIN_X, bounds.MIN_Y };
@@ -175,9 +175,10 @@ Coord2D regionGrowingWithLineBoundImage(vtkSmartPointer<vtkImageData> imageData,
 		ij = queue.front();
 		queue.pop();
 		if (ij[0] < bounds.MAX_X && ij[0] >= bounds.MIN_X && ij[1] < bounds.MAX_Y && ij[1] >= bounds.MIN_Y) {
-			if (isAdjacent(imageData, { ij[0], ij[1], ijk[2] }, MIN_WOOD, MAX_WOOD)
+			if (isAdjacent(inputData, { ij[0], ij[1], ijk[2] }, MIN_WOOD, MAX_WOOD)
 				&& !isInLine(ij, eq, bounds.MAX_X)) {
-				imageData->SetScalarComponentFromFloat(ij[0], ij[1], ijk[2], 0, AIR_HU);
+				outputData->SetScalarComponentFromFloat(ij[0], ij[1], ijk[2], 0, inputData->GetScalarComponentAsFloat(ij[0], ij[1], ijk[2], 0));
+				inputData->SetScalarComponentFromFloat(ij[0], ij[1], ijk[2], 0, AIR_HU);
 
 				queue.push({ ij[0] - 1, ij[1] - 1 });
 				queue.push({ ij[0] - 1, ij[1] });
@@ -225,20 +226,20 @@ std::pair<Line, double> findNearestLine(std::vector<Line> lines, const Line goal
 	return std::make_pair(lines[min], minAngle);
 }
 
-void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> imageData, vtkSmartPointer<vtkColorTransferFunction> colorFun, const int ijk[3], const Bounds bounds, Line firstLine, std::vector<std::vector<Line> > &lines) {
+void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> inputData, vtkSmartPointer<vtkImageData> outputData, vtkSmartPointer<vtkColorTransferFunction> colorFun, const int ijk[3], const Bounds bounds, Line firstLine, std::vector<std::vector<Line> > &lines) {
 	int xyz[3] = { ijk[0], ijk[1], ijk[2] };
 	Line lastLine = firstLine;
 	int lastZ = ijk[2];
 	int U[3] = { lastLine.first.x, lastLine.first.y, lastZ };
 	int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };
-	Coord2D lastCentroid = regionGrowingWithLineBoundImage(imageData, xyz, bounds, getLineEquation(U, V));
+	Coord2D lastCentroid = regionGrowingWithLineBoundImage(inputData, outputData, xyz, bounds, getLineEquation(U, V));
 	Coord2D lastCentroidAux = lastCentroid;
 
 	int numberOfNoLines = 0;
 
 	xyz[2] = ijk[2] + 1;
 	while (xyz[2] < bounds.MAX_Z) {
-		lines[xyz[2]] = getLinesFromImage(imageData, colorFun, xyz[2], bounds);
+		lines[xyz[2]] = getLinesFromImage(inputData, colorFun, xyz[2], bounds);
 		std::pair<Line, double> nearestLine = findNearestLine(lines[xyz[2]], lastLine, lastZ, xyz[2]);
 		if (nearestLine.second < MIN_ANGLE) {
 			if (numberOfNoLines != 0) {
@@ -248,32 +249,32 @@ void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> imageData, v
 				PlaneEq P = getPlaneEquation(A, B, C);
 				int xyzAux[3] = { xyz[0], xyz[1], xyz[2] - numberOfNoLines };
 				for (; xyzAux[2] < xyz[2]; xyzAux[2]++) {
-					if (!isAdjacent(imageData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
+					if (!isAdjacent(inputData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
 						xyzAux[0] = lastCentroid[0];
 						xyzAux[1] = lastCentroid[1];
 					}
-					if (!isAdjacent(imageData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
-						Coord2D newCentroid = searchInitialVoxel(imageData, xyzAux, bounds, MIN_WOOD, MAX_WOOD, getLineEquationFromPlane(P, xyzAux[2]));
+					if (!isAdjacent(inputData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
+						Coord2D newCentroid = searchInitialVoxel(inputData, xyzAux, bounds, MIN_WOOD, MAX_WOOD, getLineEquationFromPlane(P, xyzAux[2]));
 						xyzAux[0] = newCentroid[0];
 						xyzAux[1] = newCentroid[1];
 					}
-					lastCentroid = regionGrowingWithLineBoundImage(imageData, xyzAux, bounds, getLineEquationFromPlane(P, xyzAux[2]));
+					lastCentroid = regionGrowingWithLineBoundImage(inputData, outputData, xyzAux, bounds, getLineEquationFromPlane(P, xyzAux[2]));
 				} // for
 			} // if (numberOfNoLines != 0)
 			lastLine = nearestLine.first;
 			lastZ = xyz[2];
 			int U[3] = { lastLine.first.x, lastLine.first.y, lastZ };
 			int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };
-			if (!isAdjacent(imageData, { xyz[0], xyz[1], xyz[2] }, MIN_WOOD, MAX_WOOD)) {
+			if (!isAdjacent(inputData, { xyz[0], xyz[1], xyz[2] }, MIN_WOOD, MAX_WOOD)) {
 				xyz[0] = lastCentroid[0];
 				xyz[1] = lastCentroid[1];
 			}
-			if (!isAdjacent(imageData, { xyz[0], xyz[1], xyz[2] }, MIN_WOOD, MAX_WOOD)) {
-				Coord2D newCentroid = searchInitialVoxel(imageData, xyz, bounds, MIN_WOOD, MAX_WOOD, getLineEquation(U, V));
+			if (!isAdjacent(inputData, { xyz[0], xyz[1], xyz[2] }, MIN_WOOD, MAX_WOOD)) {
+				Coord2D newCentroid = searchInitialVoxel(inputData, xyz, bounds, MIN_WOOD, MAX_WOOD, getLineEquation(U, V));
 				xyz[0] = newCentroid[0];
 				xyz[1] = newCentroid[1];
 			}
-			lastCentroid = regionGrowingWithLineBoundImage(imageData, xyz, bounds, getLineEquation(U, V));
+			lastCentroid = regionGrowingWithLineBoundImage(inputData, outputData, xyz, bounds, getLineEquation(U, V));
 			numberOfNoLines = 0;
 		} // if (nearestLine.second < MIN_ANGLE)
 		else {
@@ -291,7 +292,7 @@ void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> imageData, v
 
 	xyz[2] = ijk[2] - 1; 
 	while (xyz[2] >= bounds.MIN_Z) {
-		lines[xyz[2]] = getLinesFromImage(imageData, colorFun, xyz[2], bounds);
+		lines[xyz[2]] = getLinesFromImage(inputData, colorFun, xyz[2], bounds);
 		std::pair<Line, double> nearestLine = findNearestLine(lines[xyz[2]], lastLine, lastZ, xyz[2]);
 		if (nearestLine.second < MIN_ANGLE) {
 			if (numberOfNoLines != 0) {
@@ -301,32 +302,32 @@ void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> imageData, v
 				PlaneEq P = getPlaneEquation(A, B, C);
 				int xyzAux[3] = { xyz[0], xyz[1], xyz[2] + numberOfNoLines };
 				for (; xyzAux[2] > xyz[2]; xyzAux[2]--) {
-					if (!isAdjacent(imageData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
+					if (!isAdjacent(inputData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
 						xyzAux[0] = lastCentroid[0];
 						xyzAux[1] = lastCentroid[1];
 					}
-					if (!isAdjacent(imageData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
-						Coord2D newCentroid = searchInitialVoxel(imageData, xyzAux, bounds, MIN_WOOD, MAX_WOOD, getLineEquationFromPlane(P, xyzAux[2]));
+					if (!isAdjacent(inputData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
+						Coord2D newCentroid = searchInitialVoxel(inputData, xyzAux, bounds, MIN_WOOD, MAX_WOOD, getLineEquationFromPlane(P, xyzAux[2]));
 						xyzAux[0] = newCentroid[0];
 						xyzAux[1] = newCentroid[1];
 					}
-					lastCentroid = regionGrowingWithLineBoundImage(imageData, xyzAux, bounds, getLineEquationFromPlane(P, xyzAux[2]));
+					lastCentroid = regionGrowingWithLineBoundImage(inputData, outputData, xyzAux, bounds, getLineEquationFromPlane(P, xyzAux[2]));
 				} // for
 			} // if (numberOfNoLines != 0)
 			lastLine = nearestLine.first;
 			lastZ = xyz[2];
 			int U[3] = { lastLine.first.x, lastLine.first.y, lastZ };
 			int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };
-			if (!isAdjacent(imageData, { xyz[0], xyz[1], xyz[2] }, MIN_WOOD, MAX_WOOD)) {
+			if (!isAdjacent(inputData, { xyz[0], xyz[1], xyz[2] }, MIN_WOOD, MAX_WOOD)) {
 				xyz[0] = lastCentroid[0];
 				xyz[1] = lastCentroid[1];
 			}
-			if (!isAdjacent(imageData, { xyz[0], xyz[1], xyz[2] }, MIN_WOOD, MAX_WOOD)) {
-				Coord2D newCentroid = searchInitialVoxel(imageData, xyz, bounds, MIN_WOOD, MAX_WOOD, getLineEquation(U, V));
+			if (!isAdjacent(inputData, { xyz[0], xyz[1], xyz[2] }, MIN_WOOD, MAX_WOOD)) {
+				Coord2D newCentroid = searchInitialVoxel(inputData, xyz, bounds, MIN_WOOD, MAX_WOOD, getLineEquation(U, V));
 				xyz[0] = newCentroid[0];
 				xyz[1] = newCentroid[1];
 			}
-			lastCentroid = regionGrowingWithLineBoundImage(imageData, xyz, bounds, getLineEquation(U, V));
+			lastCentroid = regionGrowingWithLineBoundImage(inputData, outputData, xyz, bounds, getLineEquation(U, V));
 			numberOfNoLines = 0;
 		} // if (nearestLine.second < MIN_ANGLE)
 		else {
