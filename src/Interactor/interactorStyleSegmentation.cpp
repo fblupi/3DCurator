@@ -3,7 +3,7 @@
 vtkStandardNewMacro(InteractorStyleSegmentation);
 
 void InteractorStyleSegmentation::OnLeftButtonDown() {
-	if (viewer != NULL && slicePlane != NULL && this->GetDefaultRenderer() != NULL) {
+	if (slicePlane != NULL && this->GetDefaultRenderer() != NULL) {
 		vtkSmartPointer<vtkVolumePicker> picker = vtkSmartPointer<vtkVolumePicker>::New();
 		int* pos = this->GetInteractor()->GetEventPosition();
 		picker->Pick(pos[0], pos[1], pos[2], this->GetDefaultRenderer());
@@ -75,22 +75,41 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 				QApplication::processEvents();
 				// -- END launch progress bar
 
-				regionGrowingWithLineBoundVolume(sculpture->getImageData(), sculpture->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines);
+				vtkSmartPointer<vtkImageData> oldData = vtkSmartPointer<vtkImageData>::New();
+				oldData->DeepCopy(sculpture->getImageData());
 
-				sculpture->getImageData()->Modified();
-				slicePlane->getPlane()->UpdatePlacement();
-				viewer->Render();
+				vtkSmartPointer<vtkImageData> segmentatedData = vtkSmartPointer<vtkImageData>::New();
+				segmentatedData->DeepCopy(sculpture->getImageData());
+
+				for (int i = 0; i < dimensions[0]; i++) {
+					for (int j = 0; j < dimensions[1]; j++) {
+						for (int k = 0; k < dimensions[2]; k++) {
+							segmentatedData->SetScalarComponentFromFloat(i, j, k, 0, AIR_HU);
+						}
+					}
+				}
+
+				regionGrowingWithLineBoundVolume(sculpture->getImageData(), segmentatedData, sculpture->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines);
+
+				sculpture->getImageData()->DeepCopy(oldData);
 
 				// -- close progress bar
 				progressDialog->close();
 				// -- END close progress bar
+
+				SegmentedVolumeDialog *segmentedVolumeDialog = new SegmentedVolumeDialog();
+				segmentedVolumeDialog->setImageData(segmentatedData);
+				segmentedVolumeDialog->setTransferFunction(sculpture->getTransferFunction());
+				segmentedVolumeDialog->render();
+
+				if (segmentedVolumeDialog->exec() == QMessageBox::Yes) {
+					cout << "Hola" << endl;
+				} else {
+					cout << "Adiós" << endl;
+				}
 			}
 		}
 	}
-}
-
-void InteractorStyleSegmentation::SetViewer(vtkSmartPointer<vtkImageViewer2> viewer) {
-	this->viewer = viewer;
 }
 
 void InteractorStyleSegmentation::SetSlicePlane(SlicePlane* slicePlane) {

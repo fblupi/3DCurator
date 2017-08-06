@@ -6,7 +6,7 @@
 
 #include "GUI/MainWindow.h"
 
-#define RELEASE
+//#define RELEASE
 
 #ifdef RELEASE
 #define WINAPI __stdcall

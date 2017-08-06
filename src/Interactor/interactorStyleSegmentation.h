@@ -29,6 +29,7 @@
 #include "Util/Measures.h"
 #include "Util/Utils.h"
 #include "GUI/LineSelectionDialog.h"
+#include "GUI/SegmentedVolumeDialog.h"
 #include "Segmentation/WoodSegmentation.h"
 
 /**
@@ -43,12 +44,6 @@ public:
 	static InteractorStyleSegmentation* New();
 
 	vtkTypeMacro(vtkInteractorStyleImage, InteractorStyleSegmentation);
-
-	/**
-	 * Set ImageViewer that will be updated when segmentate
-	 * @param	viewer	ImageViewer2 that will be updated when segmentate
-	 */
-	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
 
 	/**
 	 * Set plane in which will find the value of the voxel selected
