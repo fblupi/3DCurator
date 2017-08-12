@@ -89,7 +89,7 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 					}
 				}
 
-				regionGrowingWithLineBoundVolume(sculpture->getImageData(), segmentedData, sculpture->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines);
+				regionGrowingWithLineBoundVolume(sculpture->getImageData(), segmentedData, sculpture->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines, true, true);
 
 				sculpture->getImageData()->DeepCopy(oldData);
 
@@ -106,32 +106,31 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 
 				if (exportSegmentedVolume == QMessageBox::Yes) {
 					QString vtiFile = NULL;
-					while (vtiFile == NULL) {
-						vtiFile = QFileDialog::getSaveFileName(NULL, QObject::tr("Exportar volumen"), QDir(QDir::homePath()).filePath("Sub-volume"), "VTI (*.vti) ;; XML (*.xml)");
+					vtiFile = QFileDialog::getSaveFileName(NULL, QObject::tr("Exportar volumen"), QDir(QDir::homePath()).filePath("Sub-volume"), "VTI (*.vti) ;; XML (*.xml)");
+					if (vtiFile != NULL) {
+						// -- launch progress bar
+						QPointer<QProgressBar> bar = new QProgressBar(0);
+						QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+						progressDialog->setWindowTitle(QString("Extrayendo..."));
+						progressDialog->setLabelText(QString::fromLatin1("Extrayendo el modelo"));
+						progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+						progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+						progressDialog->setCancelButton(0);
+						progressDialog->setBar(bar);
+						progressDialog->show();
+						bar->close();
+						QApplication::processEvents();
+						// -- END launch progress bar
+
+						vtkSmartPointer<vtkXMLImageDataWriter> writer = vtkSmartPointer<vtkXMLImageDataWriter>::New();
+						writer->SetFileName(vtiFile.toUtf8().constData());
+						writer->SetInputData(segmentedData);
+						writer->Write();
+
+						// -- close progress bar
+						progressDialog->close();
+						// -- END close progress bar
 					}
-
-					// -- launch progress bar
-					QPointer<QProgressBar> bar = new QProgressBar(0);
-					QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-					progressDialog->setWindowTitle(QString("Extrayendo..."));
-					progressDialog->setLabelText(QString::fromLatin1("Extrayendo el modelo"));
-					progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-					progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-					progressDialog->setCancelButton(0);
-					progressDialog->setBar(bar);
-					progressDialog->show();
-					bar->close();
-					QApplication::processEvents();
-					// -- END launch progress bar
-
-					vtkSmartPointer<vtkXMLImageDataWriter> writer = vtkSmartPointer<vtkXMLImageDataWriter>::New();
-					writer->SetFileName(vtiFile.toUtf8().constData());
-					writer->SetInputData(segmentedData);
-					writer->Write();
-
-					// -- close progress bar
-					progressDialog->close();
-					// -- END close progress bar
 				}
 			}
 		}
