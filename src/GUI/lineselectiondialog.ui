@@ -20,25 +20,6 @@
    <string>Selección de línea</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" rowspan="2" colspan="2">
-    <widget class="QLabel" name="image">
-     <property name="minimumSize">
-      <size>
-       <width>500</width>
-       <height>500</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>500</width>
-       <height>500</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="2">
     <widget class="QGroupBox" name="linesGroupBox">
      <property name="maximumSize">
@@ -102,7 +83,26 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="2">
+   <item row="0" column="0" rowspan="4" colspan="2">
+    <widget class="QLabel" name="image">
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>500</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>500</width>
+       <height>500</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -115,7 +115,14 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="0">
+   <item row="4" column="1">
+    <widget class="QPushButton" name="cancelButton">
+     <property name="text">
+      <string>Cancelar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -128,17 +135,30 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="cancelButton">
+   <item row="4" column="2">
+    <widget class="QPushButton" name="okButton">
      <property name="text">
-      <string>Cancelar</string>
+      <string>OK</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QCheckBox" name="completeUp">
+     <property name="text">
+      <string>Hasta arriba</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item row="2" column="2">
-    <widget class="QPushButton" name="okButton">
+    <widget class="QCheckBox" name="completeDown">
      <property name="text">
-      <string>OK</string>
+      <string>Hasta abajo</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

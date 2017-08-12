@@ -89,7 +89,7 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 					}
 				}
 
-				regionGrowingWithLineBoundVolume(sculpture->getImageData(), segmentedData, sculpture->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines, true, true);
+				regionGrowingWithLineBoundVolume(sculpture->getImageData(), segmentedData, sculpture->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines, diag->getCompleteUp(), diag->getCompleteDown());
 
 				sculpture->getImageData()->DeepCopy(oldData);
 

@@ -20,6 +20,14 @@ void LineSelectionDialog::setImage(std::string filename) {
 	ui->image->setMask(pixmap.mask());
 }
 
+bool LineSelectionDialog::getCompleteUp() const {
+	return ui->completeUp->isChecked();
+}
+
+bool LineSelectionDialog::getCompleteDown() const {
+	return ui->completeDown->isChecked();
+}
+
 void LineSelectionDialog::accept() {
 	if (ui->greenRadioButton->isChecked()) {
 		done(LINE_GREEN);
