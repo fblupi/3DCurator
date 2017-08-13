@@ -114,31 +114,25 @@ std::string generateImage(vtkSmartPointer<vtkImageData> imageData, vtkSmartPoint
 
 bool isInLine(const Coord2D coord, const LineEq eq, const int epsilon) {
 	double result = coord[1] - epsilon + (eq[0] * coord[0] + eq[1]);
-	if (result >= -LINE_TOLERANCE && result <= LINE_TOLERANCE) {
-		return true;
-	}
-	else {
-		return false;
-	}
+
+	return result >= -LINE_TOLERANCE && result <= LINE_TOLERANCE;
 }
 
 bool isAdjacent(vtkSmartPointer<vtkImageData> imageData, const Coord3D coord, const double MIN, const double MAX) {
 	double value = imageData->GetScalarComponentAsFloat(coord[0], coord[1], coord[2], 0);
-	if (value >= MIN && value <= MAX) {
-		return true;
-	}
-	else {
-		return false;
-	}
+
+	return value >= MIN && value <= MAX;
 }
 
 Coord2D searchInitialVoxel(vtkSmartPointer<vtkImageData> imageData, const int ijk[3], const Bounds bounds, const double MIN, const double MAX, const LineEq eq) {
 	Coord2D ij;
 	std::queue<Coord2D> queue;
+	std::set<Coord2D> set;
 
 	ij[0] = ijk[0]; ij[1] = ijk[1];
 
 	queue.push(ij);
+	set.insert(ij);
 	while (!queue.empty()) {
 		ij = queue.front();
 		queue.pop();
@@ -146,16 +140,39 @@ Coord2D searchInitialVoxel(vtkSmartPointer<vtkImageData> imageData, const int ij
 			&& !isInLine(ij, eq, bounds.MAX_X)) {
 			if (isAdjacent(imageData, { ij[0], ij[1], ijk[2] }, MIN_WOOD, MAX_WOOD)) {
 				return ij;
-			}
-			else {
-				queue.push({ ij[0] - 1, ij[1] - 1 });
-				queue.push({ ij[0] - 1, ij[1] });
-				queue.push({ ij[0] - 1, ij[1] + 1 });
-				queue.push({ ij[0], ij[1] - 1 });
-				queue.push({ ij[0], ij[1] + 1 });
-				queue.push({ ij[0] + 1, ij[1] - 1 });
-				queue.push({ ij[0] + 1, ij[1] });
-				queue.push({ ij[0] + 1, ij[1] + 1 });
+			} else {
+				if (set.find({ ij[0] - 1, ij[1] - 1 }) == set.end()) {
+					queue.push({ ij[0] - 1, ij[1] - 1 });
+					set.insert({ ij[0] - 1, ij[1] - 1 });
+				}
+				if (set.find({ ij[0] - 1, ij[1] }) == set.end()) {
+					queue.push({ ij[0] - 1, ij[1] });
+					set.insert({ ij[0] - 1, ij[1] });
+				}
+				if (set.find({ ij[0] - 1, ij[1] + 1 }) == set.end()) {
+					queue.push({ ij[0] - 1, ij[1] + 1 });
+					set.insert({ ij[0] - 1, ij[1] + 1 });
+				}
+				if (set.find({ ij[0], ij[1] - 1 }) == set.end()) {
+					queue.push({ ij[0], ij[1] - 1 });
+					set.insert({ ij[0], ij[1] - 1 });
+				}
+				if (set.find({ ij[0], ij[1] + 1 }) == set.end()) {
+					queue.push({ ij[0], ij[1] + 1 });
+					set.insert({ ij[0], ij[1] + 1 });
+				}
+				if (set.find({ ij[0] + 1, ij[1] - 1 }) == set.end()) {
+					queue.push({ ij[0] + 1, ij[1] - 1 });
+					set.insert({ ij[0] + 1, ij[1] - 1 });
+				}
+				if (set.find({ ij[0] + 1, ij[1] }) == set.end()) {
+					queue.push({ ij[0] + 1, ij[1] });
+					set.insert({ ij[0] + 1, ij[1] });
+				}
+				if (set.find({ ij[0] + 1, ij[1] + 1 }) == set.end()) {
+					queue.push({ ij[0] + 1, ij[1] + 1 });
+					set.insert({ ij[0] + 1, ij[1] + 1 });
+				}
 			}
 		}
 	}
@@ -226,7 +243,7 @@ std::pair<Line, double> findNearestLine(std::vector<Line> lines, const Line goal
 	return std::make_pair(lines[min], minAngle);
 }
 
-void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> inputData, vtkSmartPointer<vtkImageData> outputData, vtkSmartPointer<vtkColorTransferFunction> colorFun, const int ijk[3], const Bounds bounds, Line firstLine, std::vector<std::vector<Line> > &lines) {
+void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> inputData, vtkSmartPointer<vtkImageData> outputData, vtkSmartPointer<vtkColorTransferFunction> colorFun, const int ijk[3], const Bounds bounds, Line firstLine, std::vector<std::vector<Line> > &lines, const bool completeUp, const bool completeDown) {
 	int xyz[3] = { ijk[0], ijk[1], ijk[2] };
 	Line lastLine = firstLine;
 	int lastZ = ijk[2];
@@ -234,6 +251,8 @@ void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> inputData, v
 	int V[3] = { lastLine.second.x, lastLine.second.y, lastZ };
 	Coord2D lastCentroid = regionGrowingWithLineBoundImage(inputData, outputData, xyz, bounds, getLineEquation(U, V));
 	Coord2D lastCentroidAux = lastCentroid;
+	PlaneEq P;
+	bool lastPlane = false;
 
 	int numberOfNoLines = 0;
 
@@ -246,7 +265,8 @@ void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> inputData, v
 				int A[3] = { lastLine.first.x, lastLine.first.y, lastZ };
 				int B[3] = { lastLine.second.x, lastLine.second.y, lastZ };
 				int C[3] = { nearestLine.first.first.x, nearestLine.first.first.y, xyz[2] };
-				PlaneEq P = getPlaneEquation(A, B, C);
+				P = getPlaneEquation(A, B, C);
+				lastPlane = true;
 				int xyzAux[3] = { xyz[0], xyz[1], xyz[2] - numberOfNoLines };
 				for (; xyzAux[2] < xyz[2]; xyzAux[2]++) {
 					if (!isAdjacent(inputData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
@@ -280,11 +300,33 @@ void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> inputData, v
 		else {
 			numberOfNoLines++;
 		}
+		if (completeDown && xyz[2] + 1 == bounds.MAX_Z && numberOfNoLines > 0) {
+			if (!lastPlane) {
+				int A[3] = { lastLine.first.x, lastLine.first.y, lastZ };
+				int B[3] = { lastLine.second.x, lastLine.second.y, lastZ };
+				int C[3] = { firstLine.first.x, firstLine.first.y, xyz[2] };
+				P = getPlaneEquation(A, B, C);
+			}
+			int xyzAux[3] = { xyz[0], xyz[1], xyz[2] - numberOfNoLines + 1 };
+			for (; xyzAux[2] <= xyz[2]; xyzAux[2]++) {
+				if (!isAdjacent(inputData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
+					xyzAux[0] = lastCentroid[0];
+					xyzAux[1] = lastCentroid[1];
+				}
+				if (!isAdjacent(inputData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
+					Coord2D newCentroid = searchInitialVoxel(inputData, xyzAux, bounds, MIN_WOOD, MAX_WOOD, getLineEquationFromPlane(P, xyzAux[2]));
+					xyzAux[0] = newCentroid[0];
+					xyzAux[1] = newCentroid[1];
+				}
+				lastCentroid = regionGrowingWithLineBoundImage(inputData, outputData, xyzAux, bounds, getLineEquationFromPlane(P, xyzAux[2]));
+			} // for
+		} // if (completeUp && xyz[2] + 1 == bounds.MAX_Z && numberOfNoLines > 0)
 		xyz[2] = xyz[2] + 1; 
 	} // while
 
 	numberOfNoLines = 0;
 	lastLine = firstLine;
+	lastPlane = false;
 	lastCentroid = lastCentroidAux;
 	lastZ = ijk[2];
 	xyz[0] = ijk[0];
@@ -299,7 +341,8 @@ void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> inputData, v
 				int A[3] = { lastLine.first.x, lastLine.first.y, lastZ };
 				int B[3] = { lastLine.second.x, lastLine.second.y, lastZ };
 				int C[3] = { nearestLine.first.first.x, nearestLine.first.first.y, xyz[2] };
-				PlaneEq P = getPlaneEquation(A, B, C);
+				P = getPlaneEquation(A, B, C);
+				lastPlane = true;
 				int xyzAux[3] = { xyz[0], xyz[1], xyz[2] + numberOfNoLines };
 				for (; xyzAux[2] > xyz[2]; xyzAux[2]--) {
 					if (!isAdjacent(inputData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
@@ -333,6 +376,27 @@ void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> inputData, v
 		else {
 			numberOfNoLines++;
 		}
+		if (completeUp && xyz[2] - 1 < bounds.MIN_Z && numberOfNoLines > 0) {
+			if (!lastPlane) {
+				int A[3] = { lastLine.first.x, lastLine.first.y, lastZ };
+				int B[3] = { lastLine.second.x, lastLine.second.y, lastZ };
+				int C[3] = { firstLine.first.x, firstLine.first.y, xyz[2] };
+				P = getPlaneEquation(A, B, C);
+			}
+			int xyzAux[3] = { xyz[0], xyz[1], xyz[2] + numberOfNoLines - 1 };
+			for (; xyzAux[2] >= xyz[2]; xyzAux[2]--) {
+				if (!isAdjacent(inputData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
+					xyzAux[0] = lastCentroid[0];
+					xyzAux[1] = lastCentroid[1];
+				}
+				if (!isAdjacent(inputData, { xyzAux[0], xyzAux[1], xyzAux[2] }, MIN_WOOD, MAX_WOOD)) {
+					Coord2D newCentroid = searchInitialVoxel(inputData, xyzAux, bounds, MIN_WOOD, MAX_WOOD, getLineEquationFromPlane(P, xyzAux[2]));
+					xyzAux[0] = newCentroid[0];
+					xyzAux[1] = newCentroid[1];
+				}
+				lastCentroid = regionGrowingWithLineBoundImage(inputData, outputData, xyzAux, bounds, getLineEquationFromPlane(P, xyzAux[2]));
+			} // for
+		} // if (completeUp && xyz[2] - 1 < bounds.MIN_Z && numberOfNoLines > 0)
 		xyz[2] = xyz[2] - 1;
 	} // while
 }

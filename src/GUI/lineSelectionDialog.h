@@ -42,6 +42,18 @@ public:
 	 */
 	void setImage(std::string filename);
 
+	/**
+	 * Check if it is forced to segmentate every slice to the top
+	 * @return	Force or not to segmentate every slice to the top
+	 */
+	bool getCompleteUp() const;
+
+	/**
+	 * Check if it is forced to segmentate every slice to the bottom
+	 * @return	Force or not to segmentate every slice to the bottom
+	 */
+	bool getCompleteDown() const;
+
 private slots:
 	/**
 	 * Ok button selected

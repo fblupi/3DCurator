@@ -2,6 +2,7 @@
 #define WOODSEGMENTATION_H
 
 #include <queue>
+#include <set>
 #include <array>
 
 #include <vtkSmartPointer.h>
@@ -109,7 +110,9 @@ std::pair<Line, double> findNearestLine(std::vector<Line> lines, const Line goal
  * @param	bounds		Image bounds
  * @param	firstLine	Initial line
  * @param	lines		Lines for each slice
+ * @param	completeUp	Force to segmentate every slice to the top
+ * @param	completeDown	Force to segmentate every slice to the bottom
  */
-void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> inputData, vtkSmartPointer<vtkImageData> outputData, vtkSmartPointer<vtkColorTransferFunction> colorFun, const int ijk[3], const Bounds bounds, const Line firstLine, std::vector<std::vector<Line> > &lines);
+void regionGrowingWithLineBoundVolume(vtkSmartPointer<vtkImageData> inputData, vtkSmartPointer<vtkImageData> outputData, vtkSmartPointer<vtkColorTransferFunction> colorFun, const int ijk[3], const Bounds bounds, const Line firstLine, std::vector<std::vector<Line> > &lines, const bool completeUp, const bool completeDown);
 
 #endif // WOODSEGMENTATION_H
