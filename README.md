@@ -14,6 +14,10 @@
 
 !["Core"](img/Core.png)
 
+#### Documentation
+
+!["Documentation"](img/Documentation.png)
+
 #### GUI
 
 !["GUI"](img/GUI.png)
