@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\Chart",
+    "\\src\\Core",
+    "\\src\\Documentation",
+    "\\src\\GUI",
+    "\\src\\Interactor",
+    "\\src\\Segmentation",
+    "\\src\\Util",
+    "\\src\\Widget"
+  ],
+  "SelectedNode": "\\src\\Documentation\\ROD.h",
+  "PreviewInSolutionExplorer": false
+}

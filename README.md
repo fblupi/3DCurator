@@ -4,6 +4,10 @@
 
 ## UML Documentation
 
+### Packages Diagram
+
+!["Package"](img/Package.png)
+
 ### Class Diagrams
 
 #### Chart
