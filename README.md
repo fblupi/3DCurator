@@ -4,7 +4,7 @@
 
 ## UML Documentation
 
-### Packages Diagram
+### Package Diagram
 
 !["Package"](img/Package.png)
 
