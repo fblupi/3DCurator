@@ -119,6 +119,12 @@ public:
 	double getMaxZBound() const;
 
 	/**
+	 * Get segmentation geometry
+	 * @return	Segmentation Geometry
+	 */
+	SegmentationGeometry* getSegmentationGeometry() const;
+
+	/**
 	 * Set folder where DICOM files will be read
 	 * @param	s	Folder with DICOM files
 	 */
@@ -168,8 +174,6 @@ public:
 	 */
 	void medianFilter(const unsigned int radius);
 
-	void generateLines() { segmentationGeometry->generateLines(); }
-
 private:
 	vtkSmartPointer<vtkImageData> imageData; /**< 3D Matrix with volume data */
 	vtkSmartPointer<vtkVolume> volume; /**< Volume */
@@ -179,10 +183,9 @@ private:
 	vtkSmartPointer<vtkPolyDataMapper> meshMapper; /**< Mesh mapper */
 	vtkSmartPointer<vtkActor> meshActor; /**< Mesh actor */
 	TransferFunction *tf; /**< Transfer function */
+	SegmentationGeometry *segmentationGeometry; /**< Segmentation geometry */
 	double isoValue; /**< Isosurface value to extract the mesh */
 	bool loaded; /**< Volume is loaded or not */
-
-	SegmentationGeometry *segmentationGeometry;
 	
 	/**
 	 * Set properties of volume and mesh

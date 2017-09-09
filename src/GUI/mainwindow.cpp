@@ -1,6 +1,16 @@
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
 
+#include <vtkVersion.h>
+#include <vtkCellArray.h>
+#include <vtkCellData.h>
+#include <vtkUnsignedCharArray.h>
+#include <vtkPoints.h>
+#include <vtkLine.h>
+#include <vtkPolyData.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkActor.h>
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
 	ui->isoValueSlider->setTracking(false); // do not launch slider event until we release it
@@ -1150,7 +1160,53 @@ void MainWindow::on_restoreBackgrounds_pressed() {
 
 void MainWindow::on_segmentate_pressed() {
 	//segmentateOnOff();
-	sculpture->generateLines();
+	sculpture->getSegmentationGeometry()->generateLines();
+
+	std::vector<std::vector<Line> > cvLines = sculpture->getSegmentationGeometry()->getLinesAxial();
+
+	vtkSmartPointer<vtkPoints> pts = vtkSmartPointer<vtkPoints>::New();
+	unsigned int n = 0;
+	for (unsigned int i = 0; i < cvLines.size(); i++) {
+		for (unsigned int j = 0; j < cvLines[i].size(); j++) {
+			double p0[3] = { cvLines[i][j].first.x, cvLines[i][j].first.y, i * 2 };
+			double p1[3] = { cvLines[i][j].second.x, cvLines[i][j].second.y, i * 2 };
+			pts->InsertNextPoint(p0);
+			pts->InsertNextPoint(p1);
+			n++;
+		}
+	}
+	vtkSmartPointer<vtkPolyData> linesPolyData = vtkSmartPointer<vtkPolyData>::New();
+	linesPolyData->SetPoints(pts);
+
+	std::vector<vtkSmartPointer<vtkLine> > linesData(n);
+	vtkSmartPointer<vtkCellArray> lines = vtkSmartPointer<vtkCellArray>::New();
+	for (unsigned int i = 0; i < n; i++) {
+		linesData[i] = vtkSmartPointer<vtkLine>::New();
+		linesData[i]->GetPointIds()->SetId(0, i * 2);
+		linesData[i]->GetPointIds()->SetId(1, i * 2 + 1);
+		lines->InsertNextCell(linesData[i]);
+	}
+	linesPolyData->SetLines(lines);
+
+	vtkSmartPointer<vtkUnsignedCharArray> colors = vtkSmartPointer<vtkUnsignedCharArray>::New();
+	colors->SetNumberOfComponents(4);
+
+	unsigned char red[4] = { 255, 255, 255, 64 };
+	for (unsigned int i = 0; i < n; i++) {
+		colors->InsertNextTupleValue(red);
+	}
+
+	linesPolyData->GetCellData()->SetScalars(colors);
+
+	vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+	mapper->SetInputData(linesPolyData);
+
+	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+	actor->SetMapper(mapper);
+
+	volumeRen->AddActor(actor);
+
+	renderVolume();
 }
 
 void MainWindow::on_filter_pressed() {

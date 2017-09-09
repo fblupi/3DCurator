@@ -223,3 +223,7 @@ double Sculpture::getMaxYBound() const {
 double Sculpture::getMaxZBound() const {
 	return volume->GetMaxZBound();
 }
+
+SegmentationGeometry* Sculpture::getSegmentationGeometry() const {
+	return segmentationGeometry;
+}

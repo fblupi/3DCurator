@@ -71,6 +71,8 @@ std::string generateImage(vtkSmartPointer<vtkImageData> imageData, vtkSmartPoint
 	cv::Mat src;
 	src = cv::imread(filename.c_str(), 1);
 
+	cout << src.rows << "," << src.cols << endl;
+
 	remove(filename.c_str());
 
 	size_t numLines = lines.size() > 6 ? 6 : lines.size();
