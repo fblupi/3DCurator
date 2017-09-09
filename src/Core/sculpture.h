@@ -27,6 +27,7 @@
 #include <itkMedianImageFilter.h>
 
 #include "Core/TransferFunction.h"
+#include "Segmentation/SegmentationGeometry.h"
 #include "Util/Measures.h"
 
 /**
@@ -167,6 +168,8 @@ public:
 	 */
 	void medianFilter(const unsigned int radius);
 
+	void generateLines() { segmentationGeometry->generateLines(); }
+
 private:
 	vtkSmartPointer<vtkImageData> imageData; /**< 3D Matrix with volume data */
 	vtkSmartPointer<vtkVolume> volume; /**< Volume */
@@ -178,6 +181,8 @@ private:
 	TransferFunction *tf; /**< Transfer function */
 	double isoValue; /**< Isosurface value to extract the mesh */
 	bool loaded; /**< Volume is loaded or not */
+
+	SegmentationGeometry *segmentationGeometry;
 	
 	/**
 	 * Set properties of volume and mesh

@@ -58,6 +58,8 @@ void Sculpture::setDICOMFolder(const std::string s) {
 	surface->SetValue(0, isoValue);
 
 	loaded = true;
+
+	segmentationGeometry = new SegmentationGeometry(imageData, tf->getColorFun());
 }
 
 void Sculpture::setVTIFile(const std::string s) {
@@ -76,6 +78,8 @@ void Sculpture::setVTIFile(const std::string s) {
 	surface->SetValue(0, isoValue);
 
 	loaded = true;
+
+	segmentationGeometry = new SegmentationGeometry(imageData, tf->getColorFun());
 }
 
 void Sculpture::createMesh() {

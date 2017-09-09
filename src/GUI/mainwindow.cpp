@@ -1149,7 +1149,8 @@ void MainWindow::on_restoreBackgrounds_pressed() {
 }
 
 void MainWindow::on_segmentate_pressed() {
-	segmentateOnOff();
+	//segmentateOnOff();
+	sculpture->generateLines();
 }
 
 void MainWindow::on_filter_pressed() {
