@@ -1,9 +1,21 @@
 cmake_minimum_required(VERSION 2.8)
+
+if(POLICY CMP0020)
+  cmake_policy(SET CMP0020 NEW)
+endif()
+
+if(POLICY CMP0043)
+  cmake_policy(SET CMP0043 NEW)
+endif()
+
+set(CMAKE_CONFIGURATION_TYPES Release)
+set(CMAKE_AUTOMOC ON)
+
 PROJECT(3DCurator)
 
 find_package(ITK REQUIRED)
 include(${ITK_USE_FILE})
-if (ITKVtkGlue_LOADED)
+if(ITKVtkGlue_LOADED)
   find_package(VTK REQUIRED)
   include(${VTK_USE_FILE})
 else()
@@ -14,10 +26,6 @@ endif()
 
 find_package(OpenCV REQUIRED)
 find_package(Boost REQUIRED)
-
-# Instruct CMake to run moc automatically when needed.
-set(CMAKE_AUTOMOC ON)
-
 find_package(Qt5Widgets REQUIRED QUIET)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${Boost_INCLUDE_DIRS})
