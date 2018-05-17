@@ -12,17 +12,26 @@ A 3D Viewer for CTs of Polychromed Wood Sculptures. Further info in [https://fbl
 
 [GNU General Public License Version 3](LICENSE)
 
-![GNU GPL v3](https://camo.githubusercontent.com/cffb10a3e84f202bdac9c38fe1f9c212a7a8b59a/68747470733a2f2f646c2e64726f70626f7875736572636f6e74656e742e636f6d2f732f7430796c76697337663173746375372f47504c2d332e302e706e67)
+![GNU GPL v3](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/gplv3.png)
 
 ## Software
 
-* CMake 3.11.1 (2018, April)
 * Visual Studio Community 2017 15.7.1 (2018, May)
+* CMake 3.11.1 (2018, April)
 * Qt5.10.1 (2018, Feb)
 * VTK 8.1.1 (2018, May)
 * ITK 4.13.0 (2017, Dec)
 * Boost 1.67.0 (2018, Apr)
 * OpenCV 3.4.1 (2018, Feb)
+
+![C++](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/c++.png)
+![Visual Studio](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/visual-studio.png)
+![CMake](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/cmake.png)
+![Qt](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/qt.png)
+![VTK](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/vtk.png)
+![ITK](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/itk.png)
+![Boost](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/boost.png)
+![OpenCV](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/opencv.png)
 
 ## Installation and configuration for developers
 
