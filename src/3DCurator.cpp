@@ -6,7 +6,7 @@
 
 #include "GUI/MainWindow.h"
 
-#define RELEASE
+//#define RELEASE
 
 #ifdef RELEASE
 #define WINAPI __stdcall
@@ -22,6 +22,9 @@ int main()
 	#endif
 
 	QTranslator qtTranslator;
+
+	std::cout << QLocale::system().name().toUtf8().constData();
+
 	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     
 	QApplication a(argc, 0);

@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+<qresource>
+  <file>i18n/en_US.ts</file>
+  <file>i18n/es_ES.ts</file>
+</qresource>
+</RCC>
