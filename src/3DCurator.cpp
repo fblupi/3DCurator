@@ -1,12 +1,13 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QLibraryInfo>
+#include <QObject>
 
 #include <vtkObject.h>
 
 #include "GUI/MainWindow.h"
 
-//#define RELEASE
+#define RELEASE
 
 #ifdef RELEASE
 #define WINAPI __stdcall
@@ -20,19 +21,15 @@ int main()
 	#ifdef RELEASE
 	vtkObject::GlobalWarningDisplayOff(); // disable VTK warnings
 	#endif
+    
+	QApplication app(argc, 0);
 
 	QTranslator qtTranslator;
+	qtTranslator.load(":/i18n/en_US");
+	app.installTranslator(&qtTranslator);
 
-	std::cout << QLocale::system().name().toUtf8().constData();
+	MainWindow window;
+	window.show();
 
-	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    
-	QApplication a(argc, 0);
-
-	a.installTranslator(&qtTranslator);
-
-	MainWindow w;
-	w.show();
-
-	return a.exec();
+	return app.exec();
 }
