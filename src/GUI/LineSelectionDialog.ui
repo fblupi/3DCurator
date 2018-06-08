@@ -29,13 +29,13 @@
       </size>
      </property>
      <property name="title">
-      <string>Línea</string>
+      <string>LINE</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QRadioButton" name="redRadioButton">
         <property name="text">
-         <string>Rojo</string>
+         <string>RED</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -45,7 +45,7 @@
       <item>
        <widget class="QRadioButton" name="blueRadioButton">
         <property name="text">
-         <string>Azul</string>
+         <string>BLUE</string>
         </property>
         <property name="checked">
          <bool>false</bool>
@@ -55,28 +55,28 @@
       <item>
        <widget class="QRadioButton" name="greenRadioButton">
         <property name="text">
-         <string>Verde</string>
+         <string>GREEN</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QRadioButton" name="cyanRadioButton">
         <property name="text">
-         <string>Cyan</string>
+         <string>CYAN</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QRadioButton" name="magentaRadioButton">
         <property name="text">
-         <string>Magenta</string>
+         <string>MAGENTA</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QRadioButton" name="yellowRadioButton">
         <property name="text">
-         <string>Amarillo</string>
+         <string>YELLOW</string>
         </property>
        </widget>
       </item>
@@ -118,7 +118,7 @@
    <item row="4" column="1">
     <widget class="QPushButton" name="cancelButton">
      <property name="text">
-      <string>Cancelar</string>
+      <string>CANCEL</string>
      </property>
     </widget>
    </item>
@@ -145,7 +145,7 @@
    <item row="1" column="2">
     <widget class="QCheckBox" name="completeUp">
      <property name="text">
-      <string>Hasta arriba</string>
+      <string>GO_UP</string>
      </property>
      <property name="checked">
       <bool>true</bool>
@@ -155,7 +155,7 @@
    <item row="2" column="2">
     <widget class="QCheckBox" name="completeDown">
      <property name="text">
-      <string>Hasta abajo</string>
+      <string>GO_DOWN</string>
      </property>
      <property name="checked">
       <bool>true</bool>

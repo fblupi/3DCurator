@@ -418,4 +418,43 @@
         <translation>Neighborhood size</translation>
     </message>
 </context>
+<context>
+    <name>LineSelectionDialog</name>
+    <message>
+        <source>LINE</source>
+        <translation>Line</translation>
+    </message>
+    <message>
+        <source>RED</source>
+        <translation>Red</translation>
+    </message>
+    <message>
+        <source>BLUE</source>
+        <translation>Blue</translation>
+    </message>
+    <message>
+        <source>GREEN</source>
+        <translation>Green</translation>
+    </message>
+    <message>
+        <source>CYAN</source>
+        <translation>Cyan</translation>
+    </message>
+    <message>
+        <source>MAGENTA</source>
+        <translation>Magenta</translation>
+    </message>
+    <message>
+        <source>YELLOW</source>
+        <translation>Yellow</translation>
+    </message>
+    <message>
+        <source>GO_UP</source>
+        <translation>Go up</translation>
+    </message>
+    <message>
+        <source>GO_DOWN</source>
+        <translation>Go down</translation>
+    </message>
+</context>
 </TS>

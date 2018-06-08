@@ -418,4 +418,43 @@
         <translation>Tamaño vecindario</translation>
     </message>
 </context>
+<context>
+    <name>LineSelectionDialog</name>
+    <message>
+        <source>LINE</source>
+        <translation>Línea</translation>
+    </message>
+    <message>
+        <source>RED</source>
+        <translation>Rojo</translation>
+    </message>
+    <message>
+        <source>BLUE</source>
+        <translation>Azul</translation>
+    </message>
+    <message>
+        <source>GREEN</source>
+        <translation>Verde</translation>
+    </message>
+    <message>
+        <source>CYAN</source>
+        <translation>Cyan</translation>
+    </message>
+    <message>
+        <source>MAGENTA</source>
+        <translation>Magenta</translation>
+    </message>
+    <message>
+        <source>YELLOW</source>
+        <translation>Amarillo</translation>
+    </message>
+    <message>
+        <source>GO_UP</source>
+        <translation>Hasta arriba</translation>
+    </message>
+    <message>
+        <source>GO_DOWN</source>
+        <translation>Hasta abajo</translation>
+    </message>
+</context>
 </TS>
