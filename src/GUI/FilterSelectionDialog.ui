@@ -23,7 +23,7 @@
    <item row="1" column="2">
     <widget class="QPushButton" name="cancelButton">
      <property name="text">
-      <string>Cancelar</string>
+      <string>CANCEL</string>
      </property>
     </widget>
    </item>
@@ -54,7 +54,7 @@
      </property>
      <widget class="QWidget" name="gaussianFilter">
       <attribute name="title">
-       <string>Gaussiano</string>
+       <string>GAUSSIAN_FILTER</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="3">
@@ -73,7 +73,7 @@
        <item row="0" column="1">
         <widget class="QLabel" name="gaussianRepsLabel">
          <property name="text">
-          <string>Repeticiones</string>
+          <string>REPETITIONS</string>
          </property>
         </widget>
        </item>
@@ -104,7 +104,7 @@
      </widget>
      <widget class="QWidget" name="meanFilter">
       <attribute name="title">
-       <string>Media</string>
+       <string>MEAN_FILTER</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="2">
@@ -123,7 +123,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="meanRadiusLabel">
          <property name="text">
-          <string>Tamaño del vecinadario</string>
+          <string>NEIGHBORHOOD_SIZE</string>
          </property>
         </widget>
        </item>
@@ -163,13 +163,13 @@
      </widget>
      <widget class="QWidget" name="medianFilter">
       <attribute name="title">
-       <string>Mediana</string>
+       <string>MEDIAN_FILTER</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0">
         <widget class="QLabel" name="medianRadiusLabel">
          <property name="text">
-          <string>Tamaño del vecinadario</string>
+          <string>NEIGHBORHOOD_SIZE</string>
          </property>
         </widget>
        </item>

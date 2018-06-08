@@ -2,6 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US" sourcelanguage="en_US">
 <context>
+    <name>Core</name>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>CANCEL</source>
+        <translation>Cancel</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>APP_NAME</source>
@@ -382,6 +393,29 @@
     <message>
         <source>SHOW_OR_HIDE_COMMENT_TOOLTIP</source>
         <translation>Show/Hide comment</translation>
+    </message>
+</context>
+<context>
+    <name>FilterSelectionDialog</name>
+    <message>
+        <source>GAUSSIAN_FILTER</source>
+        <translation>Guassian</translation>
+    </message>
+    <message>
+        <source>MEAN_FILTER</source>
+        <translation>Mean</translation>
+    </message>
+    <message>
+        <source>MEDIAN_FILTER</source>
+        <translation>Median</translation>
+    </message>
+    <message>
+        <source>REPETITIONS</source>
+        <translation>Repetitions</translation>
+    </message>
+    <message>
+        <source>NEIGHBORHOOD_SIZE</source>
+        <translation>Neighborhood size</translation>
     </message>
 </context>
 </TS>
