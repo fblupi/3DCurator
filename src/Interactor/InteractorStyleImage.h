@@ -4,6 +4,8 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QBitmap>
+#include <QObject>
+#include <QCoreApplication>
 
 #include <vtkObjectFactory.h>
 #include <vtkSmartPointer.h>

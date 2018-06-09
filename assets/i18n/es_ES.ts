@@ -2,17 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="es_ES" sourcelanguage="es_ES">
 <context>
-    <name>Core</name>
-    <message>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>CANCEL</source>
-        <translation>Cancelar</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source>APP_NAME</source>
@@ -188,7 +177,7 @@
     </message>
     <message>
         <source>SPECULAR</source>
-        <translation>ESPECULAR</translation>
+        <translation>Especular</translation>
     </message>
     <message>
         <source>SPECULAR_POWER</source>
@@ -394,6 +383,198 @@
         <source>SHOW_OR_HIDE_COMMENT_TOOLTIP</source>
         <translation>Mostrar/Ocultar nota</translation>
     </message>
+    <message>
+        <source>CHART_DENSITY</source>
+        <translation>Densidad</translation>
+    </message>
+    <message>
+        <source>CHART_OPACITY</source>
+        <translation>Opacidad</translation>
+    </message>
+    <message>
+        <source>CHART_GRADIENT</source>
+        <translation>Gradiente</translation>
+    </message>
+    <message>
+        <source>ERROR_OPENING_DEFALT_TF_FILE</source>
+        <translation>Error abriendo archivo por defecto de función de transferenia</translation>
+    </message>
+    <message>
+        <source>LOADING...</source>
+        <translation>Cargando...</translation>
+    </message>
+    <message>
+        <source>OPEN_DICOM_FOLDER_CAPTION</source>
+        <translation>Abrir carpeta DICOM</translation>
+    </message>
+    <message>
+        <source>LOADING_DICOM_FILES</source>
+        <translation>Cargando los datos DICOM especificados</translation>
+    </message>
+    <message>
+        <source>OPEN_VTI_FILE_CAPTION</source>
+        <translation>Abrir archivo VTI</translation>
+    </message>
+    <message>
+        <source>LOADING_VTI_FILE</source>
+        <translation>Cargando los datos del volumen especificados</translation>
+    </message>
+    <message>
+        <source>SAVE_VOLUME_DEFAULT_NAME</source>
+        <translation>Volumen</translation>
+    </message>
+    <message>
+        <source>EXPORTING_VOLUME</source>
+        <translation>Extrayendo...</translation>
+    </message>
+    <message>
+        <source>EXPORTING_VOLUME_MODEL</source>
+        <translation>Extrayendo el modelo</translation>
+    </message>
+    <message>
+        <source>OPEN_PRESET_CAPTION</source>
+        <translation>Abrir preset</translation>
+    </message>
+    <message>
+        <source>EXPORTING_MESH</source>
+        <translation>Extrayendo...</translation>
+    </message>
+    <message>
+        <source>EXPORTING_MESH_MODEL</source>
+        <translation>Extrayendo la maya del modelo</translation>
+    </message>
+    <message>
+        <source>SAVE_PRESET_CAPTION</source>
+        <translation>Guardar preset</translation>
+    </message>
+    <message>
+        <source>SAVE_SCREENSHOT_CAPTION</source>
+        <translation>Guardar captura</translation>
+    </message>
+    <message>
+        <source>SAVE_MESH_CAPTION</source>
+        <translation>Guardar malla</translation>
+    </message>
+    <message>
+        <source>SAVE_ROD_CAPTION</source>
+        <translation>Guardar ROD</translation>
+    </message>
+    <message>
+        <source>SAVE_VOLUME_CAPTION</source>
+        <translation>Guardar volumen</translation>
+    </message>
+    <message>
+        <source>SAVE_MESH_DEFAULT_NAME</source>
+        <translation>Malla</translation>
+    </message>
+    <message>
+        <source>UPDATING_MESH</source>
+        <translation>Actualizando...</translation>
+    </message>
+    <message>
+        <source>GENERATING_MESH_WITH_THE_SPECIFIED_ISO_SURFACE</source>
+        <translation>Generando el modelo con la isosuperficie especificada</translation>
+    </message>
+    <message>
+        <source>WARNING</source>
+        <translation>Advertencia</translation>
+    </message>
+    <message>
+        <source>WARNING_VOLUME</source>
+        <translation>Hace falta cargar un modelo antes</translation>
+    </message>
+    <message>
+        <source>WARNING_RULE</source>
+        <translation>Seleccione una regla antes</translation>
+    </message>
+    <message>
+        <source>WARNING_PROTRACTOR</source>
+        <translation>Seleccione un transportador de ángulos antes</translation>
+    </message>
+    <message>
+        <source>WARNING_COMMENT_TEXT</source>
+        <translation>Escribe el texto de la nota antes</translation>
+    </message>
+    <message>
+        <source>WARNING_COMMENT</source>
+        <translation>Seleccione una nota antes</translation>
+    </message>
+    <message>
+        <source>WARNING_ROD</source>
+        <translation>Seleccione una ROD antes</translation>
+    </message>
+    <message>
+        <source>FILTERING...</source>
+        <translation>Filtrando...</translation>
+    </message>
+    <message>
+        <source>APPLYING_FILTER</source>
+        <translation>Aplicando filtro con los parámetros seleccionados</translation>
+    </message>
+    <message>
+        <source>ADD_ROD_TITLE</source>
+        <translation>Nombre de la ROD</translation>
+    </message>
+    <message>
+        <source>ADD_ROD_LABEL</source>
+        <translation>Nombre:</translation>
+    </message>
+    <message>
+        <source>ADD_ROD_UNNAMED</source>
+        <translation>Sin nombre</translation>
+    </message>
+    <message>
+        <source>ADD_RULE_TITLE</source>
+        <translation>Nombre de la regla</translation>
+    </message>
+    <message>
+        <source>ADD_RULE_LABEL</source>
+        <translation>Nombre:</translation>
+    </message>
+    <message>
+        <source>ADD_RULE_UNNAMED</source>
+        <translation>Sin nombre</translation>
+    </message>
+    <message>
+        <source>ADD_PROTRACTOR_TITLE</source>
+        <translation>Nombre del transportador de ángulos</translation>
+    </message>
+    <message>
+        <source>ADD_PROTRACTOR_LABEL</source>
+        <translation>Nombre:</translation>
+    </message>
+    <message>
+        <source>ADD_PROTRACTOR_UNNAMED</source>
+        <translation>Sin nombre</translation>
+    </message>
+    <message>
+        <source>ADD_COMMENT_TITLE</source>
+        <translation>Nombre de la nota</translation>
+    </message>
+    <message>
+        <source>ADD_COMMENT_LABEL</source>
+        <translation>Nombre:</translation>
+    </message>
+    <message>
+        <source>ADD_COMMENT_UNNAMED</source>
+        <translation>Sin nombre</translation>
+    </message>
+    <message>
+        <source>OPEN_ROD_FILE</source>
+        <translation>Abrir ROD</translation>
+    </message>
+    <message>
+        <source>ARE_YOU_SURE_YOU_WANT_TO_EXIT?</source>
+        <translation>¿Seguro que desea salir?</translation>
+    </message>
+    <message>
+        <source>CONFIRM_EXIT_YES</source>
+        <translation>Sí</translation>
+    </message>
+    <message>
+        <source>CONFIRM_EXIT_NO</source>
+        <translation>No</translation>
+    </message>
 </context>
 <context>
     <name>FilterSelectionDialog</name>
@@ -416,6 +597,14 @@
     <message>
         <source>NEIGHBORHOOD_SIZE</source>
         <translation>Tamaño vecindario</translation>
+    </message>
+    <message>
+        <source>FILTER_OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>FILTER_CANCEL</source>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -455,6 +644,87 @@
     <message>
         <source>GO_DOWN</source>
         <translation>Hasta abajo</translation>
+    </message>
+    <message>
+        <source>LINE_OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>LINE_CANCEL</source>
+        <translation>Cancelar</translation>
+    </message>
+</context>
+<context>
+    <name>SegmentedVolumeDialog</name>
+    <message>
+        <source>SEGMENTED_OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>SEGMENTED_CANCEL</source>
+        <translation>Cancelar</translation>
+    </message>
+</context>
+<context>
+    <name>InteractorStyleDeleter</name>
+    <message>
+        <source>DELETING...</source>
+        <translation>Borrando...</translation>
+    </message>
+    <message>
+        <source>DELETING_SELECTED_PART_OF_THE_VOLUME</source>
+        <translation>Borrando la parte del volumen seleccionada</translation>
+    </message>
+    <message>
+        <source>CONFIRM_DELETION</source>
+        <translation>Confirmar</translation>
+    </message>
+    <message>
+        <source>UPDATE_DELETION_CHANGES?</source>
+        <translation>¿Actualizar cambios?</translation>
+    </message>
+    <message>
+        <source>CONFIRM_DELETION_YES</source>
+        <translation>Sí</translation>
+    </message>
+    <message>
+        <source>CONFIRM_DELETION_NO</source>
+        <translation>No</translation>
+    </message>
+    <message>
+        <source>DELETION_RESTORING...</source>
+        <translation>Restaurando...</translation>
+    </message>
+    <message>
+        <source>UNDOING_DELETION</source>
+        <translation>Deshaciendo borrado</translation>
+    </message>
+</context>
+<context>
+    <name>InteractorStyleSegmentation</name>
+    <message>
+        <source>SEGMENTING...</source>
+        <translation>Segmentando...</translation>
+    </message>
+    <message>
+        <source>SEGMENTING_PIECE_OF_WOOD_SELECTED</source>
+        <translation>Segmentando la pieza de madera seleccionada</translation>
+    </message>
+    <message>
+        <source>SAVE_SUB_VOLUME_CAPTION</source>
+        <translation>Guardar volumen</translation>
+    </message>
+    <message>
+        <source>SAVE_SUB_VOLUME_DEFAULT_NAME</source>
+        <translation>Sub-volumen</translation>
+    </message>
+    <message>
+        <source>EXPORTING_SUB_VOLUME...</source>
+        <translation>Extrayendo...</translation>
+    </message>
+    <message>
+        <source>EXPORTING_SUB_VOLUME_MODEL</source>
+        <translation>Extrayendo el modelo</translation>
     </message>
 </context>
 </TS>

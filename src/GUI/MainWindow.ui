@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1280</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -240,7 +240,7 @@
            </size>
           </property>
           <property name="title">
-           <string notr="true">PLANE</string>
+           <string>PLANE</string>
           </property>
           <property name="flat">
            <bool>false</bool>
@@ -662,7 +662,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>138</width>
+             <width>408</width>
              <height>693</height>
             </rect>
            </property>
@@ -1825,7 +1825,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1024</width>
      <height>21</height>
     </rect>
    </property>

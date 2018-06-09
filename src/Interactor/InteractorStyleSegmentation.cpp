@@ -64,8 +64,8 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 				// -- launch progress bar
 				QPointer<QProgressBar> bar = new QProgressBar(0);
 				QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-				progressDialog->setWindowTitle(QString("Segmentando..."));
-				progressDialog->setLabelText(QString::fromLatin1("Segmentando la pieza de madera seleccionada"));
+				progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING..."));
+				progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING_PIECE_OF_WOOD_SELECTED"));
 				progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 				progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 				progressDialog->setCancelButton(0);
@@ -106,13 +106,13 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 
 				if (exportSegmentedVolume == QMessageBox::Yes) {
 					QString vtiFile = NULL;
-					vtiFile = QFileDialog::getSaveFileName(NULL, QObject::tr("Exportar volumen"), QDir(QDir::homePath()).filePath("Sub-volume"), "VTI (*.vti) ;; XML (*.xml)");
+					vtiFile = QFileDialog::getSaveFileName(NULL, QCoreApplication::translate("InteractorStyleSegmentation", "SAVE_SUB_VOLUME_CAPTION"), QDir(QDir::homePath()).filePath(QCoreApplication::translate("InteractorStyleSegmentation", "SAVE_SUB_VOLUME_DEFAULT_NAME")), "VTI (*.vti) ;; XML (*.xml)");
 					if (vtiFile != NULL) {
 						// -- launch progress bar
 						QPointer<QProgressBar> bar = new QProgressBar(0);
 						QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-						progressDialog->setWindowTitle(QString("Extrayendo..."));
-						progressDialog->setLabelText(QString::fromLatin1("Extrayendo el modelo"));
+						progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME..."));
+						progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME_MODEL"));
 						progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 						progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 						progressDialog->setCancelButton(0);
