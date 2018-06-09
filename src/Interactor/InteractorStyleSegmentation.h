@@ -14,6 +14,7 @@
 #include <QIcon>
 #include <QApplication>
 #include <QObject>
+#include <QCoreApplication>
 
 #include <vtkObjectFactory.h>
 #include <vtkSmartPointer.h>
