@@ -27,9 +27,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	defaultMaterial();
 	defaultBackgroundsColors();
 
-	colorTFChart = new ColorTFChart(ui->volumeWidget->GetRenderWindow(), ui->colorTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getColorFun(), "Densidad", "", MIN_INTENSITY, MAX_INTENSITY);
-	scalarTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->scalarTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getScalarFun(), "Densidad", "Opacidad", MIN_INTENSITY, MAX_INTENSITY);
-	gradientTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->gradientTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getGradientFun(), "Gradiente", "Opacidad", 0, MAX_INTENSITY - MIN_INTENSITY);
+	colorTFChart = new ColorTFChart(ui->volumeWidget->GetRenderWindow(), ui->colorTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getColorFun(), tr("CHART_DENSITY").toUtf8().constData(), "", MIN_INTENSITY, MAX_INTENSITY);
+	scalarTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->scalarTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getScalarFun(), tr("CHART_DENSITY").toUtf8().constData(), tr("CHART_OPACITY").toUtf8().constData(), MIN_INTENSITY, MAX_INTENSITY);
+	gradientTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->gradientTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getGradientFun(), tr("CHART_GRADIENT").toUtf8().constData(), tr("CHART_OPACITY").toUtf8().constData(), 0, MAX_INTENSITY - MIN_INTENSITY);
 	updateSliders();
 
 	sliceViewer->GetWindowLevel()->SetLookupTable(sculpture->getTransferFunction()->getColorFun());
@@ -135,7 +135,7 @@ void MainWindow::loadDefaultPreset(QFile *file) {
 		ui->tfName->setText(QString::fromUtf8(sculpture->getTransferFunction()->getName().c_str()));
 		ui->tfDescription->setText(QString::fromUtf8(sculpture->getTransferFunction()->getDescription().c_str()));
 	} else {
-		cerr << "Error abriendo archivo por defecto de función de transferencia" << endl;
+		cerr << tr("ERROR_OPENING_DEFAULT_TF_FILE").toUtf8().constData() << endl;
 		exit(-1);
 	}
 }
@@ -204,14 +204,14 @@ void MainWindow::updateSliders() {
 }
 
 void MainWindow::importDICOM() {
-	QString dicomFolder = QFileDialog::getExistingDirectory(this, tr("Abrir carpeta DICOM"), QDir::homePath(), QFileDialog::ShowDirsOnly); 
+	QString dicomFolder = QFileDialog::getExistingDirectory(this, tr("OPEN_DICOM_FOLDER_CAPTION"), QDir::homePath(), QFileDialog::ShowDirsOnly); 
 
 	if (dicomFolder != NULL) {
 		// -- launch progress bar
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(QString("Cargando..."));
-		progressDialog->setLabelText(QString::fromLatin1("Cargando los datos DICOM especificados"));
+		progressDialog->setWindowTitle(tr("LOADING..."));
+		progressDialog->setLabelText(tr("LOADING_DICOM_FILES"));
 		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog->setCancelButton(0);
@@ -245,19 +245,14 @@ void MainWindow::importDICOM() {
 }
 
 void MainWindow::importVTI() {
-	QString vtiFile = QFileDialog::getOpenFileName(this, tr("Abrir archivo VTI"), QDir::homePath(), "VTI (*.vti) ;; XML (*.xml) ;; All files (*.*)");
+	QString vtiFile = QFileDialog::getOpenFileName(this, tr("OPEN_VTI_FILE_CAPTION"), QDir::homePath(), "VTI (*.vti) ;; XML (*.xml) ;; All files (*.*)");
 
 	if (vtiFile != NULL) {
 		// -- launch progress bar
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-<<<<<<< Updated upstream
-		progressDialog->setWindowTitle(QString("Cargando..."));
-		progressDialog->setLabelText(QString::fromLatin1("Cargando los datos especificados"));
-=======
 		progressDialog->setWindowTitle(tr("LOADING..."));
 		progressDialog->setLabelText(tr("LOADING_VTI_FILE"));
->>>>>>> Stashed changes
 		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog->setCancelButton(0);
@@ -292,13 +287,13 @@ void MainWindow::importVTI() {
 
 void MainWindow::exportVTI() {
 	if (sculpture->getLoaded()) {
-		QString filename = getExportVTIFilename("Volume");
+		QString filename = getExportVTIFilename(tr("SAVE_VOLUME_DEFAULT_NAME"));
 		if (filename != NULL) {
 			// -- launch progress bar
 			QPointer<QProgressBar> bar = new QProgressBar(0);
 			QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-			progressDialog->setWindowTitle(QString("Extrayendo..."));
-			progressDialog->setLabelText(QString::fromLatin1("Extrayendo el modelo"));
+			progressDialog->setWindowTitle(tr("EXPORTING_VOLUME..."));
+			progressDialog->setLabelText(tr("EXPORTING_VOLUME_MODEL"));
 			progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 			progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 			progressDialog->setCancelButton(0);
@@ -323,7 +318,7 @@ void MainWindow::exportVTI() {
 }
 
 void MainWindow::importPreset() {
-	QString presetFile = QFileDialog::getOpenFileName(this, tr("Importar preset"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
+	QString presetFile = QFileDialog::getOpenFileName(this, tr("OPEN_PRESET_CAPTION"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
 
 	if (presetFile != NULL) {
 		std::string s = presetFile.toUtf8().constData();
@@ -363,8 +358,8 @@ void MainWindow::exportMeshToFile(const QString filename) {
 		// -- launch progress bar
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(QString("Extrayendo..."));
-		progressDialog->setLabelText(QString::fromLatin1("Extrayendo la malla del modelo"));
+		progressDialog->setWindowTitle(tr("EXPORTING_MESH..."));
+		progressDialog->setLabelText(tr("EXPORTING_MESH_MODEL"));
 		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog->setCancelButton(0);
@@ -432,23 +427,23 @@ void MainWindow::exportPreset(const QString filename) {
 }
 
 QString MainWindow::getExportPresetFilename(const QString defaultFilename) {
-	return QFileDialog::getSaveFileName(this, tr("Exportar preset"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
+	return QFileDialog::getSaveFileName(this, tr("SAVE_PRESET_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
 }
 
 QString MainWindow::getExportImageFilename(const QString defaultFilename) {
-	return QFileDialog::getSaveFileName(this, tr("Exportar imagen"), QDir(QDir::homePath()).filePath(defaultFilename), "PNG (*.png);;JPG (*.jpg)");
+	return QFileDialog::getSaveFileName(this, tr("SAVE_SCREENSHOT_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "PNG (*.png);;JPG (*.jpg)");
 }
 
 QString MainWindow::getExportMeshFilename(const QString defaultFilename) {
-	return QFileDialog::getSaveFileName(this, tr("Exportar malla"), QDir(QDir::homePath()).filePath(defaultFilename), "STL (*.stl)");
+	return QFileDialog::getSaveFileName(this, tr("SAVE_MESH_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "STL (*.stl)");
 }
 
 QString MainWindow::getExportRODFilename(const QString defaultFilename) {
-	return QFileDialog::getSaveFileName(this, tr("Exportar ROD"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
+	return QFileDialog::getSaveFileName(this, tr("SAVE_ROD_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
 }
 
 QString MainWindow::getExportVTIFilename(const QString defaultFilename) {
-	return QFileDialog::getSaveFileName(this, tr("Exportar volumen"), QDir(QDir::homePath()).filePath(defaultFilename), "VTI (*.vti) ;; XML (*.xml)");
+	return QFileDialog::getSaveFileName(this, tr("SAVE_VOLUME_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "VTI (*.vti) ;; XML (*.xml)");
 }
 
 void MainWindow::enablePlane() {
@@ -467,7 +462,7 @@ void MainWindow::disablePlane() {
 
 void MainWindow::exportMesh() {
 	if (sculpture->getLoaded()) {
-		exportMeshToFile(getExportMeshFilename("Mesh"));
+		exportMeshToFile(getExportMeshFilename(tr("SAVE_MESH_DEFAULT_NAME")));
 	} else {
 		launchWarningNoVolume();
 	}
@@ -478,8 +473,8 @@ void MainWindow::updateMesh() {
 		// -- launch progress bar
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(QString("Actualizando..."));
-		progressDialog->setLabelText(QString::fromLatin1("Generando el modelo con la isosuperficie especificada"));
+		progressDialog->setWindowTitle(tr("UPDATING_MESH..."));
+		progressDialog->setLabelText(tr("GENERATING_MESH_WITH_THE_SPECIFIED_ISO_SURFACE"));
 		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog->setCancelButton(0);
@@ -638,7 +633,7 @@ void MainWindow::restoreBackgroundsColors() {
 }
 void MainWindow::launchWarning(const std::string message) {
 	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
-	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
+	confirmBox->setWindowTitle(tr("WARNING"));
 	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 	confirmBox->setIcon(QMessageBox::Information);
 	confirmBox->setText(QString::fromLatin1(message.c_str()));
@@ -647,27 +642,27 @@ void MainWindow::launchWarning(const std::string message) {
 }
 
 void MainWindow::launchWarningNoVolume() {
-	launchWarning("Hace falta cargar un modelo antes");
+	launchWarning(tr("WARNING_VOLUME").toUtf8().constData());
 }
 
 void MainWindow::launchWarningNoRule() {
-	launchWarning("Seleccione una regla antes");
+	launchWarning(tr("WARNING_RULE").toUtf8().constData());
 }
 
 void MainWindow::launchWarningNoProtractor() {
-	launchWarning("Seleccione un transportador de ángulos antes");
+	launchWarning(tr("WARNING_PROTRACTOR").toUtf8().constData());
 }
 
 void MainWindow::launchWarningNoAnnotationText() {
-	launchWarning("Escribe el texto de la nota antes");
+	launchWarning(tr("WARNING_COMMENT_TEXT").toUtf8().constData());
 }
 
 void MainWindow::launchWarningNoAnnotation() {
-	launchWarning("Seleccione una nota antes");
+	launchWarning(tr("WARNING_COMMENT").toUtf8().constData());
 }
 
 void MainWindow::launchWarningNoActiveROD() {
-	launchWarning("Seleccione un ROD antes");
+	launchWarning(tr("WARNING_ROD").toUtf8().constData());
 }
 
 void MainWindow::segmentateOnOff() {
@@ -692,8 +687,8 @@ void MainWindow::filter() {
 			// -- launch progress bar
 			QPointer<QProgressBar> bar = new QProgressBar(0);
 			QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-			progressDialog->setWindowTitle(QString("Filtrando..."));
-			progressDialog->setLabelText(QString::fromLatin1("Aplicando filtro con los parámetros seleccionados"));
+			progressDialog->setWindowTitle(tr("FILTERING..."));
+			progressDialog->setLabelText(tr("APPLYING_FILTER"));
 			progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 			progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 			progressDialog->setCancelButton(0);
@@ -756,10 +751,10 @@ void MainWindow::addROD() {
 		std::string name;
 		QListWidgetItem *item = new QListWidgetItem(0);
 		bool ok;
-		QString text = QInputDialog::getText(this, tr("Nombre del ROD"), tr("Nombre:"), QLineEdit::Normal, tr("Sin nombre"), &ok);
+		QString text = QInputDialog::getText(this, tr("ADD_ROD_TITLE"), tr("ADD_ROD_LABEL"), QLineEdit::Normal, tr("ADD_ROD_UNNAMED"), &ok);
 		if (ok) {
 			if (text.isEmpty()) {
-				name = "Sin nombre";
+				name = tr("ADD_ROD_UNNAMED").toUtf8().constData();;
 			} else {
 				name = text.toUtf8().constData(); 
 			}
@@ -798,10 +793,10 @@ void MainWindow::addRule() {
 		std::string name;
 		QListWidgetItem *item = new QListWidgetItem(0);
 		bool ok;
-		QString text = QInputDialog::getText(this, tr("Nombre de la regla"), tr("Nombre:"), QLineEdit::Normal, tr("Sin nombre"), &ok);
+		QString text = QInputDialog::getText(this, tr("ADD_RULE_LABEL"), tr("ADD_RULE_LABEL"), QLineEdit::Normal, tr("ADD_RULE_UNNAMED"), &ok);
 		if (ok) {
 			if (text.isEmpty()) {
-				name = "Sin nombre";
+				name = tr("ADD_RULE_UNNAMED").toUtf8().constData();
 			} else {
 				name = text.toUtf8().constData();
 			}
@@ -841,10 +836,10 @@ void MainWindow::addProtractor() {
 		std::string name;
 		QListWidgetItem *item = new QListWidgetItem(0);
 		bool ok;
-		QString text = QInputDialog::getText(this, tr("Nombre del transportador de ángulos"), tr("Nombre:"), QLineEdit::Normal, tr("Sin nombre"), &ok);
+		QString text = QInputDialog::getText(this, tr("ADD_PROTRACTOR_TITLE"), tr("ADD_PROTRACTOR_LABEL"), QLineEdit::Normal, tr("ADD_PROTRACTOR_UNNAMED"), &ok);
 		if (ok) {
 			if (text.isEmpty()) {
-				name = "Sin nombre";
+				name = tr("ADD_PROTRACTOR_UNNAMED").toUtf8().constData();
 			} else {
 				name = text.toUtf8().constData();
 			}
@@ -888,10 +883,10 @@ void MainWindow::addAnnotation() {
 		} else {
 			QListWidgetItem *item = new QListWidgetItem(0);
 			bool ok;
-			QString text = QInputDialog::getText(this, tr("Nombre de la nota"), tr("Nombre:"), QLineEdit::Normal, tr("Sin nombre"), &ok);
+			QString text = QInputDialog::getText(this, tr("ADD_COMMENT_TITLE"), tr("ADD_COMMENT_LABEL"), QLineEdit::Normal, tr("ADD_COMMENT_UNNAMED"), &ok);
 			if (ok) {
 				if (text.isEmpty()) {
-					name = "Sin nombre";
+					name = tr("ADD_COMMENT_UNNAMED").toUtf8().constData();
 				} else {
 					name = text.toUtf8().constData();
 				}
@@ -927,7 +922,7 @@ void MainWindow::enableDisableAnnotation() {
 
 void MainWindow::importROD() {
 	if (sculpture->getLoaded()) {
-		QString rodFile = QFileDialog::getOpenFileName(this, tr("Importar ROD"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
+		QString rodFile = QFileDialog::getOpenFileName(this, tr("OPEN_ROD_FILE"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
 		if (rodFile != NULL) {
 			std::string s = rodFile.toUtf8().constData();
 			ROD* rod = new ROD(s, itemListEnabled, itemListDisabled, ui->slicesWidget->GetInteractor(), ui->ruleList, ui->protractorList, ui->annotationList);
@@ -968,13 +963,13 @@ void MainWindow::on_actionExportSliceImage_triggered() {
 
 void MainWindow::on_actionExit_triggered() {
 	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
-	confirmBox->setWindowTitle(QString::fromLatin1("Advertencia"));
+	confirmBox->setWindowTitle(tr("WARNING"));
 	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 	confirmBox->setIcon(QMessageBox::Information);
-	confirmBox->setText(QString::fromLatin1("¿Seguro que desea salir?"));
+	confirmBox->setText(tr("ARE_YOU_SURE_YOU_WANT_TO_EXIT?"));
 	confirmBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-	confirmBox->button(QMessageBox::Yes)->setText(QString::fromLatin1("Sí"));
-	confirmBox->button(QMessageBox::No)->setText(QString::fromLatin1("No"));
+	confirmBox->button(QMessageBox::Yes)->setText(tr("CONFIRM_EXIT_YES"));
+	confirmBox->button(QMessageBox::No)->setText(tr("CONFIRM_EXIT_NO"));
 	if (confirmBox->exec() == QMessageBox::Yes) {
 		exit(0);
 	}

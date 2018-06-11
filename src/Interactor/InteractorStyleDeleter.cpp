@@ -18,8 +18,8 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			// -- launch progress bar
 			QPointer<QProgressBar> bar = new QProgressBar(0);
 			QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-			progressDialog->setWindowTitle(QString("Borrando..."));
-			progressDialog->setLabelText(QString::fromLatin1("Extrayendo la malla del objeto"));
+			progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleDeleter", "DELETING..."));
+			progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleDeleter", "DELETING_SELECTED_PART_OF_THE_VOLUME"));
 			progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 			progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 			progressDialog->setCancelButton(0);
@@ -52,18 +52,18 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 
 			// -- launch confirm box
 			QPointer<QMessageBox> confirmBox = new QMessageBox(0);
-			confirmBox->setWindowTitle(QString::fromLatin1("Confirmar"));
+			confirmBox->setWindowTitle(QCoreApplication::translate("InteractorStyleDeleter", "CONFIRM_DELETION"));
 			confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 			confirmBox->setIcon(QMessageBox::Question);
-			confirmBox->setText(QString::fromLatin1("¿Actualizar cambios?"));
+			confirmBox->setText(QCoreApplication::translate("InteractorStyleDeleter", "UPDATE_DELETION_CHANGES?"));
 			confirmBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-			confirmBox->button(QMessageBox::Yes)->setText(QString::fromLatin1("Sí"));
-			confirmBox->button(QMessageBox::No)->setText(QString::fromLatin1("No"));
+			confirmBox->button(QMessageBox::Yes)->setText(QCoreApplication::translate("InteractorStyleDeleter", "CONFIRM_DELETION_YES"));
+			confirmBox->button(QMessageBox::No)->setText(QCoreApplication::translate("InteractorStyleDeleter", "CONFIRM_DELETION_NO"));
 
 			if (confirmBox->exec() == QMessageBox::No) {
 				// -- launch progress bar
-				progressDialog->setWindowTitle(QString("Restaurando..."));
-				progressDialog->setLabelText(QString::fromLatin1("Deshaciendo borrado"));
+				progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleDeleter", "DELTION_RESTORING..."));
+				progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleDeleter", "UNDOING_DELETION"));
 				progressDialog->show();
 				QApplication::processEvents();
 				// -- END launch progress bar

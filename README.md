@@ -16,9 +16,9 @@ A 3D Viewer for CTs of Polychromed Wood Sculptures. Further info in [https://fbl
 
 ## Software
 
-* Visual Studio Community 2017 15.7.1 (2018, May)
-* CMake 3.11.1 (2018, April)
-* Qt5.10.1 (2018, Feb)
+* Visual Studio Community 2017 15.7.3 (2018, Jun)
+* CMake 3.11.3 (2018, May)
+* Qt5.11.0 (2018, May)
 * VTK 8.1.1 (2018, May)
 * ITK 4.13.0 (2017, Dec)
 * Boost 1.67.0 (2018, Apr)
@@ -43,15 +43,15 @@ A 3D Viewer for CTs of Polychromed Wood Sculptures. Further info in [https://fbl
 
 * Download [Visual Studio Community 2017](https://www.visualstudio.com/es-es/downloads/download-visual-studio-vs.aspx) and install
 
-##### Qt5.10.1
+##### Qt5.11.0
 
-* Download [Qt5.10.1](http://download.qt.io/official_releases/qt/5.10/5.10.1/qt-opensource-windows-x86-5.10.1.exe) and install for `msvc2017 64-bit`
-* Create a new environment variable `QTDIR` with the value `C:\Qt\Qt5.10.1`
-* Add to the path: `C:\Qt\Qt5.10.1\5.10.1\msvc2017_64\bin`
+* Download [Qt5.11.0](http://download.qt.io/official_releases/qt/5.11/5.11.0/qt-opensource-windows-x86-5.11.0.exe) and install for `msvc2017 64-bit`
+* Create a new environment variable `QTDIR` with the value `C:\Qt\Qt5.11.0`
+* Add to the path: `C:\Qt\Qt5.11.0\5.11.0\msvc2017_64\bin`
 
-##### CMake 3.11.1
+##### CMake 3.11.3
 
-* Download [CMake 3.11.1](https://cmake.org/files/v3.11/cmake-3.11.1-win64-x64.msi) and install
+* Download [CMake 3.11.3](https://cmake.org/files/v3.11/cmake-3.11.3-win64-x64.msi) and install
 
 #### Build libraries
 
@@ -100,7 +100,6 @@ Thus it will be easier to migrate from one version to another
   + `Module_vtkViewsQt`
   + `VTK_Group_Imaging`
   + `VTK_Group_Qt`
-* Press configure and an error will appear, you have to change the Qt version to the 5 and configure again
 * Configure until there is no red option
 * Then press generate. It will create some files and folders in `C:\VTK\8.1.1\build\msvc2017_64`
 
@@ -165,8 +164,7 @@ Thus it will be easier to migrate from one version to another
   * In *SubSystem* select the option *Windows (/SUBSYSTEM:WINDOWS)*
   * In *Enable Large Adresses* select the option *Yes (/LARGEADRESSAWARE)*
 * Set `3DCurator` solution as default project
-* Once compiled, copy to the `build\Release` folder the DLL files `libEGL.dll`, `libGLESv2.dll`, `Qt5Core.dll`, `Qt5Gui.dll` and `Qt5Widgets.dll` from `C:\Qt\Qt5.10.1\5.10.1\msvc2017_64\bin` and `qwindows.dll` from `C:\Qt\Qt5.10.1\5.10.1\msvc2017_64\plugins\platforms`
-
+* Once compiled, copy to the `build\Release` folder the DLL files `libEGL.dll`, `libGLESv2.dll`, `Qt5Core.dll`, `Qt5Gui.dll` and `Qt5Widgets.dll` from `C:\Qt\Qt5.10.1\5.10.1\msvc2017_64\bin`.
 ### Linux
 
 Building...

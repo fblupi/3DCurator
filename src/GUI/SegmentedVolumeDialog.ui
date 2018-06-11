@@ -21,7 +21,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="3">
-    <widget class="QVTKWidget" name="viewer"/>
+    <widget class="QVTKWidget" name="viewer" native="true"/>
    </item>
    <item row="1" column="0">
     <spacer name="horizontalSpacer">
@@ -39,14 +39,14 @@
    <item row="1" column="1">
     <widget class="QPushButton" name="cancelButton">
      <property name="text">
-      <string>Cancelar</string>
+      <string>SEGMENTED_CANCEL</string>
      </property>
     </widget>
    </item>
    <item row="1" column="2">
     <widget class="QPushButton" name="okButton">
      <property name="text">
-      <string>OK</string>
+      <string>SEGMENTED_OK</string>
      </property>
     </widget>
    </item>
