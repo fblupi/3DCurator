@@ -251,8 +251,13 @@ void MainWindow::importVTI() {
 		// -- launch progress bar
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
+<<<<<<< Updated upstream
 		progressDialog->setWindowTitle(QString("Cargando..."));
 		progressDialog->setLabelText(QString::fromLatin1("Cargando los datos especificados"));
+=======
+		progressDialog->setWindowTitle(tr("LOADING..."));
+		progressDialog->setLabelText(tr("LOADING_VTI_FILE"));
+>>>>>>> Stashed changes
 		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
 		progressDialog->setCancelButton(0);
