@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="A 3D Viewer for CTs of Sculptures">
+  <meta name="author" content="3DCurator">
+  <title>3DCurator</title>
+  <link href="../img/icon.png" rel="icon" sizes="192x192">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#795548">
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="../vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+  <link href="../css/landing-page.css" rel="stylesheet">
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-84703189-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container topnav">
+      <a class="navbar-brand" href="#">
+        <img src="../img/mini-banner.png" alt="Banner with 3DCurator logo"/>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsible-navbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsible-navbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#showcases">Showcases</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#publications">Publications</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#download">Download</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#footer">Contact</a>
+          </li>
+          <li>
+            <a class="nav-link" href="#">
+              <img class="language-icon" src="../img/languages/es.png" alt="Spanish"/>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="#">
+              <img class="language-icon" src="../img/languages/en.png" alt="English"/>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div> 
+  </nav>
+  <header class="masthead text-white text-center">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <h1>3DCurator</h1>
+          <hr>
+          <h3>A 3D Viewer for CTs of Sculptures</h3>
+        </div>
+      </div>
+    </div>
+  </header>
+  <a name="about"></a>
+  <section class="about bg-white text-center">
+    <div class="container">
+      <img class="logo mt-5 mb-5" src="../img/icon.png" alt="3DCurator logo"/>
+      <div class="mb-5">
+          <p class="lead">3DCurator is an open source software which renders <strong>polychromed wood sculptures</strong> from Computer Tomography (CT) volumetric datasets. It provides a wide number of tools to carry out basic documentation tasks by art curators.</p>
+          <p class="lead">The software is part of the End-of-Degree and End-of-Master Project of Computer Science from University of Granada carried out by Francisco Javier Bolívar Lupiáñez and supervised by Francisco Javier Melero Rus.</p>
+          <p class="lead">It makes use of high-level libraries: Qt, VTK, ITK, OpenCV and Boost under the C++ programming language. It uses CMake so it is possible to compile the source code into different platforms.</p>    
+      </div>
+    </div>
+  </section>
+  <a name="features"></a>
+  <section class="features-icons bg-light text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+            <div class="features-icons-icon d-flex">
+              <i class="icon-screen-desktop m-auto text-primary"></i>
+            </div>
+            <h3>Platform</h3>
+            <p class="lead mb-0">This software is available for desktop devices with Microsoft Windows OS</p>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+            <div class="features-icons-icon d-flex">
+              <i class="icon-speedometer m-auto text-primary"></i>
+            </div>
+            <h3>Modern libraries</h3>
+            <p class="lead mb-0">We have used the most recent stable versions of the libraries at the time to build this software</p>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+            <div class="features-icons-icon d-flex">
+              <i class="icon-check m-auto text-primary"></i>
+            </div>
+            <h3>Easy to Use</h3>
+            <p class="lead mb-0">Our main objective is to develop an easy-to-use software, so every user can see results without any formation course</p>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+            <div class="features-icons-icon d-flex">
+              <i class="icon-social-github m-auto text-primary"></i>
+            </div>
+            <h3>Open Source and Free</h3>
+            <p class="lead mb-0">The source code is hosted on a GitHub repository and you can download it by free</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <a name="showcases"></a>
+  <section class="showcases">
+    <div class="container-fluid p-0">
+      <div class="row no-gutters">
+        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('../img/showcases/3d.jpg');"></div>
+        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+          <h2>Reconstruction of Volumetric 3D Models</h2>
+          <p class="lead mb-0">It allows make a reconstruction of volumentric 3D model of an sculpture using differents presets or creating your owm transfer function for viewing other materials. Extract your own presets and share them so that other users can import</p>
+        </div>
+      </div>
+      <div class="row no-gutters">
+        <div class="col-lg-6 text-white showcase-img" style="background-image: url('../img/showcases/slices.jpg');"></div>
+        <div class="col-lg-6 my-auto showcase-text">
+          <h2>Slices</h2>
+          <p class="lead mb-0">You can generate slices with an arbitrary plane to see inside the sculpture</p>
+        </div>
+      </div>
+      <div class="row no-gutters">
+        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('../img/showcases/mesh.jpg');"></div>
+        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+          <h2>Polygonal mesh</h2>
+          <p class="lead mb-0">Extract the polygon mesh of any material in STL format for later printing in 3D</p>
+        </div>
+      </div>
+      <div class="row no-gutters">
+        <div class="col-lg-6 text-white showcase-img" style="background-image: url('../img/showcases/filtering.jpg');"></div>
+        <div class="col-lg-6 my-auto showcase-text">
+          <h2>Filtering</h2>
+          <p class="lead mb-0">We provide some noise reduction filters. You can use the mean and gaussian filter if you want to smooth your volumetric data and you can use median filter if you want to get rid of salt-and-pepper noise</p>
+        </div>
+      </div>
+      <div class="row no-gutters">
+        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('../img/showcases/segmentation.jpg');"></div>
+        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+          <h2>Segmentation</h2>
+          <p class="lead mb-0">Do you want to segmentate the volume into the different pieces of wood it is composed by? Now you can use our semi-automatic method to do it</p>
+        </div>
+      </div>
+      <div class="row no-gutters">
+        <div class="col-lg-6 text-white showcase-img" style="background-image: url('../img/showcases/documentation.jpg');"></div>
+        <div class="col-lg-6 my-auto showcase-text">
+          <h2>Documentation</h2>
+          <p class="lead mb-0">This software is made for curators and they will use it to inspect sculptures. We provide some documentation tools such as distance and angle measurements or annotations. You can export all these items in XML format so you or anyone else can import it to continue working on them</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <a name="publications"></a>
+  <section class="publications text-center bg-light">
+    <div class="container">
+      <h2 class="mb-5">Publications</h2>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="publication-item mx-auto mb-5 mb-lg-0">
+            <img class="img-fluid rounded-circle mb-3" src="../img/publications/ceig2016.jpg" alt="">
+            <h5>CEIG 2016</h5>
+            <p class="font-weight-light mb-0">Francisco Javier Bolívar and Francisco Javier Melero. <strong>3DCurator: A 3D Viewer for CTs of Polychromed Wood Sculptures</strong>. <span class="font-italic">Spanish Computer Graphics Conference (CEIG)</span>. The Eurographics Association, 2016 <a href="http://diglib.eg.org/handle/10.2312/ceig20161311" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a></p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="publication-item mx-auto mb-5 mb-lg-0">
+            <img class="img-fluid rounded-circle mb-3" src="../img/publications/ph91.jpg" alt="">
+            <h5>PH 91</h5>
+            <p class="font-weight-light mb-0">Francisco Javier Bolívar and Francisco Javier Melero. <strong>3DCurator: una herramienta para la inspección de esculturas a través de tomografía computacional</strong>. <span class="font-italic">Revista PH 91</span>. Insitituo Andaluz del Patrimonio Histórico, 2017 <a href="http://www.iaph.es/revistaph/index.php/revistaph/article/view/3906#.WOvZmtJ96Um" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <a name="download"></a>
+  <section class="download text-white text-center">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <h2 class="mb-4">Download latest version</h2>
+        </div>
+        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+          <a class="btn btn-primary btn-lg mr-2 ml-2" href="https://github.com/fblupi/3DCurator/releases/download/v0.1-beta/3DCurator.0.1-beta.msi" onClick="_gaq.push(['_trackEvent', 'English downloads', 'Download 3DCurator', 'Download Software']);">
+            <i class="fa fa-windows fa-fw"></i> <span class="network-name">Versión 0.1-beta</span>
+          </a>
+          <a class="btn btn-primary btn-lg mr-2 ml-2" href="https://github.com/fblupi/3DCurator/" onClick="_gaq.push(['_trackEvent', 'English downloads', 'Download 3DCurator', 'Download Source Code']);">
+            <i class="fa fa-code fa-fw"></i> <span class="network-name">Source code</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <a name="footer"></a>
+  <footer class="footer bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+          <ul class="list-inline mb-2">
+            <li class="list-inline-item">
+              <a href="#about">About</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#showcases">Showcases</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#publications">Publications</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#download">Download</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#contact">Contact</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="https://github.com/fblupi/3DCurator/blob/develop/LICENSE">License</a>
+            </li>
+          </ul>
+          <p class="text-muted small mb-4 mb-lg-0">&copy; 3DCurator 2018. All Rights Reserved.</p>
+        </div>
+        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item mr-3" target="_blank">
+              <a href="mailto:mailto:franciscojavierbolivarlupianez@gmail.com?subject=Feedback%203DCurator">
+                <i class="fa fa-envelope fa-2x fa-fw"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://github.com/fblupi/3DCurator" targe="_blank">
+                <i class="fa fa-github fa-2x fa-fw"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
