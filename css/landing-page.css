@@ -78,7 +78,18 @@ nav .navbar-nav img.language-icon {
 .showcases .showcase-img {
   min-height: 30rem;
   background-size: cover;
+}
+
+.showcases .showcase-img.background-center {
   background-position: center;
+}
+
+.showcases .showcase-img.background-right {
+  background-position: right;
+}
+
+.showcases .showcase-img.background-left {
+  background-position: left;
 }
 
 @media (min-width: 768px) {
