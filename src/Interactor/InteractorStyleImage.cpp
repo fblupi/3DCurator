@@ -15,9 +15,8 @@ void InteractorStyleImage::OnMouseMove() {
 		if (picker->GetPointId() != -1) { // a voxel has been selected
 			float value = slicePlane->getPlane()->GetResliceOutput()->GetScalarComponentAsFloat(ijk[0], ijk[1], ijk[2], 0);
 			label->setText(QString::fromStdString("HU: " + std::to_string((int)value)));
-		}
-		else {
-			label->setText(QString::fromStdString("HU: Fuera de rango"));
+		} else {
+			label->setText(QCoreApplication::translate("MainWindow", "HU_OUT_OF_RANGE"));
 		}
 	}
 	vtkInteractorStyleImage::OnMouseMove(); // Forward events
@@ -27,8 +26,8 @@ void InteractorStyleImage::OnLeftButtonDown() {
 	// idle
 }
 
-void InteractorStyleImage::SetSlicePlane(SlicePlane* plano) {
-	this->slicePlane = plano;
+void InteractorStyleImage::SetSlicePlane(SlicePlane* plane) {
+	this->slicePlane = plane;
 }
 
 void InteractorStyleImage::SetLabel(QLabel* label) {

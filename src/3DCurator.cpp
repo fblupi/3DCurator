@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QLibraryInfo>
+#include <QObject>
 
 #include <vtkObject.h>
 
@@ -20,16 +21,15 @@ int main()
 	#ifdef RELEASE
 	vtkObject::GlobalWarningDisplayOff(); // disable VTK warnings
 	#endif
+    
+	QApplication app(argc, 0);
 
 	QTranslator qtTranslator;
-	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    
-	QApplication a(argc, 0);
+	qtTranslator.load(":/i18n/es_ES");
+	app.installTranslator(&qtTranslator);
 
-	a.installTranslator(&qtTranslator);
+	MainWindow window;
+	window.show();
 
-	MainWindow w;
-	w.show();
-
-	return a.exec();
+	return app.exec();
 }
