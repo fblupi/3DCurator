@@ -20,7 +20,11 @@ std::string toUpper(std::string s) {
 std::string getCurrentDate() {
 	time_t t = time(0); // current date
 	struct tm now;
-	localtime_s(&now, &t); // struct with different components
+#ifdef _WIN32
+	localtime_s(&now, &t);
+#else
+	localtime_r(&t, &now);
+#endif
 	return std::to_string(now.tm_year + 1900)
 		+ std::to_string(now.tm_mon + 1)
 		+ std::to_string(now.tm_mday)

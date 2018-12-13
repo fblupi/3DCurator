@@ -171,4 +171,52 @@ Building...
 
 ### Mac OS X
 
+<<<<<<< Updated upstream
 Building...
+=======
+* Install `brew` and `brew cask`:
+
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew tap homebrew/cask
+```
+
+* *Optional*: Set number of cores for `make` instruction: 
+
+```
+export HOMEBREW_MAKE_JOBS=4
+```
+
+* Install all libraries:
+
+```
+brew install boost
+brew install opencv3 --with-contrib --with-opengl --with-qt5 --with-vtk
+brew install qt5
+brew cask install qt-creator
+brew install cmake
+brew install vtk --with-qt
+brew install brewsci/science/insighttoolkit --without-hdf5
+```
+
+<<<<<<< Updated upstream
+* Generate `makefile` linking with the *Qt5LinguistTools* path as argument:
+
+```
+cd build
+cmake -DQt5LinguistTools_DIR:PATH=/usr/local/Cellar/qt/5.11.1/lib/cmake/Qt5LinguistTools ../src
+=======
+* Generate `makefile`:
+
+```
+cd build
+cmake ../src
+>>>>>>> Stashed changes
+```
+
+* Generate executable:
+
+```
+make
+```
+>>>>>>> Stashed changes

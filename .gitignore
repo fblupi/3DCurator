@@ -253,3 +253,6 @@ paket-files/
 
 # Visual Studio build folder
 build/
+
+# Visual Studio Code
+.vscode/

@@ -9,7 +9,7 @@
 
 #define RELEASE
 
-#ifdef RELEASE
+#if defined RELEASE && defined _WIN32
 #define WINAPI __stdcall
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nShowCmd) 
 #else
