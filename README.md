@@ -165,14 +165,13 @@ Thus it will be easier to migrate from one version to another
   * In *Enable Large Adresses* select the option *Yes (/LARGEADRESSAWARE)*
 * Set `3DCurator` solution as default project
 * Once compiled, copy to the `build\Release` folder the DLL files `libEGL.dll`, `libGLESv2.dll`, `Qt5Core.dll`, `Qt5Gui.dll` and `Qt5Widgets.dll` from `C:\Qt\Qt5.10.1\5.10.1\msvc2017_64\bin`.
+
 ### Linux
 
 Building...
 
 ### Mac OS X
 
-Building...
-=======
 * Install `brew` and `brew cask`:
 
 ```
