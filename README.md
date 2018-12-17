@@ -199,19 +199,11 @@ brew install vtk --with-qt
 brew install brewsci/science/insighttoolkit --without-hdf5
 ```
 
-<<<<<<< Updated upstream
-* Generate `makefile` linking with the *Qt5LinguistTools* path as argument:
-
-```
-cd build
-cmake -DQt5LinguistTools_DIR:PATH=/usr/local/Cellar/qt/5.11.1/lib/cmake/Qt5LinguistTools ../src
-=======
 * Generate `makefile`:
 
 ```
 cd build
 cmake ../src
->>>>>>> Stashed changes
 ```
 
 * Generate executable:
@@ -219,4 +211,3 @@ cmake ../src
 ```
 make
 ```
->>>>>>> Stashed changes
