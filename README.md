@@ -171,7 +171,6 @@ Building...
 
 ### Mac OS X
 
-<<<<<<< Updated upstream
 Building...
 =======
 * Install `brew` and `brew cask`:
