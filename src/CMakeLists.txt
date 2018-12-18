@@ -21,7 +21,7 @@ endif()
 if (APPLE)
   set(APP_ICON ${CMAKE_CURRENT_SOURCE_DIR}/../assets/icons/3DCurator.icns)
 else()
-  set(APP_ICON ${CMAKE_CURRENT_SOURCE_DIR}/../assets/icons/3DCurator.ico)
+  set(APP_ICON ${CMAKE_CURRENT_SOURCE_DIR}/../assets/icons/3DCurator.rc)
 endif()
 
 set(CMAKE_CONFIGURATION_TYPES Release)
