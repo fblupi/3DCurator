@@ -1,4 +1,3 @@
-# 3DCurator
 
 > Francisco Javier Bolívar Lupiáñez
 
@@ -16,16 +15,7 @@ A 3D Viewer for CTs of Polychromed Wood Sculptures. Further info in [https://fbl
 
 ## Software
 
-* Visual Studio Community 2017 15.7.3 (2018, Jun)
-* CMake 3.11.3 (2018, May)
-* Qt5.11.0 (2018, May)
-* VTK 8.1.1 (2018, May)
-* ITK 4.13.0 (2017, Dec)
-* Boost 1.67.0 (2018, Apr)
-* OpenCV 3.4.1 (2018, Feb)
-
 ![C++](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/c++.png)
-![Visual Studio](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/visual-studio.png)
 ![CMake](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/cmake.png)
 ![Qt](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/qt.png)
 ![VTK](https://raw.githubusercontent.com/fblupi/3DCurator/assets/libs/64/vtk.png)
@@ -172,11 +162,12 @@ Building...
 
 ### Mac OS X
 
-* Install `brew` and `brew cask`:
+* Install `brew`, `cask` and `brewsci/science` if not installed:
 
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew tap homebrew/cask
+brew tap brewsci/science
 ```
 
 * *Optional*: Set number of cores for `make` instruction: 
@@ -189,12 +180,16 @@ export HOMEBREW_MAKE_JOBS=4
 
 ```
 brew install boost
-brew install opencv3 --with-contrib --with-opengl --with-qt5 --with-vtk
+brew install opencv3
 brew install qt5
-brew cask install qt-creator
 brew install cmake
 brew install vtk --with-qt
-brew install brewsci/science/insighttoolkit --without-hdf5
+brew install insighttoolkit
+```
+
+* Link Qt (if you use bash instead of zsh use `.bashrc`):
+```
+echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> ~/.zshrc
 ```
 
 * Generate `makefile`:
@@ -208,4 +203,10 @@ cmake ../src
 
 ```
 make
+```
+
+* Install dynamic dependencies:
+
+```
+macdeployqt 3DCurator.app
 ```
