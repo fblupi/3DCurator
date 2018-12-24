@@ -1,3 +1,4 @@
+ # 3DCurator
 
 > Francisco Javier Bolívar Lupiáñez
 
@@ -195,6 +196,7 @@ echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> ~/.zshrc
 * Generate `makefile`:
 
 ```
+mkdir build
 cd build
 cmake ../src
 ```
