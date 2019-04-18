@@ -187,7 +187,7 @@ brew install vtk --build-from-source
 brew install brewsci/science/insighttoolkit --build-from-source
 ```
 
-* Link Qt (if you use bash instead of zsh use `.bashrc`):
+* Link libs (if you use bash instead of zsh use `.bashrc`):
 ```
 echo 'export PATH="/usr/local/opt/opencv/bin:$PATH"' >> ~/.zshrc
 echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> ~/.zshrc

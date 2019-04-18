@@ -21,10 +21,15 @@ unsigned int FilterSelectionDialog::getMeanRadius() const {
 	switch (ui->meanRadius->currentIndex()) {
 	case N_3x3:
 		return 1;
+		break;
 	case N_5x5:
 		return 2;
+		break;
 	case N_7x7:
 		return 3;
+		break;
+	default:
+		return 1;
 	}
 }
 
@@ -32,10 +37,15 @@ unsigned int FilterSelectionDialog::getMedianRadius() const {
 	switch (ui->medianRadius->currentIndex()) {
 	case N_3x3:
 		return 1;
+		break;
 	case N_5x5:
 		return 2;
+		break;
 	case N_7x7:
 		return 3;
+		break;
+	default:
+		return 1;
 	}
 }
 

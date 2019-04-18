@@ -52,37 +52,37 @@ public:
 	/**
 	 * Mouse move event: Updates viewer if it is moving
 	 */
-	virtual void OnMouseMove();
+	virtual void OnMouseMove() override;
 
 	/**
 	 * Middle button down event: idle
 	 */
-	virtual void OnMiddleButtonDown();
+	virtual void OnMiddleButtonDown() override;
 
 	/**
 	 * Middle button up event: idle
 	 */
-	virtual void OnMiddleButtonUp();
+	virtual void OnMiddleButtonUp() override;
 
 	/**
 	 * Left button down event: idle
 	 */
-	virtual void OnLeftButtonDown();
+	virtual void OnLeftButtonDown() override;
 
 	/**
 	 * Left button up event: idle
 	 */
-	virtual void OnLeftButtonUp();
+	virtual void OnLeftButtonUp() override;
 
 	/**
 	 * Right button down event: Start moving
 	 */
-	virtual void OnRightButtonDown();
+	virtual void OnRightButtonDown() override;
 
 	/**
 	 * Right button up event: End moving
 	 */
-	virtual void OnRightButtonUp();
+	virtual void OnRightButtonUp() override;
 
 private:
 	bool moving = false; /**< Plane is moving */

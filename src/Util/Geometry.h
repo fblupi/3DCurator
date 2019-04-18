@@ -4,8 +4,6 @@
 #include <array>
 #include <cmath>
 
-#define M_PI 3.14159265358979323846
-
 /**
  * Get line vector from two points
  * @param	A	First Point

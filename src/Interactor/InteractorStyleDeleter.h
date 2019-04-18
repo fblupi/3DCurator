@@ -64,7 +64,7 @@ public:
 	/**
 	 * Left button down event
 	 */
-	virtual void OnLeftButtonDown();
+	virtual void OnLeftButtonDown() override;
 
 private:
 	vtkSmartPointer<vtkRenderWindow> renWin; /**< Render Window where the sculpture is rendered */

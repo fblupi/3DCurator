@@ -45,12 +45,12 @@ public:
 	/**
 	 * Mouse move event
 	 */
-	virtual void OnMouseMove();
+	virtual void OnMouseMove() override;
 
 	/**
 	 * Left button down mouse event
 	 */
-	virtual void OnLeftButtonDown();
+	virtual void OnLeftButtonDown() override;
 
 private:
 	SlicePlane* slicePlane; /**< Plane in which will find the value of the voxel selected */

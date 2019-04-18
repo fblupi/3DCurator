@@ -63,7 +63,7 @@ public:
 	/**
 	 * Left button down mouse event
 	 */
-	virtual void OnLeftButtonDown();
+	virtual void OnLeftButtonDown() override;
 
 private:
 	vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 that will be updated when segmentate */

@@ -37,19 +37,19 @@ public:
 	 * Mouse button release event: Updates RenderWindow
 	 * @param	mouse	Mouse context
 	 */
-	virtual bool MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse);
+	virtual bool MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse) override;
 
 	/**
 	 * Mouse double click event: Launches a color selector widget
 	 * @param	mouse	Mouse context
 	 */
-	virtual bool MouseDoubleClickEvent(const vtkContextMouseEvent &mouse);
+	virtual bool MouseDoubleClickEvent(const vtkContextMouseEvent &mouse) override;
 
 	/**
 	 * Key release event: Updates RenderWindow
 	 * @param	key	Key context
 	 */
-	virtual bool KeyReleaseEvent(const vtkContextKeyEvent &key);
+	virtual bool KeyReleaseEvent(const vtkContextKeyEvent &key) override;
 
 private:
 	vtkSmartPointer<vtkRenderWindow> renWin; /**< RenderWindow that will be updated when the transfer function is changed */
