@@ -105,7 +105,7 @@ std::string generateImage(vtkSmartPointer<vtkImageData> imageData, vtkSmartPoint
 	}
 
 	std::vector<int> compression_params;
-	compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
+	compression_params.push_back(cv::IMWRITE_PNG_COMPRESSION);
 	compression_params.push_back(9);
 	imwrite(filename, src, compression_params);
 

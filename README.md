@@ -163,12 +163,11 @@ Building...
 
 ### Mac OS X
 
-* Install `brew`, `cask` and `brewsci/science` if not installed:
+* Install `xcode` if not installed
+* Install `brew` if not installed:
 
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew tap homebrew/cask
-brew tap brewsci/science
 ```
 
 * *Optional*: Set number of cores for `make` instruction: 
@@ -180,17 +179,20 @@ export HOMEBREW_MAKE_JOBS=4
 * Install all libraries:
 
 ```
-brew install boost
-brew install opencv3
-brew install qt5
-brew install cmake
-brew install vtk --with-qt
-brew install insighttoolkit
+brew install boost --build-from-source
+brew install opencv --build-from-source
+brew install qt --build-from-source
+brew install cmake --build-from-source
+brew install vtk --build-from-source
+brew install brewsci/science/insighttoolkit --build-from-source
 ```
 
 * Link Qt (if you use bash instead of zsh use `.bashrc`):
 ```
+echo 'export PATH="/usr/local/opt/opencv/bin:$PATH"' >> ~/.zshrc
 echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> ~/.zshrc
+echo 'export PATH="/usr/local/opt/vtk/bin:$PATH"' >> ~/.zshrc
+echo 'export PATH="/usr/local/opt/itk/bin:$PATH"' >> ~/.zshrc
 ```
 
 * Generate `makefile`:
