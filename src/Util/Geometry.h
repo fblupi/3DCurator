@@ -4,6 +4,10 @@
 #include <array>
 #include <cmath>
 
+#ifdef _WIN32
+#define M_PI 3.14159265358979323846264338327950288
+#endif
+
 /**
  * Get line vector from two points
  * @param	A	First Point
