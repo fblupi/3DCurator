@@ -21,6 +21,8 @@ endif()
 
 set(CMAKE_CONFIGURATION_TYPES Release)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 PROJECT(3DCurator)
 
@@ -49,11 +51,7 @@ file(GLOB_RECURSE CPP_FILES *.cpp)
 file(GLOB_RECURSE UI_FILES *.ui)
 file(GLOB_RECURSE QRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/../assets/*.qrc)
 
-qt5_wrap_ui(UI_SOURCES ${UI_FILES})
-qt5_add_resources(QRC_SOURCES ${QRC_FILES})
-
-set_source_files_properties(${QRC_SOURCES} PROPERTIES GENERATED ON)
-add_executable(${APP_NAME} WIN32 MACOSX_BUNDLE ${APP_ICON} ${UI_SOURCES} ${QRC_SOURCES} ${HEADER_FILES} ${CPP_FILES})
+add_executable(${APP_NAME} WIN32 MACOSX_BUNDLE ${APP_ICON} ${UI_FILES} ${QRC_FILES} ${HEADER_FILES} ${CPP_FILES})
 target_link_libraries(${APP_NAME} Qt5::Core Qt5::Gui Qt5::Widgets ${GLUE} ${VTK_LIBRARIES} ${ITK_LIBRARIES} ${OpenCV_LIBS} ${Boost_LIBS})
 
 if(APPLE)
