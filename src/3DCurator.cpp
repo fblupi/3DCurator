@@ -2,7 +2,9 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QObject>
+#include <QSurfaceFormat> 
 
+#include <QVTKOpenGLNativeWidget.h> 
 #include <vtkObject.h>
 
 #include "GUI/MainWindow.h"
@@ -21,6 +23,10 @@ int main()
 	#ifdef RELEASE
 	vtkObject::GlobalWarningDisplayOff(); // disable VTK warnings
 	#endif
+
+	QSurfaceFormat format = QVTKOpenGLNativeWidget::defaultFormat();
+	format.setSamples(0);
+	QSurfaceFormat::setDefaultFormat(format);
     
 	QApplication app(argc, 0);
 

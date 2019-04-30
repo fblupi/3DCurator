@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	itemListEnabled = QFont();
 	itemListDisabled = QFont();
 	itemListDisabled.setItalic(true);
-
+	
 	volumeRen = vtkSmartPointer<vtkRenderer>::New();
 	meshRen = vtkSmartPointer<vtkRenderer>::New();
 	sliceViewer = vtkSmartPointer<vtkImageViewer2>::New();
@@ -59,18 +59,21 @@ void MainWindow::setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, f
 void MainWindow::connectComponents() {
 	ui->volumeWidget->GetRenderWindow()->AddRenderer(volumeRen);
 	ui->meshWidget->GetRenderWindow()->AddRenderer(meshRen);
+	ui->slicesWidget->GetRenderWindow()->AddRenderer(sliceViewer->GetRenderer());
+	volumeRen->SetRenderWindow(ui->volumeWidget->GetRenderWindow());
+	meshRen->SetRenderWindow(ui->meshWidget->GetRenderWindow());
+	sliceViewer->SetRenderWindow(ui->slicesWidget->GetRenderWindow());
 
-	ui->slicesWidget->SetRenderWindow(sliceViewer->GetRenderWindow());
 	sliceViewer->SetInputData(slicePlane->getPlane()->GetResliceOutput()); 
 
 	ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
 	slicePlane->getPlane()->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor());
 
-	sliceViewer->SetupInteractor(ui->slicesWidget->GetInteractor());
+	sliceViewer->SetupInteractor(ui->slicesWidget->GetRenderWindow()->GetInteractor());
 	sliceStyle->SetSlicePlane(slicePlane);
 	sliceStyle->SetDefaultRenderer(sliceViewer->GetRenderer());
 	sliceStyle->SetLabel(ui->coordsAndValueLabel);
-	ui->slicesWidget->GetInteractor()->SetInteractorStyle(sliceStyle);
+	ui->slicesWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(sliceStyle);
 
 	slicePlane->setViewer(sliceViewer);
 	slicePlane->getPlane()->setActiveROD(activeROD);

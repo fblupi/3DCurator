@@ -397,7 +397,7 @@
          </widget>
         </item>
         <item row="1" column="0" colspan="3">
-         <widget class="QVTKWidget" name="slicesWidget" native="true">
+         <widget class="QVTKOpenGLNativeWidget" name="slicesWidget">
           <property name="minimumSize">
            <size>
             <width>200</width>
@@ -662,8 +662,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>408</width>
-             <height>693</height>
+             <width>507</width>
+             <height>702</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -673,6 +673,19 @@
                <string>COLOR</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_85">
+               <item row="1" column="1">
+                <widget class="QSlider" name="colorTFMaxSlider">
+                 <property name="maximum">
+                  <number>10976</number>
+                 </property>
+                 <property name="value">
+                  <number>10976</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
                <item row="1" column="0">
                 <widget class="QSlider" name="colorTFMinSlider">
                  <property name="minimum">
@@ -689,21 +702,8 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
-                <widget class="QSlider" name="colorTFMaxSlider">
-                 <property name="maximum">
-                  <number>10976</number>
-                 </property>
-                 <property name="value">
-                  <number>10976</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-               </item>
                <item row="0" column="0" colspan="2">
-                <widget class="QVTKWidget" name="colorTFWidget" native="true">
+                <widget class="QVTKOpenGLNativeWidget" name="colorTFWidget">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -724,16 +724,6 @@
                <string>SCALAR_OPACITY</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_87">
-               <item row="0" column="0" colspan="2">
-                <widget class="QVTKWidget" name="scalarTFWidget" native="true">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>160</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
                <item row="2" column="0">
                 <widget class="QSlider" name="scalarTFMinSlider">
                  <property name="minimum">
@@ -763,6 +753,16 @@
                  </property>
                 </widget>
                </item>
+               <item row="0" column="0" colspan="2">
+                <widget class="QVTKOpenGLNativeWidget" name="scalarTFWidget">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>160</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
             </item>
@@ -772,16 +772,6 @@
                <string>GRADIENT_OPACITY</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_88">
-               <item row="0" column="0" colspan="2">
-                <widget class="QVTKWidget" name="gradientTFWidget" native="true">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>160</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="0">
                 <widget class="QSlider" name="gradientTFMinSlider">
                  <property name="minimum">
@@ -808,6 +798,16 @@
                  </property>
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0" colspan="2">
+                <widget class="QVTKOpenGLNativeWidget" name="gradientTFWidget">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>160</height>
+                  </size>
                  </property>
                 </widget>
                </item>
@@ -996,7 +996,7 @@
          </widget>
         </item>
         <item row="2" column="2" colspan="3">
-         <widget class="QVTKWidget" name="meshWidget" native="true">
+         <widget class="QVTKOpenGLNativeWidget" name="meshWidget">
           <property name="minimumSize">
            <size>
             <width>200</width>
@@ -1594,8 +1594,8 @@
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="placeholderText">
           <string>EMPTY_COMMENT_MESSAGE</string>
@@ -1792,7 +1792,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QVTKWidget" name="volumeWidget" native="true">
+     <widget class="QVTKOpenGLNativeWidget" name="volumeWidget">
       <property name="minimumSize">
        <size>
         <width>300</width>
@@ -1821,11 +1821,11 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1024</width>
-     <height>21</height>
+     <width>1280</width>
+     <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuArchivo">
+   <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>FILE</string>
     </property>
@@ -1836,7 +1836,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuEditar">
+   <widget class="QMenu" name="menuEdit">
     <property name="title">
      <string>EDIT</string>
     </property>
@@ -1858,7 +1858,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="actionFilter"/>
    </widget>
-   <widget class="QMenu" name="menuHerramientas">
+   <widget class="QMenu" name="menuTools">
     <property name="title">
      <string>TOOLS</string>
     </property>
@@ -1867,9 +1867,9 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="actionExtractMesh"/>
    </widget>
-   <addaction name="menuArchivo"/>
-   <addaction name="menuEditar"/>
-   <addaction name="menuHerramientas"/>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuTools"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpenDICOM">
@@ -2090,9 +2090,9 @@ p, li { white-space: pre-wrap; }
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QVTKWidget</class>
-   <extends>QWidget</extends>
-   <header>QVTKWidget.h</header>
+   <class>QVTKOpenGLNativeWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header>QVTKOpenGLNativeWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

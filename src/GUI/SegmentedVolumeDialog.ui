@@ -21,7 +21,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="3">
-    <widget class="QVTKWidget" name="viewer" native="true"/>
+    <widget class="QVTKOpenGLNativeWidget" name="viewer" native="true"/>
    </item>
    <item row="1" column="0">
     <spacer name="horizontalSpacer">
@@ -54,9 +54,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QVTKWidget</class>
-   <extends>QWidget</extends>
-   <header>QVTKWidget.h</header>
+   <class>QVTKOpenGLNativeWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header>QVTKOpenGLNativeWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
