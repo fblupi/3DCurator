@@ -1182,10 +1182,6 @@
           <zorder>specularValue</zorder>
           <zorder>powerLabel</zorder>
           <zorder>powerValue</zorder>
-          <zorder>horizontalSpacer_13</zorder>
-          <zorder>horizontalSpacer_14</zorder>
-          <zorder>horizontalSpacer_15</zorder>
-          <zorder>horizontalSpacer_16</zorder>
           <zorder>updateProperties</zorder>
           <zorder>restoreMaterial</zorder>
          </widget>
