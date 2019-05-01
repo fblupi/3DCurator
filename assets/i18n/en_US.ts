@@ -735,4 +735,31 @@
         <translation>Exporting the model</translation>
     </message>
 </context>
+<context>
+    <name>PreferencesDialog</name>
+    <message>
+        <source>PREFERENCES</source>
+        <translation>Preferences</translation>
+    </message>
+    <message>
+        <source>PREFERENCES_CANCEL</source>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>PREFERENCES_OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>LANGUAGE</source>
+        <translation>Language</translation>
+    </message>
+    <message>
+        <source>en_US</source>
+        <translation>English (en_US)</translation>
+    </message>
+    <message>
+        <source>es_ES</source>
+        <translation>Spanish (es_ES)</translation>
+    </message>
+</context>
 </TS>

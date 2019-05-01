@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	ui->setupUi(this);
 	ui->isoValueSlider->setTracking(false); // do not launch slider event until we release it
 
+	language = new Language("en_US");
+	
 	deleting = false;
 	showPlane = true;
 	segmentating = false;
@@ -50,6 +52,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 MainWindow::~MainWindow() {
     delete ui;
+}
+
+void MainWindow::changeEvent(QEvent* event) {
+	if (event->type() == QEvent::LanguageChange) {
+		ui->retranslateUi(this);
+	}
+	QMainWindow::changeEvent(event);
 }
 
 void MainWindow::setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b) {
@@ -976,6 +985,11 @@ void MainWindow::on_actionExit_triggered() {
 	if (confirmBox->exec() == QMessageBox::Yes) {
 		exit(0);
 	}
+}
+
+void MainWindow::on_actionPreferences_triggered() {
+	PreferencesDialog *dialog = new PreferencesDialog(language);
+	dialog->exec();
 }
 
 void MainWindow::on_actionEnableDisablePlane_triggered() {

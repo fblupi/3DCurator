@@ -25,6 +25,8 @@
 	<file>icons/stucco.png</file>
 	<file>icons/metal.png</file>
 	<file>icons/complete.png</file>
+	<file>icons/i18n/es_ES.png</file>
+	<file>icons/i18n/en_US.png</file>
 	<file>presets/ct-woodsculpture.xml</file>
 	<file>presets/ct-onlywood.xml</file>
 	<file>presets/ct-onlystucco.xml</file>
