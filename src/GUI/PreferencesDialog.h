@@ -2,6 +2,7 @@
 #define PREFERENCESDIALOG_H
 
 #include <QDialog>
+#include <QSettings>
 #include <QString>
 
 #include "Settings/Language.h"
@@ -21,7 +22,7 @@ public:
 	/**
 	 * Constructor
 	 */
-	explicit PreferencesDialog(Language *language, QWidget *parent = 0);
+	explicit PreferencesDialog(QSettings *settings, Language *language, QWidget *parent = 0);
 
 	/**
 	 * Destructor
@@ -53,6 +54,7 @@ private slots:
 
 private:
 	Ui::PreferencesDialog *ui; /**< Dialog GUI pointer */
+	QSettings *settings; /**< Settings pointer */
 	Language *language; /**< Language pointer */
 	QString locale; /**< Selected locale */
 };

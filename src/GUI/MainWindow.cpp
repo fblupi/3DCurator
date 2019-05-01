@@ -5,7 +5,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	ui->setupUi(this);
 	ui->isoValueSlider->setTracking(false); // do not launch slider event until we release it
 
-	language = new Language("en_US");
+	settings = new QSettings();
+	language = new Language(QVariant(settings->value("locale", "en_US")).toString());
 	
 	deleting = false;
 	showPlane = true;
@@ -988,7 +989,7 @@ void MainWindow::on_actionExit_triggered() {
 }
 
 void MainWindow::on_actionPreferences_triggered() {
-	PreferencesDialog *dialog = new PreferencesDialog(language);
+	PreferencesDialog *dialog = new PreferencesDialog(settings, language);
 	dialog->exec();
 }
 

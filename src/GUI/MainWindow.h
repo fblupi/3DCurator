@@ -9,6 +9,7 @@
 #include <QPointer>
 #include <QListWidgetItem>
 #include <QInputDialog>
+#include <QSettings>
 
 #include <sstream>
 #include <map>
@@ -525,6 +526,7 @@ private slots:
 private:
 	Ui::MainWindow *ui; /**< UI pointer */
 
+	QSettings *settings; /**< Settings pointer */
 	Language *language; /**< Language pointer */
 
 	QFont itemListEnabled; /**< Font type for rule list elements enabled */
