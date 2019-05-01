@@ -579,6 +579,10 @@
 <context>
     <name>FilterSelectionDialog</name>
     <message>
+        <source>FILTER_SELECTION</source>
+        <translation>Selección de filtro</translation>
+    </message>
+    <message>
         <source>GAUSSIAN_FILTER</source>
         <translation>Guassiano</translation>
     </message>
@@ -609,6 +613,10 @@
 </context>
 <context>
     <name>LineSelectionDialog</name>
+    <message>
+        <source>LINE_SELECTION</source>
+        <translation>Selección de línea</translation>
+    </message>
     <message>
         <source>LINE</source>
         <translation>Línea</translation>

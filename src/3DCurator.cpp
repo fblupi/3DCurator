@@ -25,7 +25,7 @@ int main()
 	QApplication app(argc, 0);
 
 	QTranslator qtTranslator;
-	qtTranslator.load(":/i18n/es_ES");
+	qtTranslator.load(":/i18n/en_US");
 	app.installTranslator(&qtTranslator);
 
 	MainWindow window;

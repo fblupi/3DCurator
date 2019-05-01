@@ -579,6 +579,10 @@
 <context>
     <name>FilterSelectionDialog</name>
     <message>
+        <source>FILTER_SELECTION</source>
+        <translation>Filter selection</translation>
+    </message>
+    <message>
         <source>GAUSSIAN_FILTER</source>
         <translation>Guassian</translation>
     </message>
@@ -609,6 +613,10 @@
 </context>
 <context>
     <name>LineSelectionDialog</name>
+    <message>
+        <source>LINE_SELECTION</source>
+        <translation>Line selection</translation>
+    </message>
     <message>
         <source>LINE</source>
         <translation>Line</translation>
@@ -657,7 +665,7 @@
 <context>
     <name>SegmentedVolumeDialog</name>
     <message>
-        <source>LINE_OK</source>
+        <source>SEGMENTED_OK</source>
         <translation>OK</translation>
     </message>
     <message>

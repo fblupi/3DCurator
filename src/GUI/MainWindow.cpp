@@ -473,7 +473,7 @@ void MainWindow::updateMesh() {
 		// -- launch progress bar
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(tr("UPDATING_MESH..."));
+		progressDialog->setWindowTitle(tr("UPDATING_MESH"));
 		progressDialog->setLabelText(tr("GENERATING_MESH_WITH_THE_SPECIFIED_ISO_SURFACE"));
 		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
