@@ -43,6 +43,8 @@
 #include "Chart/OpacityTFChart.h"
 #include "Documentation/ROD.h"
 #include "GUI/FilterSelectionDialog.h"
+#include "GUI/PreferencesDialog.h"
+#include "Settings/Language.h"
 
 #define VOLUME_RULE 0
 #define SLICE_RULE 1
@@ -72,12 +74,16 @@ public:
 	 */
 	~MainWindow();
 
+protected:
+	void changeEvent(QEvent*);
+
 private slots:
 	// GUI events
 	void on_actionOpenDICOM_triggered();
 	void on_actionExportVolumeImage_triggered();
 	void on_actionExportSliceImage_triggered();
 	void on_actionExit_triggered();
+	void on_actionPreferences_triggered();
 	void on_actionEnableDisablePlane_triggered();
 	void on_actionSagitalPlane_triggered();
 	void on_actionAxialPlane_triggered();
@@ -518,6 +524,8 @@ private slots:
 
 private:
 	Ui::MainWindow *ui; /**< UI pointer */
+
+	Language *language; /**< Language pointer */
 
 	QFont itemListEnabled; /**< Font type for rule list elements enabled */
 	QFont itemListDisabled; /**< Font type for rule list elements disabled */

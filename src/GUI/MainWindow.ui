@@ -1834,6 +1834,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionExportVolumeImage"/>
     <addaction name="actionExportSliceImage"/>
     <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -1903,6 +1905,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>PREFERENCES</string>
+   </property>
+   <property name="toolTip">
+    <string>PREFERENCES</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+,</string>
    </property>
   </action>
   <action name="actionExportVolumeImage">
