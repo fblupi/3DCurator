@@ -1,9 +1,10 @@
 #include "PreferencesDialog.h"
 #include "ui_preferencesdialog.h"
 
-PreferencesDialog::PreferencesDialog(Language *language, QWidget *parent) : QDialog(parent), ui(new Ui::PreferencesDialog) {
+PreferencesDialog::PreferencesDialog(QSettings *settings, Language *language, QWidget *parent) : QDialog(parent), ui(new Ui::PreferencesDialog) {
 	ui->setupUi(this);
 
+	this->settings = settings;
 	this->language = language;
 	ui->languageInput->setCurrentIndex(getIndexFromLocale(language->getLocale()));
 
@@ -17,7 +18,9 @@ PreferencesDialog::~PreferencesDialog() {
 }
 
 void PreferencesDialog::accept() {
-	language->setLocale(getLocaleFromIndex(ui->languageInput->currentIndex()));
+	QString locale = getLocaleFromIndex(ui->languageInput->currentIndex());
+	language->setLocale(locale);
+	settings->setValue("locale", locale);
 	done(0);
 }
 
