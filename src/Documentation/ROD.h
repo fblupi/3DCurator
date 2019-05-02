@@ -280,7 +280,7 @@ public:
 
 private:
 	const std::string DISTANCE_FORMAT = "%-#6.3g mm"; /**< Format in which distance is displayed */
-	const std::string ANGLE_FORMAT = "%-#7.1lf"; /**< Format in which angle is displayed */
+	const std::string ANGLE_FORMAT = "%-#7.1lf°"; /**< Format in which angle is displayed */
 
 	std::string name; /**< ROD name */
 	double* origin; /**< Origin of the plane */
