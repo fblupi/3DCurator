@@ -64,7 +64,7 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 				// -- launch progress bar
 				QPointer<QProgressBar> bar = new QProgressBar(0);
 				QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-				progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING..."));
+				progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING"));
 				progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING_PIECE_OF_WOOD_SELECTED"));
 				progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 				progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
@@ -111,7 +111,7 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 						// -- launch progress bar
 						QPointer<QProgressBar> bar = new QProgressBar(0);
 						QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-						progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME..."));
+						progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME"));
 						progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME_MODEL"));
 						progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 						progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);

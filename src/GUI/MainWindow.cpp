@@ -223,7 +223,7 @@ void MainWindow::importDICOM() {
 		// -- launch progress bar
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(tr("LOADING..."));
+		progressDialog->setWindowTitle(tr("LOADING"));
 		progressDialog->setLabelText(tr("LOADING_DICOM_FILES"));
 		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
@@ -264,7 +264,7 @@ void MainWindow::importVTI() {
 		// -- launch progress bar
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(tr("LOADING..."));
+		progressDialog->setWindowTitle(tr("LOADING"));
 		progressDialog->setLabelText(tr("LOADING_VTI_FILE"));
 		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
@@ -305,7 +305,7 @@ void MainWindow::exportVTI() {
 			// -- launch progress bar
 			QPointer<QProgressBar> bar = new QProgressBar(0);
 			QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-			progressDialog->setWindowTitle(tr("EXPORTING_VOLUME..."));
+			progressDialog->setWindowTitle(tr("EXPORTING_VOLUME"));
 			progressDialog->setLabelText(tr("EXPORTING_VOLUME_MODEL"));
 			progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 			progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
@@ -371,7 +371,7 @@ void MainWindow::exportMeshToFile(const QString filename) {
 		// -- launch progress bar
 		QPointer<QProgressBar> bar = new QProgressBar(0);
 		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(tr("EXPORTING_MESH..."));
+		progressDialog->setWindowTitle(tr("EXPORTING_MESH"));
 		progressDialog->setLabelText(tr("EXPORTING_MESH_MODEL"));
 		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
@@ -700,7 +700,7 @@ void MainWindow::filter() {
 			// -- launch progress bar
 			QPointer<QProgressBar> bar = new QProgressBar(0);
 			QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-			progressDialog->setWindowTitle(tr("FILTERING..."));
+			progressDialog->setWindowTitle(tr("FILTERING"));
 			progressDialog->setLabelText(tr("APPLYING_FILTER"));
 			progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 			progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);

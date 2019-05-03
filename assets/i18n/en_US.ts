@@ -20,19 +20,19 @@
         <translation>Tools</translation>
     </message>
     <message>
-        <source>OPEN_DICOM...</source>
+        <source>OPEN_DICOM</source>
         <translation>Open DICOM...</translation>
     </message>
     <message>
-        <source>OPEN_VOLUME...</source>
+        <source>OPEN_VOLUME</source>
         <translation>Open volume...</translation>
     </message>
     <message>
-        <source>VOLUME_SCREENSHOT...</source>
+        <source>VOLUME_SCREENSHOT</source>
         <translation>Volume screenshot...</translation>
     </message>
     <message>
-        <source>SLICE_SCREENSHOT...</source>
+        <source>SLICE_SCREENSHOT</source>
         <translation>Slice screenshot...</translation>
     </message>
     <message>
@@ -92,16 +92,16 @@
         <translation>Filter</translation>
     </message>
     <message>
-        <source>IMPORT_PRESET...</source>
+        <source>IMPORT_PRESET</source>
         <translation>Import preset</translation>
     </message>
     <message>
-        <source>EXPORT_PRESET...</source>
+        <source>EXPORT_PRESET</source>
         <translation>Export preset</translation>
     </message>
     <message>
-        <source>EXPORT_MESH...</source>
-        <translation>Export mesh</translation>
+        <source>GENERATE_MESH</source>
+        <translation>Generate mesh</translation>
     </message>
     <message>
         <source>VOLUME</source>
@@ -400,7 +400,7 @@
         <translation>Error opening default transfer function file</translation>
     </message>
     <message>
-        <source>LOADING...</source>
+        <source>LOADING</source>
         <translation>Loading...</translation>
     </message>
     <message>
@@ -504,7 +504,7 @@
         <translation>Select a ROD</translation>
     </message>
     <message>
-        <source>FILTERING...</source>
+        <source>FILTERING</source>
         <translation>Filtering...</translation>
     </message>
     <message>
@@ -676,7 +676,7 @@
 <context>
     <name>InteractorStyleDeleter</name>
     <message>
-        <source>DELETING...</source>
+        <source>DELETING</source>
         <translation>Deleting...</translation>
     </message>
     <message>
@@ -700,7 +700,7 @@
         <translation>No</translation>
     </message>
     <message>
-        <source>DELETION_RESTORING...</source>
+        <source>DELETION_RESTORING</source>
         <translation>Restoring...</translation>
     </message>
     <message>
@@ -711,7 +711,7 @@
 <context>
     <name>InteractorStyleSegmentation</name>
     <message>
-        <source>SEGMENTING...</source>
+        <source>SEGMENTING</source>
         <translation>Segmenting...</translation>
     </message>
     <message>
@@ -727,7 +727,7 @@
         <translation>Sub-volume</translation>
     </message>
     <message>
-        <source>EXPORTING_SUB_VOLUME...</source>
+        <source>EXPORTING_SUB_VOLUME</source>
         <translation>Exporting...</translation>
     </message>
     <message>

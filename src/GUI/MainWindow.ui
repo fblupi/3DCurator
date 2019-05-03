@@ -1880,10 +1880,10 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/icons/folder-dicom.png</normaloff>:/icons/folder-dicom.png</iconset>
    </property>
    <property name="text">
-    <string>OPEN_DICOM...</string>
+    <string>OPEN_DICOM</string>
    </property>
    <property name="toolTip">
-    <string>OPEN_DICOM</string>
+    <string>OPEN_DICOM_TOOLTIP</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -1924,10 +1924,10 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/icons/camera.png</normaloff>:/icons/camera.png</iconset>
    </property>
    <property name="iconText">
-    <string>VOLUME_SCREENSHOT...</string>
+    <string>VOLUME_SCREENSHOT</string>
    </property>
    <property name="toolTip">
-    <string>VOLUME_SCREENSHOT...</string>
+    <string>VOLUME_SCREENSHOT_TOOLTIP</string>
    </property>
    <property name="statusTip">
     <string/>
@@ -1945,13 +1945,13 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/icons/camera.png</normaloff>:/icons/camera.png</iconset>
    </property>
    <property name="text">
-    <string>SLICE_SCREENSHOT...</string>
+    <string>SLICE_SCREENSHOT</string>
    </property>
    <property name="iconText">
-    <string>SLICE_SCREENSHOT...</string>
+    <string>SLICE_SCREENSHOT</string>
    </property>
    <property name="toolTip">
-    <string>SLICE_SCREENSHOT...</string>
+    <string>SLICE_SCREENSHOT_TOOLTIP</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
@@ -1959,7 +1959,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionImportPreset">
    <property name="text">
-    <string>IMPORT_PRESET...</string>
+    <string>IMPORT_PRESET</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+I</string>
@@ -1967,7 +1967,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionExportPreset">
    <property name="text">
-    <string>EXPORT_PRESET...</string>
+    <string>EXPORT_PRESET</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+E</string>
@@ -1987,12 +1987,12 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
    </property>
    <property name="text">
-    <string>Abrir...</string>
+    <string>OPEN_DICOM</string>
    </property>
   </action>
   <action name="actionUpdateMesh">
    <property name="text">
-    <string>Generar malla</string>
+    <string>GENERATE_MESH</string>
    </property>
   </action>
   <action name="actionEnableDisablePlane">
@@ -2076,7 +2076,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionExtractMesh">
    <property name="text">
-    <string>EXPORT_MESH...</string>
+    <string>EXPORT_MESH</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+M</string>
@@ -2096,7 +2096,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
    </property>
    <property name="text">
-    <string>OPEN_VOLUME...</string>
+    <string>OPEN_VOLUME</string>
    </property>
   </action>
  </widget>

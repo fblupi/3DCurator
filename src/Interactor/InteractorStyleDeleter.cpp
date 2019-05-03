@@ -18,7 +18,7 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 			// -- launch progress bar
 			QPointer<QProgressBar> bar = new QProgressBar(0);
 			QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-			progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleDeleter", "DELETING..."));
+			progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleDeleter", "DELETING"));
 			progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleDeleter", "DELETING_SELECTED_PART_OF_THE_VOLUME"));
 			progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
 			progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
@@ -62,7 +62,7 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 
 			if (confirmBox->exec() == QMessageBox::No) {
 				// -- launch progress bar
-				progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleDeleter", "DELTION_RESTORING..."));
+				progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleDeleter", "DELTION_RESTORING"));
 				progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleDeleter", "UNDOING_DELETION"));
 				progressDialog->show();
 				QApplication::processEvents();
