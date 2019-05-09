@@ -23,38 +23,36 @@
  */
 class InteractorStyleImage : public vtkInteractorStyleImage {
 public:
-	/**
-	 * Constructor
-	 */
-	static InteractorStyleImage* New();
+    /**
+     * Constructor
+     */
+    static InteractorStyleImage* New();
 
-	vtkTypeMacro(vtkInteractorStyleImage, InteractorStyleImage);
-	
-	/**
-	 * Set plane in which will find the value of the voxel selected
-	 * @param	slicePlane	Plane in which will find the value of the voxel selected
-	 */
-	void SetSlicePlane(SlicePlane* slicePlane);
+    /**
+     * Set plane in which will find the value of the voxel selected
+     * @param	slicePlane	Plane in which will find the value of the voxel selected
+     */
+    void SetSlicePlane(SlicePlane* slicePlane);
 
-	/**
-	 * Set the QLabel where the density value will be shown
-	 * @param	label	QLabel where the density value will be shown
-	 */
-	void SetLabel(QLabel* label);
-	
-	/**
-	 * Mouse move event
-	 */
-	virtual void OnMouseMove() override;
+    /**
+     * Set the QLabel where the density value will be shown
+     * @param	label	QLabel where the density value will be shown
+     */
+    void SetLabel(QLabel* label);
 
-	/**
-	 * Left button down mouse event
-	 */
-	virtual void OnLeftButtonDown() override;
+    /**
+     * Mouse move event
+     */
+    void OnMouseMove() override;
+
+    /**
+     * Left button down mouse event
+     */
+    void OnLeftButtonDown() override;
 
 private:
-	SlicePlane* slicePlane; /**< Plane in which will find the value of the voxel selected */
-	QLabel* label; /**< QLabel where the density value will be shown */
+    SlicePlane* slicePlane; /**< Plane in which will find the value of the voxel selected */
+    QLabel* label; /**< QLabel where the density value will be shown */
 };
 
 #endif // INTERACTORSTYLEIMAGE_H

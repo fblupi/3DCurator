@@ -6,16 +6,16 @@
 #include <QBitmap>
 
 // Line ids
-#define LINE_CANCEL 0
-#define LINE_RED 1
-#define LINE_GREEN 2
-#define LINE_BLUE 3
-#define LINE_CYAN 4
-#define LINE_MAGENTA 5
-#define LINE_YELLOW 6
+#define LINE_CANCEL     0
+#define LINE_RED        1
+#define LINE_GREEN      2
+#define LINE_BLUE       3
+#define LINE_CYAN       4
+#define LINE_MAGENTA    5
+#define LINE_YELLOW     6
 
 namespace Ui {
-	class LineSelectionDialog;
+    class LineSelectionDialog;
 }
 
 /**
@@ -23,50 +23,50 @@ namespace Ui {
  * Class of the line selection dialog
  */
 class LineSelectionDialog : public QDialog {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	/**
-	 * Constructor
-	 */
-	explicit LineSelectionDialog(QWidget *parent = 0);
+    /**
+     * Constructor
+     */
+    explicit LineSelectionDialog(QWidget *parent = nullptr);
 
-	/**
-	 * Destructor
-	 */
-	~LineSelectionDialog();
+    /**
+     * Destructor
+     */
+    ~LineSelectionDialog() override;
 
-	/**
-	 * Set image where lines will be painted
-	 * @params	filename	filename of the image where the lines will be painted
-	 */
-	void setImage(std::string filename);
+    /**
+     * Set image where lines will be painted
+     * @params	filename	filename of the image where the lines will be painted
+     */
+    void setImage(const std::string &filename);
 
-	/**
-	 * Check if it is forced to segmentate every slice to the top
-	 * @return	Force or not to segmentate every slice to the top
-	 */
-	bool getCompleteUp() const;
+    /**
+     * Check if it is forced to segment every slice to the top
+     * @return	Force or not to segment every slice to the top
+     */
+    bool getCompleteUp() const;
 
-	/**
-	 * Check if it is forced to segmentate every slice to the bottom
-	 * @return	Force or not to segmentate every slice to the bottom
-	 */
-	bool getCompleteDown() const;
+    /**
+     * Check if it is forced to segment every slice to the bottom
+     * @return	Force or not to segment every slice to the bottom
+     */
+    bool getCompleteDown() const;
 
 private slots:
-	/**
-	 * Ok button selected
-	 */
-	void accept();
+    /**
+     * Ok button selected
+     */
+    void accept() override;
 
-	/** 
-	 * Cancel button selected
-	 */
-	void reject();
+    /**
+     * Cancel button selected
+     */
+    void reject() override;
 
 private:
-	Ui::LineSelectionDialog *ui; /**< Dialog GUI pointer */
+    Ui::LineSelectionDialog *ui; /**< Dialog GUI pointer */
 };
 
 #endif // LINESELECTIONDIALOG_H

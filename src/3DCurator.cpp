@@ -18,20 +18,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nSho
 int main()
 #endif
 {
-	int argc = 0;
+    int argc = 0;
 
-	#ifdef RELEASE
-	vtkObject::GlobalWarningDisplayOff(); // disable VTK warnings
-	#endif
+    #ifdef RELEASE
+    vtkObject::GlobalWarningDisplayOff(); // disable VTK warnings
+    #endif
 
-	QSurfaceFormat format = QVTKOpenGLNativeWidget::defaultFormat();
-	format.setSamples(0);
-	QSurfaceFormat::setDefaultFormat(format);
-    
-	QApplication app(argc, 0);
+    QSurfaceFormat format = QVTKOpenGLNativeWidget::defaultFormat();
+    format.setSamples(0);
+    QSurfaceFormat::setDefaultFormat(format);
 
-	MainWindow window;
-	window.show();
+    QApplication app(argc, nullptr);
 
-	return app.exec();
+    MainWindow window;
+    window.show();
+
+    return QApplication::exec();
 }

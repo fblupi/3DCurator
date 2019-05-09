@@ -12,32 +12,37 @@
  */
 class Language {
 public:
-  /**
-   * Constructor
-   * @params locale	Language locale (es_ES, en_US...)
-   */
-  Language(const QString locale);
+    /**
+     * Constructor
+     * @params locale	Language locale (es_ES, en_US...)
+     */
+    explicit Language(QString locale);
 
-  /**
-   * Destructor
-   */
-  ~Language();
+    /**
+     * Destructor
+     */
+    ~Language();
 
-  /**
-   * Change language
-   * @params locale	Language locale (es_ES, en_US...)
-   */
-  void setLocale(const QString locale);
+    /**
+     * Change language
+     * @params locale	Language locale (es_ES, en_US...)
+     */
+    void setLocale(const QString &locale);
 
-  /**
-   * Get current locale
-   * @return Current locale
-   */
-  QString getLocale() const;
+    /**
+     * Change app language
+     */
+    void setAppLocale();
+
+    /**
+     * Get current locale
+     * @return Current locale
+     */
+    QString getLocale() const;
 
 private:
-	QTranslator translator; /**< Translator */
-  QString locale; /**< Locale */
+    QTranslator translator; /**< Translator */
+    QString locale; /**< Locale */
 };
 
 #endif // LANGUAGE_H

@@ -19,7 +19,7 @@
 #include <Core/TransferFunction.h>
 
 namespace Ui {
-	class SegmentedVolumeDialog;
+    class SegmentedVolumeDialog;
 }
 
 /**
@@ -27,51 +27,39 @@ namespace Ui {
  * Class of the line selection dialog
  */
 class SegmentedVolumeDialog : public QDialog {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	/**
-	 * Constructor
-	 */
-	explicit SegmentedVolumeDialog(QWidget *parent = 0);
+    /**
+     * Constructor
+     */
+    explicit SegmentedVolumeDialog(vtkSmartPointer<vtkImageData> imageData, TransferFunction* tf, QWidget *parent = nullptr);
 
-	/**
-	 * Destructor
-	 */
-	~SegmentedVolumeDialog();
+    /**
+     * Destructor
+     */
+    ~SegmentedVolumeDialog() override;
 
-	/**
-	 * Set 3D image data that will ve displayed
-	 * @params	imageData	3D image data
-	 */
-	void setImageData(vtkSmartPointer<vtkImageData> imageData);
-
-	/**
-	 * Set transfer function
-	 * @params	tf	Transfer function
-	 */
-	void setTransferFunction(TransferFunction* tf);
-
-	/**
-	 * Render volume with its transfer function
-	 */
-	void render();
+    /**
+     * Render volume with its transfer function
+     */
+    void render();
 
 private slots:
-	/**
-	 * Ok button selected
-	 */
-	void accept();
+    /**
+     * Ok button selected
+     */
+    void accept() override;
 
-	/** 
-	 * Cancel button selected
-	 */
-	void reject();
+    /**
+     * Cancel button selected
+     */
+    void reject() override;
 
 private:
-	Ui::SegmentedVolumeDialog *ui; /**< Dialog GUI pointer */
-	vtkSmartPointer<vtkImageData> imageData; /**< Image data that will be displayed */
-	TransferFunction *tf; /**< Transfer function to render the volume */
+    Ui::SegmentedVolumeDialog *ui; /**< Dialog GUI pointer */
+    vtkSmartPointer<vtkImageData> imageData; /**< Image data that will be displayed */
+    TransferFunction *tf; /**< Transfer function to render the volume */
 };
 
 #endif // SEGMENTEDVOLUMEDIALOG_H

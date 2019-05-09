@@ -1,60 +1,56 @@
 #include "ImagePlaneWidget.h"
 
-vtkStandardNewMacro(ImagePlaneWidget);
+vtkStandardNewMacro(ImagePlaneWidget)
 
 void ImagePlaneWidget::OnMouseMove() {
-	if (moving && viewer != NULL) {
-		viewer->Render();
-	}
-	vtkImagePlaneWidget::OnMouseMove(); 
+    if (moving && viewer != nullptr) {
+        viewer->Render();
+    }
+    vtkImagePlaneWidget::OnMouseMove();
 }
 
 void ImagePlaneWidget::OnRightButtonDown() {
-	moving = true;
-	unsetActiveROD();
-	vtkImagePlaneWidget::OnMiddleButtonDown(); // forward events
+    moving = true;
+    unsetActiveROD();
+    vtkImagePlaneWidget::OnMiddleButtonDown(); // forward events
 }
 
 void ImagePlaneWidget::OnRightButtonUp() {
-	moving = false;
-	vtkImagePlaneWidget::OnMiddleButtonUp(); // forward events
+    moving = false;
+    vtkImagePlaneWidget::OnMiddleButtonUp(); // forward events
 }
 
 void ImagePlaneWidget::unsetActiveROD() {
-	if (activeROD != NULL && listROD != NULL) {
-		activeROD->hideAll();
-		listROD->setCurrentItem(NULL);
-	}
+    if (activeROD != nullptr && listROD != nullptr) {
+        activeROD->hideAll();
+        listROD->setCurrentItem(nullptr);
+    }
 }
 
 void ImagePlaneWidget::OnMiddleButtonDown() {
-	// idle
+    // idle
 }
 
 void ImagePlaneWidget::OnMiddleButtonUp() {
-	// idle
+    // idle
 }
 
 void ImagePlaneWidget::OnLeftButtonDown() {
-	// idle
+    // idle
 }
 
 void ImagePlaneWidget::OnLeftButtonUp() {
-	// idle
+    // idle
 }
 
-void ImagePlaneWidget::SetViewer(vtkSmartPointer<vtkImageViewer2> viewer) {
-	this->viewer = viewer;
+void ImagePlaneWidget::SetViewer(const vtkSmartPointer<vtkImageViewer2> &v) {
+    this->viewer = v;
 }
 
-void ImagePlaneWidget::setActiveROD(ROD* activeROD) {
-	this->activeROD = activeROD;
+void ImagePlaneWidget::setActiveROD(ROD* r) {
+    this->activeROD = r;
 }
 
-void ImagePlaneWidget::setListROD(QListWidget* listROD) {
-	this->listROD = listROD;
-}
-
-void ImagePlaneWidget::setNullROD(QListWidgetItem* nullROD) {
-	this->nullROD = nullROD;
+void ImagePlaneWidget::setListROD(QListWidget* l) {
+    this->listROD = l;
 }

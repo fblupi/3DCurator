@@ -20,116 +20,93 @@ using boost::property_tree::ptree;
  */
 class TransferFunction {
 public:
-	/**
-	 * Constructor
-	 */
-	TransferFunction();
+    /**
+     * Constructor
+     */
+    TransferFunction();
 
-	/*
-	 * Destructor
-	 */
-	~TransferFunction();
+    /**
+     * Destructor
+     */
+    ~TransferFunction();
 
-	/**
-	 * Get color transfer function
-	 * @return	Color transfer function
-	 */
-	vtkSmartPointer<vtkColorTransferFunction> getColorFun() const;
+    /**
+     * Get color transfer function
+     * @return	Color transfer function
+     */
+    vtkSmartPointer<vtkColorTransferFunction> getColorFun() const;
 
-	/**
-	 * Get scalar opacity transfer function
-	 * @return	Scalar opacity transfer function
-	 */
-	vtkSmartPointer<vtkPiecewiseFunction> getScalarFun() const;
+    /**
+     * Get scalar opacity transfer function
+     * @return	Scalar opacity transfer function
+     */
+    vtkSmartPointer<vtkPiecewiseFunction> getScalarFun() const;
 
-	/**
-	 * Get gradient opacity transfer function
-	 * @return	Gradient opacity transfer function
-	 */
-	vtkSmartPointer<vtkPiecewiseFunction> getGradientFun() const;
+    /**
+     * Get gradient opacity transfer function
+     * @return	Gradient opacity transfer function
+     */
+    vtkSmartPointer<vtkPiecewiseFunction> getGradientFun() const;
 
-	/**
-	 * Get transfer function name
-	 * @return	Transfer function name
-	 */
-	std::string getName() const;
+    /**
+     * Get transfer function name
+     * @return	Transfer function name
+     */
+    std::string getName() const;
 
-	/**
-	 * Get transfer function description
-	 * @return	Transfer function description
-	 */
-	std::string getDescription() const;
+    /**
+     * Get transfer function description
+     * @return	Transfer function description
+     */
+    std::string getDescription() const;
 
-	/**
-	 * Set transfer function name
-	 * @param	name	Transfer function name
-	 */
-	void setName(const std::string name);
+    /**
+     * Set transfer function name
+     * @param	name	Transfer function name
+     */
+    void setName(const std::string &name);
 
-	/**
-	 * Set transfer function description
-	 * @param	description	Transfer function description
-	 */
-	void setDescription(const std::string description);
+    /**
+     * Set transfer function description
+     * @param	description	Transfer function description
+     */
+    void setDescription(const std::string &description);
 
-	/**
-	 * Read transfer function from an XML file using its path
-	 * @param	filename	Path to the input XML file
-	 */
-	void read(std::string &filename);
+    /**
+     * Read transfer function from an XML file using its path
+     * @param	filename	Path to the input XML file
+     */
+    void read(std::string &filename);
 
-	/**
-	 * Read transfer function from an XML file
-	 * @param	file		Input XML file
-	 */
-	void read(std::istream &file);
+    /**
+     * Read transfer function from an XML file
+     * @param	file		Input XML file
+     */
+    void read(std::istream &file);
 
-	/**
-	 * Write trasnfer function in an XML file
-	 * @param	filename	Path to the output XML file
-	 */
-	void write(std::string &filename);
+    /**
+     * Write transfer function in an XML file
+     * @param	filename	Path to the output XML file
+     */
+    void write(std::string &filename);
 
-	/**
-	 * Clear every point in every part of the transfer function
-	 */
-	void clear();
-
-	/**
-	 * Add a RGB color point
-	 * @param	x	Density value
-	 * @param	r	Red
-	 * @param	g	Green
-	 * @param	b	Blue
-	 */
-	void addColorPoint(const double x, const double r, const double g, const double b);
-
-	/**
-	 * Add a scalar point
-	 * @param	x	Density value
-	 * @param	y	Opacity
-	 */
-	void addScalarPoint(const double x, const double y);
-
-	/**
-	 * Add a gradient point
-	 * @param	x	Gradient value
-	 * @param	y	Opacity
-	 */
-	void addGradientPoint(const double x, const double y);
+    /**
+     * Clear every point in every part of the transfer function
+     */
+    void clear();
 
 private:
-	std::string name; /**< Transfer function name */
-	std::string description; /**< Transfer function description */
-	vtkSmartPointer<vtkColorTransferFunction> colorFun; /**< Color transfer function */
-	vtkSmartPointer<vtkPiecewiseFunction> scalarFun; /**< Scalar opacity transfer function */
-	vtkSmartPointer<vtkPiecewiseFunction> gradientFun; /**< Gradient opacity transfer function */
+    std::string name; /**< Transfer function name */
+    std::string description; /**< Transfer function description */
+    vtkSmartPointer<vtkColorTransferFunction> colorFun; /**< Color transfer function */
+    vtkSmartPointer<vtkPiecewiseFunction> scalarFun; /**< Scalar opacity transfer function */
+    vtkSmartPointer<vtkPiecewiseFunction> gradientFun; /**< Gradient opacity transfer function */
 
-	/**
-	 * Read data of transfer function from a tree
-	 * @param	ptree	Tree with transfer function
-	 */
-	void readData(ptree pt);
+    /**
+     * Read data of transfer function from a tree
+     * @param	pt  Tree with transfer function
+     */
+    void readData(ptree pt);
 };
 
 #endif // TRANSFERFUNCTION_H

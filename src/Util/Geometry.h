@@ -17,16 +17,6 @@
 std::array<int, 3> getVector(const int A[3], const int B[3]);
 
 /**
- * Get normalized distance betweent two lines
- * @param	A	First Point of First Line
- * @param	A_	Second Point of First Line
- * @param	B	First Point of Second Line
- * @param	B_	Second Point of Second Line
- * @return		Normalized distance between two lines
- */
-double getDistance(const int A[3], const int A_[3], const int B[3], const int B_[3]);
-
-/**
  * Get line equation y = a * x + b by giving two points
  * @param	A	First Point
  * @param	B	Second Point
@@ -59,7 +49,7 @@ std::array<double, 4> getPlaneEquation(const int A[3], const int B[3], const int
  * @param	Z	z value
  * @return		a and b parameters of the equation y = a * x + b
  */
-std::array<double, 2> getLineEquationFromPlane(const std::array<double, 4> P, const int Z);
+std::array<double, 2> getLineEquationFromPlane(std::array<double, 4> P, int Z);
 
 /**
  * Get distance between a point and a line defined by two points

@@ -1,146 +1,143 @@
 #include "InteractorStyleSegmentation.h"
 
-vtkStandardNewMacro(InteractorStyleSegmentation);
+vtkStandardNewMacro(InteractorStyleSegmentation)
 
 void InteractorStyleSegmentation::OnLeftButtonDown() {
-	if (slicePlane != NULL && this->GetDefaultRenderer() != NULL) {
-		vtkSmartPointer<vtkVolumePicker> picker = vtkSmartPointer<vtkVolumePicker>::New();
-		int* pos = this->GetInteractor()->GetEventPosition();
-		picker->Pick(pos[0], pos[1], pos[2], this->GetDefaultRenderer());
+    if (slicePlane != nullptr && this->GetDefaultRenderer() != nullptr) {
+        vtkSmartPointer<vtkVolumePicker> picker = vtkSmartPointer<vtkVolumePicker>::New();
+        int* pos = this->GetInteractor()->GetEventPosition();
+        picker->Pick(pos[0], pos[1], pos[2], this->GetDefaultRenderer());
 
-		int* ijk = picker->GetPointIJK();
-		
-		if (picker->GetPointId() != -1) {
-			ijk[2] = slicePlane->getPlane()->GetCenter()[2] / sculpture->getImageData()->GetSpacing()[2];
-			int * dimensions = sculpture->getImageData()->GetDimensions();
-			Bounds bounds;
-			bounds.MIN_X = 0;
-			bounds.MAX_X = dimensions[0];
-			bounds.MIN_Y = 0;
-			bounds.MAX_Y = dimensions[1];
-			bounds.MIN_Z = 0;
-			bounds.MAX_Z = dimensions[2];
+        int* ijk = picker->GetPointIJK();
 
-			std::vector<std::vector<Line> > lines(bounds.MAX_Z);
+        if (picker->GetPointId() != -1) {
+            ijk[2] = static_cast<int>(slicePlane->getPlane()->GetCenter()[2] / sculpture->getImageData()->GetSpacing()[2]);
+            int * dimensions = sculpture->getImageData()->GetDimensions();
+            Bounds bounds = {};
+            bounds.MIN_X = 0;
+            bounds.MAX_X = dimensions[0];
+            bounds.MIN_Y = 0;
+            bounds.MAX_Y = dimensions[1];
+            bounds.MIN_Z = 0;
+            bounds.MAX_Z = dimensions[2];
 
-			lines[ijk[2]] = getLinesFromImage(sculpture->getImageData(), sculpture->getTransferFunction()->getColorFun(), ijk[2], bounds);
+            std::vector<std::vector<Line> > lines(bounds.MAX_Z);
 
-			std::string img = generateImage(sculpture->getImageData(), sculpture->getTransferFunction()->getColorFun(), ijk[2], bounds, lines[ijk[2]]);
+            lines[ijk[2]] = getLinesFromImage(sculpture->getImageData(), sculpture->getTransferFunction()->getColorFun(), ijk[2], bounds);
 
-			// -- launch line selection
-			LineSelectionDialog *diag = new LineSelectionDialog();
-			diag->setImage(img);
-			// -- END launch line selection
+            std::string img = generateImage(sculpture->getImageData(), sculpture->getTransferFunction()->getColorFun(), ijk[2], bounds, lines[ijk[2]]);
 
-			remove(img.c_str());
+            // -- launch line selection
+            auto *diag = new LineSelectionDialog();
+            diag->setImage(img);
+            // -- END launch line selection
 
-			// -- exec line selection
-			int response = diag->exec();
-			// -- END exec line selection
+            remove(img.c_str());
 
-			if (response != LINE_CANCEL) {
-				Line selectedLine;
-				switch (response) {
-					case LINE_RED:
-						selectedLine = lines[ijk[2]][0];
-						break;
-					case LINE_GREEN:
-						selectedLine = lines[ijk[2]][1];
-						break;
-					case LINE_BLUE:
-						selectedLine = lines[ijk[2]][2];
-						break;
-					case LINE_CYAN:
-						selectedLine = lines[ijk[2]][3];
-						break;
-					case LINE_MAGENTA:
-						selectedLine = lines[ijk[2]][4];
-						break;
-					case LINE_YELLOW:
-						selectedLine = lines[ijk[2]][5];
-						break;
-				}
+            // -- exec line selection
+            int response = diag->exec();
+            // -- END exec line selection
 
-				// -- launch progress bar
-				QPointer<QProgressBar> bar = new QProgressBar(0);
-				QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-				progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING"));
-				progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING_PIECE_OF_WOOD_SELECTED"));
-				progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-				progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-				progressDialog->setCancelButton(0);
-				progressDialog->setBar(bar);
-				progressDialog->show();
-				bar->close();
-				QApplication::processEvents();
-				// -- END launch progress bar
+            if (response != LINE_CANCEL) {
+                Line selectedLine;
+                switch (response) {
+                    case LINE_RED:
+                        selectedLine = lines[ijk[2]][0];
+                        break;
+                    case LINE_GREEN:
+                        selectedLine = lines[ijk[2]][1];
+                        break;
+                    case LINE_BLUE:
+                        selectedLine = lines[ijk[2]][2];
+                        break;
+                    case LINE_CYAN:
+                        selectedLine = lines[ijk[2]][3];
+                        break;
+                    case LINE_MAGENTA:
+                        selectedLine = lines[ijk[2]][4];
+                        break;
+                    default:
+                        selectedLine = lines[ijk[2]][5];
+                }
 
-				vtkSmartPointer<vtkImageData> oldData = vtkSmartPointer<vtkImageData>::New();
-				oldData->DeepCopy(sculpture->getImageData());
+                // -- launch progress bar
+                QPointer<QProgressBar> bar = new QProgressBar();
+                QPointer<QProgressDialog> progressDialog = new QProgressDialog();
+                progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING"));
+                progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING_PIECE_OF_WOOD_SELECTED"));
+                progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+                progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+                progressDialog->setCancelButton(nullptr);
+                progressDialog->setBar(bar);
+                progressDialog->show();
+                bar->close();
+                QApplication::processEvents();
+                // -- END launch progress bar
 
-				vtkSmartPointer<vtkImageData> segmentedData = vtkSmartPointer<vtkImageData>::New();
-				segmentedData->DeepCopy(sculpture->getImageData());
+                vtkSmartPointer<vtkImageData> oldData = vtkSmartPointer<vtkImageData>::New();
+                oldData->DeepCopy(sculpture->getImageData());
 
-				for (int i = 0; i < dimensions[0]; i++) {
-					for (int j = 0; j < dimensions[1]; j++) {
-						for (int k = 0; k < dimensions[2]; k++) {
-							segmentedData->SetScalarComponentFromFloat(i, j, k, 0, AIR_HU);
-						}
-					}
-				}
+                vtkSmartPointer<vtkImageData> segmentedData = vtkSmartPointer<vtkImageData>::New();
+                segmentedData->DeepCopy(sculpture->getImageData());
 
-				regionGrowingWithLineBoundVolume(sculpture->getImageData(), segmentedData, sculpture->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines, diag->getCompleteUp(), diag->getCompleteDown());
+                for (int i = 0; i < dimensions[0]; i++) {
+                    for (int j = 0; j < dimensions[1]; j++) {
+                        for (int k = 0; k < dimensions[2]; k++) {
+                            segmentedData->SetScalarComponentFromFloat(i, j, k, 0, AIR_HU);
+                        }
+                    }
+                }
 
-				sculpture->getImageData()->DeepCopy(oldData);
+                regionGrowingWithLineBoundVolume(sculpture->getImageData(), segmentedData, sculpture->getTransferFunction()->getColorFun(), ijk, bounds, selectedLine, lines, diag->getCompleteUp(), diag->getCompleteDown());
 
-				// -- close progress bar
-				progressDialog->close();
-				// -- END close progress bar
+                sculpture->getImageData()->DeepCopy(oldData);
 
-				SegmentedVolumeDialog *segmentedVolumeDialog = new SegmentedVolumeDialog();
-				segmentedVolumeDialog->setImageData(segmentedData);
-				segmentedVolumeDialog->setTransferFunction(sculpture->getTransferFunction());
-				segmentedVolumeDialog->render();
+                // -- close progress bar
+                progressDialog->close();
+                // -- END close progress bar
 
-				int exportSegmentedVolume = segmentedVolumeDialog->exec();
+                auto *segmentedVolumeDialog = new SegmentedVolumeDialog(segmentedData, sculpture->getTransferFunction());
+                segmentedVolumeDialog->render();
 
-				if (exportSegmentedVolume == QMessageBox::Yes) {
-					QString vtiFile = NULL;
-					vtiFile = QFileDialog::getSaveFileName(NULL, QCoreApplication::translate("InteractorStyleSegmentation", "SAVE_SUB_VOLUME_CAPTION"), QDir(QDir::homePath()).filePath(QCoreApplication::translate("InteractorStyleSegmentation", "SAVE_SUB_VOLUME_DEFAULT_NAME")), "VTI (*.vti) ;; XML (*.xml)");
-					if (vtiFile != NULL) {
-						// -- launch progress bar
-						QPointer<QProgressBar> bar = new QProgressBar(0);
-						QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-						progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME"));
-						progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME_MODEL"));
-						progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-						progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-						progressDialog->setCancelButton(0);
-						progressDialog->setBar(bar);
-						progressDialog->show();
-						bar->close();
-						QApplication::processEvents();
-						// -- END launch progress bar
+                int exportSegmentedVolume = segmentedVolumeDialog->exec();
 
-						vtkSmartPointer<vtkXMLImageDataWriter> writer = vtkSmartPointer<vtkXMLImageDataWriter>::New();
-						writer->SetFileName(vtiFile.toUtf8().constData());
-						writer->SetInputData(segmentedData);
-						writer->Write();
+                if (exportSegmentedVolume == QMessageBox::Yes) {
+                    QString vtiFile = nullptr;
+                    vtiFile = QFileDialog::getSaveFileName(nullptr, QCoreApplication::translate("InteractorStyleSegmentation", "SAVE_SUB_VOLUME_CAPTION"), QDir(QDir::homePath()).filePath(QCoreApplication::translate("InteractorStyleSegmentation", "SAVE_SUB_VOLUME_DEFAULT_NAME")), "VTI (*.vti) ;; XML (*.xml)");
+                    if (vtiFile != nullptr) {
+                        // -- launch progress bar
+                        bar = new QProgressBar();
+                        progressDialog = new QProgressDialog();
+                        progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME"));
+                        progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME_MODEL"));
+                        progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+                        progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+                        progressDialog->setCancelButton(nullptr);
+                        progressDialog->setBar(bar);
+                        progressDialog->show();
+                        bar->close();
+                        QApplication::processEvents();
+                        // -- END launch progress bar
 
-						// -- close progress bar
-						progressDialog->close();
-						// -- END close progress bar
-					}
-				}
-			}
-		}
-	}
+                        vtkSmartPointer<vtkXMLImageDataWriter> writer = vtkSmartPointer<vtkXMLImageDataWriter>::New();
+                        writer->SetFileName(vtiFile.toUtf8().constData());
+                        writer->SetInputData(segmentedData);
+                        writer->Write();
+
+                        // -- close progress bar
+                        progressDialog->close();
+                        // -- END close progress bar
+                    }
+                }
+            }
+        }
+    }
 }
 
-void InteractorStyleSegmentation::SetSlicePlane(SlicePlane* slicePlane) {
-	this->slicePlane = slicePlane;
+void InteractorStyleSegmentation::SetSlicePlane(SlicePlane* p) {
+    this->slicePlane = p;
 }
 
-void InteractorStyleSegmentation::SetSculpture(Sculpture* sculpture) {
-	this->sculpture = sculpture;
+void InteractorStyleSegmentation::SetSculpture(Sculpture* s) {
+    this->sculpture = s;
 }

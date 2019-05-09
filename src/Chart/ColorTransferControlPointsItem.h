@@ -20,39 +20,37 @@
  */
 class ColorTransferControlPointsItem : public vtkColorTransferControlPointsItem {
 public:
-	/**
-	 * Constructor
-	 */
-	static ColorTransferControlPointsItem* New();
+    /**
+     * Constructor
+     */
+    static ColorTransferControlPointsItem* New();
 
-	vtkTypeMacro(vtkColorTransferControlPointsItem, ColorTransferControlPointsItem);
+    /**
+     * Set the RenderWindow that will be updated
+     * @param	renWin	RenderWindow that will be updated
+     */
+    void SetRenderWindow(const vtkSmartPointer<vtkRenderWindow> &renWin);
 
-	/**
-	 * Set the RenderWindow that will be updated
-	 * @param	renWin	RenderWindow that will be updated
-	 */
-	void SetRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin);
+    /**
+     * Mouse button release event: Updates RenderWindow
+     * @param	mouse	Mouse context
+     */
+    bool MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse) override;
 
-	/**
-	 * Mouse button release event: Updates RenderWindow
-	 * @param	mouse	Mouse context
-	 */
-	virtual bool MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse) override;
+    /**
+     * Mouse double click event: Launches a color selector widget
+     * @param	mouse	Mouse context
+     */
+    bool MouseDoubleClickEvent(const vtkContextMouseEvent &mouse) override;
 
-	/**
-	 * Mouse double click event: Launches a color selector widget
-	 * @param	mouse	Mouse context
-	 */
-	virtual bool MouseDoubleClickEvent(const vtkContextMouseEvent &mouse) override;
-
-	/**
-	 * Key release event: Updates RenderWindow
-	 * @param	key	Key context
-	 */
-	virtual bool KeyReleaseEvent(const vtkContextKeyEvent &key) override;
+    /**
+     * Key release event: Updates RenderWindow
+     * @param	key	Key context
+     */
+    bool KeyReleaseEvent(const vtkContextKeyEvent &key) override;
 
 private:
-	vtkSmartPointer<vtkRenderWindow> renWin; /**< RenderWindow that will be updated when the transfer function is changed */
+    vtkSmartPointer<vtkRenderWindow> renWin; /**< RenderWindow that will be updated when the transfer function is changed */
 };
 
-#endif
+#endif // COLORTRANSFERCONTROLPOINTSITEM_H

@@ -22,41 +22,41 @@
  */
 class ColorTFChart {
 public:
-	/**
-	 * Constructor
-	 * @param	figureRenWin	RenderWindow that will be updated when the color function is updated
-	 * @param	chartRenWin	RenderWindow where will be placed the chart
-	 * @param	tf		Color transfer function
-	 * @param	xLabel		Axis X label name
-	 * @param	yLabel		Axis Y label name
-	 * @param	minBound	Min control points bound
-	 * @param	maxBound	Max control points bound
-	 */
-	ColorTFChart(vtkSmartPointer<vtkRenderWindow> figureRenWin, vtkSmartPointer<vtkRenderWindow> chartRenWin, vtkSmartPointer<vtkColorTransferFunction> tf, const std::string xLabel, const std::string yLabel, const double minBound, const double maxBound);
-	
-	/*
-	 * Destructor
-	 */
-	~ColorTFChart();
+    /**
+     * Constructor
+     * @param	figureRenWin    RenderWindow that will be updated when the color function is updated
+     * @param	chartRenWin	    RenderWindow where will be placed the chart
+     * @param	tf		        Color transfer function
+     * @param	xLabel		    Axis X label name
+     * @param	yLabel		    Axis Y label name
+     * @param	minBound	    Min control points bound
+     * @param	maxBound	    Max control points bound
+     */
+    ColorTFChart(const vtkSmartPointer<vtkRenderWindow> &figureRenWin, const vtkSmartPointer<vtkRenderWindow> &chartRenWin, vtkSmartPointer<vtkColorTransferFunction> tf, const std::string &xLabel, const std::string &yLabel, double minBound, double maxBound);
 
-	/**
-	 * Range of Y axes goes from the lowest to the highest transfer function value
-	 */
-	void defaultRange();
+    /**
+     * Destructor
+     */
+    ~ColorTFChart();
 
-	/**
-	 * Range of Y axes gos from min to max
-	 * @param	min	Min bound
-	 * @param	max	Max bound
-	 */
-	void setRange(const double min, const double max);
+    /**
+     * Range of Y axes goes from the lowest to the highest transfer function value
+     */
+    void defaultRange();
+
+    /**
+     * Range of Y axes gos from min to max
+     * @param	min	Min bound
+     * @param	max	Max bound
+     */
+    void setRange(double min, double max);
 
 private:
-	vtkSmartPointer<ChartXY> chart; /**> Chart where both function and control points plots will be placed */
-	vtkSmartPointer<vtkContextView> context; /**> ContextView where the chart content will be rendered */
-	vtkSmartPointer<vtkColorTransferFunctionItem> function; /**> Plot where the color function will be shown */
-	vtkSmartPointer<ColorTransferControlPointsItem> controlPoints; /**> Plot where the function control points will be shown */
-	vtkSmartPointer<vtkColorTransferFunction> tf; /**< Color transfer function used by both plots */
+    vtkSmartPointer<ChartXY> chart; /**> Chart where both function and control points plots will be placed */
+    vtkSmartPointer<vtkContextView> context; /**> ContextView where the chart content will be rendered */
+    vtkSmartPointer<vtkColorTransferFunctionItem> function; /**> Plot where the color function will be shown */
+    vtkSmartPointer<ColorTransferControlPointsItem> controlPoints; /**> Plot where the function control points will be shown */
+    vtkSmartPointer<vtkColorTransferFunction> tf; /**< Color transfer function used by both plots */
 };
 
-#endif
+#endif // COLORTFCHART_H
