@@ -41,34 +41,34 @@
  */
 class InteractorStyleSegmentation : public vtkInteractorStyleImage {
 public:
-	/**
-	 * Constructor
-	 */
-	static InteractorStyleSegmentation* New();
+    /**
+     * Constructor
+     */
+    static InteractorStyleSegmentation* New();
 
-	vtkTypeMacro(vtkInteractorStyleImage, InteractorStyleSegmentation);
+    vtkTypeMacro(vtkInteractorStyleImage, InteractorStyleSegmentation);
 
-	/**
-	 * Set plane in which will find the value of the voxel selected
-	 * @param	slicePlane	Plane in which will find the value of the voxel selected
-	 */
-	void SetSlicePlane(SlicePlane* slicePlane);
+    /**
+     * Set plane in which will find the value of the voxel selected
+     * @param	slicePlane	Plane in which will find the value of the voxel selected
+     */
+    void SetSlicePlane(SlicePlane* slicePlane);
 
-	/**
-	 * Set sculpture that we will segmentate
-	 * @param	sculpture	Sculpture that we will segmentate
-	 */
-	void SetSculpture(Sculpture* sculpture);
+    /**
+     * Set sculpture that we will segment
+     * @param	sculpture	Sculpture that we will segment
+     */
+    void SetSculpture(Sculpture* sculpture);
 
-	/**
-	 * Left button down mouse event
-	 */
-	virtual void OnLeftButtonDown() override;
+    /**
+     * Left button down mouse event
+     */
+    void OnLeftButtonDown() override;
 
 private:
-	vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 that will be updated when segmentate */
-	SlicePlane* slicePlane; /**< Plane in which will find the value of the voxel selected */
-	Sculpture* sculpture; /**< Sculpture that we will segmentate */
+    vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 that will be updated when segment */
+    SlicePlane* slicePlane; /**< Plane in which will find the value of the voxel selected */
+    Sculpture* sculpture; /**< Sculpture that we will segment */
 };
 
 #endif // INTERACTORSTYLESEGMENTATION_H

@@ -30,47 +30,38 @@
  */
 class InteractorStyleDeleter : public vtkInteractorStyleTrackballCamera {
 public:
-	/**
-	 * Constructor
-	 */
-	static InteractorStyleDeleter* New();
+    /**
+     * Constructor
+     */
+    static InteractorStyleDeleter* New();
 
-	vtkTypeMacro(vtkInteractorStyleTrackballCamera, InteractorStyleDeleter);
+    /**
+     * Set ImageViewer2 that will be updated when delete
+     * @param	viewer	ImageViewer2 that will be updated when delete
+     */
+    void SetViewer(const vtkSmartPointer<vtkImageViewer2> &viewer);
 
-	/**
-	 * Set render window where we will pick a voxel
-	 * @param	renWin	RenderWindow where we will pick a voxel
-	 */
-	void SetDefaultRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin);
+    /**
+     * Set sculpture where we will delete a region
+     * @param	sculpture	Sculpture where we will delete a region
+     */
+    void SetSculpture(Sculpture* sculpture);
 
-	/**
-	 * Set ImageViewer2 that will be updated when delete
-	 * @param	viewer	ImageViewer2 that will be updated when delete
-	 */
-	void SetViewer(vtkSmartPointer<vtkImageViewer2> viewer);
+    /**
+     * Slice plane that will be updated when delete
+     * @param	slicePlane	Slice plane that will be updated when delete
+     */
+    void SetSlicePlane(SlicePlane* slicePlane);
 
-	/**
-	 * Set sculpture where we will delete a region
-	 * @param	sculpture	Sculpture where we will delete a region
-	 */
-	void SetSculpture(Sculpture* sculpture);
-
-	/**
-	 * Slice plane that will be updated when delete
-	 * @param	slicePlane	Slice plane that will be updated when delete
-	 */
-	void SetSlicePlane(SlicePlane* slicePlane);
-
-	/**
-	 * Left button down event
-	 */
-	virtual void OnLeftButtonDown() override;
+    /**
+     * Left button down event
+     */
+    void OnLeftButtonDown() override;
 
 private:
-	vtkSmartPointer<vtkRenderWindow> renWin; /**< Render Window where the sculpture is rendered */
-	vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 that will be updated when delete */
-	Sculpture* sculpture; /**< Sculpture where we will delete a region */
-	SlicePlane* slicePlane; /**< Slice plane that will be updated when delete */
+    vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 that will be updated when delete */
+    Sculpture* sculpture; /**< Sculpture where we will delete a region */
+    SlicePlane* slicePlane; /**< Slice plane that will be updated when delete */
 };
 
 #endif // INTERACTORSTYLEDELETER_H

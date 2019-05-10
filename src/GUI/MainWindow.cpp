@@ -1,54 +1,55 @@
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
-	ui->setupUi(this);
-	ui->isoValueSlider->setTracking(false); // do not launch slider event until we release it
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow),
+    settings(new QSettings),
+    language(new Language(QVariant(settings->value("locale", "en_US")).toString())),
+    deleting(false),
+    showPlane(true),
+    segmenting(false),
+    itemListEnabled(QFont()),
+    itemListDisabled(QFont()),
+    volumeRen(vtkSmartPointer<vtkRenderer>::New()),
+    meshRen(vtkSmartPointer<vtkRenderer>::New()),
+    sliceViewer(vtkSmartPointer<vtkImageViewer2>::New()),
+    volumeStyle(vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New()),
+    sliceStyle(vtkSmartPointer<InteractorStyleImage>::New()),
+    deleterStyle(vtkSmartPointer<InteractorStyleDeleter>::New()),
+    segmentationStyle(vtkSmartPointer<InteractorStyleSegmentation>::New()),
+    slicePlane(new SlicePlane()),
+    sculpture(new Sculpture()),
+    activeROD(nullptr),
+    nullROD(nullptr)
+{
+    ui->setupUi(this);
+    ui->isoValueSlider->setTracking(false); // do not launch slider event until we release it
+    itemListDisabled.setItalic(true);
 
-	settings = new QSettings();
-	language = new Language(QVariant(settings->value("locale", "en_US")).toString());
-	
-	deleting = false;
-	showPlane = true;
-	segmentating = false;
+    defaultTF();
+    defaultMaterial();
+    defaultBackgroundsColors();
 
-	itemListEnabled = QFont();
-	itemListDisabled = QFont();
-	itemListDisabled.setItalic(true);
-	
-	volumeRen = vtkSmartPointer<vtkRenderer>::New();
-	meshRen = vtkSmartPointer<vtkRenderer>::New();
-	sliceViewer = vtkSmartPointer<vtkImageViewer2>::New();
-	volumeStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
-	sliceStyle = vtkSmartPointer<InteractorStyleImage>::New();
-	deleterStyle = vtkSmartPointer<InteractorStyleDeleter>::New();
-	segmentationStyle = vtkSmartPointer<InteractorStyleSegmentation>::New();
-	slicePlane = new SlicePlane();
-	sculpture = new Sculpture();
-	activeROD = NULL;
-	defaultTF(); 
-	defaultMaterial();
-	defaultBackgroundsColors();
+    colorTFChart = new ColorTFChart(ui->volumeWidget->GetRenderWindow(), ui->colorTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getColorFun(), tr("CHART_DENSITY").toUtf8().constData(), "", MIN_INTENSITY, MAX_INTENSITY);
+    scalarTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->scalarTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getScalarFun(), tr("CHART_DENSITY").toUtf8().constData(), tr("CHART_OPACITY").toUtf8().constData(), MIN_INTENSITY, MAX_INTENSITY);
+    gradientTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->gradientTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getGradientFun(), tr("CHART_GRADIENT").toUtf8().constData(), tr("CHART_OPACITY").toUtf8().constData(), 0, MAX_INTENSITY - MIN_INTENSITY);
+    updateSliders();
 
-	colorTFChart = new ColorTFChart(ui->volumeWidget->GetRenderWindow(), ui->colorTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getColorFun(), tr("CHART_DENSITY").toUtf8().constData(), "", MIN_INTENSITY, MAX_INTENSITY);
-	scalarTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->scalarTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getScalarFun(), tr("CHART_DENSITY").toUtf8().constData(), tr("CHART_OPACITY").toUtf8().constData(), MIN_INTENSITY, MAX_INTENSITY);
-	gradientTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->gradientTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getGradientFun(), tr("CHART_GRADIENT").toUtf8().constData(), tr("CHART_OPACITY").toUtf8().constData(), 0, MAX_INTENSITY - MIN_INTENSITY);
-	updateSliders();
+    sliceViewer->GetWindowLevel()->SetLookupTable(sculpture->getTransferFunction()->getColorFun());
+    sliceViewer->SetColorLevel(-600);
+    sliceViewer->SetColorWindow(400);
 
-	sliceViewer->GetWindowLevel()->SetLookupTable(sculpture->getTransferFunction()->getColorFun());
-	sliceViewer->SetColorLevel(-600);
-	sliceViewer->SetColorWindow(400);
+    setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
+    setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
 
-	setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
-	setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
+    connectComponents();
 
-	connectComponents();
+    renderVolume();
+    renderMesh();
 
-	renderVolume();
-	renderMesh();
-
-	slicePlane->show(false);
-	enablePlane();
+    slicePlane->show(false);
+    enablePlane();
 }
 
 MainWindow::~MainWindow() {
@@ -56,906 +57,904 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::changeEvent(QEvent* event) {
-	if (event->type() == QEvent::LanguageChange) {
-		ui->retranslateUi(this);
-	}
-	QMainWindow::changeEvent(event);
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+    QMainWindow::changeEvent(event);
 }
 
-void MainWindow::setBackgroundColor(vtkSmartPointer<vtkRenderer> ren, float r, float g, float b) {
-	ren->SetBackground(r, g, b);
+void MainWindow::setBackgroundColor(const vtkSmartPointer<vtkRenderer> &ren, float r, float g, float b) {
+    ren->SetBackground(r, g, b);
 }
 
 void MainWindow::connectComponents() {
-	ui->volumeWidget->GetRenderWindow()->AddRenderer(volumeRen);
-	ui->meshWidget->GetRenderWindow()->AddRenderer(meshRen);
-	ui->slicesWidget->GetRenderWindow()->AddRenderer(sliceViewer->GetRenderer());
-	volumeRen->SetRenderWindow(ui->volumeWidget->GetRenderWindow());
-	meshRen->SetRenderWindow(ui->meshWidget->GetRenderWindow());
-	sliceViewer->SetRenderWindow(ui->slicesWidget->GetRenderWindow());
+    ui->volumeWidget->GetRenderWindow()->AddRenderer(volumeRen);
+    ui->meshWidget->GetRenderWindow()->AddRenderer(meshRen);
+    ui->slicesWidget->GetRenderWindow()->AddRenderer(sliceViewer->GetRenderer());
+    volumeRen->SetRenderWindow(ui->volumeWidget->GetRenderWindow());
+    meshRen->SetRenderWindow(ui->meshWidget->GetRenderWindow());
+    sliceViewer->SetRenderWindow(ui->slicesWidget->GetRenderWindow());
 
-	sliceViewer->SetInputData(slicePlane->getPlane()->GetResliceOutput()); 
+    sliceViewer->SetInputData(slicePlane->getPlane()->GetResliceOutput());
 
-	ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
-	slicePlane->getPlane()->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor());
+    ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
+    slicePlane->getPlane()->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor());
 
-	sliceViewer->SetupInteractor(ui->slicesWidget->GetRenderWindow()->GetInteractor());
-	sliceStyle->SetSlicePlane(slicePlane);
-	sliceStyle->SetDefaultRenderer(sliceViewer->GetRenderer());
-	sliceStyle->SetLabel(ui->coordsAndValueLabel);
-	ui->slicesWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(sliceStyle);
+    sliceViewer->SetupInteractor(ui->slicesWidget->GetRenderWindow()->GetInteractor());
+    sliceStyle->SetSlicePlane(slicePlane);
+    sliceStyle->SetDefaultRenderer(sliceViewer->GetRenderer());
+    sliceStyle->SetLabel(ui->coordsAndValueLabel);
+    ui->slicesWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(sliceStyle);
 
-	slicePlane->setViewer(sliceViewer);
-	slicePlane->getPlane()->setActiveROD(activeROD);
-	slicePlane->getPlane()->setListROD(ui->ruleList);
+    slicePlane->setViewer(sliceViewer);
+    slicePlane->getPlane()->setActiveROD(activeROD);
+    slicePlane->getPlane()->setListROD(ui->ruleList);
 
-	deleterStyle->SetSculpture(sculpture);
-	deleterStyle->SetSlicePlane(slicePlane);
-	deleterStyle->SetDefaultRenderer(volumeRen);
-	deleterStyle->SetViewer(sliceViewer);
-	deleterStyle->SetDefaultRenderWindow(ui->volumeWidget->GetRenderWindow());
+    deleterStyle->SetSculpture(sculpture);
+    deleterStyle->SetSlicePlane(slicePlane);
+    deleterStyle->SetDefaultRenderer(volumeRen);
+    deleterStyle->SetViewer(sliceViewer);
 
-	segmentationStyle->SetSculpture(sculpture);
-	segmentationStyle->SetSlicePlane(slicePlane);
-	segmentationStyle->SetDefaultRenderer(sliceViewer->GetRenderer());
+    segmentationStyle->SetSculpture(sculpture);
+    segmentationStyle->SetSlicePlane(slicePlane);
+    segmentationStyle->SetDefaultRenderer(sliceViewer->GetRenderer());
 }
 
 void MainWindow::drawVolume() {
-	volumeRen->AddViewProp(sculpture->getVolume());
-	volumeRen->ResetCamera();
-	renderVolume();
+    volumeRen->AddViewProp(sculpture->getVolume());
+    volumeRen->ResetCamera();
+    renderVolume();
 }
 
 void MainWindow::drawMesh() {
-	meshRen->AddActor(sculpture->getMesh());
-	meshRen->ResetCamera();
-	renderMesh();
+    meshRen->AddActor(sculpture->getMesh());
+    meshRen->ResetCamera();
+    renderMesh();
 }
 
 void MainWindow::removeVolume() {
-	volumeRen->RemoveAllViewProps();
-	volumeRen->ResetCamera();
-	renderVolume();
+    volumeRen->RemoveAllViewProps();
+    volumeRen->ResetCamera();
+    renderVolume();
 }
 
 void MainWindow::removeMesh() {
-	meshRen->RemoveAllViewProps();
-	meshRen->ResetCamera();
-	renderMesh();
+    meshRen->RemoveAllViewProps();
+    meshRen->ResetCamera();
+    renderMesh();
 }
 
 void MainWindow::renderVolume() {
-	ui->volumeWidget->GetRenderWindow()->Render();
+    ui->volumeWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::renderMesh() {
-	ui->meshWidget->GetRenderWindow()->Render();
+    ui->meshWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::renderSlice() {
-	sliceViewer->Render();
+    sliceViewer->Render();
 }
 
 void MainWindow::loadDefaultPreset(QFile *file) {
-	if (file->open(QIODevice::ReadOnly | QIODevice::Text)) {
-		std::istringstream ss;
-		ss.str(QString(file->readAll()).toStdString()); //Get istringstream from QFile
+    if (file->open(QIODevice::ReadOnly | QIODevice::Text)) {
+        std::istringstream ss;
+        ss.str(QString(file->readAll()).toStdString()); //Get istringstream from QFile
 
-		sculpture->getTransferFunction()->read(ss);
-		file->close(); 
+        sculpture->getTransferFunction()->read(ss);
+        file->close();
 
-		// Update tags
-		ui->tfName->setText(QString::fromUtf8(sculpture->getTransferFunction()->getName().c_str()));
-		ui->tfDescription->setText(QString::fromUtf8(sculpture->getTransferFunction()->getDescription().c_str()));
-	} else {
-		cerr << tr("ERROR_OPENING_DEFAULT_TF_FILE").toUtf8().constData() << endl;
-		exit(-1);
-	}
+        // Update tags
+        ui->tfName->setText(QString::fromUtf8(sculpture->getTransferFunction()->getName().c_str()));
+        ui->tfDescription->setText(QString::fromUtf8(sculpture->getTransferFunction()->getDescription().c_str()));
+    } else {
+        cerr << tr("ERROR_OPENING_DEFAULT_TF_FILE").toUtf8().constData() << endl;
+        exit(-1);
+    }
 }
 
 void MainWindow::defaultTF() {
-	QFile file(":/presets/ct-woodsculpture.xml"); 
-	loadDefaultPreset(&file);
+    QFile file(":/presets/ct-woodsculpture.xml");
+    loadDefaultPreset(&file);
 }
 
 void MainWindow::defaultMaterial() {
-	ui->ambientValue->setValue(0.1); 
-	ui->diffuseValue->setValue(0.9); 
-	ui->specularValue->setValue(0.2);
-	ui->powerValue->setValue(10.0);
+    ui->ambientValue->setValue(0.1);
+    ui->diffuseValue->setValue(0.9);
+    ui->specularValue->setValue(0.2);
+    ui->powerValue->setValue(10.0);
 }
 
 void MainWindow::defaultBackgroundsColors() {
-	volumeBackground = QColor::fromRgbF(0.1, 0.2, 0.3);
-	volumeDeletingBackground = QColor::fromRgbF(0.2, 0.3, 0.1);
-	meshBackground = QColor::fromRgbF(0.1, 0.2, 0.3);
+    volumeBackground = QColor::fromRgbF(0.1, 0.2, 0.3);
+    volumeDeletingBackground = QColor::fromRgbF(0.2, 0.3, 0.1);
+    meshBackground = QColor::fromRgbF(0.1, 0.2, 0.3);
 
-	ui->volumeBackground->setStyleSheet("background-color: " + volumeBackground.name());
-	ui->volumeDeletingBackground->setStyleSheet("background-color: " + volumeDeletingBackground.name());
-	ui->meshBackground->setStyleSheet("background-color: " + meshBackground.name());
+    ui->volumeBackground->setStyleSheet("background-color: " + volumeBackground.name());
+    ui->volumeDeletingBackground->setStyleSheet("background-color: " + volumeDeletingBackground.name());
+    ui->meshBackground->setStyleSheet("background-color: " + meshBackground.name());
 }
 
 void MainWindow::defaultPlanePosition() {
-	if (sculpture->getVolume() != NULL) { 
-		// volume dimension
-		double xSize = sculpture->getMaxXBound() - sculpture->getMinXBound();
-		double ySize = sculpture->getMaxYBound() - sculpture->getMinYBound();
-		double zSize = sculpture->getMaxZBound() - sculpture->getMinZBound();
-		slicePlane->setOrigin(xSize / 2, ySize / 2, zSize / 2); // plane in the center of the sculpture
-		slicePlane->setAxial();
-	} else {
-		launchWarningNoVolume();
-	}
+    if (sculpture->getVolume() != nullptr) {
+        // volume dimension
+        double xSize = sculpture->getMaxXBound() - sculpture->getMinXBound();
+        double ySize = sculpture->getMaxYBound() - sculpture->getMinYBound();
+        double zSize = sculpture->getMaxZBound() - sculpture->getMinZBound();
+        slicePlane->setOrigin(xSize / 2, ySize / 2, zSize / 2); // plane in the center of the sculpture
+        slicePlane->setAxial();
+    } else {
+        launchWarningNoVolume();
+    }
 }
 
 void MainWindow::updateMaterial() {
-	sculpture->setMaterial(ui->ambientValue->value(), ui->diffuseValue->value(), ui->specularValue->value(), ui->powerValue->value());
+    sculpture->setMaterial(ui->ambientValue->value(), ui->diffuseValue->value(), ui->specularValue->value(), ui->powerValue->value());
 }
 
 void MainWindow::updateSliders() {
-	ui->colorTFMinSlider->setMinimum((int)MIN_INTENSITY);
-	ui->colorTFMinSlider->setValue((int)sculpture->getTransferFunction()->getColorFun()->GetRange()[0]);
-	ui->colorTFMinSlider->setMaximum((int)sculpture->getTransferFunction()->getColorFun()->GetRange()[1] - 1);
-	ui->colorTFMaxSlider->setMinimum((int)sculpture->getTransferFunction()->getColorFun()->GetRange()[0] + 1);
-	ui->colorTFMaxSlider->setValue((int)sculpture->getTransferFunction()->getColorFun()->GetRange()[1]);
-	ui->colorTFMaxSlider->setMaximum((int)MAX_INTENSITY);
+    ui->colorTFMinSlider->setMinimum((int)MIN_INTENSITY);
+    ui->colorTFMinSlider->setValue((int)sculpture->getTransferFunction()->getColorFun()->GetRange()[0]);
+    ui->colorTFMinSlider->setMaximum((int)sculpture->getTransferFunction()->getColorFun()->GetRange()[1] - 1);
+    ui->colorTFMaxSlider->setMinimum((int)sculpture->getTransferFunction()->getColorFun()->GetRange()[0] + 1);
+    ui->colorTFMaxSlider->setValue((int)sculpture->getTransferFunction()->getColorFun()->GetRange()[1]);
+    ui->colorTFMaxSlider->setMaximum((int)MAX_INTENSITY);
 
 
-	ui->scalarTFMinSlider->setMinimum((int)MIN_INTENSITY);
-	ui->scalarTFMinSlider->setValue((int)sculpture->getTransferFunction()->getScalarFun()->GetRange()[0]);
-	ui->scalarTFMinSlider->setMaximum((int)sculpture->getTransferFunction()->getScalarFun()->GetRange()[1] - 1);
-	ui->scalarTFMaxSlider->setMinimum((int)sculpture->getTransferFunction()->getScalarFun()->GetRange()[0] + 1);
-	ui->scalarTFMaxSlider->setValue((int)sculpture->getTransferFunction()->getScalarFun()->GetRange()[1]);
-	ui->scalarTFMaxSlider->setMaximum((int)MAX_INTENSITY);
+    ui->scalarTFMinSlider->setMinimum((int)MIN_INTENSITY);
+    ui->scalarTFMinSlider->setValue((int)sculpture->getTransferFunction()->getScalarFun()->GetRange()[0]);
+    ui->scalarTFMinSlider->setMaximum((int)sculpture->getTransferFunction()->getScalarFun()->GetRange()[1] - 1);
+    ui->scalarTFMaxSlider->setMinimum((int)sculpture->getTransferFunction()->getScalarFun()->GetRange()[0] + 1);
+    ui->scalarTFMaxSlider->setValue((int)sculpture->getTransferFunction()->getScalarFun()->GetRange()[1]);
+    ui->scalarTFMaxSlider->setMaximum((int)MAX_INTENSITY);
 
-	ui->gradientTFMinSlider->setMinimum(0);
-	ui->gradientTFMinSlider->setValue((int)sculpture->getTransferFunction()->getGradientFun()->GetRange()[0]);
-	ui->gradientTFMinSlider->setMaximum((int)sculpture->getTransferFunction()->getGradientFun()->GetRange()[1] - 1);
-	ui->gradientTFMaxSlider->setMinimum((int)sculpture->getTransferFunction()->getGradientFun()->GetRange()[0] + 1);
-	ui->gradientTFMaxSlider->setValue((int)sculpture->getTransferFunction()->getGradientFun()->GetRange()[1]);
-	ui->gradientTFMaxSlider->setMaximum((int)MAX_INTENSITY);
+    ui->gradientTFMinSlider->setMinimum(0);
+    ui->gradientTFMinSlider->setValue((int)sculpture->getTransferFunction()->getGradientFun()->GetRange()[0]);
+    ui->gradientTFMinSlider->setMaximum((int)sculpture->getTransferFunction()->getGradientFun()->GetRange()[1] - 1);
+    ui->gradientTFMaxSlider->setMinimum((int)sculpture->getTransferFunction()->getGradientFun()->GetRange()[0] + 1);
+    ui->gradientTFMaxSlider->setValue((int)sculpture->getTransferFunction()->getGradientFun()->GetRange()[1]);
+    ui->gradientTFMaxSlider->setMaximum((int)MAX_INTENSITY);
 }
 
 void MainWindow::importDICOM() {
-	QString dicomFolder = QFileDialog::getExistingDirectory(this, tr("OPEN_DICOM_FOLDER_CAPTION"), QDir::homePath(), QFileDialog::ShowDirsOnly); 
+    QString dicomFolder = QFileDialog::getExistingDirectory(this, tr("OPEN_DICOM_FOLDER_CAPTION"), QDir::homePath(), QFileDialog::ShowDirsOnly);
 
-	if (dicomFolder != NULL) {
-		// -- launch progress bar
-		QPointer<QProgressBar> bar = new QProgressBar(0);
-		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(tr("LOADING"));
-		progressDialog->setLabelText(tr("LOADING_DICOM_FILES"));
-		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-		progressDialog->setCancelButton(0);
-		progressDialog->setBar(bar);
-		progressDialog->show();
-		bar->close();
-		QApplication::processEvents();
-		// -- END launch progress bar
+    if (dicomFolder != nullptr) {
+        // -- launch progress bar
+        QPointer<QProgressBar> bar = new QProgressBar();
+        QPointer<QProgressDialog> progressDialog = new QProgressDialog();
+        progressDialog->setWindowTitle(tr("LOADING"));
+        progressDialog->setLabelText(tr("LOADING_DICOM_FILES"));
+        progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+        progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+        progressDialog->setCancelButton(nullptr);
+        progressDialog->setBar(bar);
+        progressDialog->show();
+        bar->close();
+        QApplication::processEvents();
+        // -- END launch progress bar
 
-		removeVolume();
-		removeMesh();
-		clearAllRODs();
+        removeVolume();
+        removeMesh();
+        clearAllRODs();
 
-		slicePlane->show(false);
-		disablePlane();
-		sculpture->setDICOMFolder(dicomFolder.toUtf8().constData());
-		slicePlane->setInputData(sculpture->getImageData());
-		ui->labelFolder->setText(dicomFolder);
-		defaultPlanePosition();
-		slicePlane->show(true);
-		enablePlane();
+        slicePlane->show(false);
+        disablePlane();
+        sculpture->setDICOMFolder(dicomFolder.toUtf8().constData());
+        slicePlane->setInputData(sculpture->getImageData());
+        ui->labelFolder->setText(dicomFolder);
+        defaultPlanePosition();
+        slicePlane->show(true);
+        enablePlane();
 
-		drawVolume();
-		drawMesh();
-		renderSlice();
+        drawVolume();
+        drawMesh();
+        renderSlice();
 
-		// -- close progress bar
-		progressDialog->close();
-		// -- END close progress bar
-	}
+        // -- close progress bar
+        progressDialog->close();
+        // -- END close progress bar
+    }
 }
 
 void MainWindow::importVTI() {
-	QString vtiFile = QFileDialog::getOpenFileName(this, tr("OPEN_VTI_FILE_CAPTION"), QDir::homePath(), "VTI (*.vti) ;; XML (*.xml) ;; All files (*.*)");
+    QString vtiFile = QFileDialog::getOpenFileName(this, tr("OPEN_VTI_FILE_CAPTION"), QDir::homePath(), "VTI (*.vti) ;; XML (*.xml) ;; All files (*.*)");
 
-	if (vtiFile != NULL) {
-		// -- launch progress bar
-		QPointer<QProgressBar> bar = new QProgressBar(0);
-		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(tr("LOADING"));
-		progressDialog->setLabelText(tr("LOADING_VTI_FILE"));
-		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-		progressDialog->setCancelButton(0);
-		progressDialog->setBar(bar);
-		progressDialog->show();
-		bar->close();
-		QApplication::processEvents();
-		// -- END launch progress bar
+    if (vtiFile != nullptr) {
+        // -- launch progress bar
+        QPointer<QProgressBar> bar = new QProgressBar();
+        QPointer<QProgressDialog> progressDialog = new QProgressDialog();
+        progressDialog->setWindowTitle(tr("LOADING"));
+        progressDialog->setLabelText(tr("LOADING_VTI_FILE"));
+        progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+        progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+        progressDialog->setCancelButton(nullptr);
+        progressDialog->setBar(bar);
+        progressDialog->show();
+        bar->close();
+        QApplication::processEvents();
+        // -- END launch progress bar
 
-		removeVolume();
-		removeMesh();
-		clearAllRODs();
+        removeVolume();
+        removeMesh();
+        clearAllRODs();
 
-		slicePlane->show(false);
-		disablePlane();
-		sculpture->setVTIFile(vtiFile.toUtf8().constData());
-		slicePlane->setInputData(sculpture->getImageData());
-		ui->labelFolder->setText(vtiFile);
-		defaultPlanePosition();
-		slicePlane->show(true);
-		enablePlane();
+        slicePlane->show(false);
+        disablePlane();
+        sculpture->setVTIFile(vtiFile.toUtf8().constData());
+        slicePlane->setInputData(sculpture->getImageData());
+        ui->labelFolder->setText(vtiFile);
+        defaultPlanePosition();
+        slicePlane->show(true);
+        enablePlane();
 
-		drawVolume();
-		drawMesh();
-		renderSlice();
+        drawVolume();
+        drawMesh();
+        renderSlice();
 
-		// -- close progress bar
-		progressDialog->close();
-		// -- END close progress bar
-	}
+        // -- close progress bar
+        progressDialog->close();
+        // -- END close progress bar
+    }
 }
 
 void MainWindow::exportVTI() {
-	if (sculpture->getLoaded()) {
-		QString filename = getExportVTIFilename(tr("SAVE_VOLUME_DEFAULT_NAME"));
-		if (filename != NULL) {
-			// -- launch progress bar
-			QPointer<QProgressBar> bar = new QProgressBar(0);
-			QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-			progressDialog->setWindowTitle(tr("EXPORTING_VOLUME"));
-			progressDialog->setLabelText(tr("EXPORTING_VOLUME_MODEL"));
-			progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-			progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-			progressDialog->setCancelButton(0);
-			progressDialog->setBar(bar);
-			progressDialog->show();
-			bar->close();
-			QApplication::processEvents();
-			// -- END launch progress bar
+    if (sculpture->getLoaded()) {
+        QString filename = getExportVTIFilename(tr("SAVE_VOLUME_DEFAULT_NAME"));
+        if (filename != nullptr) {
+            // -- launch progress bar
+            QPointer<QProgressBar> bar = new QProgressBar();
+            QPointer<QProgressDialog> progressDialog = new QProgressDialog();
+            progressDialog->setWindowTitle(tr("EXPORTING_VOLUME"));
+            progressDialog->setLabelText(tr("EXPORTING_VOLUME_MODEL"));
+            progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+            progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+            progressDialog->setCancelButton(nullptr);
+            progressDialog->setBar(bar);
+            progressDialog->show();
+            bar->close();
+            QApplication::processEvents();
+            // -- END launch progress bar
 
-			vtkSmartPointer<vtkXMLImageDataWriter> writer = vtkSmartPointer<vtkXMLImageDataWriter>::New();
-			writer->SetFileName(filename.toUtf8().constData());
-			writer->SetInputData(sculpture->getImageData());
-			writer->Write();
+            vtkSmartPointer<vtkXMLImageDataWriter> writer = vtkSmartPointer<vtkXMLImageDataWriter>::New();
+            writer->SetFileName(filename.toUtf8().constData());
+            writer->SetInputData(sculpture->getImageData());
+            writer->Write();
 
-			// -- close progress bar
-			progressDialog->close();
-			// -- END close progress bar
-		}
-	} else {
-		launchWarningNoVolume();
-	}
+            // -- close progress bar
+            progressDialog->close();
+            // -- END close progress bar
+        }
+    } else {
+        launchWarningNoVolume();
+    }
 }
 
 void MainWindow::importPreset() {
-	QString presetFile = QFileDialog::getOpenFileName(this, tr("OPEN_PRESET_CAPTION"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
+    QString presetFile = QFileDialog::getOpenFileName(this, tr("OPEN_PRESET_CAPTION"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
 
-	if (presetFile != NULL) {
-		std::string s = presetFile.toUtf8().constData();
-		sculpture->getTransferFunction()->read(s);
+    if (presetFile != nullptr) {
+        std::string s = presetFile.toUtf8().constData();
+        sculpture->getTransferFunction()->read(s);
 
-		// update tags
-		ui->tfName->setText(QString::fromUtf8(sculpture->getTransferFunction()->getName().c_str()));
-		ui->tfDescription->setText(QString::fromUtf8(sculpture->getTransferFunction()->getDescription().c_str()));
+        // update tags
+        ui->tfName->setText(QString::fromUtf8(sculpture->getTransferFunction()->getName().c_str()));
+        ui->tfDescription->setText(QString::fromUtf8(sculpture->getTransferFunction()->getDescription().c_str()));
 
-		colorTFChart->defaultRange(); 
-		scalarTFChart->defaultRange();
-		gradientTFChart->defaultRange();
+        colorTFChart->defaultRange();
+        scalarTFChart->defaultRange();
+        gradientTFChart->defaultRange();
 
-		updateSliders();
-	}
+        updateSliders();
+    }
 }
 
-void MainWindow::exportImageFromRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin, const QString filename) {
-	if (filename != NULL) {
-		vtkSmartPointer<vtkWindowToImageFilter> filter = vtkSmartPointer<vtkWindowToImageFilter>::New(); 
-		filter->SetInput(renWin);
-		filter->Update();
-		vtkSmartPointer<vtkImageWriter> writer;
-		if (toUpper(getFileExtension(filename.toUtf8().constData())) == "PNG") {
-			writer = vtkSmartPointer<vtkPNGWriter>::New();
-		} else {
-			writer = vtkSmartPointer<vtkJPEGWriter>::New();
-		}
-		writer->SetFileName(filename.toUtf8().constData()); 
-		writer->SetInputConnection(filter->GetOutputPort());
-		writer->Write();
-	}
+void MainWindow::exportImageFromRenderWindow(const vtkSmartPointer<vtkRenderWindow> &renWin, const QString &filename) {
+    if (filename != nullptr) {
+        vtkSmartPointer<vtkWindowToImageFilter> filter = vtkSmartPointer<vtkWindowToImageFilter>::New();
+        filter->SetInput(renWin);
+        filter->Update();
+        vtkSmartPointer<vtkImageWriter> writer;
+        if (toUpper(getFileExtension(filename.toUtf8().constData())) == "PNG") {
+            writer = vtkSmartPointer<vtkPNGWriter>::New();
+        } else {
+            writer = vtkSmartPointer<vtkJPEGWriter>::New();
+        }
+        writer->SetFileName(filename.toUtf8().constData());
+        writer->SetInputConnection(filter->GetOutputPort());
+        writer->Write();
+    }
 }
 
-void MainWindow::exportMeshToFile(const QString filename) {
-	if (filename != NULL) { 
-		// -- launch progress bar
-		QPointer<QProgressBar> bar = new QProgressBar(0);
-		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(tr("EXPORTING_MESH"));
-		progressDialog->setLabelText(tr("EXPORTING_MESH_MODEL"));
-		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-		progressDialog->setCancelButton(0);
-		progressDialog->setBar(bar);
-		progressDialog->show();
-		bar->close();
-		QApplication::processEvents();
-		// -- END launch progress bar
+void MainWindow::exportMeshToFile(const QString &filename) {
+    if (filename != nullptr) {
+        // -- launch progress bar
+        QPointer<QProgressBar> bar = new QProgressBar();
+        QPointer<QProgressDialog> progressDialog = new QProgressDialog();
+        progressDialog->setWindowTitle(tr("EXPORTING_MESH"));
+        progressDialog->setLabelText(tr("EXPORTING_MESH_MODEL"));
+        progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+        progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+        progressDialog->setCancelButton(nullptr);
+        progressDialog->setBar(bar);
+        progressDialog->show();
+        bar->close();
+        QApplication::processEvents();
+        // -- END launch progress bar
 
-		// marching cubes
-		vtkSmartPointer<vtkMarchingCubes> surface = vtkSmartPointer<vtkMarchingCubes>::New();
-		surface->SetInputData(sculpture->getImageData()); 
-		surface->UpdateInformation(); 
-		surface->ComputeScalarsOn();
-		surface->ComputeGradientsOn();
-		surface->ComputeNormalsOn();
-		surface->SetValue(0, sculpture->getIsoValue()); 
+        // marching cubes
+        vtkSmartPointer<vtkMarchingCubes> surface = vtkSmartPointer<vtkMarchingCubes>::New();
+        surface->SetInputData(sculpture->getImageData());
+        surface->UpdateInformation();
+        surface->ComputeScalarsOn();
+        surface->ComputeGradientsOn();
+        surface->ComputeNormalsOn();
+        surface->SetValue(0, sculpture->getIsoValue());
 
-		// get mesh
-		vtkSmartPointer<vtkPolyData> marched = vtkSmartPointer<vtkPolyData>::New();
-		surface->Update(); 
-		marched->DeepCopy(surface->GetOutput());
+        // get mesh
+        vtkSmartPointer<vtkPolyData> marched = vtkSmartPointer<vtkPolyData>::New();
+        surface->Update();
+        marched->DeepCopy(surface->GetOutput());
 
-		// mesh reduction
-		vtkSmartPointer<vtkDecimatePro> decimator = vtkSmartPointer<vtkDecimatePro>::New();
-		decimator->SetInputData(marched); 
-		decimator->SetTargetReduction(0.5); 
-		decimator->SetPreserveTopology(true);
-		decimator->Update();
+        // mesh reduction
+        vtkSmartPointer<vtkDecimatePro> decimator = vtkSmartPointer<vtkDecimatePro>::New();
+        decimator->SetInputData(marched);
+        decimator->SetTargetReduction(0.5);
+        decimator->SetPreserveTopology(true);
+        decimator->Update();
 
-		// mesh smooth
-		vtkSmartPointer<vtkSmoothPolyDataFilter> smoother = vtkSmartPointer<vtkSmoothPolyDataFilter>::New();
-		smoother->SetInputData(decimator->GetOutput());
-		smoother->SetNumberOfIterations(5);
-		smoother->SetFeatureAngle(60);
-		smoother->SetRelaxationFactor(0.05);
-		smoother->FeatureEdgeSmoothingOff();
-		smoother->Update();
+        // mesh smooth
+        vtkSmartPointer<vtkSmoothPolyDataFilter> smoother = vtkSmartPointer<vtkSmoothPolyDataFilter>::New();
+        smoother->SetInputData(decimator->GetOutput());
+        smoother->SetNumberOfIterations(5);
+        smoother->SetFeatureAngle(60);
+        smoother->SetRelaxationFactor(0.05);
+        smoother->FeatureEdgeSmoothingOff();
+        smoother->Update();
 
-		// get final mesh
-		vtkSmartPointer<vtkPolyData> mesh = vtkSmartPointer<vtkPolyData>::New();
-		mesh->ShallowCopy(smoother->GetOutput());
+        // get final mesh
+        vtkSmartPointer<vtkPolyData> mesh = vtkSmartPointer<vtkPolyData>::New();
+        mesh->ShallowCopy(smoother->GetOutput());
 
-		// export to STL
-		vtkSmartPointer<vtkSTLWriter> stlWriter = vtkSmartPointer<vtkSTLWriter>::New();
-		stlWriter->SetFileName(filename.toUtf8().constData());
-		stlWriter->SetInputData(mesh);
-		stlWriter->Write();
+        // export to STL
+        vtkSmartPointer<vtkSTLWriter> stlWriter = vtkSmartPointer<vtkSTLWriter>::New();
+        stlWriter->SetFileName(filename.toUtf8().constData());
+        stlWriter->SetInputData(mesh);
+        stlWriter->Write();
 
-		// -- close progress bar
-		progressDialog->close();
-		// -- END close progress bar
-	}
+        // -- close progress bar
+        progressDialog->close();
+        // -- END close progress bar
+    }
 }
 
-void MainWindow::exportPreset(const QString filename) {
-	if (filename != NULL) {
-		// get name and description from GUI
-		sculpture->getTransferFunction()->setName(ui->tfName->text().toUtf8().constData());
-		sculpture->getTransferFunction()->setDescription(ui->tfDescription->text().toUtf8().constData());
+void MainWindow::exportPreset(const QString &filename) {
+    if (filename != nullptr) {
+        // get name and description from GUI
+        sculpture->getTransferFunction()->setName(ui->tfName->text().toUtf8().constData());
+        sculpture->getTransferFunction()->setDescription(ui->tfDescription->text().toUtf8().constData());
 
-		std::string s = filename.toUtf8().constData();
-		sculpture->getTransferFunction()->write(s);
-	}
+        std::string s = filename.toUtf8().constData();
+        sculpture->getTransferFunction()->write(s);
+    }
 }
 
-QString MainWindow::getExportPresetFilename(const QString defaultFilename) {
-	return QFileDialog::getSaveFileName(this, tr("SAVE_PRESET_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
+QString MainWindow::getExportPresetFilename(const QString &defaultFilename) {
+    return QFileDialog::getSaveFileName(this, tr("SAVE_PRESET_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
 }
 
-QString MainWindow::getExportImageFilename(const QString defaultFilename) {
-	return QFileDialog::getSaveFileName(this, tr("SAVE_SCREENSHOT_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "PNG (*.png);;JPG (*.jpg)");
+QString MainWindow::getExportImageFilename(const QString &defaultFilename) {
+    return QFileDialog::getSaveFileName(this, tr("SAVE_SCREENSHOT_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "PNG (*.png);;JPG (*.jpg)");
 }
 
-QString MainWindow::getExportMeshFilename(const QString defaultFilename) {
-	return QFileDialog::getSaveFileName(this, tr("SAVE_MESH_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "STL (*.stl)");
+QString MainWindow::getExportMeshFilename(const QString &defaultFilename) {
+    return QFileDialog::getSaveFileName(this, tr("SAVE_MESH_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "STL (*.stl)");
 }
 
-QString MainWindow::getExportRODFilename(const QString defaultFilename) {
-	return QFileDialog::getSaveFileName(this, tr("SAVE_ROD_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
+QString MainWindow::getExportRODFilename(const QString &defaultFilename) {
+    return QFileDialog::getSaveFileName(this, tr("SAVE_ROD_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
 }
 
-QString MainWindow::getExportVTIFilename(const QString defaultFilename) {
-	return QFileDialog::getSaveFileName(this, tr("SAVE_VOLUME_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "VTI (*.vti) ;; XML (*.xml)");
+QString MainWindow::getExportVTIFilename(const QString &defaultFilename) {
+    return QFileDialog::getSaveFileName(this, tr("SAVE_VOLUME_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "VTI (*.vti) ;; XML (*.xml)");
 }
 
 void MainWindow::enablePlane() {
-	slicePlane->enable(true);
-	QIcon icon(":/icons/eye-slash.png");
-	ui->enableDisablePlane->setIcon(icon); 
-	showPlane = true; 
+    slicePlane->enable(true);
+    QIcon icon(":/icons/eye-slash.png");
+    ui->enableDisablePlane->setIcon(icon);
+    showPlane = true;
 }
 
 void MainWindow::disablePlane() {
-	slicePlane->enable(false);
-	QIcon icon(":/icons/eye.png");
-	ui->enableDisablePlane->setIcon(icon);
-	showPlane = false;
+    slicePlane->enable(false);
+    QIcon icon(":/icons/eye.png");
+    ui->enableDisablePlane->setIcon(icon);
+    showPlane = false;
 }
 
 void MainWindow::exportMesh() {
-	if (sculpture->getLoaded()) {
-		exportMeshToFile(getExportMeshFilename(tr("SAVE_MESH_DEFAULT_NAME")));
-	} else {
-		launchWarningNoVolume();
-	}
+    if (sculpture->getLoaded()) {
+        exportMeshToFile(getExportMeshFilename(tr("SAVE_MESH_DEFAULT_NAME")));
+    } else {
+        launchWarningNoVolume();
+    }
 }
 
 void MainWindow::updateMesh() {
-	if (sculpture->getLoaded()) { 
-		// -- launch progress bar
-		QPointer<QProgressBar> bar = new QProgressBar(0);
-		QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-		progressDialog->setWindowTitle(tr("UPDATING_MESH"));
-		progressDialog->setLabelText(tr("GENERATING_MESH_WITH_THE_SPECIFIED_ISO_SURFACE"));
-		progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-		progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-		progressDialog->setCancelButton(0);
-		progressDialog->setBar(bar);
-		progressDialog->show();
-		bar->close();
-		QApplication::processEvents();
-		// -- END launch progress bar
+    if (sculpture->getLoaded()) {
+        // -- launch progress bar
+        QPointer<QProgressBar> bar = new QProgressBar();
+        QPointer<QProgressDialog> progressDialog = new QProgressDialog();
+        progressDialog->setWindowTitle(tr("UPDATING_MESH"));
+        progressDialog->setLabelText(tr("GENERATING_MESH_WITH_THE_SPECIFIED_ISO_SURFACE"));
+        progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+        progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+        progressDialog->setCancelButton(nullptr);
+        progressDialog->setBar(bar);
+        progressDialog->show();
+        bar->close();
+        QApplication::processEvents();
+        // -- END launch progress bar
 
-		sculpture->createMesh();
-		meshRen->Render();
+        sculpture->createMesh();
+        meshRen->Render();
 
-		// -- close progress bar
-		progressDialog->close();
-		// -- END close progress bar
+        // -- close progress bar
+        progressDialog->close();
+        // -- END close progress bar
 
-	} else {
-		launchWarningNoVolume();
-	}
+    } else {
+        launchWarningNoVolume();
+    }
 }
 
 void MainWindow::enableDisablePlane() {
-	if (showPlane) {
-		disablePlane();
-	} else {
-		enablePlane();
-	}
-	renderVolume();
+    if (showPlane) {
+        disablePlane();
+    } else {
+        enablePlane();
+    }
+    renderVolume();
 }
 
 void MainWindow::axialPlane() {
-	if (sculpture->getLoaded()) {
-		slicePlane->setAxial();
-		if (activeROD != NULL) {
-			unsetActiveROD();
-		}
-		renderVolume();
-		renderSlice();
-	} else {
-		launchWarningNoVolume();
-	}
+    if (sculpture->getLoaded()) {
+        slicePlane->setAxial();
+        if (activeROD != nullptr) {
+            unsetActiveROD();
+        }
+        renderVolume();
+        renderSlice();
+    } else {
+        launchWarningNoVolume();
+    }
 }
 
 void MainWindow::coronalPlane() {
-	if (sculpture->getLoaded()) {
-		slicePlane->setCoronal();
-		if (activeROD != NULL) {
-			unsetActiveROD();
-		}
-		renderVolume();
-		renderSlice();
-	} else {
-		launchWarningNoVolume();
-	}
+    if (sculpture->getLoaded()) {
+        slicePlane->setCoronal();
+        if (activeROD != nullptr) {
+            unsetActiveROD();
+        }
+        renderVolume();
+        renderSlice();
+    } else {
+        launchWarningNoVolume();
+    }
 }
 
 void MainWindow::sagitalPlane() {
-	if (sculpture->getLoaded()) {
-		slicePlane->setSagital();
-		if (activeROD != NULL) {
-			unsetActiveROD();
-		}
-		renderVolume();
-		renderSlice();
-	} else {
-		launchWarningNoVolume();
-	}
+    if (sculpture->getLoaded()) {
+        slicePlane->setSagital();
+        if (activeROD != nullptr) {
+            unsetActiveROD();
+        }
+        renderVolume();
+        renderSlice();
+    } else {
+        launchWarningNoVolume();
+    }
 }
 
 void MainWindow::deleteVolumeParts() {
-	if (deleting) {
-		deleting = false;
-		setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
-		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
-	} else {
-		deleting = true;
-		setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
-		ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(deleterStyle);
-	}
-	slicePlane->getPlane()->UpdatePlacement();
-	renderVolume();
-	renderSlice();
+    if (deleting) {
+        deleting = false;
+        setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
+        ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
+    } else {
+        deleting = true;
+        setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
+        ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(deleterStyle);
+    }
+    slicePlane->getPlane()->UpdatePlacement();
+    renderVolume();
+    renderSlice();
 }
 
 void MainWindow::importCompletePreset() {
-	QFile file(":/presets/ct-woodsculpture.xml");
-	loadDefaultPreset(&file);
-	renderVolume();
+    QFile file(":/presets/ct-woodsculpture.xml");
+    loadDefaultPreset(&file);
+    renderVolume();
 }
 
 void MainWindow::importWoodPreset() {
-	QFile file(":/presets/ct-onlywood.xml");
-	loadDefaultPreset(&file);
-	renderVolume();
+    QFile file(":/presets/ct-onlywood.xml");
+    loadDefaultPreset(&file);
+    renderVolume();
 }
 
 void MainWindow::importStuccoPreset() {
-	QFile file(":/presets/ct-onlystucco.xml");
-	loadDefaultPreset(&file);
-	renderVolume();
+    QFile file(":/presets/ct-onlystucco.xml");
+    loadDefaultPreset(&file);
+    renderVolume();
 }
 
 void MainWindow::importMetalPreset() {
-	QFile file(":/presets/ct-onlymetal.xml");
-	loadDefaultPreset(&file);
-	renderVolume();
+    QFile file(":/presets/ct-onlymetal.xml");
+    loadDefaultPreset(&file);
+    renderVolume();
 }
 
-void MainWindow::changeBackgroundColor(const int widget) {
-	QColor color;
-	switch (widget) {
-		case VOLUME_BACKGROUND:
-			color = QColorDialog::getColor(volumeBackground);
-			if (color.isValid()) {
-				volumeBackground = color;
-				if (!deleting) { 
-					setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
-					renderVolume(); 
-				}
-				ui->volumeBackground->setStyleSheet("background-color: " + volumeBackground.name()); 
-			}
-			break;
-		case VOLUME_DELETING_BACKGROUND: 
-			color = QColorDialog::getColor(volumeDeletingBackground);
-			if (color.isValid()) {
-				volumeDeletingBackground = color;
-				if (deleting) {
-					setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
-					renderVolume();
-				}
-				ui->volumeDeletingBackground->setStyleSheet("background-color: " + volumeDeletingBackground.name());
-			}
-			break;
-		case MESH_BACKGROUND:
-			color = QColorDialog::getColor(meshBackground);
-			if (color.isValid()) {
-				meshBackground = color;
-				setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
-				renderMesh();
-				ui->meshBackground->setStyleSheet("background-color: " + meshBackground.name());
-			}
-			break;
-	}
+void MainWindow::changeBackgroundColor(int widget) {
+    QColor color;
+    switch (widget) {
+        case VOLUME_BACKGROUND:
+            color = QColorDialog::getColor(volumeBackground);
+            if (color.isValid()) {
+                volumeBackground = color;
+                if (!deleting) {
+                    setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
+                    renderVolume();
+                }
+                ui->volumeBackground->setStyleSheet("background-color: " + volumeBackground.name());
+            }
+            break;
+        case VOLUME_DELETING_BACKGROUND:
+            color = QColorDialog::getColor(volumeDeletingBackground);
+            if (color.isValid()) {
+                volumeDeletingBackground = color;
+                if (deleting) {
+                    setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
+                    renderVolume();
+                }
+                ui->volumeDeletingBackground->setStyleSheet("background-color: " + volumeDeletingBackground.name());
+            }
+            break;
+        case MESH_BACKGROUND:
+            color = QColorDialog::getColor(meshBackground);
+            if (color.isValid()) {
+                meshBackground = color;
+                setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
+                renderMesh();
+                ui->meshBackground->setStyleSheet("background-color: " + meshBackground.name());
+            }
+            break;
+    }
 }
 
 void MainWindow::restoreBackgroundsColors() {
-	defaultBackgroundsColors();
-	if (deleting) {
-		setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
-	} else { 
-		setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
-	}
-	setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
-	renderVolume();
-	renderMesh();
+    defaultBackgroundsColors();
+    if (deleting) {
+        setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
+    } else {
+        setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
+    }
+    setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
+    renderVolume();
+    renderMesh();
 }
-void MainWindow::launchWarning(const std::string message) {
-	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
-	confirmBox->setWindowTitle(tr("WARNING"));
-	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-	confirmBox->setIcon(QMessageBox::Information);
-	confirmBox->setText(QString::fromLatin1(message.c_str()));
-	confirmBox->setStandardButtons(QMessageBox::Ok);
-	confirmBox->exec();
+void MainWindow::launchWarning(const std::string &message) {
+    QPointer<QMessageBox> confirmBox = new QMessageBox();
+    confirmBox->setWindowTitle(tr("WARNING"));
+    confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+    confirmBox->setIcon(QMessageBox::Information);
+    confirmBox->setText(QString::fromLatin1(message.c_str()));
+    confirmBox->setStandardButtons(QMessageBox::Ok);
+    confirmBox->exec();
 }
 
 void MainWindow::launchWarningNoVolume() {
-	launchWarning(tr("WARNING_VOLUME").toUtf8().constData());
+    launchWarning(tr("WARNING_VOLUME").toUtf8().constData());
 }
 
 void MainWindow::launchWarningNoRule() {
-	launchWarning(tr("WARNING_RULE").toUtf8().constData());
+    launchWarning(tr("WARNING_RULE").toUtf8().constData());
 }
 
 void MainWindow::launchWarningNoProtractor() {
-	launchWarning(tr("WARNING_PROTRACTOR").toUtf8().constData());
+    launchWarning(tr("WARNING_PROTRACTOR").toUtf8().constData());
 }
 
 void MainWindow::launchWarningNoAnnotationText() {
-	launchWarning(tr("WARNING_COMMENT_TEXT").toUtf8().constData());
+    launchWarning(tr("WARNING_COMMENT_TEXT").toUtf8().constData());
 }
 
 void MainWindow::launchWarningNoAnnotation() {
-	launchWarning(tr("WARNING_COMMENT").toUtf8().constData());
+    launchWarning(tr("WARNING_COMMENT").toUtf8().constData());
 }
 
 void MainWindow::launchWarningNoActiveROD() {
-	launchWarning(tr("WARNING_ROD").toUtf8().constData());
+    launchWarning(tr("WARNING_ROD").toUtf8().constData());
 }
 
-void MainWindow::segmentateOnOff() {
-	if (segmentating) {
-		ui->slicesWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(sliceStyle);
-		ui->segmentate->setIcon(QIcon(":/icons/scissors.png"));
-		segmentating = false;
-	} else {
-		ui->slicesWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(segmentationStyle); 
-		ui->segmentate->setIcon(QIcon(":/icons/scissors-slash.png"));
-		segmentating = true;
-	}
+void MainWindow::segmentationOnOff() {
+    if (segmenting) {
+        ui->slicesWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(sliceStyle);
+        ui->segmentate->setIcon(QIcon(":/icons/scissors.png"));
+        segmenting = false;
+    } else {
+        ui->slicesWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(segmentationStyle);
+        ui->segmentate->setIcon(QIcon(":/icons/scissors-slash.png"));
+        segmenting = true;
+    }
 }
 
 void MainWindow::filter() {
-	if (sculpture->getLoaded()) {
-		FilterSelectionDialog *dialog = new FilterSelectionDialog();
+    if (sculpture->getLoaded()) {
+        auto *dialog = new FilterSelectionDialog();
 
-		int response = dialog->exec();
+        int response = dialog->exec();
 
-		if (response != CANCEL) {
-			// -- launch progress bar
-			QPointer<QProgressBar> bar = new QProgressBar(0);
-			QPointer<QProgressDialog> progressDialog = new QProgressDialog(0);
-			progressDialog->setWindowTitle(tr("FILTERING"));
-			progressDialog->setLabelText(tr("APPLYING_FILTER"));
-			progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-			progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-			progressDialog->setCancelButton(0);
-			progressDialog->setBar(bar);
-			progressDialog->show();
-			bar->close();
-			QApplication::processEvents();
-			// -- END launch progress bar
+        if (response != CANCEL) {
+            // -- launch progress bar
+            QPointer<QProgressBar> bar = new QProgressBar();
+            QPointer<QProgressDialog> progressDialog = new QProgressDialog();
+            progressDialog->setWindowTitle(tr("FILTERING"));
+            progressDialog->setLabelText(tr("APPLYING_FILTER"));
+            progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+            progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
+            progressDialog->setCancelButton(nullptr);
+            progressDialog->setBar(bar);
+            progressDialog->show();
+            bar->close();
+            QApplication::processEvents();
+            // -- END launch progress bar
 
-			switch (response) {
-			case GAUSSIAN:
-				sculpture->gaussianFilter(dialog->getGaussianReps());
-				break;
-			case MEAN:
-				sculpture->meanFilter(dialog->getMeanRadius());
-				break;
-			case MEDIAN:
-				sculpture->medianFilter(dialog->getMedianRadius());
-				break;
-			}
+            switch (response) {
+                case MEAN:
+                    sculpture->meanFilter(dialog->getMeanRadius());
+                    break;
+                case MEDIAN:
+                    sculpture->medianFilter(dialog->getMedianRadius());
+                    break;
+                default:
+                    sculpture->gaussianFilter(dialog->getGaussianReps());
+                    break;
+            }
 
-			// -- close progress bar
-			progressDialog->close();
-			// -- END close progress bar
-		}
-	} else {
-		launchWarningNoVolume();
-	}
+            // -- close progress bar
+            progressDialog->close();
+            // -- END close progress bar
+        }
+    } else {
+        launchWarningNoVolume();
+    }
 }
 
 void MainWindow::unsetActiveROD() {
-	if (activeROD != NULL) {
-		activeROD->hideAll();
-		ui->RODList->setCurrentItem(nullROD);
-		updateActiveROD(NULL);
-		nullROD->setSelected(true);
-	}
+    if (activeROD != nullptr) {
+        activeROD->hideAll();
+        ui->RODList->setCurrentItem(nullROD);
+        updateActiveROD(nullptr);
+        nullROD->setSelected(true);
+    }
 }
 
 void MainWindow::setActiveROD(ROD* rod) {
-	if (activeROD != NULL) {
-		activeROD->hideAll();
-	}
-	if (rod != NULL) {
-		updateActiveROD(rod);
-		activeROD->showAll();
-		slicePlane->setCustomPosition(activeROD->getOrigin(), activeROD->getPoint1(), activeROD->getPoint2(), activeROD->getSlicePosition());
-		renderVolume();
-		renderSlice();
-	}
+    if (activeROD != nullptr) {
+        activeROD->hideAll();
+    }
+    if (rod != nullptr) {
+        updateActiveROD(rod);
+        activeROD->showAll();
+        slicePlane->setCustomPosition(activeROD->getOrigin(), activeROD->getPoint1(), activeROD->getPoint2(), activeROD->getSlicePosition());
+        renderVolume();
+        renderSlice();
+    }
 }
 
 void MainWindow::updateActiveROD(ROD *rod) {
-	activeROD = rod;
-	slicePlane->getPlane()->setActiveROD(rod);
+    activeROD = rod;
+    slicePlane->getPlane()->setActiveROD(rod);
 }
 
 void MainWindow::addROD() {
-	if (sculpture->getLoaded()) {
-		std::string name;
-		QListWidgetItem *item = new QListWidgetItem(0);
-		bool ok;
-		QString text = QInputDialog::getText(this, tr("ADD_ROD_TITLE"), tr("ADD_ROD_LABEL"), QLineEdit::Normal, tr("ADD_ROD_UNNAMED"), &ok);
-		if (ok) {
-			if (text.isEmpty()) {
-				name = tr("ADD_ROD_UNNAMED").toUtf8().constData();;
-			} else {
-				name = text.toUtf8().constData(); 
-			}
-			item->setText(name.c_str());
-			ui->RODList->addItem(item);
-			rods[item] = new ROD(name, slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition(), itemListEnabled, itemListDisabled, ui->slicesWidget->GetInteractor());
-			ui->RODList->setCurrentItem(item); // calls setActiveROD
-			item->setSelected(true);
-		}
-	} else {
-		launchWarningNoVolume();
-	}
+    if (sculpture->getLoaded()) {
+        std::string name;
+        auto *item = new QListWidgetItem(nullptr);
+        bool ok;
+        QString text = QInputDialog::getText(this, tr("ADD_ROD_TITLE"), tr("ADD_ROD_LABEL"), QLineEdit::Normal, tr("ADD_ROD_UNNAMED"), &ok);
+        if (ok) {
+            if (text.isEmpty()) {
+                name = tr("ADD_ROD_UNNAMED").toUtf8().constData();
+            } else {
+                name = text.toUtf8().constData();
+            }
+            item->setText(name.c_str());
+            ui->RODList->addItem(item);
+            rods[item] = new ROD(name, slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition(), itemListEnabled, itemListDisabled, ui->slicesWidget->GetInteractor());
+            ui->RODList->setCurrentItem(item); // calls setActiveROD
+            item->setSelected(true);
+        }
+    } else {
+        launchWarningNoVolume();
+    }
 }
 
 void MainWindow::deleteROD() {
-	if (activeROD != NULL) {
-		rods.erase(ui->RODList->currentItem());
-		delete ui->RODList->currentItem();
-		unsetActiveROD();
-	}
+    if (activeROD != nullptr) {
+        rods.erase(ui->RODList->currentItem());
+        delete ui->RODList->currentItem();
+        unsetActiveROD();
+    }
 }
 
 void MainWindow::clearAllRODs() {
-	rods.clear();
-	ui->RODList->clear();
-	nullROD = new QListWidgetItem("---");
-	ui->RODList->insertItem(0, nullROD);
-	slicePlane->getPlane()->setNullROD(nullROD);
+    rods.clear();
+    ui->RODList->clear();
+    nullROD = new QListWidgetItem("---");
+    ui->RODList->insertItem(0, nullROD);
 }
 
 void MainWindow::addRule() {
-	if (activeROD != NULL && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
-		unsetActiveROD();
-	}
-	if (activeROD != NULL) {
-		std::string name;
-		QListWidgetItem *item = new QListWidgetItem(0);
-		bool ok;
-		QString text = QInputDialog::getText(this, tr("ADD_RULE_LABEL"), tr("ADD_RULE_LABEL"), QLineEdit::Normal, tr("ADD_RULE_UNNAMED"), &ok);
-		if (ok) {
-			if (text.isEmpty()) {
-				name = tr("ADD_RULE_UNNAMED").toUtf8().constData();
-			} else {
-				name = text.toUtf8().constData();
-			}
-			item->setText(name.c_str());
-			ui->ruleList->addItem(item);
-			ui->ruleList->setCurrentItem(item);
-			activeROD->addRule(item);
-		}
-	} else {
-		launchWarningNoActiveROD();
-	}
+    if (activeROD != nullptr && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
+        unsetActiveROD();
+    }
+    if (activeROD != nullptr) {
+        std::string name;
+        auto *item = new QListWidgetItem();
+        bool ok;
+        QString text = QInputDialog::getText(this, tr("ADD_RULE_LABEL"), tr("ADD_RULE_LABEL"), QLineEdit::Normal, tr("ADD_RULE_UNNAMED"), &ok);
+        if (ok) {
+            if (text.isEmpty()) {
+                name = tr("ADD_RULE_UNNAMED").toUtf8().constData();
+            } else {
+                name = text.toUtf8().constData();
+            }
+            item->setText(name.c_str());
+            ui->ruleList->addItem(item);
+            ui->ruleList->setCurrentItem(item);
+            activeROD->addRule(item);
+        }
+    } else {
+        launchWarningNoActiveROD();
+    }
 }
 
 void MainWindow::deleteRule() {
-	if (ui->ruleList->currentItem() != NULL) {
-		activeROD->deleteRule(ui->ruleList->currentItem());
-		delete ui->ruleList->currentItem();
-		renderSlice();
-	} else {
-		launchWarningNoRule();
-	}
+    if (ui->ruleList->currentItem() != nullptr) {
+        activeROD->deleteRule(ui->ruleList->currentItem());
+        delete ui->ruleList->currentItem();
+        renderSlice();
+    } else {
+        launchWarningNoRule();
+    }
 }
 
 void MainWindow::enableDisableRule() {
-	if (ui->ruleList->currentItem() != NULL) {
-		activeROD->enableDisableRule(ui->ruleList->currentItem());
-	} else {
-		launchWarningNoRule();
-	}
+    if (ui->ruleList->currentItem() != nullptr) {
+        activeROD->enableDisableRule(ui->ruleList->currentItem());
+    } else {
+        launchWarningNoRule();
+    }
 }
 
 void MainWindow::addProtractor() {
-	if (activeROD != NULL && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
-		unsetActiveROD();
-	}
-	if (activeROD != NULL) {
-		std::string name;
-		QListWidgetItem *item = new QListWidgetItem(0);
-		bool ok;
-		QString text = QInputDialog::getText(this, tr("ADD_PROTRACTOR_TITLE"), tr("ADD_PROTRACTOR_LABEL"), QLineEdit::Normal, tr("ADD_PROTRACTOR_UNNAMED"), &ok);
-		if (ok) {
-			if (text.isEmpty()) {
-				name = tr("ADD_PROTRACTOR_UNNAMED").toUtf8().constData();
-			} else {
-				name = text.toUtf8().constData();
-			}
-			item->setText(name.c_str());
-			ui->protractorList->addItem(item);
-			ui->protractorList->setCurrentItem(item);
-			activeROD->addProtractor(item);
-		}
-	} else {
-		launchWarningNoActiveROD();
-	}
+    if (activeROD != nullptr && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
+        unsetActiveROD();
+    }
+    if (activeROD != nullptr) {
+        std::string name;
+        auto *item = new QListWidgetItem();
+        bool ok;
+        QString text = QInputDialog::getText(this, tr("ADD_PROTRACTOR_TITLE"), tr("ADD_PROTRACTOR_LABEL"), QLineEdit::Normal, tr("ADD_PROTRACTOR_UNNAMED"), &ok);
+        if (ok) {
+            if (text.isEmpty()) {
+                name = tr("ADD_PROTRACTOR_UNNAMED").toUtf8().constData();
+            } else {
+                name = text.toUtf8().constData();
+            }
+            item->setText(name.c_str());
+            ui->protractorList->addItem(item);
+            ui->protractorList->setCurrentItem(item);
+            activeROD->addProtractor(item);
+        }
+    } else {
+        launchWarningNoActiveROD();
+    }
 }
 
 void MainWindow::deleteProtractor() {
-	if (ui->protractorList->currentItem() != NULL) {
-		activeROD->deleteProtractor(ui->protractorList->currentItem());
-		delete ui->protractorList->currentItem();
-		renderSlice();
-	} else {
-		launchWarningNoProtractor();
-	}
+    if (ui->protractorList->currentItem() != nullptr) {
+        activeROD->deleteProtractor(ui->protractorList->currentItem());
+        delete ui->protractorList->currentItem();
+        renderSlice();
+    } else {
+        launchWarningNoProtractor();
+    }
 }
 
 void MainWindow::enableDisableProtractor() {
-	if (ui->protractorList->currentItem() != NULL) {
-		activeROD->enableDisableProtractor(ui->protractorList->currentItem());
-	} else {
-		launchWarningNoProtractor();
-	}
+    if (ui->protractorList->currentItem() != nullptr) {
+        activeROD->enableDisableProtractor(ui->protractorList->currentItem());
+    } else {
+        launchWarningNoProtractor();
+    }
 }
 
 void MainWindow::addAnnotation() {
-	if (activeROD != NULL && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
-		unsetActiveROD();
-	}
-	if (activeROD != NULL) {
-		std::string name;
-		std::string description = ui->annotation->toPlainText().toUtf8().constData();
-		if (description == "") {
-			launchWarningNoAnnotationText();
-		} else {
-			QListWidgetItem *item = new QListWidgetItem(0);
-			bool ok;
-			QString text = QInputDialog::getText(this, tr("ADD_COMMENT_TITLE"), tr("ADD_COMMENT_LABEL"), QLineEdit::Normal, tr("ADD_COMMENT_UNNAMED"), &ok);
-			if (ok) {
-				if (text.isEmpty()) {
-					name = tr("ADD_COMMENT_UNNAMED").toUtf8().constData();
-				} else {
-					name = text.toUtf8().constData();
-				}
-				item->setText(name.c_str());
-				ui->annotationList->addItem(item);
-				ui->annotationList->setCurrentItem(item);
-				activeROD->addAnnotation(item, description);
-				ui->annotation->clear();
-			}
-		}
-	} else {
-		launchWarningNoActiveROD();
-	}
+    if (activeROD != nullptr && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
+        unsetActiveROD();
+    }
+    if (activeROD != nullptr) {
+        std::string name;
+        std::string description = ui->annotation->toPlainText().toUtf8().constData();
+        if (description.empty()) {
+            launchWarningNoAnnotationText();
+        } else {
+            auto *item = new QListWidgetItem();
+            bool ok;
+            QString text = QInputDialog::getText(this, tr("ADD_COMMENT_TITLE"), tr("ADD_COMMENT_LABEL"), QLineEdit::Normal, tr("ADD_COMMENT_UNNAMED"), &ok);
+            if (ok) {
+                if (text.isEmpty()) {
+                    name = tr("ADD_COMMENT_UNNAMED").toUtf8().constData();
+                } else {
+                    name = text.toUtf8().constData();
+                }
+                item->setText(name.c_str());
+                ui->annotationList->addItem(item);
+                ui->annotationList->setCurrentItem(item);
+                activeROD->addAnnotation(item, description);
+                ui->annotation->clear();
+            }
+        }
+    } else {
+        launchWarningNoActiveROD();
+    }
 }
 
 void MainWindow::deleteAnnotation() {
-	if (ui->annotationList->currentItem() != NULL) {
-		activeROD->deleteAnnotation(ui->annotationList->currentItem());
-		delete ui->annotationList->currentItem();
-		renderSlice();
-	} else {
-		launchWarningNoAnnotation();
-	}
+    if (ui->annotationList->currentItem() != nullptr) {
+        activeROD->deleteAnnotation(ui->annotationList->currentItem());
+        delete ui->annotationList->currentItem();
+        renderSlice();
+    } else {
+        launchWarningNoAnnotation();
+    }
 }
 
 void MainWindow::enableDisableAnnotation() {
-	if (ui->annotationList->currentItem() != NULL) {
-		activeROD->enableDisableAnnotation(ui->annotationList->currentItem());
-	} else {
-		launchWarningNoAnnotation();
-	}
+    if (ui->annotationList->currentItem() != nullptr) {
+        activeROD->enableDisableAnnotation(ui->annotationList->currentItem());
+    } else {
+        launchWarningNoAnnotation();
+    }
 }
 
 void MainWindow::importROD() {
-	if (sculpture->getLoaded()) {
-		QString rodFile = QFileDialog::getOpenFileName(this, tr("OPEN_ROD_FILE"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
-		if (rodFile != NULL) {
-			std::string s = rodFile.toUtf8().constData();
-			ROD* rod = new ROD(s, itemListEnabled, itemListDisabled, ui->slicesWidget->GetInteractor(), ui->ruleList, ui->protractorList, ui->annotationList);
-			QListWidgetItem *item = new QListWidgetItem(0);
-			item->setText(QString::fromStdString(rod->getName()));
-			ui->RODList->addItem(item);
-			rods[item] = rod;
-			ui->RODList->setCurrentItem(item); // calls setActiveROD
-			item->setSelected(true);
-		}
-	} else {
-		launchWarningNoVolume();
-	}
+    if (sculpture->getLoaded()) {
+        QString rodFile = QFileDialog::getOpenFileName(this, tr("OPEN_ROD_FILE"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
+        if (rodFile != nullptr) {
+            std::string s = rodFile.toUtf8().constData();
+            ROD* rod = new ROD(s, itemListEnabled, itemListDisabled, ui->slicesWidget->GetInteractor(), ui->ruleList, ui->protractorList, ui->annotationList);
+            auto *item = new QListWidgetItem();
+            item->setText(QString::fromStdString(rod->getName()));
+            ui->RODList->addItem(item);
+            rods[item] = rod;
+            ui->RODList->setCurrentItem(item); // calls setActiveROD
+            item->setSelected(true);
+        }
+    } else {
+        launchWarningNoVolume();
+    }
 }
 
-void MainWindow::exportROD(const QString filename) {
-	if (filename != NULL) {
-		std::string s = filename.toUtf8().constData();
-		activeROD->write(s);
-	}
+void MainWindow::exportROD(const QString &filename) {
+    if (filename != nullptr) {
+        std::string s = filename.toUtf8().constData();
+        activeROD->write(s);
+    }
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -963,98 +962,98 @@ void MainWindow::exportROD(const QString filename) {
 //---------------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::on_actionOpenDICOM_triggered() {
-	importDICOM();
+    importDICOM();
 }
 
 void MainWindow::on_actionExportVolumeImage_triggered() {
-	exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+    exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_actionExportSliceImage_triggered() {
-	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+    exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_actionExit_triggered() {
-	QPointer<QMessageBox> confirmBox = new QMessageBox(0);
-	confirmBox->setWindowTitle(tr("WARNING"));
-	confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-	confirmBox->setIcon(QMessageBox::Information);
-	confirmBox->setText(tr("ARE_YOU_SURE_YOU_WANT_TO_EXIT?"));
-	confirmBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-	confirmBox->button(QMessageBox::Yes)->setText(tr("CONFIRM_EXIT_YES"));
-	confirmBox->button(QMessageBox::No)->setText(tr("CONFIRM_EXIT_NO"));
-	if (confirmBox->exec() == QMessageBox::Yes) {
-		exit(0);
-	}
+    QPointer<QMessageBox> confirmBox = new QMessageBox();
+    confirmBox->setWindowTitle(tr("WARNING"));
+    confirmBox->setWindowIcon(QIcon(":/icons/3DCurator.png"));
+    confirmBox->setIcon(QMessageBox::Information);
+    confirmBox->setText(tr("ARE_YOU_SURE_YOU_WANT_TO_EXIT?"));
+    confirmBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    confirmBox->button(QMessageBox::Yes)->setText(tr("CONFIRM_EXIT_YES"));
+    confirmBox->button(QMessageBox::No)->setText(tr("CONFIRM_EXIT_NO"));
+    if (confirmBox->exec() == QMessageBox::Yes) {
+        exit(0);
+    }
 }
 
 void MainWindow::on_actionPreferences_triggered() {
-	PreferencesDialog *dialog = new PreferencesDialog(settings, language);
-	dialog->exec();
+    auto *dialog = new PreferencesDialog(settings, language);
+    dialog->exec();
 }
 
 void MainWindow::on_actionEnableDisablePlane_triggered() {
-	enableDisablePlane();
+    enableDisablePlane();
 }
 
 void MainWindow::on_actionSagitalPlane_triggered() {
-	sagitalPlane();
+    sagitalPlane();
 }
 
 void MainWindow::on_actionAxialPlane_triggered() {
-	axialPlane();
+    axialPlane();
 }
 
 void MainWindow::on_actionCoronalPlane_triggered() {
-	coronalPlane();
+    coronalPlane();
 }
 
 void MainWindow::on_actionImportPreset_triggered() {
-	importPreset();
+    importPreset();
 }
 
 void MainWindow::on_actionCompletePreset_triggered() {
-	importCompletePreset();
+    importCompletePreset();
 }
 
 void MainWindow::on_actionWoodPreset_triggered() {
-	importWoodPreset();
+    importWoodPreset();
 }
 
 void MainWindow::on_actionStuccoPreset_triggered() {
-	importStuccoPreset();
+    importStuccoPreset();
 }
 
 void MainWindow::on_actionMetalPreset_triggered() {
-	importMetalPreset();
+    importMetalPreset();
 }
 
 void MainWindow::on_actionExportPreset_triggered() {
-	exportPreset(getExportPresetFilename(ui->tfName->text()));
+    exportPreset(getExportPresetFilename(ui->tfName->text()));
 }
 
 void MainWindow::on_actionDeleteVolumeParts_triggered() {
-	deleteVolumeParts();
+    deleteVolumeParts();
 }
 
 void MainWindow::on_actionExtractMesh_triggered() {
-	exportMesh();
+    exportMesh();
 }
 
 void MainWindow::on_actionWoodMesh_triggered() {
-	ui->isoValueSlider->setValue(WOOD_ISOVALUE);
+    ui->isoValueSlider->setValue(WOOD_ISOVALUE);
 }
 
 void MainWindow::on_actionStuccoMesh_triggered() {
-	ui->isoValueSlider->setValue(STUCCO_ISOVALUE);
+    ui->isoValueSlider->setValue(STUCCO_ISOVALUE);
 }
 
 void MainWindow::on_actionMetalMesh_triggered() {
-	ui->isoValueSlider->setValue(METAL_ISOVALUE);
+    ui->isoValueSlider->setValue(METAL_ISOVALUE);
 }
 
 void MainWindow::on_actionFilter_triggered() {
-	filter();
+    filter();
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -1062,175 +1061,175 @@ void MainWindow::on_actionFilter_triggered() {
 //---------------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::on_openDICOM_pressed() {
-	importDICOM();
+    importDICOM();
 }
 
 void MainWindow::on_openVolume_pressed() {
-	importVTI();
+    importVTI();
 }
 
 void MainWindow::on_saveVolume_pressed() {
-	exportVTI();
+    exportVTI();
 }
 
 void MainWindow::on_axialPlane_pressed() {
-	axialPlane();
+    axialPlane();
 }
 
 void MainWindow::on_coronalPlane_pressed() {
-	coronalPlane();
+    coronalPlane();
 }
 
 void MainWindow::on_sagitalPlane_pressed() {
-	sagitalPlane();
+    sagitalPlane();
 }
 
 void MainWindow::on_exportSliceImage_pressed() {
-	exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+    exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_exportVolumeImage_pressed() {
-	exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+    exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_importPreset_pressed() {
-	importPreset();
+    importPreset();
 }
 
 void MainWindow::on_exportPreset_pressed() {
-	exportPreset(getExportPresetFilename(ui->tfName->text()));
+    exportPreset(getExportPresetFilename(ui->tfName->text()));
 }
 
 void MainWindow::on_restoreMaterial_pressed() {
-	defaultMaterial();
+    defaultMaterial();
 }
 
 void MainWindow::on_updateProperties_pressed() {
-	updateMaterial();
-	renderVolume();
+    updateMaterial();
+    renderVolume();
 }
 
 void MainWindow::on_completePreset_pressed() {
-	importCompletePreset();
+    importCompletePreset();
 }
 
 void MainWindow::on_woodPreset_pressed() {
-	importWoodPreset();
+    importWoodPreset();
 }
 
 void MainWindow::on_stuccoPreset_pressed() {
-	importStuccoPreset();
+    importStuccoPreset();
 }
 
 void MainWindow::on_metalPreset_pressed() {
-	importMetalPreset();
+    importMetalPreset();
 }
 
 void MainWindow::on_extractMesh_pressed() {
-	exportMesh();
+    exportMesh();
 }
 
 void MainWindow::on_extractMeshWood_pressed() {
-	ui->isoValueSlider->setValue(WOOD_ISOVALUE);
+    ui->isoValueSlider->setValue(WOOD_ISOVALUE);
 }
 
 void MainWindow::on_extractMeshStucco_pressed() {
-	ui->isoValueSlider->setValue(STUCCO_ISOVALUE);
+    ui->isoValueSlider->setValue(STUCCO_ISOVALUE);
 }
 
 void MainWindow::on_extractMeshMetal_pressed() {
-	ui->isoValueSlider->setValue(METAL_ISOVALUE);
+    ui->isoValueSlider->setValue(METAL_ISOVALUE);
 }
 
 void MainWindow::on_enableDisablePlane_pressed() {
-	enableDisablePlane();
+    enableDisablePlane();
 }
 
 void MainWindow::on_deleteVolumeParts_pressed() {
-	deleteVolumeParts();
+    deleteVolumeParts();
 }
 
 void MainWindow::on_volumeBackground_pressed() {
-	changeBackgroundColor(0);
+    changeBackgroundColor(0);
 }
 
 void MainWindow::on_volumeDeletingBackground_pressed() {
-	changeBackgroundColor(1);
+    changeBackgroundColor(1);
 }
 
 void MainWindow::on_meshBackground_pressed() {
-	changeBackgroundColor(2);
+    changeBackgroundColor(2);
 }
 
 void MainWindow::on_restoreBackgrounds_pressed() {
-	restoreBackgroundsColors();
+    restoreBackgroundsColors();
 }
 
 void MainWindow::on_segmentate_pressed() {
-	segmentateOnOff();
+    segmentationOnOff();
 }
 
 void MainWindow::on_filter_pressed() {
-	filter();
+    filter();
 }
 
 void MainWindow::on_addRule_pressed() {
-	addRule();
+    addRule();
 }
 
 void MainWindow::on_deleteRule_pressed() {
-	deleteRule();
+    deleteRule();
 }
 
 void MainWindow::on_enableDisableRule_pressed() {
-	enableDisableRule();
+    enableDisableRule();
 }
 
 void MainWindow::on_addProtractor_pressed() {
-	addProtractor();
+    addProtractor();
 }
 
 void MainWindow::on_deleteProtractor_pressed() {
-	deleteProtractor();
+    deleteProtractor();
 }
 
 void MainWindow::on_enableDisableProtractor_pressed() {
-	enableDisableProtractor();
+    enableDisableProtractor();
 }
 
 void MainWindow::on_addAnnotation_pressed() {
-	addAnnotation();
+    addAnnotation();
 }
 
 void MainWindow::on_deleteAnnotation_pressed() {
-	deleteAnnotation();
+    deleteAnnotation();
 }
 
 void MainWindow::on_addROD_pressed() {
-	addROD();
+    addROD();
 }
 
 void MainWindow::on_deleteROD_pressed() {
-	deleteROD();
+    deleteROD();
 }
 
 void MainWindow::on_enableDisableAnnotation_pressed() {
-	enableDisableAnnotation();
+    enableDisableAnnotation();
 }
 
 void MainWindow::on_importROD_pressed() {
-	importROD();
+    importROD();
 }
 
 void MainWindow::on_exportROD_pressed() {
-	if (activeROD != NULL && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
-		unsetActiveROD();
-	}
-	if (activeROD != NULL) {
-		exportROD(getExportRODFilename(QString::fromStdString(activeROD->getName())));
-	} else {
-		launchWarningNoActiveROD();
-	}
+    if (activeROD != nullptr && !activeROD->samePlane(slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition())) {
+        unsetActiveROD();
+    }
+    if (activeROD != nullptr) {
+        exportROD(getExportRODFilename(QString::fromStdString(activeROD->getName())));
+    } else {
+        launchWarningNoActiveROD();
+    }
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -1238,11 +1237,11 @@ void MainWindow::on_exportROD_pressed() {
 //---------------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::on_RODList_currentItemChanged() {
-	if (ui->RODList->currentItem() != nullROD) {
-		setActiveROD(rods[ui->RODList->currentItem()]);
-	} else {
-		unsetActiveROD();
-	}
+    if (ui->RODList->currentItem() != nullROD) {
+        setActiveROD(rods[ui->RODList->currentItem()]);
+    } else {
+        unsetActiveROD();
+    }
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
@@ -1250,36 +1249,36 @@ void MainWindow::on_RODList_currentItemChanged() {
 //---------------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::on_colorTFMaxSlider_valueChanged() {
-	colorTFChart->setRange((double)ui->colorTFMinSlider->value(), (double)ui->colorTFMaxSlider->value());
-	ui->colorTFMinSlider->setMaximum(ui->colorTFMaxSlider->value() - 1);
+    colorTFChart->setRange((double)ui->colorTFMinSlider->value(), (double)ui->colorTFMaxSlider->value());
+    ui->colorTFMinSlider->setMaximum(ui->colorTFMaxSlider->value() - 1);
 }
 
 void MainWindow::on_colorTFMinSlider_valueChanged() {
-	colorTFChart->setRange((double)ui->colorTFMinSlider->value(), (double)ui->colorTFMaxSlider->value());
-	ui->colorTFMaxSlider->setMinimum(ui->colorTFMinSlider->value() + 1);
+    colorTFChart->setRange((double)ui->colorTFMinSlider->value(), (double)ui->colorTFMaxSlider->value());
+    ui->colorTFMaxSlider->setMinimum(ui->colorTFMinSlider->value() + 1);
 }
 
 void MainWindow::on_gradientTFMaxSlider_valueChanged() {
-	gradientTFChart->setRange((double)ui->gradientTFMinSlider->value(), (double)ui->gradientTFMaxSlider->value());
-	ui->gradientTFMinSlider->setMaximum(ui->gradientTFMaxSlider->value() - 1);
+    gradientTFChart->setRange((double)ui->gradientTFMinSlider->value(), (double)ui->gradientTFMaxSlider->value());
+    ui->gradientTFMinSlider->setMaximum(ui->gradientTFMaxSlider->value() - 1);
 }
 
 void MainWindow::on_gradientTFMinSlider_valueChanged() {
-	gradientTFChart->setRange((double)ui->gradientTFMinSlider->value(), (double)ui->gradientTFMaxSlider->value());
-	ui->gradientTFMaxSlider->setMinimum(ui->gradientTFMinSlider->value() + 1);
+    gradientTFChart->setRange((double)ui->gradientTFMinSlider->value(), (double)ui->gradientTFMaxSlider->value());
+    ui->gradientTFMaxSlider->setMinimum(ui->gradientTFMinSlider->value() + 1);
 }
 
 void MainWindow::on_scalarTFMaxSlider_valueChanged() {
-	scalarTFChart->setRange((double)ui->scalarTFMinSlider->value(), (double)ui->scalarTFMaxSlider->value());
-	ui->scalarTFMinSlider->setMaximum(ui->scalarTFMaxSlider->value() - 1);
+    scalarTFChart->setRange((double)ui->scalarTFMinSlider->value(), (double)ui->scalarTFMaxSlider->value());
+    ui->scalarTFMinSlider->setMaximum(ui->scalarTFMaxSlider->value() - 1);
 }
 
 void MainWindow::on_scalarTFMinSlider_valueChanged() {
-	scalarTFChart->setRange((double)ui->scalarTFMinSlider->value(), (double)ui->scalarTFMaxSlider->value());
-	ui->scalarTFMaxSlider->setMinimum(ui->scalarTFMinSlider->value() + 1);
+    scalarTFChart->setRange((double)ui->scalarTFMinSlider->value(), (double)ui->scalarTFMaxSlider->value());
+    ui->scalarTFMaxSlider->setMinimum(ui->scalarTFMinSlider->value() + 1);
 }
 
 void MainWindow::on_isoValueSlider_valueChanged() {
-	sculpture->setIsoValue(ui->isoValueSlider->value());
-	updateMesh();
+    sculpture->setIsoValue(ui->isoValueSlider->value());
+    updateMesh();
 }

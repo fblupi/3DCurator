@@ -1,25 +1,22 @@
 #include "Sculpture.h"
 
-Sculpture::Sculpture() {
-	isoValue = WOOD_ISOVALUE; // default isovalue
-	loaded = false; // no volume loaded
-
-	tf = new TransferFunction();
-	volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
-	volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
-	imageData = vtkSmartPointer<vtkImageData>::New();
-	meshActor = vtkSmartPointer<vtkActor>::New();
-	volume = vtkSmartPointer<vtkVolume>::New();
-	meshMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-	surface = vtkSmartPointer<vtkMarchingCubes>::New();
-
+Sculpture::Sculpture() :
+	isoValue(WOOD_ISOVALUE),
+	loaded(false),
+	tf(new TransferFunction()),
+	volumeProperty(vtkSmartPointer<vtkVolumeProperty>::New()),
+	volumeMapper(vtkSmartPointer<vtkSmartVolumeMapper>::New()),
+	imageData(vtkSmartPointer<vtkImageData>::New()),
+	meshActor(vtkSmartPointer<vtkActor>::New()),
+	volume(vtkSmartPointer<vtkVolume>::New()),
+	meshMapper(vtkSmartPointer<vtkPolyDataMapper>::New()),
+	surface(vtkSmartPointer<vtkMarchingCubes>::New())
+{
 	setProperties();
 	connectComponents();
 }
 
-Sculpture::~Sculpture() {
-
-}
+Sculpture::~Sculpture() = default;
 
 void Sculpture::connectComponents() {
 	volume->SetMapper(volumeMapper);
@@ -42,133 +39,96 @@ void Sculpture::setProperties() {
 	meshMapper->ScalarVisibilityOff();
 }
 
-void Sculpture::setDICOMFolder(const std::string s) {
+void Sculpture::setDICOMFolder(const std::string &s) {
 	loaded = false;
 
 	vtkSmartPointer<vtkDICOMImageReader> imageReader = vtkSmartPointer<vtkDICOMImageReader>::New();
 	imageReader->SetDirectoryName(s.c_str());
-	imageReader->Update();
+    imageReader->Update();
 
-	imageData->DeepCopy(imageReader->GetOutput());
-
-	volumeMapper->SetInputData(imageData);
-
-	surface->SetInputData(imageData);
-	meshMapper->Update();
-	surface->SetValue(0, isoValue);
+    imageData->DeepCopy(imageReader->GetOutput());
+    loadVolume(imageReader);
 
 	loaded = true;
 }
 
-void Sculpture::setVTIFile(const std::string s) {
+void Sculpture::setVTIFile(const std::string &s) {
 	loaded = false;
 
 	vtkSmartPointer<vtkXMLImageDataReader> imageReader = vtkSmartPointer<vtkXMLImageDataReader>::New();
 	imageReader->SetFileName(s.c_str());
-	imageReader->Update();
+    imageReader->Update();
 
-	imageData->DeepCopy(imageReader->GetOutput());
-
-	volumeMapper->SetInputData(imageData);
-
-	surface->SetInputData(imageData);
-	meshMapper->Update();
-	surface->SetValue(0, isoValue);
+    imageData->DeepCopy(imageReader->GetOutput());
+    loadVolume(imageReader);
 
 	loaded = true;
+}
+
+void Sculpture::loadVolume(const vtkSmartPointer<vtkAlgorithm> &imageReader) {
+    volumeMapper->SetInputData(imageData);
+    surface->SetInputData(imageData);
+    meshMapper->Update();
+    surface->SetValue(0, isoValue);
 }
 
 void Sculpture::createMesh() {
 	surface->SetValue(0, isoValue);
 }
 
-void Sculpture::gaussianFilter(const unsigned int reps) {
-	typedef signed short PixelType;
-	const unsigned int Dimension = 3;
-
-	typedef itk::Image<PixelType, Dimension> ImageType;
-
-	typedef itk::VTKImageToImageFilter<ImageType> VTKImageToImageType;
-	VTKImageToImageType::Pointer vtkImageToImage = VTKImageToImageType::New();
-	vtkImageToImage->SetInput(imageData);
-	vtkImageToImage->Update();
-
-	typedef itk::BinomialBlurImageFilter<ImageType, ImageType> BinomialBlurFilterType;
+void Sculpture::gaussianFilter(unsigned int reps) {
 	BinomialBlurFilterType::Pointer binomialBlurFilter = BinomialBlurFilterType::New();
-	binomialBlurFilter->SetInput(vtkImageToImage->GetOutput());
+	binomialBlurFilter->SetInput(getITKImage()->GetOutput());
 	binomialBlurFilter->SetRepetitions(reps);
 	binomialBlurFilter->Update();
 
-	typedef itk::ImageToVTKImageFilter<ImageType> ImageToVTKImageType;
-	ImageToVTKImageType::Pointer imageToVTKImage = ImageToVTKImageType::New();
-	imageToVTKImage->SetInput(binomialBlurFilter->GetOutput());
-	imageToVTKImage->Update();
-
-	imageData->DeepCopy(imageToVTKImage->GetOutput());
-	imageData->Modified();
+	itkToVTK(binomialBlurFilter->GetOutput());
 }
 
-void Sculpture::meanFilter(const unsigned int radius) {
-	typedef signed short PixelType;
-	const unsigned int Dimension = 3;
-
-	typedef itk::Image<PixelType, Dimension> ImageType;
-
-	typedef itk::VTKImageToImageFilter<ImageType> VTKImageToImageType;
-	VTKImageToImageType::Pointer vtkImageToImage = VTKImageToImageType::New();
-	vtkImageToImage->SetInput(imageData);
-	vtkImageToImage->Update();
-
-	typedef itk::MeanImageFilter<ImageType, ImageType> MeanImageFilterType;
+void Sculpture::meanFilter(unsigned int radius) {
 	MeanImageFilterType::Pointer meanFilter = MeanImageFilterType::New();
-	meanFilter->SetInput(vtkImageToImage->GetOutput());
+	meanFilter->SetInput(getITKImage()->GetOutput());
 	meanFilter->SetRadius(radius);
 	meanFilter->Update();
 
-	typedef itk::ImageToVTKImageFilter<ImageType> ImageToVTKImageType;
-	ImageToVTKImageType::Pointer imageToVTKImage = ImageToVTKImageType::New();
-	imageToVTKImage->SetInput(meanFilter->GetOutput());
-	imageToVTKImage->Update();
-
-	imageData->DeepCopy(imageToVTKImage->GetOutput());
-	imageData->Modified();
+	itkToVTK(meanFilter->GetOutput());
 }
 
-void Sculpture::medianFilter(const unsigned int radius) {
-	typedef signed short PixelType;
-	const unsigned int Dimension = 3;
-
-	typedef itk::Image<PixelType, Dimension> ImageType;
-
-	typedef itk::VTKImageToImageFilter<ImageType> VTKImageToImageType;
-	VTKImageToImageType::Pointer vtkImageToImage = VTKImageToImageType::New();
-	vtkImageToImage->SetInput(imageData);
-	vtkImageToImage->Update();
-
-	typedef itk::MedianImageFilter<ImageType, ImageType> MedianImageFilterType;
+void Sculpture::medianFilter(unsigned int radius) {
 	MedianImageFilterType::Pointer medianFilter = MedianImageFilterType::New();
-	medianFilter->SetInput(vtkImageToImage->GetOutput());
+	medianFilter->SetInput(getITKImage()->GetOutput());
 	medianFilter->SetRadius(radius);
 	medianFilter->Update();
 
-	typedef itk::ImageToVTKImageFilter<ImageType> ImageToVTKImageType;
-	ImageToVTKImageType::Pointer imageToVTKImage = ImageToVTKImageType::New();
-	imageToVTKImage->SetInput(medianFilter->GetOutput());
-	imageToVTKImage->Update();
-
-	imageData->DeepCopy(imageToVTKImage->GetOutput());
-	imageData->Modified();
+	itkToVTK(medianFilter->GetOutput());
 }
 
-void Sculpture::setMaterial(const double ambient, const double diffuse, const double specular, const double power) {
+VTKImageToImageType::Pointer Sculpture::getITKImage() {
+    VTKImageToImageType::Pointer vtkImageToImage = VTKImageToImageType::New();
+    vtkImageToImage->SetInput(imageData);
+    vtkImageToImage->Update();
+
+    return vtkImageToImage;
+}
+
+void Sculpture::itkToVTK(const ImageType::Pointer &filter) {
+    ImageToVTKImageType::Pointer imageToVTKImage = ImageToVTKImageType::New();
+    imageToVTKImage->SetInput(filter);
+    imageToVTKImage->Update();
+
+    imageData->DeepCopy(imageToVTKImage->GetOutput());
+    imageData->Modified();
+}
+
+void Sculpture::setMaterial(double ambient, double diffuse, double specular, double power) {
 	volumeProperty->SetAmbient(ambient);
 	volumeProperty->SetDiffuse(diffuse);
 	volumeProperty->SetSpecular(specular); 
 	volumeProperty->SetSpecularPower(power);
 }
 
-void Sculpture::setIsoValue(const double isoValue) {
-	this->isoValue = isoValue;
+void Sculpture::setIsoValue(double v) {
+	this->isoValue = v;
 }
 
 

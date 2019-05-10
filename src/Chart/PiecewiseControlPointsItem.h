@@ -11,37 +11,35 @@
 
 /**
  * @class PiecewiseControlPointsItem
- * Class that inherites from vtkPiecewiseControlPointsItem and overrides mouse events to update RenderWindow with each change made
+ * Class that inherits from vtkPiecewiseControlPointsItem and overrides mouse events to update RenderWindow with each change made
  */
 class PiecewiseControlPointsItem : public vtkPiecewiseControlPointsItem {
 public:
-	/**
-	 * Constructor
-	 */
-	static PiecewiseControlPointsItem* New();
+    /**
+     * Constructor
+     */
+    static PiecewiseControlPointsItem* New();
 
-	vtkTypeMacro(vtkPiecewiseControlPointsItem, PiecewiseControlPointsItem);
+    /**
+     * Set the RenderWindow that will be updated
+     * @param	renWin	RenderWindow that will be updated
+     */
+    void SetRenderWindow(const vtkSmartPointer<vtkRenderWindow> &renWin);
 
-	/**
-	 * Set the RenderWindow that will be updated
-	 * @param	renWin	RenderWindow that will be updated
-	 */
-	void SetRenderWindow(vtkSmartPointer<vtkRenderWindow> renWin);
-	
-	/**
-	 * Mouse button release event: Updates RenderWindow
-	 * @param	mouse	Mouse context
-	 */
-	virtual bool MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse) override;
+    /**
+     * Mouse button release event: Updates RenderWindow
+     * @param	mouse	Mouse context
+     */
+    bool MouseButtonReleaseEvent(const vtkContextMouseEvent &mouse) override;
 
-	/**
-	 * Key release event: Updates RenderWindow
-	 * @param	key	Key context
-	 */
-	virtual bool KeyReleaseEvent(const vtkContextKeyEvent &key) override;
+    /**
+     * Key release event: Updates RenderWindow
+     * @param	key	Key context
+     */
+    bool KeyReleaseEvent(const vtkContextKeyEvent &key) override;
 
 private:
-	vtkSmartPointer<vtkRenderWindow> renWin; /**< RenderWindow that will be updated when the transfer function is changed */
+    vtkSmartPointer<vtkRenderWindow> renWin; /**< RenderWindow that will be updated when the transfer function is changed */
 };
 
-#endif
+#endif // PIECEWISECONTROLPOINTSITEM_H

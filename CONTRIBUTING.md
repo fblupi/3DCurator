@@ -22,6 +22,10 @@ Write the name of the files in Camel Case.
 
 Write the name of the classes in Camel Case and the functions in Lower Case Camel Case.
 
+## Indentation
+
+Use spaces instead of tabs. Configure your IDE to indent with 4 spaces.
+
 ## Documentation
 
 The code has to be properly documented following the [Doxygen guidelines](https://www.stack.nl/~dimitri/doxygen/manual/docblocks.html) with JavaDoc style. It is a mandatory requirement if you want your pull request to be accepted.

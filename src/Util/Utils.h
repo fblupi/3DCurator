@@ -7,19 +7,19 @@
 #include <limits>
 
 /**
- * Split a string by a delimeter and get last substring
- * @param	s		Input string
- * @param	delimeter	Delimeter
+ * Split a string by a delimiter and get last substring
+ * @param	s		    Input string
+ * @param	delimiter	Delimiter
  * @return	Last substring
  */
-std::string splitAndGetLast(std::string s, const std::string delimiter);
+std::string splitAndGetLast(std::string s, const std::string &delimiter);
 
 /**
  * Get file extension
  * @param	s	Filename
  * @return	File extension
  */
-std::string getFileExtension(std::string s);
+std::string getFileExtension(const std::string &s);
 
 /**
  * Return a string in uppercase

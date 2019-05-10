@@ -8,12 +8,12 @@
  * Struct that includes bounds in X, Y and Z axis
  */
 struct Bounds {
-	int MIN_X;
-	int MAX_X;
-	int MIN_Y;
-	int MAX_Y;
-	int MIN_Z;
-	int MAX_Z;
+    int MIN_X;
+    int MAX_X;
+    int MIN_Y;
+    int MAX_Y;
+    int MIN_Z;
+    int MAX_Z;
 };
 
 // typedefs

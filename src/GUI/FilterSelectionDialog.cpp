@@ -1,62 +1,59 @@
 #include "FilterSelectionDialog.h"
 #include "ui_filterselectiondialog.h"
 
-FilterSelectionDialog::FilterSelectionDialog(QWidget *parent) : QDialog(parent), ui(new Ui::FilterSelectionDialog) {
-	ui->setupUi(this);
+FilterSelectionDialog::FilterSelectionDialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::FilterSelectionDialog)
+{
+    ui->setupUi(this);
 
-	// Connect button actions
-	QObject::connect(ui->okButton, SIGNAL(clicked()), this, SLOT(accept()));
-	QObject::connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
+    // Connect button actions
+    QObject::connect(ui->okButton, SIGNAL(clicked()), this, SLOT(accept()));
+    QObject::connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
 FilterSelectionDialog::~FilterSelectionDialog() {
-	delete ui;
+    delete ui;
 }
 
 unsigned int FilterSelectionDialog::getGaussianReps() const {
-	return ui->gaussianReps->value();
+    return ui->gaussianReps->value();
 }
 
 unsigned int FilterSelectionDialog::getMeanRadius() const {
-	switch (ui->meanRadius->currentIndex()) {
-	case N_3x3:
-		return 1;
-		break;
-	case N_5x5:
-		return 2;
-		break;
-	case N_7x7:
-		return 3;
-		break;
-	default:
-		return 1;
-	}
+    switch (ui->meanRadius->currentIndex()) {
+    case N_3x3:
+        return 1;
+    case N_5x5:
+        return 2;
+    case N_7x7:
+        return 3;
+    default:
+        return 1;
+    }
 }
 
 unsigned int FilterSelectionDialog::getMedianRadius() const {
-	switch (ui->medianRadius->currentIndex()) {
-	case N_3x3:
-		return 1;
-		break;
-	case N_5x5:
-		return 2;
-		break;
-	case N_7x7:
-		return 3;
-		break;
-	default:
-		return 1;
-	}
+    switch (ui->medianRadius->currentIndex()) {
+    case N_3x3:
+        return 1;
+    case N_5x5:
+        return 2;
+    case N_7x7:
+        return 3;
+    default:
+        return 1;
+    }
 }
 
 void FilterSelectionDialog::accept() {
-	done(filterType);
+    done(filterType);
 }
 
 void FilterSelectionDialog::reject() {
-	done(CANCEL);
+    done(CANCEL);
 }
 
 void FilterSelectionDialog::on_filtersTab_currentChanged() {
-	filterType = ui->filtersTab->currentIndex();
+    filterType = ui->filtersTab->currentIndex();
 }

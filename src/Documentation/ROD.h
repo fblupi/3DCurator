@@ -29,271 +29,253 @@ using boost::property_tree::ptree;
 
 class ROD {
 public:
-	/**
-	 * Constructor
-	 * @param	name		ROD name
-	 * @param	origin		Origin of the plane
-	 * @param	point1		Position of the point defining the first axis of the plane
-	 * @param	point2		Position of the point defining the second axis of the plane
-	 * @param	slice		Slice position in terms of data extent
-	 * @param	enabled		Font for enabled list elements
-	 * @param	disabled	Font for disabled list elements
-	 * @param	interactor	Render window interactor where will be placed
-	 */
-	ROD(const std::string name, const double* origin, const double* point1, const double* point2, const double slice, const QFont enabled, const QFont disabled, vtkSmartPointer<vtkRenderWindowInteractor> interactor);
+    /**
+     * Constructor
+     * @param	name		ROD name
+     * @param	origin		Origin of the plane
+     * @param	point1		Position of the point defining the first axis of the plane
+     * @param	point2		Position of the point defining the second axis of the plane
+     * @param	slice		Slice position in terms of data extent
+     * @param	enabled		Font for enabled list elements
+     * @param	disabled	Font for disabled list elements
+     * @param	interactor	Render window interactor where will be placed
+     */
+    ROD(std::string name, double* origin, double* point1, double* point2, double slice, const QFont &enabled, const QFont &disabled, vtkSmartPointer<vtkRenderWindowInteractor> interactor);
 
-	/**
-	 * Constructor
-	 * @param	filename	Path to the input XML file
-	 * @param	enabled		Font for enabled list elements
-	 * @param	disabled	Font for disabled list elements
-	 * @param	interactor	Render window interactor where will be placed
-	 * @param	ruleList	List where the rule QListWidgetItems will be placed
-	 * @param	protractorList	List where the protractor QListWidgetItems will be placed
-	 * @param	annotationList	List where the annotation QListWidgetItems will be placed
-	 */
-	ROD(std::string &filename, const QFont enabled, const QFont disabled, vtkSmartPointer<vtkRenderWindowInteractor> interactor, QListWidget* ruleList, QListWidget* protractorList, QListWidget *annotationList);
+    /**
+     * Constructor
+     * @param	filename	    Path to the input XML file
+     * @param	enabled		    Font for enabled list elements
+     * @param	disabled	    Font for disabled list elements
+     * @param	interactor	    Render window interactor where will be placed
+     * @param	ruleList	    List where the rule QListWidgetItems will be placed
+     * @param	protractorList	List where the protractor QListWidgetItems will be placed
+     * @param	annotationList	List where the annotation QListWidgetItems will be placed
+     */
+    ROD(const std::string &filename, const QFont &enabled, const QFont &disabled, vtkSmartPointer<vtkRenderWindowInteractor> interactor, QListWidget* ruleList, QListWidget* protractorList, QListWidget *annotationList);
 
-	/**
-	 * Destructor
-	 */
-	~ROD();
+    /**
+     * Destructor
+     */
+    ~ROD();
 
-	/**
-	 * Get ROD name
-	 * @return	ROD name
-	 */
-	std::string getName() const;
+    /**
+     * Get ROD name
+     * @return	ROD name
+     */
+    std::string getName() const;
 
-	/**
-	 * Get origin of the plane
-	 * @return	Origin of the plane
-	 */
-	double* getOrigin() const;
+    /**
+     * Get origin of the plane
+     * @return	Origin of the plane
+     */
+    double* getOrigin() const;
 
-	/**
-	 * Get position of the point defining the first axis of the plane
-	 * @return	Position of the point defining the first axis of the plane
-	 */
-	double* getPoint1() const;
+    /**
+     * Get position of the point defining the first axis of the plane
+     * @return	Position of the point defining the first axis of the plane
+     */
+    double* getPoint1() const;
 
-	/**
-	 * Get position of the point defining the second axis of the plane
-	 * @return	Position of the point defining the second axis of the plane
-	 */
-	double* getPoint2() const;
+    /**
+     * Get position of the point defining the second axis of the plane
+     * @return	Position of the point defining the second axis of the plane
+     */
+    double* getPoint2() const;
 
-	/**
-	 * Get slice position in terms of data extent
-	 * @return	Slice position in terms of data extent
-	 */
-	double getSlicePosition() const;
+    /**
+     * Get slice position in terms of data extent
+     * @return	Slice position in terms of data extent
+     */
+    double getSlicePosition() const;
 
-	/**
-	 * Get rules container
-	 * @return	Rules container
-	 */
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> > getRules() const;
+    /**
+     * Add new rule to measure
+     * @param	item    Rule item in UI
+     */
+    void addRule(QListWidgetItem* item);
 
-	/**
-	 * Get protractors container
-	 * @return	Protractors container
-	 */
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget> > getProtractors() const;
+    /**
+     * Delete selected rule
+     * @param	item	Rule item in UI
+     */
+    void deleteRule(QListWidgetItem* item);
 
-	/**
-	 * Get annotations container
-	 * @return	Annotations container
-	 */
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkCaptionWidget> > getAnnotations() const;
+    /**
+     * Enable or disable selected rule
+     * @param	item	Rule item in UI
+     */
+    void enableDisableRule(QListWidgetItem* item);
 
-	/**
-	 * Add new rule to measure
-	 * @param	item		Rule item in UI
-	 */
-	void addRule(QListWidgetItem* item);
+    /**
+     * Enable selected rule
+     * @param	item	Rule item in UI
+     */
+    void enableRule(QListWidgetItem* item);
 
-	/**
-	 * Delete selected rule
-	 * @param	item	Rule item in UI
-	 */
-	void deleteRule(QListWidgetItem* item);
+    /**
+     * Disable selected rule
+     * @param	item	Rule item in UI
+     */
+    void disableRule(QListWidgetItem* item);
 
-	/**
-	 * Enable or disable selected rule
-	 * @param	item	Rule item in UI
-	 */
-	void enableDisableRule(QListWidgetItem* item);
+    /**
+     * Hide all rules
+     */
+    void hideAllRules();
 
-	/**
-	 * Enable selected rule
-	 * @param	item	Rule item in UI
-	 */
-	void enableRule(QListWidgetItem* item);
+    /**
+     * Show all rules
+     */
+    void showAllRules();
 
-	/**
-	 * Disable selected rule
-	 * @param	item	Rule item in UI
-	 */
-	void disableRule(QListWidgetItem* item);
+    /**
+     * Delete all rules
+     */
+    void clearAllRules();
 
-	/**
-	 * Hide all rules
-	 */
-	void hideAllRules();
+    /**
+     * Add new protractor to measure
+     * @param	item    Rule item in UI
+     */
+    void addProtractor(QListWidgetItem* item);
 
-	/**
-	 * Show all rules
-	 */
-	void showAllRules();
+    /**
+     * Delete selected protractor
+     * @param	item	Protractor item in UI
+     */
+    void deleteProtractor(QListWidgetItem* item);
 
-	/**
-	 * Delete all rules
-	 */
-	void clearAllRules();
+    /**
+     * Enable or disable selected protractor
+     * @param	item	Protractor item in UI
+     */
+    void enableDisableProtractor(QListWidgetItem* item);
 
-	/**
-	 * Add new protractor to measure
-	 * @param	item		Rule item in UI
-	 */
-	void addProtractor(QListWidgetItem* item);
+    /**
+     * Enable selected protractor
+     * @param	item	Protractor item in UI
+     */
+    void enableProtractor(QListWidgetItem* item);
 
-	/**
-	 * Delete selected protractor
-	 * @param	item	Protractor item in UI
-	 */
-	void deleteProtractor(QListWidgetItem* item);
+    /**
+     * Disable selected protractor
+     * @param	item	Protractor item in UI
+     */
+    void disableProtractor(QListWidgetItem* item);
 
-	/**
-	 * Enable or disable selected protractor
-	 * @param	item	Protractor item in UI
-	 */
-	void enableDisableProtractor(QListWidgetItem* item);
+    /**
+     * Hide all protractors
+     */
+    void hideAllProtractors();
 
-	/**
-	 * Enable selected protractor
-	 * @param	item	Protractor item in UI
-	 */
-	void enableProtractor(QListWidgetItem* item);
+    /**
+     * Show all protractors
+     */
+    void showAllProtractors();
 
-	/**
-	 * Disable selected protractor
-	 * @param	item	Protractor item in UI
-	 */
-	void disableProtractor(QListWidgetItem* item);
+    /**
+     * Delete all protractors
+     */
+    void clearAllProtractors();
 
-	/**
-	 * Hide all protractors
-	 */
-	void hideAllProtractors();
+    /**
+     * Add new annotation
+     * @param	item		Rule item in UI
+     * @param	text		Annotation text
+     */
+    void addAnnotation(QListWidgetItem* item, const std::string &text);
 
-	/**
-	 * Show all protractors
-	 */
-	void showAllProtractors();
+    /**
+    * Delete selected annotation
+    * @param	item	Annotation item in UI
+    */
+    void deleteAnnotation(QListWidgetItem* item);
 
-	/**
-	 * Delete all protractors
-	 */
-	void clearAllProtractors();
+    /**
+    * Enable or disable selected annotation
+    * @param	item	Annotation item in UI
+    */
+    void enableDisableAnnotation(QListWidgetItem* item);
 
-	/**
-	 * Add new annotation
-	 * @param	item		Rule item in UI
-	 * @param	text		Annotation text
-	 */
-	void addAnnotation(QListWidgetItem* item, std::string text);
+    /**
+    * Enable selected annotation
+    * @param	item	Protractor item in UI
+    */
+    void enableAnnotation(QListWidgetItem* item);
 
-	/**
-	* Delete selected annotation
-	* @param	item	Annotation item in UI
-	*/
-	void deleteAnnotation(QListWidgetItem* item);
+    /**
+    * Disable selected annotation
+    * @param	item	Annotation item in UI
+    */
+    void disableAnnotation(QListWidgetItem* item);
 
-	/**
-	* Enable or disable selected annotation
-	* @param	item	Annotation item in UI
-	*/
-	void enableDisableAnnotation(QListWidgetItem* item);
+    /**
+    * Hide all annotations
+    */
+    void hideAllAnnotations();
 
-	/**
-	* Enable selected annotation
-	* @param	item	Protractor item in UI
-	*/
-	void enableAnnotation(QListWidgetItem* item);
+    /**
+    * Show all annotations
+    */
+    void showAllAnnotations();
 
-	/**
-	* Disable selected annotation
-	* @param	item	Annotation item in UI
-	*/
-	void disableAnnotation(QListWidgetItem* item);
+    /**
+     * Delete all annotations
+     */
+    void clearAllAnnotations();
 
-	/**
-	* Hide all annotations
-	*/
-	void hideAllAnnotations();
+    /**
+     * Hide all ROD elements
+     */
+    void hideAll();
 
-	/**
-	* Show all annotations
-	*/
-	void showAllAnnotations();
+    /**
+     * Show all ROD elements
+     */
+    void showAll();
 
-	/**
-	 * Delete all annotations
-	 */
-	void clearAllAnnotations();
+    /**
+     * Compare if the input plane is the same as the ROD's one
+     * @param	origin		Origin of the plane
+     * @param	point1		Position of the point defining the first axis of the plane
+     * @param	point2		Position of the point defining the second axis of the plane
+     * @param	slice		Slice position in terms of data extent
+     * @return	The input plane is the same as the ROD's one
+     */
+    bool samePlane(const double* origin, const double* point1, const double* point2, double slice);
 
-	/**
-	 * Hide all ROD elements
-	 */
-	void hideAll();
+    /**
+     * Write ROD in an XML file
+     * @param	filename	Path to the output XML file
+     */
+    void write(const std::string &filename);
 
-	/**
-	 * Show all ROD elements
-	 */
-	void showAll();
-
-	/**
-	 * Compare if the input plane is the same as the ROD's one
-	 * @param	origin		Origin of the plane
-	 * @param	point1		Position of the point defining the first axis of the plane
-	 * @param	point2		Position of the point defining the second axis of the plane
-	 * @param	slice		Slice position in terms of data extent
-	 * @return	The input plane is the same as the ROD's one
-	 */
-	bool samePlane(const double* origin, const double* point1, const double* point2, const double slice);
-
-	/**
-	 * Write ROD in an XML file
-	 * @param	filename	Path to the output XML file
-	 */
-	void write(std::string &filename);
-
-	/**
-	 * Read ROD from an XML file using its path
-	 * @param	filename	Path to the input XML file
-	 * @param	ruleList	List where the rule QListWidgetItems will be placed
-	 * @param	protractorList	List where the protractor QListWidgetItems will be placed
-	 * @param	annotationList	List where the annotation QListWidgetItems will be placed
-	 */
-	void read(std::string &filename, QListWidget* ruleList, QListWidget* protractorList, QListWidget *annotationList);
+    /**
+     * Read ROD from an XML file using its path
+     * @param	filename	Path to the input XML file
+     * @param	ruleList	List where the rule QListWidgetItems will be placed
+     * @param	protractorList	List where the protractor QListWidgetItems will be placed
+     * @param	annotationList	List where the annotation QListWidgetItems will be placed
+     */
+    void read(const std::string &filename, QListWidget* ruleList, QListWidget* protractorList, QListWidget *annotationList);
 
 private:
-	const std::string DISTANCE_FORMAT = "%-#6.3g mm"; /**< Format in which distance is displayed */
-	const std::string ANGLE_FORMAT = "%-#7.1lf°"; /**< Format in which angle is displayed */
+    const std::string DISTANCE_FORMAT = "%-#6.3g mm"; /**< Format in which distance is displayed */
+    const std::string ANGLE_FORMAT = "%-#7.1lf°"; /**< Format in which angle is displayed */
 
-	std::string name; /**< ROD name */
-	double* origin; /**< Origin of the plane */
-	double* point1; /**< Position of the point defining the first axis of the plane */
-	double* point2; /**< Position of the point defining the second axis of the plane */
-	double slice; /**< Slice position in terms of data extent */
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> > rules; /**< Rules container */
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget> > protractors; /**< Protractors container */
-	std::map<QListWidgetItem*, vtkSmartPointer<vtkCaptionWidget> > annotations; /**< Annotations container */
+    std::string name; /**< ROD name */
+    double* origin; /**< Origin of the plane */
+    double* point1; /**< Position of the point defining the first axis of the plane */
+    double* point2; /**< Position of the point defining the second axis of the plane */
+    double slice; /**< Slice position in terms of data extent */
+    std::map<QListWidgetItem*, vtkSmartPointer<vtkDistanceWidget> > rules; /**< Rules container */
+    std::map<QListWidgetItem*, vtkSmartPointer<vtkAngleWidget> > protractors; /**< Protractors container */
+    std::map<QListWidgetItem*, vtkSmartPointer<vtkCaptionWidget> > annotations; /**< Annotations container */
 
-	QFont enabled; /**< Font for list enabled elements */
-	QFont disabled; /**< Font for list disabled elements */
-	vtkSmartPointer<vtkRenderWindowInteractor> interactor; /**< Render window interactor where will be placed */
+    QFont enabled; /**< Font for list enabled elements */
+    QFont disabled; /**< Font for list disabled elements */
+    vtkSmartPointer<vtkRenderWindowInteractor> interactor; /**< Render window interactor where will be placed */
 };
 
-#endif
+#endif // ROD_H
