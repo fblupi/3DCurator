@@ -33,7 +33,7 @@ public:
     /**
      * Constructor
      */
-    explicit SegmentedVolumeDialog(vtkSmartPointer<vtkImageData> imageData, TransferFunction* tf, QWidget *parent = nullptr);
+    explicit SegmentedVolumeDialog(vtkSmartPointer<vtkImageData> imageData, TransferFunction* tf, QColor background, QWidget *parent = nullptr);
 
     /**
      * Destructor
@@ -60,6 +60,7 @@ private:
     Ui::SegmentedVolumeDialog *ui; /**< Dialog GUI pointer */
     vtkSmartPointer<vtkImageData> imageData; /**< Image data that will be displayed */
     TransferFunction *tf; /**< Transfer function to render the volume */
+    QColor background; /**< Widget background color */
 };
 
 #endif // SEGMENTEDVOLUMEDIALOG_H

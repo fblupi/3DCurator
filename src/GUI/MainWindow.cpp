@@ -6,6 +6,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     settings(new QSettings),
     language(new Language(QVariant(settings->value("locale", "en_US")).toString())),
+    backgrounds(new Backgrounds(
+        QColor::fromRgb(QVariant(settings->value("mesh_bg", QVariant(QColor::fromRgbF(0.1, 0.2, 0.3).rgb()))).toUInt()),
+        QColor::fromRgb(QVariant(settings->value("volume_bg", QVariant(QColor::fromRgbF(0.1, 0.2, 0.3).rgb()))).toUInt()),
+        QColor::fromRgb(QVariant(settings->value("volume_del_bg", QVariant(QColor::fromRgbF(0.2, 0.3, 0.1).rgb()))).toUInt()),
+        QColor::fromRgb(QVariant(settings->value("volume_seg_bg", QVariant(QColor::fromRgbF(0.1, 0.2, 0.3).rgb()))).toUInt())
+    )),
     deleting(false),
     showPlane(true),
     segmenting(false),
@@ -27,9 +33,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->isoValueSlider->setTracking(false); // do not launch slider event until we release it
     itemListDisabled.setItalic(true);
 
+    backgrounds->setDeleting(&deleting);
+    backgrounds->setMeshRenderer(meshRen);
+    backgrounds->setVolumeRenderer(volumeRen);
+    backgrounds->setMeshRenderWindow(ui->meshWidget->GetRenderWindow());
+    backgrounds->setVolumeRenderWindow(ui->volumeWidget->GetRenderWindow());
+
     defaultTF();
     defaultMaterial();
-    defaultBackgroundsColors();
 
     colorTFChart = new ColorTFChart(ui->volumeWidget->GetRenderWindow(), ui->colorTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getColorFun(), tr("CHART_DENSITY").toUtf8().constData(), "", MIN_INTENSITY, MAX_INTENSITY);
     scalarTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->scalarTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getScalarFun(), tr("CHART_DENSITY").toUtf8().constData(), tr("CHART_OPACITY").toUtf8().constData(), MIN_INTENSITY, MAX_INTENSITY);
@@ -40,8 +51,8 @@ MainWindow::MainWindow(QWidget *parent) :
     sliceViewer->SetColorLevel(-600);
     sliceViewer->SetColorWindow(400);
 
-    setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
-    setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
+    volumeRen->SetBackground(backgrounds->getVolumeBackground().redF(), backgrounds->getVolumeBackground().greenF(), backgrounds->getVolumeBackground().blueF());
+    meshRen->SetBackground(backgrounds->getMeshBackground().redF(), backgrounds->getMeshBackground().greenF(), backgrounds->getMeshBackground().blueF());
 
     connectComponents();
 
@@ -61,10 +72,6 @@ void MainWindow::changeEvent(QEvent* event) {
         ui->retranslateUi(this);
     }
     QMainWindow::changeEvent(event);
-}
-
-void MainWindow::setBackgroundColor(const vtkSmartPointer<vtkRenderer> &ren, float r, float g, float b) {
-    ren->SetBackground(r, g, b);
 }
 
 void MainWindow::connectComponents() {
@@ -97,6 +104,7 @@ void MainWindow::connectComponents() {
 
     segmentationStyle->SetSculpture(sculpture);
     segmentationStyle->SetSlicePlane(slicePlane);
+    segmentationStyle->SetBackgrounds(backgrounds);
     segmentationStyle->SetDefaultRenderer(sliceViewer->GetRenderer());
 }
 
@@ -163,16 +171,6 @@ void MainWindow::defaultMaterial() {
     ui->diffuseValue->setValue(0.9);
     ui->specularValue->setValue(0.2);
     ui->powerValue->setValue(10.0);
-}
-
-void MainWindow::defaultBackgroundsColors() {
-    volumeBackground = QColor::fromRgbF(0.1, 0.2, 0.3);
-    volumeDeletingBackground = QColor::fromRgbF(0.2, 0.3, 0.1);
-    meshBackground = QColor::fromRgbF(0.1, 0.2, 0.3);
-
-    ui->volumeBackground->setStyleSheet("background-color: " + volumeBackground.name());
-    ui->volumeDeletingBackground->setStyleSheet("background-color: " + volumeDeletingBackground.name());
-    ui->meshBackground->setStyleSheet("background-color: " + meshBackground.name());
 }
 
 void MainWindow::defaultPlanePosition() {
@@ -560,11 +558,11 @@ void MainWindow::sagitalPlane() {
 void MainWindow::deleteVolumeParts() {
     if (deleting) {
         deleting = false;
-        setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
+        volumeRen->SetBackground(backgrounds->getVolumeBackground().redF(), backgrounds->getVolumeBackground().greenF(), backgrounds->getVolumeBackground().blueF());
         ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
     } else {
         deleting = true;
-        setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
+        volumeRen->SetBackground(backgrounds->getVolumeDeletingBackground().redF(), backgrounds->getVolumeDeletingBackground().greenF(), backgrounds->getVolumeDeletingBackground().blueF());
         ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(deleterStyle);
     }
     slicePlane->getPlane()->UpdatePlacement();
@@ -596,54 +594,6 @@ void MainWindow::importMetalPreset() {
     renderVolume();
 }
 
-void MainWindow::changeBackgroundColor(int widget) {
-    QColor color;
-    switch (widget) {
-        case VOLUME_BACKGROUND:
-            color = QColorDialog::getColor(volumeBackground);
-            if (color.isValid()) {
-                volumeBackground = color;
-                if (!deleting) {
-                    setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
-                    renderVolume();
-                }
-                ui->volumeBackground->setStyleSheet("background-color: " + volumeBackground.name());
-            }
-            break;
-        case VOLUME_DELETING_BACKGROUND:
-            color = QColorDialog::getColor(volumeDeletingBackground);
-            if (color.isValid()) {
-                volumeDeletingBackground = color;
-                if (deleting) {
-                    setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
-                    renderVolume();
-                }
-                ui->volumeDeletingBackground->setStyleSheet("background-color: " + volumeDeletingBackground.name());
-            }
-            break;
-        case MESH_BACKGROUND:
-            color = QColorDialog::getColor(meshBackground);
-            if (color.isValid()) {
-                meshBackground = color;
-                setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
-                renderMesh();
-                ui->meshBackground->setStyleSheet("background-color: " + meshBackground.name());
-            }
-            break;
-    }
-}
-
-void MainWindow::restoreBackgroundsColors() {
-    defaultBackgroundsColors();
-    if (deleting) {
-        setBackgroundColor(volumeRen, volumeDeletingBackground.redF(), volumeDeletingBackground.greenF(), volumeDeletingBackground.blueF());
-    } else {
-        setBackgroundColor(volumeRen, volumeBackground.redF(), volumeBackground.greenF(), volumeBackground.blueF());
-    }
-    setBackgroundColor(meshRen, meshBackground.redF(), meshBackground.greenF(), meshBackground.blueF());
-    renderVolume();
-    renderMesh();
-}
 void MainWindow::launchWarning(const std::string &message) {
     QPointer<QMessageBox> confirmBox = new QMessageBox();
     confirmBox->setWindowTitle(tr("WARNING"));
@@ -988,7 +938,7 @@ void MainWindow::on_actionExit_triggered() {
 }
 
 void MainWindow::on_actionPreferences_triggered() {
-    auto *dialog = new PreferencesDialog(settings, language);
+    auto *dialog = new PreferencesDialog(settings, backgrounds, language);
     dialog->exec();
 }
 
@@ -1147,22 +1097,6 @@ void MainWindow::on_enableDisablePlane_pressed() {
 
 void MainWindow::on_deleteVolumeParts_pressed() {
     deleteVolumeParts();
-}
-
-void MainWindow::on_volumeBackground_pressed() {
-    changeBackgroundColor(0);
-}
-
-void MainWindow::on_volumeDeletingBackground_pressed() {
-    changeBackgroundColor(1);
-}
-
-void MainWindow::on_meshBackground_pressed() {
-    changeBackgroundColor(2);
-}
-
-void MainWindow::on_restoreBackgrounds_pressed() {
-    restoreBackgroundsColors();
 }
 
 void MainWindow::on_segmentate_pressed() {

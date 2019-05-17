@@ -34,6 +34,7 @@
 #include "GUI/LineSelectionDialog.h"
 #include "GUI/SegmentedVolumeDialog.h"
 #include "Segmentation/WoodSegmentation.h"
+#include "Settings/Backgrounds.h"
 
 /**
  * @class InteractorStyleSegmentation
@@ -61,6 +62,12 @@ public:
     void SetSculpture(Sculpture* sculpture);
 
     /**
+     * Set backgrounds with the background color info
+     * @param backgrounds   Backgrounds with the background color info
+     */
+    void SetBackgrounds(Backgrounds* backgrounds);
+
+    /**
      * Left button down mouse event
      */
     void OnLeftButtonDown() override;
@@ -69,6 +76,7 @@ private:
     vtkSmartPointer<vtkImageViewer2> viewer; /**< ImageViewer2 that will be updated when segment */
     SlicePlane* slicePlane; /**< Plane in which will find the value of the voxel selected */
     Sculpture* sculpture; /**< Sculpture that we will segment */
+    Backgrounds* backgrounds; /**< Backgrounds pointer */
 };
 
 #endif // INTERACTORSTYLESEGMENTATION_H

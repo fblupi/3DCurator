@@ -7,7 +7,7 @@
 #include <QTranslator>
 
 /**
- * @class Sculpture
+ * @class Language
  * Class with app current language
  */
 class Language {

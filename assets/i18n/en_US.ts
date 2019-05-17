@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8">
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US" sourcelanguage="en_US">
 <context>
@@ -192,26 +192,6 @@
         <translation>Update</translation>
     </message>
     <message>
-        <source>BACKGROUND</source>
-        <translation>Background</translation>
-    </message>
-    <message>
-        <source>VOLUME_BG</source>
-        <translation>Volume</translation>
-    </message>
-    <message>
-        <source>VOLUME_DELETED_BG</source>
-        <translation>Volume (delete mode)</translation>
-    </message>
-    <message>
-        <source>MESH_BG</source>
-        <translation>Mesh</translation>
-    </message>
-    <message>
-        <source>RESTORE_BG</source>
-        <translation>Restore</translation>
-    </message>
-    <message>
         <source>DOCUMENTATION</source>
         <translation>Documentation</translation>
     </message>
@@ -326,10 +306,6 @@
     <message>
         <source>UPDATE_MTL_TOOLTIP</source>
         <translation>Update material</translation>
-    </message>
-    <message>
-        <source>RESTORE_BG_TOOLTIP</source>
-        <translation>Update default backgrounds</translation>
     </message>
     <message>
         <source>OPEN_ROD_TOOLTIP</source>
@@ -760,6 +736,26 @@
     <message>
         <source>es_ES</source>
         <translation>Spanish (es_ES)</translation>
+    </message>
+    <message>
+        <source>BACKGROUND</source>
+        <translation>Background</translation>
+    </message>
+    <message>
+        <source>VOLUME_BG</source>
+        <translation>Volume</translation>
+    </message>
+    <message>
+        <source>VOLUME_DELETED_BG</source>
+        <translation>Volume (delete mode)</translation>
+    </message>
+    <message>
+        <source>VOLUME_SEGMENTING_BG</source>
+        <translation>Segmented volume</translation>
+    </message>
+    <message>
+        <source>MESH_BG</source>
+        <translation>Mesh</translation>
     </message>
 </context>
 </TS>

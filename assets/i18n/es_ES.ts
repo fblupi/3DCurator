@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8">
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="es_ES" sourcelanguage="es_ES">
 <context>
@@ -192,26 +192,6 @@
         <translation>Actualizar</translation>
     </message>
     <message>
-        <source>BACKGROUND</source>
-        <translation>Fondo</translation>
-    </message>
-    <message>
-        <source>VOLUME_BG</source>
-        <translation>Volumen</translation>
-    </message>
-    <message>
-        <source>VOLUME_DELETED_BG</source>
-        <translation>Volumen (modo borrado)</translation>
-    </message>
-    <message>
-        <source>MESH_BG</source>
-        <translation>Malla</translation>
-    </message>
-    <message>
-        <source>RESTORE_BG</source>
-        <translation>Restaurar</translation>
-    </message>
-    <message>
         <source>DOCUMENTATION</source>
         <translation>Documentación</translation>
     </message>
@@ -326,10 +306,6 @@
     <message>
         <source>UPDATE_MTL_TOOLTIP</source>
         <translation>Actualizar material</translation>
-    </message>
-    <message>
-        <source>RESTORE_BG_TOOLTIP</source>
-        <translation>Restaurar fondos predeterminados</translation>
     </message>
     <message>
         <source>OPEN_ROD_TOOLTIP</source>
@@ -760,6 +736,26 @@
     <message>
         <source>es_ES</source>
         <translation>Español (es_ES)</translation>
+    </message>
+    <message>
+        <source>BACKGROUND</source>
+        <translation>Fondo</translation>
+    </message>
+    <message>
+        <source>VOLUME_BG</source>
+        <translation>Volumen</translation>
+    </message>
+    <message>
+        <source>VOLUME_DELETED_BG</source>
+        <translation>Volumen (modo borrado)</translation>
+    </message>
+    <message>
+        <source>VOLUME_SEGMENTING_BG</source>
+        <translation>Volumen segmentado</translation>
+    </message>
+    <message>
+        <source>MESH_BG</source>
+        <translation>Malla</translation>
     </message>
 </context>
 </TS>

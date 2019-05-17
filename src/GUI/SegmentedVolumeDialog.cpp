@@ -1,10 +1,11 @@
 #include "SegmentedVolumeDialog.h"
 #include "ui_segmentedvolumedialog.h"
 
-SegmentedVolumeDialog::SegmentedVolumeDialog(vtkSmartPointer<vtkImageData> imageData, TransferFunction *tf, QWidget *parent) :
+SegmentedVolumeDialog::SegmentedVolumeDialog(vtkSmartPointer<vtkImageData> imageData, TransferFunction *tf, QColor background, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SegmentedVolumeDialog),
     imageData(std::move(imageData)),
+    background(std::move(background)),
     tf(tf)
 {
     ui->setupUi(this);
@@ -25,7 +26,7 @@ void SegmentedVolumeDialog::render() {
     vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
     vtkSmartPointer<vtkInteractorStyleTrackballCamera> interactorStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 
-    renderer->SetBackground(0.1, 0.2, 0.3);
+    renderer->SetBackground(background.redF(), background.greenF(), background.blueF());
     ui->viewer->GetRenderWindow()->AddRenderer(renderer);
     ui->viewer->GetRenderWindow()->GetInteractor()->SetInteractorStyle(interactorStyle);
 
