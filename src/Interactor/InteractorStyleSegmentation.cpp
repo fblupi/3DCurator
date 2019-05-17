@@ -96,7 +96,7 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
                 progressDialog->close();
                 // -- END close progress bar
 
-                auto *segmentedVolumeDialog = new SegmentedVolumeDialog(segmentedData, sculpture->getTransferFunction());
+                auto *segmentedVolumeDialog = new SegmentedVolumeDialog(segmentedData, sculpture->getTransferFunction(), backgrounds->getVolumeSegmentingBackground());
                 segmentedVolumeDialog->render();
 
                 int exportSegmentedVolume = segmentedVolumeDialog->exec();
@@ -140,4 +140,8 @@ void InteractorStyleSegmentation::SetSlicePlane(SlicePlane* p) {
 
 void InteractorStyleSegmentation::SetSculpture(Sculpture* s) {
     this->sculpture = s;
+}
+
+void InteractorStyleSegmentation::SetBackgrounds(Backgrounds* b) {
+    this->backgrounds = b;
 }

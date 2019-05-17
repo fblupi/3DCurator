@@ -1,11 +1,17 @@
 #ifndef PREFERENCESDIALOG_H
 #define PREFERENCESDIALOG_H
 
+#include <QColor>
+#include <QColorDialog>
 #include <QDialog>
 #include <QSettings>
 #include <QString>
 
+#include "GUI/MainWindow.h"
+#include "Settings/Backgrounds.h"
 #include "Settings/Language.h"
+
+class MainWindow;
 
 namespace Ui {
     class PreferencesDialog;
@@ -22,7 +28,7 @@ public:
     /**
      * Constructor
      */
-    explicit PreferencesDialog(QSettings *settings, Language *language, QWidget *parent = nullptr);
+    explicit PreferencesDialog(QSettings *settings, Backgrounds *backgrounds, Language *language, QWidget *parent = nullptr);
 
     /**
      * Destructor
@@ -30,6 +36,12 @@ public:
     ~PreferencesDialog() override;
 
 private slots:
+    // GUI events
+    void on_meshBackground_pressed();
+    void on_volumeBackground_pressed();
+    void on_volumeDeletingBackground_pressed();
+    void on_volumeSegmentingBackground_pressed();
+
     /**
      * Ok button selected
      */
@@ -55,7 +67,23 @@ private slots:
 private:
     Ui::PreferencesDialog *ui; /**< Dialog GUI pointer */
     QSettings *settings; /**< Settings pointer */
+    Backgrounds *backgrounds; /**< Backgrounds pointer */
     Language *language; /**< Language pointer */
+
+    /**
+     * Set backgrounds' inputs
+     */
+    void setupBackgrounds();
+
+    /**
+     * Set language input
+     */
+    void setupLanguage();
+
+    /**
+     * Process language settings
+     */
+    void processLanguage();
 };
 
 #endif // PREFERENCESDIALOG_H

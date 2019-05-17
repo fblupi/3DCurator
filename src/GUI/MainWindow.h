@@ -46,6 +46,7 @@
 #include "GUI/FilterSelectionDialog.h"
 #include "GUI/PreferencesDialog.h"
 #include "Settings/Language.h"
+#include "Settings/Backgrounds.h"
 
 #define VOLUME_BACKGROUND 0
 #define VOLUME_DELETING_BACKGROUND 1
@@ -68,7 +69,7 @@ public:
      */
     explicit MainWindow(QWidget *parent = nullptr);
 
-    /*
+    /**
      * Destructor
      */
     ~MainWindow() override;
@@ -122,10 +123,6 @@ private slots:
     void on_extractMeshMetal_pressed();
     void on_enableDisablePlane_pressed();
     void on_deleteVolumeParts_pressed();
-    void on_volumeBackground_pressed();
-    void on_volumeDeletingBackground_pressed();
-    void on_meshBackground_pressed();
-    void on_restoreBackgrounds_pressed();
     void on_segmentate_pressed();
     void on_filter_pressed();
     void on_addROD_pressed();
@@ -151,15 +148,6 @@ private slots:
     void on_scalarTFMaxSlider_valueChanged();
     void on_scalarTFMinSlider_valueChanged();
     void on_isoValueSlider_valueChanged();
-
-    /**
-     * Set renderer color using RGB
-     * @param	ren	Renderer
-     * @param	r	Red
-     * @param	g	Green
-     * @param	b	Blue
-     */
-    static void setBackgroundColor(const vtkSmartPointer<vtkRenderer> &ren, float r, float g, float b);
 
     /**
      * Connect components of the pipeline
@@ -210,11 +198,6 @@ private slots:
      * Set default material
      */
     void defaultMaterial();
-
-    /**
-     * Set default viewers background colors
-     */
-    void defaultBackgroundsColors();
 
     /**
      * Set default plane position
@@ -379,7 +362,7 @@ private slots:
     /**
      * Restore default viewers background colors
      */
-    void restoreBackgroundsColors();
+    //void restoreBackgroundsColors();
 
     /**
      * Launch a warning message
@@ -421,7 +404,7 @@ private slots:
      * Change background color of a viewer
      * @param	widget	0: 3D Model, 1: 3D Model (deleting), 2: Mesh
      */
-    void changeBackgroundColor(int widget);
+    //void changeBackgroundColor(int widget);
 
     /**
      * Enable or disable segmentation mode
@@ -526,13 +509,10 @@ private:
 
     QSettings *settings; /**< Settings pointer */
     Language *language; /**< Language pointer */
+    Backgrounds *backgrounds; /**< Backgrounds pointer */
 
     QFont itemListEnabled; /**< Font type for rule list elements enabled */
     QFont itemListDisabled; /**< Font type for rule list elements disabled */
-
-    QColor volumeBackground; /**< Volume viewer background color */
-    QColor volumeDeletingBackground; /**< Volume viewer (delete mode) background color */
-    QColor meshBackground; /**< Mesh viewer background color */
 
     QListWidgetItem *nullROD; /**< ROD selected when there is no ROD selected */
 
