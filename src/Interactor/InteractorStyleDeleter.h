@@ -1,12 +1,10 @@
 #ifndef INTERACTORSTYLEDELETER_H
 #define INTERACTORSTYLEDELETER_H
 
-#include <QProgressDialog>
 #include <QIcon>
 #include <QMessageBox>
 #include <QAbstractButton>
 #include <QPointer>
-#include <QProgressBar>
 #include <QApplication>
 #include <QObject>
 #include <QCoreApplication>
@@ -21,6 +19,7 @@
 
 #include "Core/Sculpture.h"
 #include "Core/SlicePlane.h"
+#include "GUI/ProgressDialog.h"
 #include "Segmentation/RegionGrowingDeleter.h"
 
 /**

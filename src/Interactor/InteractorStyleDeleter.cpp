@@ -15,19 +15,8 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
     if (picker->GetPointId() != -1) {
         double value = sculpture->getImageData()->GetScalarComponentAsDouble(ijk[0], ijk[1], ijk[2], 0);
         if (value > AIR_HU) {
-            // -- launch progress bar
-            QPointer<QProgressBar> bar = new QProgressBar();
-            QPointer<QProgressDialog> progressDialog = new QProgressDialog();
-            progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleDeleter", "DELETING"));
-            progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleDeleter", "DELETING_SELECTED_PART_OF_THE_VOLUME"));
-            progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-            progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-            progressDialog->setCancelButton(nullptr);
-            progressDialog->setBar(bar);
+            auto *progressDialog = new ProgressDialog(QCoreApplication::translate("InteractorStyleDeleter", "DELETING"), QCoreApplication::translate("InteractorStyleDeleter", "DELETING_SELECTED_PART_OF_THE_VOLUME"));
             progressDialog->show();
-            bar->close();
-            QApplication::processEvents();
-            // -- END launch progress bar
 
             vtkSmartPointer<vtkImageData> oldData = vtkSmartPointer<vtkImageData>::New();
             oldData->DeepCopy(sculpture->getImageData());
@@ -46,9 +35,7 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
             slicePlane->getPlane()->UpdatePlacement();
             viewer->Render();
 
-            // -- close progress bar
             progressDialog->close();
-            // -- END close progress bar
 
             // -- launch confirm box
             QPointer<QMessageBox> confirmBox = new QMessageBox();
@@ -61,12 +48,8 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
             confirmBox->button(QMessageBox::No)->setText(QCoreApplication::translate("InteractorStyleDeleter", "CONFIRM_DELETION_NO"));
 
             if (confirmBox->exec() == QMessageBox::No) {
-                // -- launch progress bar
-                progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleDeleter", "DELETION_RESTORING"));
-                progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleDeleter", "UNDOING_DELETION"));
+                progressDialog = new ProgressDialog(QCoreApplication::translate("InteractorStyleDeleter", "DELETION_RESTORING"), QCoreApplication::translate("InteractorStyleDeleter", "UNDOING_DELETION"));
                 progressDialog->show();
-                QApplication::processEvents();
-                // -- END launch progress bar
 
                 sculpture->getImageData()->DeepCopy(oldData);
 
@@ -74,9 +57,7 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
                 slicePlane->getPlane()->UpdatePlacement();
                 viewer->Render();
 
-                // -- close progress bar
                 progressDialog->close();
-                // -- END close progress bar
             }
             // -- END launch confirm box
         }

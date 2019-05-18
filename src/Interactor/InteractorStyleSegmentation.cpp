@@ -60,19 +60,8 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
                         selectedLine = lines[ijk[2]][5];
                 }
 
-                // -- launch progress bar
-                QPointer<QProgressBar> bar = new QProgressBar();
-                QPointer<QProgressDialog> progressDialog = new QProgressDialog();
-                progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING"));
-                progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING_PIECE_OF_WOOD_SELECTED"));
-                progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-                progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-                progressDialog->setCancelButton(nullptr);
-                progressDialog->setBar(bar);
+                auto *progressDialog = new ProgressDialog(QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING"), QCoreApplication::translate("InteractorStyleSegmentation", "SEGMENTING_PIECE_OF_WOOD_SELECTED"));
                 progressDialog->show();
-                bar->close();
-                QApplication::processEvents();
-                // -- END launch progress bar
 
                 vtkSmartPointer<vtkImageData> oldData = vtkSmartPointer<vtkImageData>::New();
                 oldData->DeepCopy(sculpture->getImageData());
@@ -92,9 +81,7 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 
                 sculpture->getImageData()->DeepCopy(oldData);
 
-                // -- close progress bar
                 progressDialog->close();
-                // -- END close progress bar
 
                 auto *segmentedVolumeDialog = new SegmentedVolumeDialog(segmentedData, sculpture->getTransferFunction(), backgrounds->getVolumeSegmentingBackground());
                 segmentedVolumeDialog->render();
@@ -105,28 +92,15 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
                     QString vtiFile = nullptr;
                     vtiFile = QFileDialog::getSaveFileName(nullptr, QCoreApplication::translate("InteractorStyleSegmentation", "SAVE_SUB_VOLUME_CAPTION"), QDir(QDir::homePath()).filePath(QCoreApplication::translate("InteractorStyleSegmentation", "SAVE_SUB_VOLUME_DEFAULT_NAME")), "VTI (*.vti) ;; XML (*.xml)");
                     if (vtiFile != nullptr) {
-                        // -- launch progress bar
-                        bar = new QProgressBar();
-                        progressDialog = new QProgressDialog();
-                        progressDialog->setWindowTitle(QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME"));
-                        progressDialog->setLabelText(QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME_MODEL"));
-                        progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-                        progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-                        progressDialog->setCancelButton(nullptr);
-                        progressDialog->setBar(bar);
+                        progressDialog = new ProgressDialog(QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME"), QCoreApplication::translate("InteractorStyleSegmentation", "EXPORTING_SUB_VOLUME_MODEL"));
                         progressDialog->show();
-                        bar->close();
-                        QApplication::processEvents();
-                        // -- END launch progress bar
 
                         vtkSmartPointer<vtkXMLImageDataWriter> writer = vtkSmartPointer<vtkXMLImageDataWriter>::New();
                         writer->SetFileName(vtiFile.toUtf8().constData());
                         writer->SetInputData(segmentedData);
                         writer->Write();
 
-                        // -- close progress bar
                         progressDialog->close();
-                        // -- END close progress bar
                     }
                 }
             }
