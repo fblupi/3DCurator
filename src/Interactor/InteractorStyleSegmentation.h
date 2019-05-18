@@ -8,10 +8,7 @@
 #include <QPixmap>
 #include <QBitmap>
 #include <QMessageBox>
-#include <QProgressDialog>
-#include <QProgressBar>
 #include <QPointer>
-#include <QIcon>
 #include <QApplication>
 #include <QObject>
 #include <QCoreApplication>
@@ -31,6 +28,7 @@
 #include "Core/Sculpture.h"
 #include "Util/Measures.h"
 #include "Util/Utils.h"
+#include "GUI/ProgressDialog.h"
 #include "GUI/LineSelectionDialog.h"
 #include "GUI/SegmentedVolumeDialog.h"
 #include "Segmentation/WoodSegmentation.h"

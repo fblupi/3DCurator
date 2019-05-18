@@ -4,8 +4,6 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QFile>
-#include <QProgressDialog>
-#include <QProgressBar>
 #include <QPointer>
 #include <QListWidgetItem>
 #include <QInputDialog>
@@ -43,14 +41,11 @@
 #include "Chart/ColorTFChart.h"
 #include "Chart/OpacityTFChart.h"
 #include "Documentation/ROD.h"
+#include "GUI/ProgressDialog.h"
 #include "GUI/FilterSelectionDialog.h"
 #include "GUI/PreferencesDialog.h"
 #include "Settings/Language.h"
 #include "Settings/Backgrounds.h"
-
-#define VOLUME_BACKGROUND 0
-#define VOLUME_DELETING_BACKGROUND 1
-#define MESH_BACKGROUND 2
 
 namespace Ui {
     class MainWindow;

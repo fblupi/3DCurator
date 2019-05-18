@@ -218,19 +218,8 @@ void MainWindow::importDICOM() {
     QString dicomFolder = QFileDialog::getExistingDirectory(this, tr("OPEN_DICOM_FOLDER_CAPTION"), QDir::homePath(), QFileDialog::ShowDirsOnly);
 
     if (dicomFolder != nullptr) {
-        // -- launch progress bar
-        QPointer<QProgressBar> bar = new QProgressBar();
-        QPointer<QProgressDialog> progressDialog = new QProgressDialog();
-        progressDialog->setWindowTitle(tr("LOADING"));
-        progressDialog->setLabelText(tr("LOADING_DICOM_FILES"));
-        progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-        progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-        progressDialog->setCancelButton(nullptr);
-        progressDialog->setBar(bar);
+        auto *progressDialog = new ProgressDialog(tr("LOADING"), tr("LOADING_DICOM_FILES"));
         progressDialog->show();
-        bar->close();
-        QApplication::processEvents();
-        // -- END launch progress bar
 
         removeVolume();
         removeMesh();
@@ -249,9 +238,7 @@ void MainWindow::importDICOM() {
         drawMesh();
         renderSlice();
 
-        // -- close progress bar
         progressDialog->close();
-        // -- END close progress bar
     }
 }
 
@@ -259,19 +246,8 @@ void MainWindow::importVTI() {
     QString vtiFile = QFileDialog::getOpenFileName(this, tr("OPEN_VTI_FILE_CAPTION"), QDir::homePath(), "VTI (*.vti) ;; XML (*.xml) ;; All files (*.*)");
 
     if (vtiFile != nullptr) {
-        // -- launch progress bar
-        QPointer<QProgressBar> bar = new QProgressBar();
-        QPointer<QProgressDialog> progressDialog = new QProgressDialog();
-        progressDialog->setWindowTitle(tr("LOADING"));
-        progressDialog->setLabelText(tr("LOADING_VTI_FILE"));
-        progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-        progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-        progressDialog->setCancelButton(nullptr);
-        progressDialog->setBar(bar);
+        auto *progressDialog = new ProgressDialog(tr("LOADING"), tr("LOADING_VTI_FILE"));
         progressDialog->show();
-        bar->close();
-        QApplication::processEvents();
-        // -- END launch progress bar
 
         removeVolume();
         removeMesh();
@@ -290,9 +266,7 @@ void MainWindow::importVTI() {
         drawMesh();
         renderSlice();
 
-        // -- close progress bar
         progressDialog->close();
-        // -- END close progress bar
     }
 }
 
@@ -300,28 +274,15 @@ void MainWindow::exportVTI() {
     if (sculpture->getLoaded()) {
         QString filename = getExportVTIFilename(tr("SAVE_VOLUME_DEFAULT_NAME"));
         if (filename != nullptr) {
-            // -- launch progress bar
-            QPointer<QProgressBar> bar = new QProgressBar();
-            QPointer<QProgressDialog> progressDialog = new QProgressDialog();
-            progressDialog->setWindowTitle(tr("EXPORTING_VOLUME"));
-            progressDialog->setLabelText(tr("EXPORTING_VOLUME_MODEL"));
-            progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-            progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-            progressDialog->setCancelButton(nullptr);
-            progressDialog->setBar(bar);
+            auto *progressDialog = new ProgressDialog(tr("EXPORTING_VOLUME"), tr("EXPORTING_VOLUME_MODEL"));
             progressDialog->show();
-            bar->close();
-            QApplication::processEvents();
-            // -- END launch progress bar
 
             vtkSmartPointer<vtkXMLImageDataWriter> writer = vtkSmartPointer<vtkXMLImageDataWriter>::New();
             writer->SetFileName(filename.toUtf8().constData());
             writer->SetInputData(sculpture->getImageData());
             writer->Write();
 
-            // -- close progress bar
             progressDialog->close();
-            // -- END close progress bar
         }
     } else {
         launchWarningNoVolume();
@@ -366,19 +327,8 @@ void MainWindow::exportImageFromRenderWindow(const vtkSmartPointer<vtkRenderWind
 
 void MainWindow::exportMeshToFile(const QString &filename) {
     if (filename != nullptr) {
-        // -- launch progress bar
-        QPointer<QProgressBar> bar = new QProgressBar();
-        QPointer<QProgressDialog> progressDialog = new QProgressDialog();
-        progressDialog->setWindowTitle(tr("EXPORTING_MESH"));
-        progressDialog->setLabelText(tr("EXPORTING_MESH_MODEL"));
-        progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-        progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-        progressDialog->setCancelButton(nullptr);
-        progressDialog->setBar(bar);
+        auto *progressDialog = new ProgressDialog(tr("EXPORTING_MESH"), tr("EXPORTING_MESH_MODEL"));
         progressDialog->show();
-        bar->close();
-        QApplication::processEvents();
-        // -- END launch progress bar
 
         // marching cubes
         vtkSmartPointer<vtkMarchingCubes> surface = vtkSmartPointer<vtkMarchingCubes>::New();
@@ -420,9 +370,7 @@ void MainWindow::exportMeshToFile(const QString &filename) {
         stlWriter->SetInputData(mesh);
         stlWriter->Write();
 
-        // -- close progress bar
         progressDialog->close();
-        // -- END close progress bar
     }
 }
 
@@ -481,26 +429,13 @@ void MainWindow::exportMesh() {
 
 void MainWindow::updateMesh() {
     if (sculpture->getLoaded()) {
-        // -- launch progress bar
-        QPointer<QProgressBar> bar = new QProgressBar();
-        QPointer<QProgressDialog> progressDialog = new QProgressDialog();
-        progressDialog->setWindowTitle(tr("UPDATING_MESH"));
-        progressDialog->setLabelText(tr("GENERATING_MESH_WITH_THE_SPECIFIED_ISO_SURFACE"));
-        progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-        progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-        progressDialog->setCancelButton(nullptr);
-        progressDialog->setBar(bar);
+        auto *progressDialog = new ProgressDialog(tr("UPDATING_MESH"), tr("GENERATING_MESH_WITH_THE_SPECIFIED_ISO_SURFACE"));
         progressDialog->show();
-        bar->close();
-        QApplication::processEvents();
-        // -- END launch progress bar
 
         sculpture->createMesh();
         meshRen->Render();
 
-        // -- close progress bar
         progressDialog->close();
-        // -- END close progress bar
 
     } else {
         launchWarningNoVolume();
@@ -647,19 +582,8 @@ void MainWindow::filter() {
         int response = dialog->exec();
 
         if (response != CANCEL) {
-            // -- launch progress bar
-            QPointer<QProgressBar> bar = new QProgressBar();
-            QPointer<QProgressDialog> progressDialog = new QProgressDialog();
-            progressDialog->setWindowTitle(tr("FILTERING"));
-            progressDialog->setLabelText(tr("APPLYING_FILTER"));
-            progressDialog->setWindowIcon(QIcon(":/icons/3DCurator.png"));
-            progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowCloseButtonHint);
-            progressDialog->setCancelButton(nullptr);
-            progressDialog->setBar(bar);
+            auto *progressDialog = new ProgressDialog(tr("FILTERING"), tr("APPLYING_FILTER"));
             progressDialog->show();
-            bar->close();
-            QApplication::processEvents();
-            // -- END launch progress bar
 
             switch (response) {
                 case MEAN:
@@ -673,9 +597,7 @@ void MainWindow::filter() {
                     break;
             }
 
-            // -- close progress bar
             progressDialog->close();
-            // -- END close progress bar
         }
     } else {
         launchWarningNoVolume();
