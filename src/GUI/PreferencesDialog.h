@@ -7,9 +7,9 @@
 #include <QSettings>
 #include <QString>
 
-#include "GUI/MainWindow.h"
 #include "Settings/Backgrounds.h"
 #include "Settings/Language.h"
+#include "Settings/Material.h"
 
 class MainWindow;
 
@@ -28,7 +28,7 @@ public:
     /**
      * Constructor
      */
-    explicit PreferencesDialog(QSettings *settings, Backgrounds *backgrounds, Language *language, QWidget *parent = nullptr);
+    explicit PreferencesDialog(QSettings *settings, Backgrounds *backgrounds, Language *language, Material *material, QWidget *parent = nullptr);
 
     /**
      * Destructor
@@ -41,6 +41,10 @@ private slots:
     void on_volumeBackground_pressed();
     void on_volumeDeletingBackground_pressed();
     void on_volumeSegmentingBackground_pressed();
+    void on_ambientValue_valueChanged(double value);
+    void on_diffuseValue_valueChanged(double value);
+    void on_specularValue_valueChanged(double value);
+    void on_powerValue_valueChanged(double value);
 
     /**
      * Ok button selected
@@ -69,9 +73,10 @@ private:
     QSettings *settings; /**< Settings pointer */
     Backgrounds *backgrounds; /**< Backgrounds pointer */
     Language *language; /**< Language pointer */
+    Material *material; /**< Material pointer */
 
     /**
-     * Set backgrounds' inputs
+     * Set backgrounds inputs
      */
     void setupBackgrounds();
 
@@ -79,6 +84,11 @@ private:
      * Set language input
      */
     void setupLanguage();
+
+    /**
+     * Set material inputs
+     */
+    void setupMaterial();
 
     /**
      * Process language settings

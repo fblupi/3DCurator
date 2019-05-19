@@ -1,16 +1,18 @@
 #include "PreferencesDialog.h"
 #include "ui_preferencesdialog.h"
 
-PreferencesDialog::PreferencesDialog(QSettings *settings, Backgrounds *backgrounds, Language *language, QWidget *parent) :
+PreferencesDialog::PreferencesDialog(QSettings *settings, Backgrounds *backgrounds, Language *language, Material *material, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PreferencesDialog),
     settings(settings),
     backgrounds(backgrounds),
-    language(language)
+    language(language),
+    material(material)
 {
     ui->setupUi(this);
     setupBackgrounds();
     setupLanguage();
+    setupMaterial();
 
     // Connect button actions
     QObject::connect(ui->okButton, SIGNAL(clicked()), this, SLOT(accept()));
@@ -30,6 +32,13 @@ void PreferencesDialog::setupBackgrounds() {
 
 void PreferencesDialog::setupLanguage() {
     ui->languageInput->setCurrentIndex(getIndexFromLocale(language->getLocale()));
+}
+
+void PreferencesDialog::setupMaterial() {
+    ui->ambientValue->setValue(material->getAmbient());
+    ui->diffuseValue->setValue(material->getDiffuse());
+    ui->specularValue->setValue(material->getSpecular());
+    ui->powerValue->setValue(material->getPower());
 }
 
 void PreferencesDialog::accept() {
@@ -101,4 +110,24 @@ void PreferencesDialog::on_volumeSegmentingBackground_pressed() {
         settings->setValue("volume_seg_bg", QVariant(color.rgb()));
         ui->volumeSegmentingBackground->setStyleSheet("background-color: " + backgrounds->getVolumeSegmentingBackground().name());
     }
+}
+
+void PreferencesDialog::on_ambientValue_valueChanged(double value) {
+    material->setAmbient(value);
+    settings->setValue("mat_ambient", value);
+}
+
+void PreferencesDialog::on_diffuseValue_valueChanged(double value) {
+    material->setDiffuse(value);
+    settings->setValue("mat_diffuse", value);
+}
+
+void PreferencesDialog::on_specularValue_valueChanged(double value) {
+    material->setSpecular(value);
+    settings->setValue("mat_specular", value);
+}
+
+void PreferencesDialog::on_powerValue_valueChanged(double value) {
+    material->setPower(value);
+    settings->setValue("mat_power", value);
 }

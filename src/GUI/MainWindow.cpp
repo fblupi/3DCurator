@@ -6,6 +6,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     settings(new QSettings),
     language(new Language(QVariant(settings->value("locale", "en_US")).toString())),
+    material(new Material(
+        QVariant(settings->value("mat_ambient", 0.1)).toDouble(),
+        QVariant(settings->value("mat_diffuse", 0.9)).toDouble(),
+        QVariant(settings->value("mat_specular", 0.2)).toDouble(),
+        QVariant(settings->value("mat_power", 10.0)).toDouble()
+    )),
     backgrounds(new Backgrounds(
         QColor::fromRgb(QVariant(settings->value("mesh_bg", QVariant(QColor::fromRgbF(0.1, 0.2, 0.3).rgb()))).toUInt()),
         QColor::fromRgb(QVariant(settings->value("volume_bg", QVariant(QColor::fromRgbF(0.1, 0.2, 0.3).rgb()))).toUInt()),
@@ -39,8 +45,10 @@ MainWindow::MainWindow(QWidget *parent) :
     backgrounds->setMeshRenderWindow(ui->meshWidget->GetRenderWindow());
     backgrounds->setVolumeRenderWindow(ui->volumeWidget->GetRenderWindow());
 
+    material->setSculpture(sculpture);
+    material->setVolumeRenderWindow(ui->volumeWidget->GetRenderWindow());
+
     defaultTF();
-    defaultMaterial();
 
     colorTFChart = new ColorTFChart(ui->volumeWidget->GetRenderWindow(), ui->colorTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getColorFun(), tr("CHART_DENSITY").toUtf8().constData(), "", MIN_INTENSITY, MAX_INTENSITY);
     scalarTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->scalarTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getScalarFun(), tr("CHART_DENSITY").toUtf8().constData(), tr("CHART_OPACITY").toUtf8().constData(), MIN_INTENSITY, MAX_INTENSITY);
@@ -166,13 +174,6 @@ void MainWindow::defaultTF() {
     loadDefaultPreset(&file);
 }
 
-void MainWindow::defaultMaterial() {
-    ui->ambientValue->setValue(0.1);
-    ui->diffuseValue->setValue(0.9);
-    ui->specularValue->setValue(0.2);
-    ui->powerValue->setValue(10.0);
-}
-
 void MainWindow::defaultPlanePosition() {
     if (sculpture->getVolume() != nullptr) {
         // volume dimension
@@ -184,10 +185,6 @@ void MainWindow::defaultPlanePosition() {
     } else {
         launchWarningNoVolume();
     }
-}
-
-void MainWindow::updateMaterial() {
-    sculpture->setMaterial(ui->ambientValue->value(), ui->diffuseValue->value(), ui->specularValue->value(), ui->powerValue->value());
 }
 
 void MainWindow::updateSliders() {
@@ -860,7 +857,7 @@ void MainWindow::on_actionExit_triggered() {
 }
 
 void MainWindow::on_actionPreferences_triggered() {
-    auto *dialog = new PreferencesDialog(settings, backgrounds, language);
+    auto *dialog = new PreferencesDialog(settings, backgrounds, language, material);
     dialog->exec();
 }
 
@@ -970,15 +967,6 @@ void MainWindow::on_importPreset_pressed() {
 
 void MainWindow::on_exportPreset_pressed() {
     exportPreset(getExportPresetFilename(ui->tfName->text()));
-}
-
-void MainWindow::on_restoreMaterial_pressed() {
-    defaultMaterial();
-}
-
-void MainWindow::on_updateProperties_pressed() {
-    updateMaterial();
-    renderVolume();
 }
 
 void MainWindow::on_completePreset_pressed() {

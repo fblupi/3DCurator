@@ -164,34 +164,6 @@
         <translation>Presets</translation>
     </message>
     <message>
-        <source>MATERIAL</source>
-        <translation>Material</translation>
-    </message>
-    <message>
-        <source>AMBIENT</source>
-        <translation>Ambient</translation>
-    </message>
-    <message>
-        <source>DIFFUSE</source>
-        <translation>Diffuse</translation>
-    </message>
-    <message>
-        <source>SPECULAR</source>
-        <translation>Specular</translation>
-    </message>
-    <message>
-        <source>SPECULAR_POWER</source>
-        <translation>Specular power</translation>
-    </message>
-    <message>
-        <source>RESTORE_MTL</source>
-        <translation>Restore</translation>
-    </message>
-    <message>
-        <source>UPDATE_MTL</source>
-        <translation>Update</translation>
-    </message>
-    <message>
         <source>DOCUMENTATION</source>
         <translation>Documentation</translation>
     </message>
@@ -756,6 +728,26 @@
     <message>
         <source>MESH_BG</source>
         <translation>Mesh</translation>
+    </message>
+    <message>
+        <source>MATERIAL</source>
+        <translation>Material</translation>
+    </message>
+    <message>
+        <source>AMBIENT</source>
+        <translation>Ambient</translation>
+    </message>
+    <message>
+        <source>DIFFUSE</source>
+        <translation>Diffuse</translation>
+    </message>
+    <message>
+        <source>SPECULAR</source>
+        <translation>Specular</translation>
+    </message>
+    <message>
+        <source>SPECULAR_POWER</source>
+        <translation>Specular power</translation>
     </message>
 </context>
 </TS>

@@ -45,6 +45,7 @@
 #include "GUI/FilterSelectionDialog.h"
 #include "GUI/PreferencesDialog.h"
 #include "Settings/Language.h"
+#include "Settings/Material.h"
 #include "Settings/Backgrounds.h"
 
 namespace Ui {
@@ -106,8 +107,6 @@ private slots:
     void on_exportVolumeImage_pressed();
     void on_importPreset_pressed();
     void on_exportPreset_pressed();
-    void on_restoreMaterial_pressed();
-    void on_updateProperties_pressed();
     void on_completePreset_pressed();
     void on_woodPreset_pressed();
     void on_stuccoPreset_pressed();
@@ -190,19 +189,9 @@ private slots:
     void defaultTF();
 
     /**
-     * Set default material
-     */
-    void defaultMaterial();
-
-    /**
      * Set default plane position
      */
     void defaultPlanePosition();
-
-    /**
-     * Update material with GUI values
-     */
-    void updateMaterial();
 
     /**
      * Update sliders using transfer function bounds
@@ -505,6 +494,7 @@ private:
     QSettings *settings; /**< Settings pointer */
     Language *language; /**< Language pointer */
     Backgrounds *backgrounds; /**< Backgrounds pointer */
+    Material *material; /**< Material pointer */
 
     QFont itemListEnabled; /**< Font type for rule list elements enabled */
     QFont itemListDisabled; /**< Font type for rule list elements disabled */
