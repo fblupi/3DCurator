@@ -1,6 +1,6 @@
 #include "ColorTFChart.h"
 
-ColorTFChart::ColorTFChart(const vtkSmartPointer<vtkRenderWindow> &figureRenWin, const vtkSmartPointer<vtkRenderWindow> &chartRenWin, vtkSmartPointer<vtkColorTransferFunction> tf, const std::string &xLabel, const std::string &yLabel, double minBound, double maxBound) :
+ColorTFChart::ColorTFChart(const vtkSmartPointer<vtkRenderWindow> &figureRenWin, vtkSmartPointer<vtkColorTransferFunction> tf, const std::string &xLabel, const std::string &yLabel, double minBound, double maxBound) :
     tf(std::move(tf)),
     chart(vtkSmartPointer<ChartXY>::New()),
     function(vtkSmartPointer<vtkColorTransferFunctionItem>::New()),
@@ -14,18 +14,23 @@ ColorTFChart::ColorTFChart(const vtkSmartPointer<vtkRenderWindow> &figureRenWin,
     chart->GetAxis(0)->SetBehavior(vtkAxis::FIXED);
     chart->GetAxis(1)->SetBehavior(vtkAxis::FIXED);
 
-    function->SetColorTransferFunction(tf);
+    function->SetColorTransferFunction(this->tf);
     chart->AddPlot(function);
 
     controlPoints->SetRenderWindow(figureRenWin);
-    controlPoints->SetColorTransferFunction(tf);
+    controlPoints->SetColorTransferFunction(this->tf);
     controlPoints->SetUserBounds(minBound, maxBound, 0, 1);
     chart->AddPlot(controlPoints);
 
-    context->SetRenderWindow(chartRenWin);
-    context->GetScene()->AddItem(chart);
+    // Axis ranges set here; rendering deferred until setRenderWindow
+    chart->GetAxis(0)->SetRange(0, 1);
+    chart->GetAxis(1)->SetRange(this->tf->GetRange()[0], this->tf->GetRange()[1]);
+}
 
-    defaultRange();
+void ColorTFChart::setRenderWindow(vtkRenderWindow* renWin) {
+    context->SetRenderWindow(renWin);
+    context->GetScene()->AddItem(chart);
+    context->Render();
 }
 
 ColorTFChart::~ColorTFChart() = default;

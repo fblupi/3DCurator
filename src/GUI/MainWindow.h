@@ -7,6 +7,7 @@
 #include <QPointer>
 #include <QListWidgetItem>
 #include <QInputDialog>
+#include <QRegularExpression>
 #include <QSettings>
 
 #include <sstream>
@@ -287,6 +288,8 @@ private slots:
      * @return	Output filename
      */
     QString getExportVTIFilename(const QString &defaultFilename);
+
+    static QString ensureExtension(const QString &filename, const QString &selectedFilter);
 
     /**
      * Show plane in viewer

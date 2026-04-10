@@ -1,6 +1,6 @@
 #include "OpacityTFChart.h"
 
-OpacityTFChart::OpacityTFChart(const vtkSmartPointer<vtkRenderWindow> &figureRenWin, const vtkSmartPointer<vtkRenderWindow> &chartRenWin, vtkSmartPointer<vtkPiecewiseFunction> tf, const std::string &xLabel, const std::string &yLabel, double minBound, double maxBound) :
+OpacityTFChart::OpacityTFChart(const vtkSmartPointer<vtkRenderWindow> &figureRenWin, vtkSmartPointer<vtkPiecewiseFunction> tf, const std::string &xLabel, const std::string &yLabel, double minBound, double maxBound) :
     tf(std::move(tf)),
     chart(vtkSmartPointer<ChartXY>::New()),
     function(vtkSmartPointer<vtkPiecewiseFunctionItem>::New()),
@@ -14,18 +14,23 @@ OpacityTFChart::OpacityTFChart(const vtkSmartPointer<vtkRenderWindow> &figureRen
     chart->GetAxis(0)->SetBehavior(vtkAxis::FIXED);
     chart->GetAxis(1)->SetBehavior(vtkAxis::FIXED);
 
-    function->SetPiecewiseFunction(tf);
+    function->SetPiecewiseFunction(this->tf);
     chart->AddPlot(function);
 
     controlPoints->SetRenderWindow(figureRenWin);
-    controlPoints->SetPiecewiseFunction(tf);
+    controlPoints->SetPiecewiseFunction(this->tf);
     controlPoints->SetUserBounds(minBound, maxBound, 0, 1);
     chart->AddPlot(controlPoints);
 
-    context->SetRenderWindow(chartRenWin);
-    context->GetScene()->AddItem(chart);
+    // Axis ranges set here; rendering deferred until setRenderWindow
+    chart->GetAxis(0)->SetRange(0, 1);
+    chart->GetAxis(1)->SetRange(this->tf->GetRange()[0], this->tf->GetRange()[1]);
+}
 
-    defaultRange();
+void OpacityTFChart::setRenderWindow(vtkRenderWindow* renWin) {
+    context->SetRenderWindow(renWin);
+    context->GetScene()->AddItem(chart);
+    context->Render();
 }
 
 OpacityTFChart::~OpacityTFChart() = default;

@@ -5,7 +5,7 @@ Sculpture::Sculpture() :
 	loaded(false),
 	tf(new TransferFunction()),
 	volumeProperty(vtkSmartPointer<vtkVolumeProperty>::New()),
-	volumeMapper(vtkSmartPointer<vtkSmartVolumeMapper>::New()),
+	volumeMapper(vtkSmartPointer<vtkGPUVolumeRayCastMapper>::New()),
 	imageData(vtkSmartPointer<vtkImageData>::New()),
 	meshActor(vtkSmartPointer<vtkActor>::New()),
 	volume(vtkSmartPointer<vtkVolume>::New()),
@@ -68,8 +68,8 @@ void Sculpture::setVTIFile(const std::string &s) {
 void Sculpture::loadVolume(const vtkSmartPointer<vtkAlgorithm> &imageReader) {
     volumeMapper->SetInputData(imageData);
     surface->SetInputData(imageData);
-    meshMapper->Update();
     surface->SetValue(0, isoValue);
+    surface->Update();
 }
 
 void Sculpture::createMesh() {

@@ -33,6 +33,7 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 
             sculpture->getImageData()->Modified();
             slicePlane->getPlane()->UpdatePlacement();
+            this->GetInteractor()->GetRenderWindow()->Render();
             viewer->Render();
 
             progressDialog->close();
@@ -55,6 +56,7 @@ void InteractorStyleDeleter::OnLeftButtonDown() {
 
                 sculpture->getImageData()->Modified();
                 slicePlane->getPlane()->UpdatePlacement();
+                this->GetInteractor()->GetRenderWindow()->Render();
                 viewer->Render();
 
                 progressDialog->close();
