@@ -2,14 +2,18 @@
 
 ROD::ROD(std::string name, double* origin, double* point1, double* point2, double slice, const QFont &enabled, const QFont &disabled, vtkSmartPointer<vtkRenderWindowInteractor> interactor) :
     name(std::move(name)),
-    origin(origin),
-    point1(point1),
-    point2(point2),
+    origin(new double[3]),
+    point1(new double[3]),
+    point2(new double[3]),
     slice(slice),
     enabled(enabled),
     disabled(disabled),
     interactor(std::move(interactor))
-{}
+{
+    std::copy(origin, origin + 3, this->origin);
+    std::copy(point1, point1 + 3, this->point1);
+    std::copy(point2, point2 + 3, this->point2);
+}
 
 ROD::ROD(const std::string &filename, const QFont &enabled, const QFont &disabled, vtkSmartPointer<vtkRenderWindowInteractor> interactor, QListWidget* ruleList, QListWidget* protractorList, QListWidget *annotationList) :
     enabled(enabled),
@@ -27,6 +31,9 @@ ROD::~ROD() {
     delete[] origin;
     delete[] point1;
     delete[] point2;
+    hideAllRules();
+    hideAllProtractors();
+    hideAllAnnotations();
     clearAllRules();
     clearAllProtractors();
     clearAllAnnotations();

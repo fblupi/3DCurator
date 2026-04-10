@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.5)
 
 if(POLICY CMP0020)
     cmake_policy(SET CMP0020 NEW)
@@ -34,7 +34,6 @@ find_package(ITK REQUIRED)
 include(${ITK_USE_FILE})
 if(ITKVtkGlue_LOADED)
     find_package(VTK REQUIRED)
-    include(${VTK_USE_FILE})
 else()
     find_package(ItkVtkGlue REQUIRED)
     include(${ItkVtkGlue_USE_FILE})
@@ -43,10 +42,7 @@ endif()
 
 find_package(OpenCV REQUIRED)
 find_package(Boost REQUIRED)
-find_package(Qt5Core REQUIRED QUIET)
-find_package(Qt5Gui REQUIRED QUIET)
-find_package(Qt5LinguistTools REQUIRED QUIET)
-find_package(Qt5Widgets REQUIRED QUIET)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui LinguistTools Widgets QUIET)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_BINARY_DIR} ${Boost_INCLUDE_DIRS})
 
@@ -56,7 +52,12 @@ file(GLOB_RECURSE UI_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.ui)
 file(GLOB_RECURSE QRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/*.qrc)
 
 add_executable(${APP_NAME} WIN32 MACOSX_BUNDLE ${APP_ICON} ${UI_FILES} ${QRC_FILES} ${HEADER_FILES} ${CPP_FILES})
-target_link_libraries(${APP_NAME} Qt5::Core Qt5::Gui Qt5::Widgets ${GLUE} ${VTK_LIBRARIES} ${ITK_LIBRARIES} ${OpenCV_LIBS} ${Boost_LIBS})
+target_link_libraries(${APP_NAME} Qt6::Core Qt6::Gui Qt6::Widgets ${GLUE} ${VTK_LIBRARIES} ${ITK_LIBRARIES} ${OpenCV_LIBS} ${Boost_LIBS})
+
+vtk_module_autoinit(
+    TARGETS ${APP_NAME}
+    MODULES ${VTK_LIBRARIES}
+)
 
 if(APPLE)
     set(MACOSX_BUNDLE_ICON_FILE 3DCurator.icns)

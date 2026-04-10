@@ -12,7 +12,6 @@
 #include <vtkColorTransferFunctionItem.h>
 #include <vtkSmartPointer.h>
 #include <vtkRenderWindow.h>
-
 #include "Chart/ColorTransferControlPointsItem.h"
 #include "Chart/ChartXY.h"
 
@@ -32,7 +31,9 @@ public:
      * @param	minBound	    Min control points bound
      * @param	maxBound	    Max control points bound
      */
-    ColorTFChart(const vtkSmartPointer<vtkRenderWindow> &figureRenWin, const vtkSmartPointer<vtkRenderWindow> &chartRenWin, vtkSmartPointer<vtkColorTransferFunction> tf, const std::string &xLabel, const std::string &yLabel, double minBound, double maxBound);
+    ColorTFChart(const vtkSmartPointer<vtkRenderWindow> &figureRenWin, vtkSmartPointer<vtkColorTransferFunction> tf, const std::string &xLabel, const std::string &yLabel, double minBound, double maxBound);
+
+    void setRenderWindow(vtkRenderWindow* renWin);
 
     /**
      * Destructor

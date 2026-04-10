@@ -20,18 +20,17 @@ SegmentedVolumeDialog::~SegmentedVolumeDialog() {
 }
 
 void SegmentedVolumeDialog::render() {
-    vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
+    vtkSmartPointer<vtkGPUVolumeRayCastMapper> volumeMapper = vtkSmartPointer<vtkGPUVolumeRayCastMapper>::New();
     vtkSmartPointer<vtkVolumeProperty> volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
     vtkSmartPointer<vtkVolume> volume = vtkSmartPointer<vtkVolume>::New();
     vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
     vtkSmartPointer<vtkInteractorStyleTrackballCamera> interactorStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 
     renderer->SetBackground(background.redF(), background.greenF(), background.blueF());
-    ui->viewer->GetRenderWindow()->AddRenderer(renderer);
-    ui->viewer->GetRenderWindow()->GetInteractor()->SetInteractorStyle(interactorStyle);
+    ui->viewer->renderWindow()->AddRenderer(renderer);
+    ui->viewer->renderWindow()->GetInteractor()->SetInteractorStyle(interactorStyle);
 
     volumeMapper->SetBlendModeToComposite();
-    volumeMapper->SetRequestedRenderModeToGPU();
     volumeMapper->SetInputData(imageData);
 
     volumeProperty->ShadeOn();
@@ -51,7 +50,7 @@ void SegmentedVolumeDialog::render() {
     renderer->AddVolume(volume);
     renderer->ResetCamera();
 
-    ui->viewer->GetRenderWindow()->Render();
+    ui->viewer->renderWindow()->Render();
 }
 
 void SegmentedVolumeDialog::accept() {

@@ -4,7 +4,7 @@
 #include <vtkAlgorithm.h>
 #include <vtkColorTransferFunction.h>
 #include <vtkDICOMImageReader.h>
-#include <vtkSmartVolumeMapper.h>
+#include <vtkGPUVolumeRayCastMapper.h>
 #include <vtkImageData.h>
 #include <vtkPiecewiseFunction.h>
 #include <vtkSmartPointer.h>
@@ -179,7 +179,7 @@ public:
 private:
     vtkSmartPointer<vtkImageData> imageData; /**< 3D Matrix with volume data */
     vtkSmartPointer<vtkVolume> volume; /**< Volume */
-    vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper; /**< Mapper that uses DVR GPU Ray-casting */
+    vtkSmartPointer<vtkGPUVolumeRayCastMapper> volumeMapper; /**< Mapper that uses DVR GPU Ray-casting */
     vtkSmartPointer<vtkVolumeProperty> volumeProperty; /**< Volume properties */
     vtkSmartPointer<vtkMarchingCubes> surface; /**< Extracted mesh using marching cubes */
     vtkSmartPointer<vtkPolyDataMapper> meshMapper; /**< Mesh mapper */

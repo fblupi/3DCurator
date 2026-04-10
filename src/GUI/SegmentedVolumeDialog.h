@@ -7,7 +7,7 @@
 #include <vtkRenderer.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkRenderWindowInteractor.h>
-#include <vtkSmartVolumeMapper.h>
+#include <vtkGPUVolumeRayCastMapper.h>
 #include <vtkVolumeProperty.h>
 
 #include <QDialog>

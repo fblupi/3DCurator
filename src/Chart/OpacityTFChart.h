@@ -12,7 +12,6 @@
 #include <vtkPiecewiseFunctionItem.h>
 #include <vtkSmartPointer.h>
 #include <vtkRenderWindow.h>
-
 #include "Chart/PiecewiseControlPointsItem.h"
 #include "Chart/ChartXY.h"
 
@@ -32,7 +31,9 @@ public:
      * @param	minBound	    Min control points bound
      * @param	maxBound	    Max control points bound
      */
-    OpacityTFChart(const vtkSmartPointer<vtkRenderWindow> &figureRenWin, const vtkSmartPointer<vtkRenderWindow> &chartRenWin, vtkSmartPointer<vtkPiecewiseFunction> tf, const std::string &xLabel, const std::string &yLabel, double minBound, double maxBound);
+    OpacityTFChart(const vtkSmartPointer<vtkRenderWindow> &figureRenWin, vtkSmartPointer<vtkPiecewiseFunction> tf, const std::string &xLabel, const std::string &yLabel, double minBound, double maxBound);
+
+    void setRenderWindow(vtkRenderWindow* renWin);
 
     /**
      * Destructor

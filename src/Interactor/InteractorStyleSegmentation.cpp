@@ -27,6 +27,10 @@ void InteractorStyleSegmentation::OnLeftButtonDown() {
 
             std::string img = generateImage(sculpture->getImageData(), sculpture->getTransferFunction()->getColorFun(), ijk[2], bounds, lines[ijk[2]]);
 
+            if (img.empty()) {
+                return;
+            }
+
             // -- launch line selection
             auto *diag = new LineSelectionDialog();
             diag->setImage(img);

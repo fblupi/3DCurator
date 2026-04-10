@@ -42,17 +42,20 @@ MainWindow::MainWindow(QWidget *parent) :
     backgrounds->setDeleting(&deleting);
     backgrounds->setMeshRenderer(meshRen);
     backgrounds->setVolumeRenderer(volumeRen);
-    backgrounds->setMeshRenderWindow(ui->meshWidget->GetRenderWindow());
-    backgrounds->setVolumeRenderWindow(ui->volumeWidget->GetRenderWindow());
+    backgrounds->setMeshRenderWindow(ui->meshWidget->renderWindow());
+    backgrounds->setVolumeRenderWindow(ui->volumeWidget->renderWindow());
 
     material->setSculpture(sculpture);
-    material->setVolumeRenderWindow(ui->volumeWidget->GetRenderWindow());
+    material->setVolumeRenderWindow(ui->volumeWidget->renderWindow());
 
     defaultTF();
 
-    colorTFChart = new ColorTFChart(ui->volumeWidget->GetRenderWindow(), ui->colorTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getColorFun(), tr("CHART_DENSITY").toUtf8().constData(), "", MIN_INTENSITY, MAX_INTENSITY);
-    scalarTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->scalarTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getScalarFun(), tr("CHART_DENSITY").toUtf8().constData(), tr("CHART_OPACITY").toUtf8().constData(), MIN_INTENSITY, MAX_INTENSITY);
-    gradientTFChart = new OpacityTFChart(ui->volumeWidget->GetRenderWindow(), ui->gradientTFWidget->GetRenderWindow(), sculpture->getTransferFunction()->getGradientFun(), tr("CHART_GRADIENT").toUtf8().constData(), tr("CHART_OPACITY").toUtf8().constData(), 0, MAX_INTENSITY - MIN_INTENSITY);
+    colorTFChart = new ColorTFChart(ui->volumeWidget->renderWindow(), sculpture->getTransferFunction()->getColorFun(), tr("CHART_DENSITY").toUtf8().constData(), "", MIN_INTENSITY, MAX_INTENSITY);
+    colorTFChart->setRenderWindow(ui->colorTFWidget->renderWindow());
+    scalarTFChart = new OpacityTFChart(ui->volumeWidget->renderWindow(), sculpture->getTransferFunction()->getScalarFun(), tr("CHART_DENSITY").toUtf8().constData(), tr("CHART_OPACITY").toUtf8().constData(), MIN_INTENSITY, MAX_INTENSITY);
+    scalarTFChart->setRenderWindow(ui->scalarTFWidget->renderWindow());
+    gradientTFChart = new OpacityTFChart(ui->volumeWidget->renderWindow(), sculpture->getTransferFunction()->getGradientFun(), tr("CHART_GRADIENT").toUtf8().constData(), tr("CHART_OPACITY").toUtf8().constData(), 0, MAX_INTENSITY - MIN_INTENSITY);
+    gradientTFChart->setRenderWindow(ui->gradientTFWidget->renderWindow());
     updateSliders();
 
     sliceViewer->GetWindowLevel()->SetLookupTable(sculpture->getTransferFunction()->getColorFun());
@@ -83,23 +86,23 @@ void MainWindow::changeEvent(QEvent* event) {
 }
 
 void MainWindow::connectComponents() {
-    ui->volumeWidget->GetRenderWindow()->AddRenderer(volumeRen);
-    ui->meshWidget->GetRenderWindow()->AddRenderer(meshRen);
-    ui->slicesWidget->GetRenderWindow()->AddRenderer(sliceViewer->GetRenderer());
-    volumeRen->SetRenderWindow(ui->volumeWidget->GetRenderWindow());
-    meshRen->SetRenderWindow(ui->meshWidget->GetRenderWindow());
-    sliceViewer->SetRenderWindow(ui->slicesWidget->GetRenderWindow());
+    ui->volumeWidget->renderWindow()->AddRenderer(volumeRen);
+    ui->meshWidget->renderWindow()->AddRenderer(meshRen);
+    ui->slicesWidget->renderWindow()->AddRenderer(sliceViewer->GetRenderer());
+    volumeRen->SetRenderWindow(ui->volumeWidget->renderWindow());
+    meshRen->SetRenderWindow(ui->meshWidget->renderWindow());
+    sliceViewer->SetRenderWindow(ui->slicesWidget->renderWindow());
 
     sliceViewer->SetInputData(slicePlane->getPlane()->GetResliceOutput());
 
-    ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
-    slicePlane->getPlane()->SetInteractor(ui->volumeWidget->GetRenderWindow()->GetInteractor());
+    ui->volumeWidget->renderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
+    slicePlane->getPlane()->SetInteractor(ui->volumeWidget->renderWindow()->GetInteractor());
 
-    sliceViewer->SetupInteractor(ui->slicesWidget->GetRenderWindow()->GetInteractor());
+    sliceViewer->SetupInteractor(ui->slicesWidget->renderWindow()->GetInteractor());
     sliceStyle->SetSlicePlane(slicePlane);
     sliceStyle->SetDefaultRenderer(sliceViewer->GetRenderer());
     sliceStyle->SetLabel(ui->coordsAndValueLabel);
-    ui->slicesWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(sliceStyle);
+    ui->slicesWidget->renderWindow()->GetInteractor()->SetInteractorStyle(sliceStyle);
 
     slicePlane->setViewer(sliceViewer);
     slicePlane->getPlane()->setActiveROD(activeROD);
@@ -141,11 +144,11 @@ void MainWindow::removeMesh() {
 }
 
 void MainWindow::renderVolume() {
-    ui->volumeWidget->GetRenderWindow()->Render();
+    ui->volumeWidget->renderWindow()->Render();
 }
 
 void MainWindow::renderMesh() {
-    ui->meshWidget->GetRenderWindow()->Render();
+    ui->meshWidget->renderWindow()->Render();
 }
 
 void MainWindow::renderSlice() {
@@ -212,9 +215,9 @@ void MainWindow::updateSliders() {
 }
 
 void MainWindow::importDICOM() {
-    QString dicomFolder = QFileDialog::getExistingDirectory(this, tr("OPEN_DICOM_FOLDER_CAPTION"), QDir::homePath(), QFileDialog::ShowDirsOnly);
+    QString dicomFolder = QFileDialog::getExistingDirectory(this, tr("OPEN_DICOM_FOLDER_CAPTION"), QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontUseNativeDialog);
 
-    if (dicomFolder != nullptr) {
+    if (!dicomFolder.isEmpty()) {
         auto *progressDialog = new ProgressDialog(tr("LOADING"), tr("LOADING_DICOM_FILES"));
         progressDialog->show();
 
@@ -240,9 +243,9 @@ void MainWindow::importDICOM() {
 }
 
 void MainWindow::importVTI() {
-    QString vtiFile = QFileDialog::getOpenFileName(this, tr("OPEN_VTI_FILE_CAPTION"), QDir::homePath(), "VTI (*.vti) ;; XML (*.xml) ;; All files (*.*)");
+    QString vtiFile = QFileDialog::getOpenFileName(this, tr("OPEN_VTI_FILE_CAPTION"), QDir::homePath(), "VTI (*.vti) ;; XML (*.xml) ;; All files (*.*)", nullptr, QFileDialog::DontUseNativeDialog);
 
-    if (vtiFile != nullptr) {
+    if (!vtiFile.isEmpty()) {
         auto *progressDialog = new ProgressDialog(tr("LOADING"), tr("LOADING_VTI_FILE"));
         progressDialog->show();
 
@@ -270,7 +273,7 @@ void MainWindow::importVTI() {
 void MainWindow::exportVTI() {
     if (sculpture->getLoaded()) {
         QString filename = getExportVTIFilename(tr("SAVE_VOLUME_DEFAULT_NAME"));
-        if (filename != nullptr) {
+        if (!filename.isEmpty()) {
             auto *progressDialog = new ProgressDialog(tr("EXPORTING_VOLUME"), tr("EXPORTING_VOLUME_MODEL"));
             progressDialog->show();
 
@@ -287,9 +290,9 @@ void MainWindow::exportVTI() {
 }
 
 void MainWindow::importPreset() {
-    QString presetFile = QFileDialog::getOpenFileName(this, tr("OPEN_PRESET_CAPTION"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
+    QString presetFile = QFileDialog::getOpenFileName(this, tr("OPEN_PRESET_CAPTION"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)", nullptr, QFileDialog::DontUseNativeDialog);
 
-    if (presetFile != nullptr) {
+    if (!presetFile.isEmpty()) {
         std::string s = presetFile.toUtf8().constData();
         sculpture->getTransferFunction()->read(s);
 
@@ -306,7 +309,7 @@ void MainWindow::importPreset() {
 }
 
 void MainWindow::exportImageFromRenderWindow(const vtkSmartPointer<vtkRenderWindow> &renWin, const QString &filename) {
-    if (filename != nullptr) {
+    if (!filename.isEmpty()) {
         vtkSmartPointer<vtkWindowToImageFilter> filter = vtkSmartPointer<vtkWindowToImageFilter>::New();
         filter->SetInput(renWin);
         filter->Update();
@@ -323,7 +326,7 @@ void MainWindow::exportImageFromRenderWindow(const vtkSmartPointer<vtkRenderWind
 }
 
 void MainWindow::exportMeshToFile(const QString &filename) {
-    if (filename != nullptr) {
+    if (!filename.isEmpty()) {
         auto *progressDialog = new ProgressDialog(tr("EXPORTING_MESH"), tr("EXPORTING_MESH_MODEL"));
         progressDialog->show();
 
@@ -372,7 +375,7 @@ void MainWindow::exportMeshToFile(const QString &filename) {
 }
 
 void MainWindow::exportPreset(const QString &filename) {
-    if (filename != nullptr) {
+    if (!filename.isEmpty()) {
         // get name and description from GUI
         sculpture->getTransferFunction()->setName(ui->tfName->text().toUtf8().constData());
         sculpture->getTransferFunction()->setDescription(ui->tfDescription->text().toUtf8().constData());
@@ -382,24 +385,47 @@ void MainWindow::exportPreset(const QString &filename) {
     }
 }
 
+QString MainWindow::ensureExtension(const QString &filename, const QString &selectedFilter) {
+    if (filename.isEmpty()) return filename;
+    QRegularExpression re("\\*\\.([a-zA-Z0-9]+)");
+    QRegularExpressionMatch match = re.match(selectedFilter);
+    if (match.hasMatch()) {
+        QString ext = "." + match.captured(1).toLower();
+        if (!filename.endsWith(ext, Qt::CaseInsensitive)) {
+            return filename + ext;
+        }
+    }
+    return filename;
+}
+
 QString MainWindow::getExportPresetFilename(const QString &defaultFilename) {
-    return QFileDialog::getSaveFileName(this, tr("SAVE_PRESET_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
+    QString selectedFilter;
+    QString filename = QFileDialog::getSaveFileName(this, tr("SAVE_PRESET_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)", &selectedFilter, QFileDialog::DontUseNativeDialog);
+    return ensureExtension(filename, selectedFilter);
 }
 
 QString MainWindow::getExportImageFilename(const QString &defaultFilename) {
-    return QFileDialog::getSaveFileName(this, tr("SAVE_SCREENSHOT_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "PNG (*.png);;JPG (*.jpg)");
+    QString selectedFilter;
+    QString filename = QFileDialog::getSaveFileName(this, tr("SAVE_SCREENSHOT_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "PNG (*.png);;JPG (*.jpg)", &selectedFilter, QFileDialog::DontUseNativeDialog);
+    return ensureExtension(filename, selectedFilter);
 }
 
 QString MainWindow::getExportMeshFilename(const QString &defaultFilename) {
-    return QFileDialog::getSaveFileName(this, tr("SAVE_MESH_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "STL (*.stl)");
+    QString selectedFilter;
+    QString filename = QFileDialog::getSaveFileName(this, tr("SAVE_MESH_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "STL (*.stl)", &selectedFilter, QFileDialog::DontUseNativeDialog);
+    return ensureExtension(filename, selectedFilter);
 }
 
 QString MainWindow::getExportRODFilename(const QString &defaultFilename) {
-    return QFileDialog::getSaveFileName(this, tr("SAVE_ROD_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)");
+    QString selectedFilter;
+    QString filename = QFileDialog::getSaveFileName(this, tr("SAVE_ROD_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "XML (*.xml)", &selectedFilter, QFileDialog::DontUseNativeDialog);
+    return ensureExtension(filename, selectedFilter);
 }
 
 QString MainWindow::getExportVTIFilename(const QString &defaultFilename) {
-    return QFileDialog::getSaveFileName(this, tr("SAVE_VOLUME_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "VTI (*.vti) ;; XML (*.xml)");
+    QString selectedFilter;
+    QString filename = QFileDialog::getSaveFileName(this, tr("SAVE_VOLUME_CAPTION"), QDir(QDir::homePath()).filePath(defaultFilename), "VTI (*.vti) ;; XML (*.xml)", &selectedFilter, QFileDialog::DontUseNativeDialog);
+    return ensureExtension(filename, selectedFilter);
 }
 
 void MainWindow::enablePlane() {
@@ -491,11 +517,11 @@ void MainWindow::deleteVolumeParts() {
     if (deleting) {
         deleting = false;
         volumeRen->SetBackground(backgrounds->getVolumeBackground().redF(), backgrounds->getVolumeBackground().greenF(), backgrounds->getVolumeBackground().blueF());
-        ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
+        ui->volumeWidget->renderWindow()->GetInteractor()->SetInteractorStyle(volumeStyle);
     } else {
         deleting = true;
         volumeRen->SetBackground(backgrounds->getVolumeDeletingBackground().redF(), backgrounds->getVolumeDeletingBackground().greenF(), backgrounds->getVolumeDeletingBackground().blueF());
-        ui->volumeWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(deleterStyle);
+        ui->volumeWidget->renderWindow()->GetInteractor()->SetInteractorStyle(deleterStyle);
     }
     slicePlane->getPlane()->UpdatePlacement();
     renderVolume();
@@ -562,11 +588,11 @@ void MainWindow::launchWarningNoActiveROD() {
 
 void MainWindow::segmentationOnOff() {
     if (segmenting) {
-        ui->slicesWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(sliceStyle);
+        ui->slicesWidget->renderWindow()->GetInteractor()->SetInteractorStyle(sliceStyle);
         ui->segmentate->setIcon(QIcon(":/icons/scissors.png"));
         segmenting = false;
     } else {
-        ui->slicesWidget->GetRenderWindow()->GetInteractor()->SetInteractorStyle(segmentationStyle);
+        ui->slicesWidget->renderWindow()->GetInteractor()->SetInteractorStyle(segmentationStyle);
         ui->segmentate->setIcon(QIcon(":/icons/scissors-slash.png"));
         segmenting = true;
     }
@@ -593,6 +619,10 @@ void MainWindow::filter() {
                     sculpture->gaussianFilter(dialog->getGaussianReps());
                     break;
             }
+
+            slicePlane->getPlane()->UpdatePlacement();
+            renderVolume();
+            renderSlice();
 
             progressDialog->close();
         }
@@ -642,7 +672,7 @@ void MainWindow::addROD() {
             }
             item->setText(name.c_str());
             ui->RODList->addItem(item);
-            rods[item] = new ROD(name, slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition(), itemListEnabled, itemListDisabled, ui->slicesWidget->GetInteractor());
+            rods[item] = new ROD(name, slicePlane->getOrigin(), slicePlane->getPoint1(), slicePlane->getPoint2(), slicePlane->getSlicePosition(), itemListEnabled, itemListDisabled, ui->slicesWidget->interactor());
             ui->RODList->setCurrentItem(item); // calls setActiveROD
             item->setSelected(true);
         }
@@ -653,13 +683,20 @@ void MainWindow::addROD() {
 
 void MainWindow::deleteROD() {
     if (activeROD != nullptr) {
-        rods.erase(ui->RODList->currentItem());
-        delete ui->RODList->currentItem();
+        auto *item = ui->RODList->currentItem();
+        ROD *rod = rods[item];
+        rods.erase(item);
         unsetActiveROD();
+        delete rod;
+        delete item;
+        ui->slicesWidget->renderWindow()->Render();
     }
 }
 
 void MainWindow::clearAllRODs() {
+    for (auto &pair : rods) {
+        delete pair.second;
+    }
     rods.clear();
     ui->RODList->clear();
     nullROD = new QListWidgetItem("---");
@@ -803,10 +840,10 @@ void MainWindow::enableDisableAnnotation() {
 
 void MainWindow::importROD() {
     if (sculpture->getLoaded()) {
-        QString rodFile = QFileDialog::getOpenFileName(this, tr("OPEN_ROD_FILE"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)");
-        if (rodFile != nullptr) {
+        QString rodFile = QFileDialog::getOpenFileName(this, tr("OPEN_ROD_FILE"), QDir::homePath(), "XML (*.xml) ;; All files (*.*)", nullptr, QFileDialog::DontUseNativeDialog);
+        if (!rodFile.isEmpty()) {
             std::string s = rodFile.toUtf8().constData();
-            ROD* rod = new ROD(s, itemListEnabled, itemListDisabled, ui->slicesWidget->GetInteractor(), ui->ruleList, ui->protractorList, ui->annotationList);
+            ROD* rod = new ROD(s, itemListEnabled, itemListDisabled, ui->slicesWidget->interactor(), ui->ruleList, ui->protractorList, ui->annotationList);
             auto *item = new QListWidgetItem();
             item->setText(QString::fromStdString(rod->getName()));
             ui->RODList->addItem(item);
@@ -820,7 +857,7 @@ void MainWindow::importROD() {
 }
 
 void MainWindow::exportROD(const QString &filename) {
-    if (filename != nullptr) {
+    if (!filename.isEmpty()) {
         std::string s = filename.toUtf8().constData();
         activeROD->write(s);
     }
@@ -835,11 +872,11 @@ void MainWindow::on_actionOpenDICOM_triggered() {
 }
 
 void MainWindow::on_actionExportVolumeImage_triggered() {
-    exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+    exportImageFromRenderWindow(ui->volumeWidget->renderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_actionExportSliceImage_triggered() {
-    exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+    exportImageFromRenderWindow(ui->slicesWidget->renderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_actionExit_triggered() {
@@ -954,11 +991,11 @@ void MainWindow::on_sagitalPlane_pressed() {
 }
 
 void MainWindow::on_exportSliceImage_pressed() {
-    exportImageFromRenderWindow(ui->slicesWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+    exportImageFromRenderWindow(ui->slicesWidget->renderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_exportVolumeImage_pressed() {
-    exportImageFromRenderWindow(ui->volumeWidget->GetRenderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
+    exportImageFromRenderWindow(ui->volumeWidget->renderWindow(), getExportImageFilename(QString::fromStdString(getCurrentDate())));
 }
 
 void MainWindow::on_importPreset_pressed() {

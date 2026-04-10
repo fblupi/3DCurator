@@ -1,4 +1,5 @@
 ﻿#include "WoodSegmentation.h"
+#include <filesystem>
 
 bool longerLine(const HoughLine &i, const HoughLine &j) {
     return i.second > j.second;
@@ -14,7 +15,7 @@ std::vector<Line> getLinesFromImage(const vtkSmartPointer<vtkImageData> &imageDa
     voi->SetVOI(bounds.MIN_X, bounds.MAX_X - 1, bounds.MIN_Y, bounds.MAX_Y - 1, slice, slice);
     voi->Update();
 
-    std::string filename = "tmp" + std::to_string(slice) + ".png";
+    std::string filename = (std::filesystem::temp_directory_path() / ("tmp" + std::to_string(slice) + ".png")).string();
 
     vtkSmartPointer<vtkPNGWriter> png = vtkSmartPointer<vtkPNGWriter>::New();
     png->SetInputData(voi->GetOutput());
@@ -22,7 +23,7 @@ std::vector<Line> getLinesFromImage(const vtkSmartPointer<vtkImageData> &imageDa
     png->Write();
 
     cv::Mat src, dst;
-    src = cv::imread(filename, 0);
+    src = cv::imread(filename, cv::IMREAD_GRAYSCALE);
     remove(filename.c_str());
 
     cv::Canny(src, dst, 30, 50, 3);
@@ -51,7 +52,7 @@ std::vector<Line> getLinesFromImage(const vtkSmartPointer<vtkImageData> &imageDa
 }
 
 std::string generateImage(const vtkSmartPointer<vtkImageData> &imageData, const vtkSmartPointer<vtkColorTransferFunction> &colorFun, int slice, const Bounds &bounds, const std::vector<Line> &lines) {
-    std::string filename = "tmp" + std::to_string(slice) + ".png";
+    std::string filename = (std::filesystem::temp_directory_path() / ("tmp" + std::to_string(slice) + ".png")).string();
 
     vtkSmartPointer<vtkImageMapToColors> map = vtkSmartPointer<vtkImageMapToColors>::New();
     map->SetInputData(imageData);
@@ -68,7 +69,12 @@ std::string generateImage(const vtkSmartPointer<vtkImageData> &imageData, const 
     png->Write();
 
     cv::Mat src;
-    src = cv::imread(filename, 1);
+    src = cv::imread(filename, cv::IMREAD_COLOR);
+
+    if (src.empty()) {
+        remove(filename.c_str());
+        return "";
+    }
 
     remove(filename.c_str());
 

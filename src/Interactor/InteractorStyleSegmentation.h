@@ -45,7 +45,7 @@ public:
      */
     static InteractorStyleSegmentation* New();
 
-    vtkTypeMacro(vtkInteractorStyleImage, InteractorStyleSegmentation);
+    vtkTypeMacro(InteractorStyleSegmentation, vtkInteractorStyleImage);
 
     /**
      * Set plane in which will find the value of the voxel selected
